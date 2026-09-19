@@ -79,8 +79,7 @@ dataset with real model stages:
   number with its status, what the independent review said, which definitions were decided and by
   whom, what was not checked, and whether the export was reconciled with anything outside it;
 - **the receipt** -- the SHA-256 of every file the client was given, one total over them, and the
-  head of the run's hash-chained history, written outside the dataset at the moment of the seal;
-- **the signature** -- the operator's OpenSSH signature over the receipt.
+  head of the run's hash-chained history, written outside the dataset at the moment of the seal.
 
 ## Checking a receipt yourself
 
@@ -88,13 +87,11 @@ A receipt proves that the files you hold are the files that were sealed. It does
 checks were right; that is what the rest of this repository is for.
 
 ```bash
-sha256sum report.md                      # or: Get-FileHash report.md -Algorithm SHA256
-ssh-keygen -Y verify -f allowed_signers -I <signer> -n max-v2-seal -s receipt.md.sig < receipt.md
+sha256sum report.md
 ```
 
-The first line compares a file with the digest the receipt lists. The second checks the operator's
-signature with OpenSSH alone; `allowed_signers` is the operator's published public key. The sample
-receipts are signed with a demonstration key, `iterum-demo`, which is not an operator's key.
+On Windows, `Get-FileHash report.md -Algorithm SHA256`. The digest it prints is the one the receipt
+lists beside that file, or the file is not the one that was sealed.
 
 ## What Iterum does not claim
 
