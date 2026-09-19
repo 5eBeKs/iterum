@@ -1,0 +1,6 @@
+# Text is stored and checked out with LF everywhere.
+* text=auto eol=lf
+# A sample is kept byte for byte: its receipt lists the SHA-256 of these bytes and
+# its signature is over them, and a checkout that rewrote line endings would make
+# an honest file fail its own check.
+samples/** -text
