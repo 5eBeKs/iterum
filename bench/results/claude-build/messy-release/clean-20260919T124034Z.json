@@ -1,0 +1,72 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "clean",
+  "dataset": "messy",
+  "error": "no defect planted (false-positive control)",
+  "at": "2026-09-19T12:35:34+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "clean_blocked",
+  "matched_signals": [],
+  "blocking_issues": 6,
+  "warnings": 4,
+  "checks": 21,
+  "issue_ids": [
+    "REL-POPULATION-HEADER-MISLABEL",
+    "REL-POPULATION-PERIOD-NOT-ON-CARD",
+    "REL-COMPLETION-DENOMINATOR-UNSTATED",
+    "REL-AOV-CAVEATS-MISSING",
+    "REL-DASHBOARD-ESTIMATE-N-LEVEL",
+    "REL-UNITS-AND-LABELS"
+  ],
+  "issue_texts": [
+    "REL-POPULATION-HEADER-MISLABEL | gate_release_auditor.population_label_matches_claim | gate_release_auditor|population_label_matches_claim|release/report.md|page_header | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3 prints one population line for the whole page. It is CLM-NET-REVENUE's population ('... delivered only'), which the generator writes at src/release/build_releas",
+    "REL-POPULATION-PERIOD-NOT-ON-CARD | gate_release_auditor.population_period_on_card | gate_release_auditor|population_period_on_card|release/report.md+release/dashboard_data.json|every_figure | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md: no bullet (lines 7-30) carries its claim's population, and the period 2026-01-01..2026-03-31 appears only in the H1 on line 1. release/dashboard",
+    "REL-COMPLETION-DENOMINATOR-UNSTATED | gate_release_auditor.completion_denominator_stated | gate_release_auditor|completion_denominator_stated|release/report.md+release/dashboard_data.json|CLM-COMPLETION-* | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md lines 14-17 and dashboard cards 2-3 (CLM-COMPLETION-DIRECT/PARTNER) carry only the caveats 'one quarter of orders in this channel' ",
+    "REL-AOV-CAVEATS-MISSING | gate_release_auditor.aov_caveats | gate_release_auditor|aov_caveats|analysis/claim_register.json|CLM-AOV-* | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/claim_register.json CLM-AOV-DIRECT and CLM-AOV-PARTNER list only the channel-population caveat and the sampling-interval caveat. The release renders claim caveats verbatim, so release/report.md lines 18-21 and dashb",
+    "REL-DASHBOARD-ESTIMATE-N-LEVEL | gate_release_auditor.estimate_n_and_level_visible | gate_release_auditor|estimate_n_and_level_visible|release/dashboard_data.json|CLM-COMPLETION-*+CLM-AOV-* | VISUALIZATION | HIGH | worker_release | release/dashboard_data.json cards 2-5 carry value, ci_low and ci_high, but no n and no interval level. release/report.md does show n = 24597/19934/17818/12055 and '0.95",
+    "REL-UNITS-AND-LABELS | gate_release_auditor.units_and_labels | gate_release_auditor|units_and_labels|release/report.md+release/dashboard_data.json|money_and_test_cards | VISUALIZATION | MEDIUM | worker_release | release/report.md lines 18 and 20 show AOV as bare numbers with no currency, although the claim unit is EUR. On release/dashboard_data.json, the Net Revenue card and both AOV cards carry n"
+  ],
+  "other_blockers": 6,
+  "warning_texts": [
+    "shipping_total in metrics/calculated_metrics.json is 37,792,722.50 EUR, about 849 EUR per order, while gross_amount runs 5 to 312 per order. That suggests the locale parse of the shipping column inflated values. It is correctly absent from every release surface, but the figure itself looks wrong and",
+    "Both p-values are shown as 0.0000. The recomputed two-proportion p is about 3e-157, so the display is correct under display_digits 4, but it reads as a p of exactly zero; '< 0.0001' would say what was measured.",
+    "No machine rule checks where the plan leaves gaps: release_surface_contract.json has empty reconciliations and card_caveat_requirements, and no rule checks population or period per card, the completion denominator wording, or units. Four of the six blockers here sit in those gaps, which is why gate_",
+    "The gate_release_machine evidence lists rendered numbers only and records no scan of the generator source for literals. My own scan of src/release/build_release.py found only 0, 1, 2 and 8 (a return code, Decimal(1), a path index or JSON indent, and utf-8), none of them a business figure."
+  ],
+  "summary": "Every rendered number on report.md, dashboard_data.json and the manifest matches its claim and display_digits (60 of 60, agreeing with gate_release_machine), and I recomputed the headline and channel figures independently from the metrics registry. They reconcile: 1,971,306.75 + 1,051,989.86 = 3,023,296.61 net revenue; 24,597 + 19,934 = 44,531 orders; the Wilson bounds, the z test and the effect match exactly; Welch t and Cohen's d are consistent within rounding. The release still fails on what surrounds the numbers. (1) The page-level population line says 'delivered only' for the whole report",
+  "wall_seconds": 295.4,
+  "cost": {
+    "at": "2026-09-19T12:40:32.642091+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-1ec424ea468d",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-19T12:35:40.744694+00:00",
+    "finished_at": "2026-09-19T12:40:32.639461+00:00",
+    "wall_seconds": 291.891,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 36,
+    "cached_input_tokens": 1820808,
+    "output_tokens": 28072,
+    "total_tokens": 1848916,
+    "cost_usd": 2.7367089999999994
+  }
+}

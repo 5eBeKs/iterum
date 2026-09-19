@@ -1,0 +1,83 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "m_population_line_all_rows",
+  "dataset": "messy",
+  "error": "The page's population line says every export row; the figures are over one row per order after deduplication.",
+  "at": "2026-09-19T11:28:59+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "every row|export row|revision|dedup|one row per order"
+  ],
+  "blocking_issues": 2,
+  "warnings": 15,
+  "checks": 20,
+  "issue_ids": [
+    "FINAL-REPORT-POPULATION-LINE",
+    "FINAL-CARRY-CONTRADICTS-OUTPUT"
+  ],
+  "issue_texts": [
+    "FINAL-REPORT-POPULATION-LINE | final_claude_redteam.report_population_statement | final_claude_redteam|population_statement_matches_claims|release/report.md|page_population_line | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3 is the page's only population statement, read with HTML comments removed: 'Population: every row of the export inside the quarter, delivered only.' evi",
+    "FINAL-CARRY-CONTRADICTS-OUTPUT | final_claude_redteam.carry_matches_stage_output | final_claude_redteam|carry_facts_match_output|audit/checkpoints/worker_*.carry.json|grain_period_population | OTHER | MEDIUM | worker_clean | The carries of worker_clean, worker_metrics, worker_analysis and worker_release are one identical body apart from their ids (evidence/surfaces_and_carries.py, distinct_bodies_"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "This run is single-vendor: the architect, four workers, five auditors and this red team all run on claude-opus-5. An isolated context is not an independent vendor, so a shared blind spot sits on both sides of every LLM check. Only the deterministic layer checks independently: the machine gates, the ",
+    "Every worker and LLM-auditor result in my inputs is a placeholder. Each has the summary 'driver e2e <step>' and a check whose value 0.473684 matches no figure in this audit. Each is dated 2026-01-01T00:00:00Z, three months before the analysis plan was registered, and the auditor evidence files hold ",
+    "The 'recomputed independently' rows in gate_metrics_auditor and gate_claims_auditor repeat the machine gate's own expected values with no computation in their evidence directories, so they add no independent confirmation.",
+    "No worker result has a disclosures field, and all their warnings are empty, so no stage reported any deviation. With placeholder results, that silence cannot be read as 'nothing deviated'. The stage code under src/ is outside my inputs.",
+    "The spec and this stage's dataset addition require an n beside every estimate, but the dashboard's four estimate cards (completion and AOV per channel) show the point and both bounds without it. The frozen release contract has no render role or JSON exclusion for n on the dashboard, so adding it wou",
+    "Neither AOV card on the dashboard, nor either AOV claim's caveats, says the figure is over delivered orders only, and check_plan's caveats_declared does not require that topic for AOV claims. Once the report's population line is corrected, nothing on the dashboard explains why AOV times orders is no",
+    "The dedup assumption (last row wins) agrees with updated_at on all 368 repeats whose timestamps differ. However, 549 repeats have identical updated_at, and 6 of those in the quarter change status (all to delivered in the later row), so file order alone decides them. If the earlier row won, net reven",
+    "The completion rates are a snapshot at export time. 3457 direct orders (14.1%) and 4034 partner orders (20.2%) are still pending and count as not completed. If all of them delivered, the rates would be 0.864943 and 0.807113, and the channel gap would be 0.05783 instead of 0.119652. No caveat on eith",
+    "shipping_total (37792722.50, correctly unpublished) implies about 900 per order in every country, against a mean delivered gross of 110.50. That makes the column's unit or currency doubtful, on top of the 5.95% of cells that cannot be read. Stripping the separators blindly would have given 124840218",
+    "Both surfaces print both p-values as 0.0000, which a reader can take as p = 0. '< 0.0001' would state the same bound honestly: z is 26.72 and Welch t is 42.70, both far past the Bonferroni alpha of 0.025.",
+    "CLM-TEST-CHANNEL-AOV's population in the register omits 'delivered', although the registered test runs on delivered orders only (n 17818 against 12055).",
+    "The negative-refund exclusion removes 10 orders in the quarter (11 rows in the export), which moves CLM-ORDERS by 10. The data cannot tell whether these are export faults or refunds with a flipped sign; that rests entirely on refund_sign_policy.",
+    "No audit/decisions/*.json exists and the rulings are empty, so every judgment behind the numbers rests on the five RESOLVED lines of human_decisions.yaml. A reader sees only two of them (deduplication and the negative-refund exclusion). Neither surface says that the period is taken by order_month or",
+    "Three things I could not establish. First, carry and result schemas under audit/schemas/ are outside my inputs, so the carries' schema validity rests on the runner accepting them. Second, src/release/build_release.py is outside my inputs, and release_surface_gate.json records no generator-literal fi",
+    "Several things are checked by no deterministic rule, only by this red team: the prose on both surfaces (population line, AOV population, snapshot meaning), the renamed and derived clean columns (customer_id, order_date, country, is_delivered, shipping_missing, shipping_cost values), the printed n va"
+  ],
+  "summary": "FAIL on two blockers. The numbers hold: from the quarantine projection, my own stdlib code reproduces every registry metric, all 8 claims, both Wilson and both Student intervals, both registered tests and the unpublished shipping_total. The clean table matches my population row by row (44531 orders, 0 mismatches over 12 columns), and the release gate bound all 60 numbers on the 3 surfaces in release/. Blocker 1: the population line on report.md line 3 describes every export row in the quarter, delivered only. The figures under it rest on 44531 deduplicated orders, and 14658 of them are cancell",
+  "wall_seconds": 698.7,
+  "cost": {
+    "at": "2026-09-19T11:40:47.329172+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-4b16f125bb3c",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-19T11:29:12.370049+00:00",
+    "finished_at": "2026-09-19T11:40:47.329172+00:00",
+    "wall_seconds": 694.953,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 76,
+    "cached_input_tokens": 6533378,
+    "output_tokens": 67283,
+    "total_tokens": 6600737,
+    "cost_usd": 7.060994000000001
+  }
+}

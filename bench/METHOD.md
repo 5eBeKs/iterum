@@ -60,6 +60,14 @@ its warnings **false warnings**. **Other blockers** are blocking issues on a pla
 nothing of the defect -- a reviewer that refuses a stage for the planted defect and for three things
 that are not wrong costs a live run three retries, and the catch alone would hide it.
 
+**Only orders has a clean control.** The untouched messy stage is not clean: its reference release
+carries defects no machine gate names -- one population line over the whole page ending in
+"delivered only" above rates computed over every order, estimate cards without their `n`, average
+order values without their caveats or currency -- and both vendors shown it, Claude and GLM, block
+them there, launch after launch. A reviewer that blocks a real defect is right, so messy's clean blocks are not
+counted as false alarms, and the same defects are most of messy's other blockers. Which of them are
+false is not sorted until the reference is fixed; the tables print what was raised and call it that.
+
 Every launch is kept as it was recorded, in [`results/`](results/), one file per launch: the case,
 the vendor, the verdict, what the reviewer said and what it cost.
 

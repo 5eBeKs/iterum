@@ -1,0 +1,75 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "clean",
+  "dataset": "orders",
+  "error": "no defect planted (false-positive control)",
+  "at": "2026-09-19T12:35:36+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "PASS",
+  "stop_code": null,
+  "outcome": "clean_pass",
+  "matched_signals": [],
+  "blocking_issues": 0,
+  "warnings": 16,
+  "checks": 29,
+  "issue_ids": [],
+  "issue_texts": [],
+  "other_blockers": 0,
+  "warning_texts": [
+    "Single-vendor profile: every context in this run, from architect through workers and auditors to this red team, is claude-opus-5. An isolated context is not an independent vendor, so a mistake this model family tends to make would show up on both sides of every LLM check. Only the machine gates, the",
+    "Write barriers: edits to raw_data and the frozen machinery were blocked by permissions.deny for edit tools only, not for the shell. A raw file changed through the shell would be caught by the control lock after the fact, not prevented.",
+    "None of the five LLM auditors (gate0_semantic, gate_clean_auditor, gate_metrics_auditor, gate_claims_auditor, gate_release_auditor) left verifiable evidence: each evidence/notes.json holds only a placeholder note with no recomputation, command or output, and every result carries the fixed timestamp ",
+    "The four worker results are templated: each summary just names a driver end-to-end run, and each reports recomputing refund rate 0.473684, including worker_clean and worker_release, which never compute that metric. None has a disclosures field and all warnings are empty, so there are no stage self-r",
+    "Carry gap: all four carries define the population 'delivered orders inside the period' as status=delivered with no period filter. Applied literally, that filter keeps 175 rows, while clean_data/orders_clean.csv holds 174 (it rightly excludes O00201, dated 2025-04-01, gross 999.99). No downstream num",
+    "The four carries are word-for-word identical apart from step and context ids. None records a stage-specific fact, and each lists raw_data/orders.csv under do_not_reread even though that file is no worker stage's output.",
+    "Snapshot versus completed sales: 10 pending orders dated inside the period (gross 2028.28) are excluded as not completed sales, as the spec allows. The report never tells the reader that the export is a snapshot and that the Q1 net revenue of 35,741.52 could rise by up to 2028.28 if those orders are",
+    "Refund timing is an unstated assumption: the export has no refund date, so each refund counts against its order's date. Refunds booked after the export would lower net revenue (35,741.52) and could raise the refund rate (0.473684), and the export's snapshot date could not be established.",
+    "The refund-rate numerator counts every paying customer with any refund above 0, partial refunds included (27 of 57). Counting only fully refunded customers would give 12/57 = 0.210526, and the ruled-out order-row basis gives 33/174 = 0.189655. The report does not tell the reader that partial refunds",
+    "The spec period ends 2025-03-30, but R01 asks for the quarter and the registry names the period 2025-Q1-delivered, and Q1 ends 2025-03-31. This export has 0 rows dated 2025-03-31, so no figure moves today, but a later export would drop 31 March orders from every figure without notice.",
+    "The spec declares every amount in EUR, yet the export has no currency column and PL and CZ are not euro countries. If PL or CZ amounts are really PLN or CZK, then net revenue PL 11,181.67, CZ 13,527.24 and the headline 35,741.52 are wrong. This could not be established from the data.",
+    "check_plan.json lists gate_release_document's claims_rendered and caveats_rendered under accepted_unproven, with a proof-harness file-not-found error as the reason, and gate0 plan_proven counts that gate among the 4 not provable before the lock. So neither rule was ever shown to fire on a broken rel",
+    "I could not independently confirm that the release generator contains no business-number literal. src/release/build_release.py lies outside this stage's allowed inputs, and release_surface_gate.json lists only rendered numbers, with no per-literal generator result.",
+    "No deterministic rule covers the following, so this red team is their only check. The net_revenue registry field 'numerator' = 40235.02 is unrendered and equals my gross total. excluded_outside_period is covered only through the component-sum invariant, and I recount 1. questions_are_answered compar",
+    "The release reader never sees the row accounting: 27 of 201 rows are excluded (26 not delivered, 1 delivered order dated 2025-04-01), and those counts appear only in analysis/answers/R04.json, which check_plan excuses from the release.",
+    "Could not establish: retry history and stale inputs (runner state is not in the handoff; see audit_runner.py report); whether any stage deviated without reporting it; and how the dashboard renders, since its JSON was read as values only. The handoff has no drift_since_review field, and that absence "
+  ],
+  "summary": "PASS with no material blocker. I traced raw -> clean -> metrics -> claims -> release and, using this stage's own code (audit/results/final/evidence/redteam_recalc.py, which reads raw_data/orders.csv with csv and Decimal and imports nothing from audit/tools or src), reproduced every published figure from the raw export: 174 population rows, with 201 = 174 + 26 not delivered + 1 outside the period (O00201, 2025-04-01); net revenue 35741.52 EUR, net of 4493.50 refunds on 40235.02 gross; refund rate 27/57 = 0.473684 on the paying_customers basis; PL 11181.67, DE 11032.61 and CZ 13527.24, which sum",
+  "wall_seconds": 418.3,
+  "cost": {
+    "at": "2026-09-19T12:42:42.897804+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-0cdb94b85940",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-19T12:35:47.797685+00:00",
+    "finished_at": "2026-09-19T12:42:42.897804+00:00",
+    "wall_seconds": 415.094,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 54,
+    "cached_input_tokens": 2949837,
+    "output_tokens": 46039,
+    "total_tokens": 2995930,
+    "cost_usd": 4.0992999999999995
+  }
+}

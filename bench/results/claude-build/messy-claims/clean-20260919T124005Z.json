@@ -1,0 +1,71 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "clean",
+  "dataset": "messy",
+  "error": "no defect planted (false-positive control)",
+  "at": "2026-09-19T12:35:32+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "clean_blocked",
+  "matched_signals": [],
+  "blocking_issues": 5,
+  "warnings": 5,
+  "checks": 37,
+  "issue_ids": [
+    "CLAIMS-AOV-DIRECT-CAVEAT-POPULATION",
+    "CLAIMS-AOV-PARTNER-CAVEAT-POPULATION",
+    "CLAIMS-TEST-AOV-POPULATION",
+    "ANSWERS-R03-HYPOTHESIS-GROUPS",
+    "ANSWERS-R04-HYPOTHESIS-GROUPS"
+  ],
+  "issue_texts": [
+    "CLAIMS-AOV-DIRECT-CAVEAT-POPULATION | gate_claims_auditor.caveat_population_words.CLM-AOV-DIRECT | gate_claims_auditor|caveat_population_words|analysis/claim_register.json|CLM-AOV-DIRECT | CLAIM_SUPPORT | MEDIUM | worker_analysis | The CLM-AOV-DIRECT caveats in analysis/claim_register.json cover only the channel population and the sampling interval. My recount in evidence/recalc_claims.json gets 1",
+    "CLAIMS-AOV-PARTNER-CAVEAT-POPULATION | gate_claims_auditor.caveat_population_words.CLM-AOV-PARTNER | gate_claims_auditor|caveat_population_words|analysis/claim_register.json|CLM-AOV-PARTNER | CLAIM_SUPPORT | MEDIUM | worker_analysis | The CLM-AOV-PARTNER caveats in analysis/claim_register.json cover only the channel population and the sampling interval. My recount in evidence/recalc_claims.json ge",
+    "CLAIMS-TEST-AOV-POPULATION | gate_claims_auditor.population_matches_computation.CLM-TEST-CHANNEL-AOV | gate_claims_auditor|population_matches_computation|analysis/claim_register.json|CLM-TEST-CHANNEL-AOV | CLAIM_SUPPORT | MEDIUM | worker_analysis | The CLM-TEST-CHANNEL-AOV population in analysis/claim_register.json is described as all quarter orders, direct against partner by channel. Its only cav",
+    "ANSWERS-R03-HYPOTHESIS-GROUPS | gate_claims_auditor.answer_hypothesis_fields.R03 | gate_claims_auditor|answer_hypothesis_fields|analysis/answers/R03.json|H-CHANNEL-COMPLETION | CLAIM_SUPPORT | LOW | worker_analysis | The hypothesis block in analysis/answers/R03.json has method, statistic, p_value, alpha, correction, effect_size, n_per_group and effect_name, but no groups field. | The dataset contr",
+    "ANSWERS-R04-HYPOTHESIS-GROUPS | gate_claims_auditor.answer_hypothesis_fields.R04 | gate_claims_auditor|answer_hypothesis_fields|analysis/answers/R04.json|H-CHANNEL-AOV | CLAIM_SUPPORT | LOW | worker_analysis | The hypothesis block in analysis/answers/R04.json has method, statistic, p_value, alpha, correction, effect_size, n_per_group and effect_name, but no groups field. | The dataset contract for"
+  ],
+  "other_blockers": 5,
+  "warning_texts": [
+    "No rule in audit/check_plan.json checks the AOV wording gaps above. caveats_declared requires only the channel-population and sampling-interval topics for CLM-AOV-*, and nothing for CLM-TEST-CHANNEL-AOV beyond the direction of the comparison, so the machine gate's PASS on caveats says nothing about ",
+    "Only the six point values go through claims_recomputed, which reads the raw export. The eight interval bounds and all test statistics, p values and effects are recomputed from clean_data/orders_clean.csv, which a worker produced. My recount from the quarantined export agrees with them.",
+    "Both p values are stored as 0.0000000000 with display_digits 4, so a page that formats them as registered will print 0.0000. That reads as exactly zero, and the release stage should show them as below 0.0001.",
+    "The completion rate counts pending orders as not completed, as the spec defines it. Some of the 3457 direct and 4034 partner pending orders may still be delivered. March completion is not lower than January in either channel, so the data shows no sign of late-quarter censoring.",
+    "The CLM-COMPLETION-* caveats do not say in words that cancelled and pending orders are in the denominator. The computation is right: the direct denominator of 24597 includes 3322 cancelled and 3457 pending orders."
+  ],
+  "summary": "Every figure in all eight claims matches my own recount from quarantine/orders.csv: 44531 orders, net revenue 3023296.61, both completion rates with their Wilson bounds, both AOVs with their Student bounds, and both registered tests (z 26.718455, Welch t 42.699880, effects 0.119652 and 0.486900). They also match metrics and all 24 recompute checks in the machine gate. The channel gap keeps the same sign in every country and every month, so there is no Simpson reversal and no country confounder. The stage still fails on wording. CLM-AOV-DIRECT and CLM-AOV-PARTNER never say in their caveats that",
+  "wall_seconds": 265.4,
+  "cost": {
+    "at": "2026-09-19T12:40:04.332568+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-19T12:35:42.446559+00:00",
+    "finished_at": "2026-09-19T12:40:04.332568+00:00",
+    "wall_seconds": 261.875,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 40,
+    "cached_input_tokens": 2346217,
+    "output_tokens": 25793,
+    "total_tokens": 2372050,
+    "cost_usd": 3.1374554999999997
+  }
+}

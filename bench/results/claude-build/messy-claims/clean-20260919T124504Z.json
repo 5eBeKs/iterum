@@ -1,0 +1,63 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "clean",
+  "dataset": "messy",
+  "error": "no defect planted (false-positive control)",
+  "at": "2026-09-19T12:40:36+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "clean_blocked",
+  "matched_signals": [],
+  "blocking_issues": 1,
+  "warnings": 5,
+  "checks": 48,
+  "issue_ids": [
+    "CLAIMS-AUD-ANSWER-GROUPS"
+  ],
+  "issue_texts": [
+    "CLAIMS-AUD-ANSWER-GROUPS | gate_claims_auditor.answers_hypothesis_groups | gate_claims_auditor|answer_hypothesis_groups|analysis/answers|R03,R04 | CLAIM_SUPPORT | MEDIUM | worker_analysis | audit/results/gate_claims_auditor/evidence/chain_output.json: hypothesis.groups_named is absent in analysis/answers/R03.json and R04.json; audit/analysis_plan.json registers groups [direct, partner] for H-CHANN"
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "Both test p values are stored and will render as 0.0000000000 / 0.0000 although the recomputed two-sided p is about 3e-157 for completion and below double-precision range for AOV; the release should render them as below the display floor rather than as zero.",
+    "The completion rate counts pending orders as not completed (as the spec requires); pending is about 14 percent of direct and 20 percent of partner orders in every month, so roughly half the channel gap is orders still open at export time rather than cancellations, and the claim does not say the rate",
+    "The analysis plan assumes neither channel changed how it books orders during the quarter; the monthly split shows a stable gap (direct higher in all three months), but nothing in the data can confirm the assumption itself.",
+    "Country is not a confounder here: direct is about 55 percent of orders in each of CZ, DE and PL, and direct is higher on both completion and AOV inside every country and every month (no Simpson reversal).",
+    "The min_group_size, recompute_estimate and recompute_test machine rules read clean_data/orders_clean.csv, and only claims_recomputed goes back to raw; this audit recomputed all of them from the quarantine projection and they agree, so the gap is only in what the gate on its own can catch."
+  ],
+  "summary": "All eight claims recompute independently from quarantine/orders.csv (dedup last revision, Q1 by order_month, negative refunds excluded) and match the register, the metrics registry and every gate_claims_machine comparison; the claim->metric->plan chain agrees byte for byte on 132 of 134 compared fields; no confounder or Simpson reversal by country or month. One blocker: the hypothesis blocks of analysis/answers/R03.json and R04.json do not name the plan's groups (direct, partner), so their signed effect sizes carry no direction on their own.",
+  "wall_seconds": 261.5,
+  "cost": {
+    "at": "2026-09-19T12:45:03.158620+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-19T12:40:44.837062+00:00",
+    "finished_at": "2026-09-19T12:45:03.158620+00:00",
+    "wall_seconds": 258.313,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 40,
+    "cached_input_tokens": 2316530,
+    "output_tokens": 26912,
+    "total_tokens": 2343482,
+    "cost_usd": 3.1482405
+  }
+}

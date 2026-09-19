@@ -64,7 +64,8 @@ to prove they are silent on it, and the stage's reviewer is launched once, for r
 prompt and evidence as in a live run. Each launch is scored **blocked** (the reviewer refused the
 stage and named the defect), **warned** (it named it and let it through) or **missed**, with what
 the vendor charged beside it. A clean control -- the same review over the untouched stage --
-measures false alarms.
+measures false alarms, on the orders demo only: the messy demo's reference release has real defects
+of its own that the reviewers shown it block, and [`bench/METHOD.md`](bench/METHOD.md) says which.
 
 [`bench/METHOD.md`](bench/METHOD.md) has the method, [`bench/CASES.md`](bench/CASES.md) every
 planted defect, [`bench/RESULTS.md`](bench/RESULTS.md) the tables, and `bench/results/` every

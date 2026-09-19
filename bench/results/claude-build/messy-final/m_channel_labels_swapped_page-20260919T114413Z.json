@@ -1,0 +1,90 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "m_channel_labels_swapped_page",
+  "dataset": "messy",
+  "error": "On the page the direct and partner completion lines carry each other's labels; the figures and anchors are untouched.",
+  "at": "2026-09-19T11:32:51+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "label",
+    "swap|transpos|mislabel",
+    "direct|partner"
+  ],
+  "blocking_issues": 4,
+  "warnings": 17,
+  "checks": 20,
+  "issue_ids": [
+    "FINAL-REPORT-CHANNEL-LABELS-SWAPPED",
+    "FINAL-REPORT-PAGE-POPULATION-DELIVERED-ONLY",
+    "FINAL-DASHBOARD-ESTIMATE-WITHOUT-N",
+    "FINAL-CARRY-CONTRADICTS-STAGE-OUTPUT"
+  ],
+  "issue_texts": [
+    "FINAL-REPORT-CHANNEL-LABELS-SWAPPED | final_claude_redteam.visible_label_matches_claim | final_claude_redteam|visible_label_matches_claim|release/report.md|completion_by_channel | RELEASE_INTEGRITY | CRITICAL | worker_release | release/report.md line 14: the visible label is 'completion partner', but the number beside it is anchored to claim:CLM-COMPLETION-DIRECT (value 0.724397, bounds 0.718779..",
+    "FINAL-REPORT-PAGE-POPULATION-DELIVERED-ONLY | final_claude_redteam.page_population_matches_claims | final_claude_redteam|page_population_matches_claims|release/report.md|population_line | RELEASE_INTEGRITY | MEDIUM | worker_release | release/report.md line 3 sets the population of the whole page as 'orders placed inside the quarter, one row per order, delivered only'. The claims under that line sa",
+    "FINAL-DASHBOARD-ESTIMATE-WITHOUT-N | final_claude_redteam.estimate_rendered_with_bounds_and_n | final_claude_redteam|estimate_rendered_with_bounds_and_n|release/dashboard_data.json|estimate_cards | RELEASE_INTEGRITY | LOW | worker_release | release/dashboard_data.json cards[2] to cards[5] (CLM-COMPLETION-DIRECT, CLM-COMPLETION-PARTNER, CLM-AOV-DIRECT, CLM-AOV-PARTNER) carry value, ci_low and ci_hi",
+    "FINAL-CARRY-CONTRADICTS-STAGE-OUTPUT | final_claude_redteam.carry_facts_match_output | final_claude_redteam|carry_facts_match_output|audit/checkpoints/worker_clean.carry.json|period_population_grain | OTHER | MEDIUM | worker_clean | All four worker carries (worker_clean, worker_metrics, worker_analysis, worker_release) exist, and their context_id and attempt match the execution block of the matchi"
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "This profile is single-vendor: the architect, the four workers, the five auditors and this red team are all one model family (claude-opus-5), an isolated context is not an independent vendor, no GPT gate exists over any of this work, and what actually holds here is the deterministic layer (machine g",
+    "The LLM layer gave no independent verification in this run: the four worker results and the gate0_semantic and gate_release_auditor results all carry the summary 'driver e2e', a single check whose expected and actual are 0.473684 (not a number of this audit), evidence notes with no content, and a cr",
+    "The channel-label swap passed every gate because no rule in check_plan.json or release_surface_contract.json compares the words on a surface (a channel label, a population line) with the claim behind the number, so the words on every release surface are checked by model judgment alone, and in this r",
+    "The release contract excludes the text 'n = N' from binding, so no machine rule checks the n printed beside an estimate; my script found all four n values on report.md equal to their claims' n, and the dashboard shows none.",
+    "The dedup assumption rests on file order alone for most repeated orders: the last row is never older by updated_at, but 549 of the 917 repeated orders carry the same updated_at on both revisions, and 126 change status between them; if the first revision were the current one, net revenue would read 3",
+    "The completion rate counts pending orders as not completed; pending is a flat 13-15% of direct and 19-21% of partner orders in every month, January included, and if pending orders later deliver, the published rates understate completion by up to about 0.14 (direct) and 0.21 (partner); the formula is",
+    "My locale-aware parse reproduces the unpublished shipping_total of 37,792,722.50 EUR exactly (a separator-stripping read would give 1,248,402,183.11), but the mean readable shipping cost is 902.34 EUR per order against an average order value of 87-111 EUR, which is implausible for a shipping charge ",
+    "The refund_sign_policy exclusion removes 10 orders from the quarter (8 delivered, 9 of them direct); keeping them would add 10 to the order count and 1,290.57 EUR to net revenue, which is small and declared in the spec.",
+    "The month-first reading of slashed dates holds on the data: none of the 6,661 slashed dates in the population disagrees with order_month under month-first, a day-first reading would disagree on 2,350 ambiguous rows, no UTC timestamp changes calendar day in Europe/Warsaw, and no metric uses order_dat",
+    "The caveat 'one quarter of orders in this channel' on the report and the dashboard can be read as 25% of the channel's orders rather than every order of 2026-Q1, and a reader of a sampling interval needs the second meaning to be unambiguous.",
+    "Both registered tests show p as 0.0000 on the report and the dashboard, when the true values are about 3e-157 and below double precision; 'p < 0.0001' would not print a zero probability.",
+    "The report says nothing about shipping, so a reader never learns that R05 was asked and deliberately left unanswered; only analysis/answers/R05.json says so.",
+    "values_preserved does not cover the renamed columns customer_id, order_date and country; my own row-by-row comparison found 0 mismatches over 44,531 orders (hashed customer_id, country, order_date under the four declared notations, shipping_cost under the declared locale, and shipping_missing).",
+    "What I could not establish: whether the carries pass audit/schemas/carry.schema.json (the schema is outside my inputs); whether the release gate code carries a [:N] slice or a magnitude filter (audit/tools is outside my inputs, though its evidence lists 60 of 60 numbers on all three surfaces and no ",
+    "No audit/decisions/*.json exists and the handoff lists no rulings, and no worker result has a disclosures field or any warning, so no deviation was reported to evaluate, which does not show that none happened.",
+    "The handoff has no drift_since_review; that absence does not prove the code's assumptions hold, so I checked dedup, date notation, shipping locale and refund sign against the current projection directly (see the warnings above).",
+    "free_text_quarantined.values compares only a sample of 25 values; my scan of 30 registers, surfaces, answers, stage results and carries for instruction-like vocabulary found nothing, and I did not read the comment column."
+  ],
+  "summary": "Every business number recomputes exactly from the quarantine projection with my own code: 44,531 orders, net revenue 3,023,296.61 EUR, completion direct 0.724397 [0.718779, 0.729946] n=24597 and partner 0.604746 [0.597939, 0.611512] n=19934, AOV direct 110.64 [109.88, 111.39] and partner 87.27 [86.50, 88.03], z 26.718455, Welch t 42.699880, d 0.486900, and the unpublished shipping_total 37,792,722.50. All 60 rendered numbers match my recalculation, and the clean table matches my population row by row. The release still fails: on release/report.md the two completion lines carry swapped channel ",
+  "wall_seconds": 671.0,
+  "cost": {
+    "at": "2026-09-19T11:44:12.216764+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-4b16f125bb3c",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-19T11:33:04.619236+00:00",
+    "finished_at": "2026-09-19T11:44:12.216764+00:00",
+    "wall_seconds": 667.594,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 66,
+    "cached_input_tokens": 4666711,
+    "output_tokens": 66767,
+    "total_tokens": 4733544,
+    "cost_usd": 5.9421620000000015
+  }
+}

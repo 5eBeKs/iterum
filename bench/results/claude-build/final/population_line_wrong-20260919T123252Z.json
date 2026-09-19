@@ -1,0 +1,82 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "population_line_wrong",
+  "dataset": "orders",
+  "error": "The page's population line says all orders; every figure is over delivered orders.",
+  "at": "2026-09-19T12:26:27+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "all orders"
+  ],
+  "blocking_issues": 1,
+  "warnings": 16,
+  "checks": 20,
+  "issue_ids": [
+    "FINAL-RELEASE-POPULATION-LINE"
+  ],
+  "issue_texts": [
+    "FINAL-RELEASE-POPULATION-LINE | final_claude_redteam.release_population_statement | final_claude_redteam|release_population_statement|release/report.md|population | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3, with HTML comments stripped as a reader sees it, names the population as all orders inside the period. audit_spec.yaml population.name and include_status: [delivered"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The machine gates cannot see the blocker by construction: release_surface_gate binds only numbers, and caveats_rendered and claims_rendered look only for claim-level caveats and anchors. No rule in audit/check_plan.json compares the page-level population or period prose with the spec, so the prose o",
+    "audit/check_plan.json lists gate_release_document claims_rendered and caveats_rendered under accepted_unproven because the proof run failed with FileNotFoundError, yet gate0_machine plan_proven reports 0 accepted unproven. The two release-document rules nearest this finding were never shown to fire ",
+    "Every auditor before this step (gate0_semantic, gate_clean_auditor, gate_metrics_auditor, gate_claims_auditor, gate_release_auditor) has a notes.json that says only 'driver e2e evidence', with no recalculation script or output. Their PASS verdicts carry no inspectable evidence, and gate_release_audi",
+    "All four worker result.json files and all four carries have the placeholder timestamp 2026-01-01T00:00:00Z and a 'driver e2e' summary, and their only check repeats the refund rate 0.473684. None of them describes the work the stage actually did.",
+    "All four carries define the population as 'status=delivered' and leave out the period filter. The period is listed separately under periods and clean_data applies it correctly, but the carry's own population definition is the same half-statement of the population that reached the report, with the ot",
+    "audit_spec.yaml sets the period end to 2025-03-30, but the metrics registry names the period '2025-Q1-delivered', the exclusion reason says 'outside the reported quarter', and Q1 ends on 2025-03-31. The export has no 2025-03-31 row, so today this moves 0 rows and 0.00 EUR of the 35,741.52 net revenu",
+    "The spec's boundary probe does not sit at the edge it claims to test: the planted out-of-period row O00201 is dated 2025-04-01 (delivered, 999.99 EUR, customer C001), one day beyond the true quarter end and two beyond the spec's end. It proves that 2025-04-01 is excluded, not that the inclusive 2025",
+    "The refund_rate_basis=paying_customers ruling moves the published refund rate from 0.189655 (33 refunded order rows of 174) to 0.473684 (27 of 57 customers), a factor of 2.498. The report states the basis, but 12 of the 33 refunded rows are full refunds, and a reader comparing against an order-level",
+    "The revenue_recognition=net_of_refunds ruling assigns each refund to its order's date because the export has no refund date, so refunds issued after the quarter closed are inside the 4,493.50 EUR refund total and the 35,741.52 EUR net revenue. I could not establish how much of that total is refunds ",
+    "The timezone_for_dates=Europe/Warsaw ruling cannot be verified from the data because order_date carries no time or offset. The rows it could move are the three delivered 2025-01-01 orders (O00008 297.40 fully refunded, O00082 174.34, O00198 16.43) and the one delivered 2025-03-30 order (O00064 268.1",
+    "No 'paying customer' in the population has zero net revenue for the period, so the reading of 'paying' does not change the 27/57 refund rate on this export. The spec never defines whether a customer whose every delivered order was fully refunded counts as paying.",
+    "Question R05 (customer lifetime value) is excused in check_plan, and R04 (row accounting 201 / 174 / 26 cancelled or pending / 1 outside the period) is answered only in analysis/answers/R04.json. A reader of release/report.md or dashboard_data.json sees neither the R04 counts nor why R05 is not answ",
+    "The country lines in release/report.md (PL, DE, CZ) print no currency unit. EUR appears only in the headline label and in the dashboard card labels.",
+    "release_surface_gate.json records per-number bindings but no result for the REC-COUNTRY-SUM and REC-REFUND-RATE reconciliations or for the generator literal scan of src/release/build_release.py. My own recompute confirms both reconciliations hold (11,181.67 + 11,032.61 + 13,527.24 = 35,741.52, and 2",
+    "I could not establish whether the raw files and control plane still match the control lock, because the runner state and lock are outside this step's inputs. I also could not see retry history or stale inputs, which a human sees in audit_runner.py report.",
+    "The handoff has no drift_since_review field. That does not show the stage code's assumptions hold on this export; it only means no distribution shift was indexed."
+  ],
+  "summary": "FAIL on one material blocker: release/report.md line 3 tells the reader the population is 'all orders inside the period', while the spec, the claim register and every figure on the page use delivered orders inside the period (174 of 200 in-period rows; taken literally the line describes a population whose net would be 41,881.34 EUR, not 35,741.52). Every business number otherwise reproduces from raw with my own code: net revenue 35,741.52 EUR, refund rate 0.473684 (27 of 57 paying customers), PL 11,181.67, DE 11,032.61, CZ 13,527.24, and row accounting 201 = 174 + 26 + 1. All 21 rendered numbe",
+  "wall_seconds": 375.6,
+  "cost": {
+    "at": "2026-09-19T12:32:51.183538+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-0cdb94b85940",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-19T12:26:39.043850+00:00",
+    "finished_at": "2026-09-19T12:32:51.183538+00:00",
+    "wall_seconds": 372.141,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 48,
+    "cached_input_tokens": 2593873,
+    "output_tokens": 37701,
+    "total_tokens": 2631622,
+    "cost_usd": 3.5662244999999992
+  }
+}

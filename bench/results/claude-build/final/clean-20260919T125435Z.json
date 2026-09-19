@@ -1,0 +1,75 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "clean",
+  "dataset": "orders",
+  "error": "no defect planted (false-positive control)",
+  "at": "2026-09-19T12:45:06+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "PASS",
+  "stop_code": null,
+  "outcome": "clean_pass",
+  "matched_signals": [],
+  "blocking_issues": 0,
+  "warnings": 16,
+  "checks": 41,
+  "issue_ids": [],
+  "issue_texts": [],
+  "other_blockers": 0,
+  "warning_texts": [
+    "This profile is single-vendor: the architect, four workers, five auditors and this red team all ran on claude-opus-5, so a mistake the model family is prone to can pass on both sides of every check. No cross-vendor or GPT gate exists here. Only the deterministic layer (machine gates, frozen check_pl",
+    "All five LLM auditor results (gate0_semantic, gate_clean_auditor, gate_metrics_auditor, gate_claims_auditor, gate_release_auditor) are templated placeholders: summary 'driver e2e <step>', created_at 2026-01-01T00:00:00Z (before this run's 2026-09-19 dispatch), and an evidence/notes.json that holds o",
+    "All four worker result.json files are templated in the same way: summary 'driver e2e <step>', created_at 2026-01-01T00:00:00Z, artifacts listing only the src/*.py script and not the data the stage wrote, no disclosures field, and one identical 'recomputed 0.473684' check, even on worker_clean, which",
+    "The four worker carries are identical apart from step_id and context_id, and their updated_at is 2026-01-01T00:00:00Z. Each gives the population definition as 'status=delivered' with no period filter: read literally that is 175 rows, including O00201 dated 2025-04-01, and would move net revenue from",
+    "Every carry puts raw_data/orders.csv under do_not_reread, although the common contract limits that field to the previous stage's outputs and working data. None of them names a real stage output (clean_data, metrics, analysis, release) or records a stage-specific pitfall: the period ending 2025-03-30",
+    "revenue_recognition = net_of_refunds books each refund on its order's date, and the export has no refund-date column, so any refund issued after the extract (the latest row is 2025-04-01) is missing. The share of refunded orders falls from 14/57 in January and 10/55 in February to 9/62 in March and ",
+    "The refund rate 0.473684 = 27/57 counts a paying customer as refunded after any refund above zero: 15 of the 27 had only partial refunds, and customers with several orders get more chances (26/47 multi-order customers vs 1/10 single-order customers). The release says the denominator is paying custom",
+    "The audit_spec comment says the two refund-rate readings differ by 'roughly a factor of three'; on this export the ratio is 2.50 (0.473684 vs 0.189655). risk_register R-REFUND-BASIS states it correctly as roughly 2.5x.",
+    "10 pending orders dated inside the period (2,028.28 EUR gross, the latest on 2025-03-27) are excluded as not yet sales, which is correct under the spec. If they are delivered after the extract, period net revenue would rise by up to 2,028.28 EUR (about 5.7%), and nothing on the release surfaces tell",
+    "The spec period ends 2025-03-30, one day short of the calendar quarter that questions.md ('reported quarter'), the exclusion reason ('outside the reported quarter') and the registry period name '2025-Q1-delivered' all imply. No row is dated 2025-03-31, so nothing moves on this export, but a later ex",
+    "timezone_for_dates = Europe/Warsaw appears on neither release surface. order_date is date-only, so nothing is converted and nothing moves unless the source dates are in fact UTC, in which case only the 4 delivered orders on the edge days (net 458.95 EUR) could shift.",
+    "release_surface_gate.json records the 21 bound numbers but no outcome for the contract's reconciliations (REC-COUNTRY-SUM, REC-REFUND-RATE) and no generator-literal scan of src/release/build_release.py. I recomputed both reconciliations and both hold. I did not read the generator (src/ is outside my",
+    "check_plan.json accepts gate_release_document's claims_rendered and caveats_rendered as unproven because the plan proof hit FileNotFoundError, yet gate0_machine's plan_proven reports '0 accepted unproven'. Those two document checks were therefore never shown to fire on a broken release. I checked cl",
+    "The release shows R01–R03 only. R04's row accounting (201 raw rows, 174 kept, 26 not delivered, 1 outside the period) exists only in analysis/answers/R04.json, and the reader is never told that R05 (customer lifetime value) went unanswered, excused in the check plan for lack of acquisition dates.",
+    "No deterministic rule covered the following, so this red team is their only check, and each holds: order_date preservation in clean_data (values_preserved omits it; 174/174 identical); excluded_outside_period taken directly (1, O00201; the gate pins it only through sums); R04's raw_order_rows and po",
+    "Not established by this red team: the content of src/** (the generator and the stage code were not read); whether stage code actually produced these artifacts, since the result records are placeholders; runner retry history and stale inputs, which are outside the handoff (see audit_runner.py report)"
+  ],
+  "summary": "No material blocker found. I recomputed everything from raw_data/orders.csv with my own stdlib code (evidence/recalc.py, surface_scan.py, carry_check.py, assumptions.py), and every published figure matches: net revenue 35741.52 EUR; refund rate 0.473684 = 27/57 paying customers; PL 11181.67, DE 11032.61, CZ 13527.24, which sum exactly to the headline; row accounting 201 = 174 + 26 + 1. The clean table is the spec population row for row, with no value drift. All 21 rendered numbers on report.md, dashboard_data.json and release_number_manifest.json equal my recalculation at the registered displa",
+  "wall_seconds": 560.0,
+  "cost": {
+    "at": "2026-09-19T12:54:33.665899+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-0cdb94b85940",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-19T12:45:16.756181+00:00",
+    "finished_at": "2026-09-19T12:54:33.664895+00:00",
+    "wall_seconds": 556.922,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 60,
+    "cached_input_tokens": 3844283,
+    "output_tokens": 61975,
+    "total_tokens": 3906318,
+    "cost_usd": 5.196285
+  }
+}

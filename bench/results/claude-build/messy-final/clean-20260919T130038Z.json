@@ -1,0 +1,93 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "clean",
+  "dataset": "messy",
+  "error": "no defect planted (false-positive control)",
+  "at": "2026-09-19T12:50:37+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "clean_blocked",
+  "matched_signals": [],
+  "blocking_issues": 6,
+  "warnings": 20,
+  "checks": 24,
+  "issue_ids": [
+    "FINAL-REPORT-PAGE-POPULATION",
+    "FINAL-DASHBOARD-ESTIMATE-N",
+    "FINAL-CARRY-WORKER-CLEAN",
+    "FINAL-CARRY-WORKER-METRICS",
+    "FINAL-CARRY-WORKER-ANALYSIS",
+    "FINAL-CARRY-WORKER-RELEASE"
+  ],
+  "issue_texts": [
+    "FINAL-REPORT-PAGE-POPULATION | final_claude_redteam.card_local_population | final_claude_redteam|card_local_population|release/report.md|page_population_line | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3 is read as text without HTML comments. It gives the whole page one population, which is the population of CLM-NET-REVENUE with 'delivered only' at the end. 7 of the 8 clai",
+    "FINAL-DASHBOARD-ESTIMATE-N | final_claude_redteam.estimate_rendered_with_n | final_claude_redteam|estimate_rendered_with_n|release/dashboard_data.json|estimate_cards | RELEASE_INTEGRITY | MEDIUM | worker_release | In release/dashboard_data.json, cards[2..5] (CLM-COMPLETION-DIRECT, CLM-COMPLETION-PARTNER, CLM-AOV-DIRECT, CLM-AOV-PARTNER) carry value, ci_low and ci_high. They carry no n, no level an",
+    "FINAL-CARRY-WORKER-CLEAN | final_claude_redteam.carry_continuity | final_claude_redteam|carry_continuity|audit/checkpoints/worker_clean.carry.json|period_grain_population | OTHER | MEDIUM | worker_clean | audit/checkpoints/worker_clean.carry.json has the right context_id and attempt, which match audit/results/worker_clean/result.json. Its facts contradict what the stage produced. The period is 202",
+    "FINAL-CARRY-WORKER-METRICS | final_claude_redteam.carry_continuity | final_claude_redteam|carry_continuity|audit/checkpoints/worker_metrics.carry.json|period_grain_population | OTHER | MEDIUM | worker_metrics | audit/checkpoints/worker_metrics.carry.json is byte-for-byte the same content as the worker_clean carry apart from step_id and context_id. Its context_id and attempt match the result. It gi",
+    "FINAL-CARRY-WORKER-ANALYSIS | final_claude_redteam.carry_continuity | final_claude_redteam|carry_continuity|audit/checkpoints/worker_analysis.carry.json|period_grain_population | OTHER | MEDIUM | worker_analysis | In audit/checkpoints/worker_analysis.carry.json the context_id and attempt match the result. The facts are the same template: period 2025-01-01..2025-03-30 and a delivered-only populatio",
+    "FINAL-CARRY-WORKER-RELEASE | final_claude_redteam.carry_continuity | final_claude_redteam|carry_continuity|audit/checkpoints/worker_release.carry.json|period_grain_population | OTHER | MEDIUM | worker_release | In audit/checkpoints/worker_release.carry.json the context_id and attempt match the result. The facts are the same template: period 2025-01-01..2025-03-30 and population status=delivered. r"
+  ],
+  "other_blockers": 6,
+  "warning_texts": [
+    "This profile is single-vendor. The architect, workers, auditors and this red team are all claude-opus-5, and an isolated context is not an independent vendor, so an error the model is prone to would reproduce on both sides of every LLM check. What held here is the deterministic layer (machine gates,",
+    "All five LLM auditor results (gate0_semantic, gate_clean_auditor, gate_metrics_auditor, gate_claims_auditor, gate_release_auditor) are PASS with summaries reading 'driver e2e' and evidence files holding only a placeholder note. Their 'recomputed independently' checks repeat machine-gate values, so i",
+    "All four worker results carry one identical check whose expected and actual value, 0.473684, appears nowhere in this audit's data, metrics or claims. Their created_at is 2026-01-01T00:00:00Z, before the reported quarter closed and before the analysis plan was registered on 2026-04-02, so neither the",
+    "Worker results have no disclosures field and empty warnings, so step 8 had no self-reported deviation to weigh. Given the placeholder results, that absence is no evidence that none occurred.",
+    "Completion rate is a snapshot. Following the spec formula, pending orders count as not completed: 3457 of 24597 direct (14.1%) and 4034 of 19934 partner (20.2%). Left out of the denominator, the rates would be 0.842857 and 0.758176 and the gap 0.084681 instead of 0.119652. Roughly 0.035 of the publi",
+    "Pending share is flat across January, February and March in both channels, so it is no end-of-quarter artefact. That means January orders are still pending at export time, which is itself a question for the client about what pending means.",
+    "The RESOLVED dedup decision (latest_revision_wins) is supported by the data: in all 917 revised orders the last row in the file also has the latest updated_at. It still moves net revenue. 126 revisions change status (61 pending to delivered, 65 cancelled to delivered). First-revision-wins would give",
+    "The RESOLVED negative-refund exclusion removes 10 in-quarter orders (8 delivered, 2 pending; refunds summing to -381.46). Keeping them would make orders 44541 and net revenue 3024587.18. The decision looks right and its effect is small.",
+    "The RESOLVED month-first reading of slashed dates is confirmed by the data: it agrees with order_month in 6852 of 6852 slashed rows, where day-first agrees in only 231. No ISO-8601 timestamp crosses a Europe/Warsaw day boundary. The period is taken on order_month, and every parsed date agrees with i",
+    "The RESOLVED shipping locale is confirmed: every non-missing cell parses under space-thousands and comma-decimal with no ambiguous form, and my parse equals clean shipping_cost on every row (2648 missing in the population). However, the readable cells average about 902 per order against a gross_amou",
+    "The AOV claims and cards never state 'delivered orders only' in their own caveats, which read 'orders in this channel'. The population of CLM-TEST-CHANNEL-AOV also omits the delivered filter. The check plan's caveat topics do not require it, so this is only a warning, but a reader of the dashboard c",
+    "p-values are shown as 0.0000, which reads as exactly zero. The recomputed values are about 2.9e-157 for the z test and below double precision for the Welch test, so 'p < 0.0001' would be accurate.",
+    "Several columns have no deterministic rule over them: customer_id, order_date and country (renamed, so values_preserved skips them), the is_delivered flag, the shipping_missing flag, and whether shipping_cost is correct rather than merely changed. I verified all of them by hand against my own parse ",
+    "No deterministic rule reads the words around the numbers: the report's page-level population line and the dashboard's missing n and population. Both release blockers sit in that gap, and the surface gate passed 60 of 60 because every number itself is right.",
+    "The release contract's text_exclusions leave any 'n = <digits>' and any ISO date anywhere in report.md unbound. The four n shown do equal the claims' n and my recount, but a wrong n would pass the surface gate.",
+    "The check plan says a control-total match proves the export is everything the client's system holds, not everything that happened. The release report does not tell the reader this completeness limit.",
+    "The channel gap holds inside every country and every month (completion 0.72-0.73 direct against 0.59-0.62 partner, AOV about 110 against about 87), and country mix per channel is stable across months. So within this quarter the gap is no mix artefact, and the interval caveat rightly says nothing abo",
+    "The report never mentions that shipping cost was asked (R05), computed, and deliberately withheld as unreliable, so a reader of the report does not learn that question went unanswered.",
+    "Several things I could not establish because they are outside my inputs. (a) That the carries pass audit/schemas/carry.schema.json, which I cannot read. (b) That src/release/build_release.py holds no business literal. (c) The Gate 0 machine results: control totals against the client's export log, pl",
+    "The handoff has no drift_since_review. I re-derived the date and shipping parsing assumptions against the current export and they hold, but the field's absence alone would not have proved it."
+  ],
+  "summary": "FAIL with 6 material blockers, and none of them is a wrong number. My own stdlib code, run over quarantine/orders.csv, reproduces every value in the registry and the claim register exactly, and all 60 rendered numbers: 44531 orders, net revenue 3023296.61, completion 0.724397 [0.718779, 0.729946] n=24597 and 0.604746 [0.597939, 0.611512] n=19934, AOV 110.64 [109.88, 111.39] n=17818 and 87.27 [86.50, 88.03] n=12055, z 26.718455, Welch t 42.699880, d 0.486900, and shipping_total 37792722.50, which is not published. The clean table matches my own dedup, filter, date parse and shipping parse on al",
+  "wall_seconds": 592.4,
+  "cost": {
+    "at": "2026-09-19T13:00:37.137571+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-4b16f125bb3c",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-19T12:50:47.919275+00:00",
+    "finished_at": "2026-09-19T13:00:37.137571+00:00",
+    "wall_seconds": 589.219,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 68,
+    "cached_input_tokens": 5299142,
+    "output_tokens": 58655,
+    "total_tokens": 5357865,
+    "cost_usd": 6.029624
+  }
+}

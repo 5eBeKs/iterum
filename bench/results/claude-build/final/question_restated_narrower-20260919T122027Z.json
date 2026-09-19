@@ -1,0 +1,79 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "question_restated_narrower",
+  "dataset": "orders",
+  "error": "R02 is restated without the half that asks on which basis the rate is taken.",
+  "at": "2026-09-19T12:11:15+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "PASS",
+  "stop_code": null,
+  "outcome": "warned",
+  "matched_signals": [
+    "R02",
+    "basis",
+    "restat|narrow|half|question"
+  ],
+  "blocking_issues": 0,
+  "warnings": 16,
+  "checks": 27,
+  "issue_ids": [],
+  "issue_texts": [],
+  "other_blockers": 0,
+  "warning_texts": [
+    "This profile uses one vendor only: every context in this run, including this red team, ran on claude-opus-5, so an error the model family tends to make would show up on both sides of every LLM check; what actually holds is the deterministic layer (the machine gates, the frozen check_plan.json, the c",
+    "Writes over raw sources and frozen machinery were blocked by permissions.deny in .claude/settings.json for edit tools only, not for the shell, and permissions.allow is no barrier at all; a changed raw file would be caught afterwards by the control lock, not prevented.",
+    "Every LLM step result in this run is a placeholder (gate0_semantic, worker_clean/metrics/analysis/release, gate_clean/metrics/claims/release_auditor): each summary reads 'driver e2e <step>'; each has one generic check citing 0.473684, even stages that never compute a rate; the auditors' evidence not",
+    "analysis/answers/R02.json restates R02 as only 'the refund rate' and drops the mandate's clause asking which basis was used (order rows or paying customers); the basis is still answered in that file's caveat and on both release surfaces (paying customers, 27 of 57 = 0.473684, where the order-row rea",
+    "analysis/answers/R01.json restates R01 as 'net revenue for the reported quarter', drops the population clause 'over delivered orders inside the period', and carries no caveat; its fact CLM-NET-REVENUE = 35741.52 is over delivered orders in 2025-01-01..2025-03-30 through the claim register, so the fi",
+    "No deterministic rule compares the R01-R03 answer values with the registry (questions_are_answered declares figures for R04 only), and no rule compares any answer's restated question with raw_data/questions.md; my check of all 10 answer facts (all match) and my read of the 4 restatements (2 narrowed",
+    "audit_spec.yaml sets the period end to 2025-03-30, while R01 asks for 'the reported quarter', metrics names the period 2025-Q1-delivered and exclusions.json gives 'outside the reported quarter' as the reason; calendar Q1 ends 2025-03-31, and the export has 0 rows dated 2025-03-31, so net revenue 357",
+    "refund_rate counts a customer as refunded when refund_amount > 0, including partial refunds such as O00109 (13.08 of 26.15); the plan's flag_identity rule pins this, but neither surface tells the reader: a fully-refunded reading gives 12 of 57 = 0.210526 instead of 27 of 57 = 0.473684; the report's ",
+    "The resolved decision revenue_recognition = net_of_refunds deducts each refund on its order's date, because the export has no refund date, so refunds issued after 2025-03-30 on in-period orders still reduce Q1 revenue; the data cannot confirm this, and it can move up to the full 4493.50 EUR refund t",
+    "The resolved decision timezone_for_dates = Europe/Warsaw cannot be verified from the export: order_date is a bare date with no time or offset, so if the source wrote UTC dates, the boundary rows (O00008, O00082 and O00198 on 2025-01-01, net 0.00 + 174.34 + 16.43; O00064 on 2025-03-30, net 268.18) ar",
+    "All four worker carries use one identical template (same grain, pitfall, hints and updated_at 2026-01-01T00:00:00Z, and the worker_release carry still states a row grain), and each defines the population as 'status=delivered' with no period filter; read literally, that definition gives 175 rows and ",
+    "check_plan.json accepts gate_release_document's claims_rendered and caveats_rendered as unproven (the plan proof crashed with FileNotFoundError on claim_register.json), while gate0's plan_proven evidence reports 0 accepted unproven; so the two rules meant to show that every claim and caveat reached ",
+    "release_surface_gate.json records 21 bound numbers but no outcome for the contract's REC-COUNTRY-SUM and REC-REFUND-RATE reconciliations, and none for the generator literal scan of src/release/build_release.py; I recomputed both reconciliations (11181.67 + 11032.61 + 13527.24 = 35741.52 exactly; 27/",
+    "The release answers only R01-R03: by the plan's choice, R04's row accounting (201 raw, 174 kept, 26 not delivered, 1 outside the period) lives only in analysis/answers/R04.json, and nothing in report.md or dashboard_data.json tells the reader that R05 (lifetime value of a customer acquired in the pe",
+    "audit_spec.yaml's comment says the two refund-rate readings differ by roughly a factor of three, but on this export they differ by 2.50x (0.473684 vs 0.189655), which matches risk_register R-REFUND-BASIS; the spec comment overstates the gap.",
+    "Not established by this red team: retry history and stale inputs (runner state is not in the handoff; see audit_runner.py report), the stage code under src/** and the tests, the timezone and refund-date assumptions above, whether any stage departed from its prompt (no worker result has a disclosures"
+  ],
+  "summary": "PASS: no material blocker. My own recompute from raw_data/orders.csv (evidence/recompute.py) matches every registry metric, all 5 claims and all 21 numbers on the 3 release surfaces exactly: net revenue 35741.52 EUR (PL 11181.67 + DE 11032.61 + CZ 13527.24, exact sum); refund rate 0.473684 = 27 of 57 paying customers; rows 201 = 174 kept + 26 not delivered + 1 outside the period. All 4 carries exist, pass their schema and match their stage's context_id and attempt. There are no tests and no hypotheses. Two answer files restate their question more narrowly than raw_data/questions.md (R01, R02),",
+  "wall_seconds": 533.0,
+  "cost": {
+    "at": "2026-09-19T12:20:26.271476+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-d423fa05b27b",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-19T12:11:36.272810+00:00",
+    "finished_at": "2026-09-19T12:20:26.271476+00:00",
+    "wall_seconds": 530.0,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 54,
+    "cached_input_tokens": 3149746,
+    "output_tokens": 58320,
+    "total_tokens": 3208120,
+    "cost_usd": 4.6209255
+  }
+}

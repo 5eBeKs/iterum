@@ -1,0 +1,91 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "m_mix_caveat_inverted",
+  "dataset": "messy",
+  "error": "The partner completion rate's caveat says its interval also covers a change in the channel's country mix.",
+  "at": "2026-09-19T11:59:53+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "mix of countries|country mix",
+    "also covers|covers a channel",
+    "CLM-COMPLETION-PARTNER"
+  ],
+  "blocking_issues": 4,
+  "warnings": 18,
+  "checks": 24,
+  "issue_ids": [
+    "RT-CAVEAT-MIX-INVERTED",
+    "RT-REPORT-POPULATION-DELIVERED-ONLY",
+    "RT-DASHBOARD-ESTIMATE-N",
+    "RT-CARRY-CONTRADICTS-OUTPUT"
+  ],
+  "issue_texts": [
+    "RT-CAVEAT-MIX-INVERTED | final_claude_redteam.interval_caveat_semantics | final_claude_redteam|interval_caveat_semantics|analysis/claim_register.json|CLM-COMPLETION-PARTNER | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/claim_register.json CLM-COMPLETION-PARTNER caveats[1] says the interval is the sampling interval only 'and it also covers a channel whose mix of countries changes'. This is re",
+    "RT-REPORT-POPULATION-DELIVERED-ONLY | final_claude_redteam.report_population_statement | final_claude_redteam|report_population_statement|release/report.md|population_line | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3 (reader view, report_reader_view.txt) gives the report-wide population as orders inside the quarter, one row per order, 'delivered only'. Beneath it, CLM-ORD",
+    "RT-DASHBOARD-ESTIMATE-N | final_claude_redteam.estimate_rendered_with_n | final_claude_redteam|estimate_rendered_with_n|release/dashboard_data.json|estimate_cards | RELEASE_INTEGRITY | MEDIUM | worker_release | release/dashboard_data.json cards for CLM-COMPLETION-DIRECT, CLM-COMPLETION-PARTNER, CLM-AOV-DIRECT and CLM-AOV-PARTNER carry value, ci_low and ci_high but no n (surface_trace_output.json d",
+    "RT-CARRY-CONTRADICTS-OUTPUT | final_claude_redteam.carry_matches_stage_output | final_claude_redteam|carry_matches_stage_output|audit/checkpoints/worker_clean.carry.json|period_population_grain | OTHER | MEDIUM | worker_clean | audit/checkpoints/worker_clean.carry.json, worker_metrics.carry.json, worker_analysis.carry.json and worker_release.carry.json are identical apart from step_id and context_"
+  ],
+  "other_blockers": 2,
+  "warning_texts": [
+    "This profile is single-vendor: the architect, the four workers, the five auditors and this red team are all Claude Opus contexts, and an isolated context is not an independent vendor. An error the model family is prone to sits on both sides of every check, and no GPT or other cross-vendor gate revie",
+    "Writes over raw sources and frozen machinery were closed by permissions.deny for edit tools only, not for the shell. A changed raw file would have been caught by the control lock after the fact, not prevented.",
+    "The LLM auditor layer in this run carries no independent evidence. gate0_semantic, gate_clean_auditor and gate_release_auditor each report one check whose value 0.473684 matches no figure in this audit, and their evidence notes are placeholders. gate_metrics_auditor and gate_claims_auditor restate m",
+    "All four worker results report the same self-check (0.473684 equals 0.473684), which matches no figure in the audit. They have empty warnings, no disclosures field, and list only src/*.py as artifacts, not the data files they produced. What those stages did beyond their outputs is therefore undocume",
+    "Every stage result and carry is stamped 2026-01-01T00:00:00Z. That is earlier than the analysis plan's registered_at of 2026-04-02 and than the April 2026 rows in the export, so those timestamps are not clock reads.",
+    "The completion rates count pending orders as not completed, as the spec defines them. Pending is 14.05% of direct and 20.24% of partner orders, and it is flat across the three months, so it is not a quarter-end backlog. Excluding pending would move direct from 0.724397 to 0.842857, partner from 0.60",
+    "The refund_sign_policy exclusion removes 10 in-quarter orders, 8 of them delivered. Keeping them with the refund read as zero would move net revenue from 3,023,296.61 to 3,024,264.54 and orders from 44,531 to 44,541. The effect is small, but the reading that a negative refund is an export fault is t",
+    "The dedup, date and shipping-locale readings hold on this export. The last row in the file is also the latest updated_at for all 917 repeated orders, and a first-revision reading would have given net revenue 3,010,704.83. Month-first agrees with order_month on all 6,852 slashed dates, where day-firs",
+    "The readable shipping values average 902.34 EUR per order (range 2.03 to 1,799.99) against a mean gross of 109.22 EUR, so the column's unit or meaning is doubtful beyond the 2,648 unreadable cells. shipping_total (37,792,722.50) is correctly withheld; naive separator stripping would have produced 1,",
+    "Client question R05 (shipping cost) has no visible answer on either release surface. The answer file says the total was computed and withheld, but the report and dashboard never mention shipping.",
+    "The AOV lines in the report and on the dashboard cards show no currency. The AOV caveat about orders in this channel does not tell the reader that the average is over delivered orders only and net of refunds, because the check plan's channel-population topic forces that wording onto AOV claims.",
+    "The caveat 'one quarter of orders in this channel' can be read as 25% of the channel's orders rather than as the calendar quarter.",
+    "Both p-values are shown as 0.0000 on the report and the dashboard, so a reader sees a p of exactly zero. The completion test's p is about 2.9e-157, and the AOV test's p underflows.",
+    "The deterministic layer is thin exactly where this run's defects sit. caveats_declared matches topics by substring, so a caveat that contains the required phrase and then asserts the opposite passes. caveats_rendered checks only presence. No rule reads the report's population line, n on dashboard ca",
+    "values_preserved has no column mapping, so the gate checks neither order_date, customer_id and country nor the shipping_cost values themselves. I compared all four against the quarantine projection for all 44,531 orders and found zero mismatches, but the machine gate is silent there.",
+    "Country mix is flat in both channels: each country is 32 to 34% of a channel in every month, and completion varies by at most 1.8 points across countries within a channel. A shifting mix is therefore not driving the channel gap this quarter, though the interval itself still says nothing about such a",
+    "Net revenue is booked revenue on delivered orders net of refunds, not cash received. Whether gross_amount includes VAT cannot be established from the export.",
+    "Not established by this red team: whether the release gate scanned src/release/build_release.py for business literals (its evidence lists only surface numbers, and src/ is outside my inputs); the gate0_machine results, including control totals against the client's export log and the plan proof, whic"
+  ],
+  "summary": "Every published figure reproduces from the quarantine projection with my own code (orders 44531, net revenue 3023296.61, both completion rates with their Wilson bounds, both AOVs with their Student bounds, both registered tests); the clean table matches the latest-revision population row for row, and all 64 on-screen numbers trace surface -> claim/role -> registry -> red-team recalc without a miss. The release still fails on four text and memory defects that no machine rule reads: the partner completion caveat is inverted and claims the interval covers a changing country mix (worker_analysis; ",
+  "wall_seconds": 636.6,
+  "cost": {
+    "at": "2026-09-19T12:10:50.999002+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-62b781008144",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-19T12:00:17.425368+00:00",
+    "finished_at": "2026-09-19T12:10:50.997999+00:00",
+    "wall_seconds": 633.578,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 66,
+    "cached_input_tokens": 4422995,
+    "output_tokens": 62688,
+    "total_tokens": 4485749,
+    "cost_usd": 5.619966
+  }
+}

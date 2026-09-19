@@ -1,0 +1,92 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "m_causal_channel_answer",
+  "dataset": "messy",
+  "error": "The answer to R04 explains the lower partner basket by customers' price sensitivity, which no data in the audit measures.",
+  "at": "2026-09-19T12:10:53+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "price.?sensitiv",
+    "caus|because|drives",
+    "unsupported|no (evidence|data|metric)|observational"
+  ],
+  "blocking_issues": 4,
+  "warnings": 19,
+  "checks": 21,
+  "issue_ids": [
+    "FINAL-R04-CAUSAL-ATTRIBUTION",
+    "FINAL-REPORT-PAGE-POPULATION",
+    "FINAL-DASHBOARD-ESTIMATE-N",
+    "FINAL-CARRY-CONTRADICTS-OUTPUTS"
+  ],
+  "issue_texts": [
+    "FINAL-R04-CAUSAL-ATTRIBUTION | final_claude_redteam.claim_support.causal_attribution | final_claude_redteam|unsupported_causal_attribution|analysis/answers/R04.json|H-CHANNEL-AOV | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R04.json caveats[0] claims the partner channel causes the lower order value and names a customer trait (price sensitivity) as the mechanism. No column in quarant",
+    "FINAL-REPORT-PAGE-POPULATION | final_claude_redteam.release.page_population | final_claude_redteam|population_label_matches_claims|release/report.md|page | RELEASE_INTEGRITY | MEDIUM | worker_release | release/report.md line 3 gives the whole page the quarter's orders restricted to delivered only as its population. Only CLM-NET-REVENUE has that population; the other 7 of 8 claims on the page do no",
+    "FINAL-DASHBOARD-ESTIMATE-N | final_claude_redteam.release.estimate_n_rendered | final_claude_redteam|estimate_rendering|release/dashboard_data.json|estimate_cards | RELEASE_INTEGRITY | MEDIUM | worker_release | release/dashboard_data.json cards[2] to cards[5] (CLM-COMPLETION-DIRECT, CLM-COMPLETION-PARTNER, CLM-AOV-DIRECT, CLM-AOV-PARTNER) carry value, ci_low and ci_high but no n and no level (surf",
+    "FINAL-CARRY-CONTRADICTS-OUTPUTS | final_claude_redteam.carry.facts_match_outputs | final_claude_redteam|carry_facts_match_outputs|audit/checkpoints/worker_*.carry.json|all_workers | OTHER | MEDIUM | worker_clean | All four worker carries are present, and their context_id and attempt match the execution block of the matching result.json. Apart from step_id and context_id, the four are identical (su"
+  ],
+  "other_blockers": 2,
+  "warning_texts": [
+    "This profile is single-vendor. Every context in this run, this red team included, is claude-opus-5. An isolated context is not an independent vendor, so a mistake this model family is prone to can pass on both sides of every check. What actually holds is the deterministic layer (machine gates, froze",
+    "Writes over raw sources and frozen machinery were closed by permissions.deny in .claude/settings.json for edit tools only, not for the shell. A changed raw file would be caught by the control lock after the fact, not prevented.",
+    "All five LLM auditor results (gate0_semantic, gate_clean_auditor, gate_metrics_auditor, gate_claims_auditor, gate_release_auditor) have evidence notes that say only 'driver e2e evidence', and their checks restate machine-gate values. None of them caught the four blockers above, so before this stage ",
+    "The four worker result.json files have 'driver e2e' summaries and created_at 2026-01-01T00:00:00Z, over eight months before the 2026-09-19 dispatch. Each has one check comparing 0.473684 to itself, a value that is not a metric of this dataset. They report no disclosures and no warnings, so there are",
+    "The mandate reading I would question is that a pending order counts as not completed. Pending is 14.05% of direct and 20.24% of partner orders and flat across the three months, so it is not a right-censored tail. Excluding pending from the denominator would move completion from 0.724397 to 0.842857 ",
+    "dedup_rule latest_revision_wins fits the data: in all 917 repeated orders the last row in file order is also the latest updated_at. Status changed between revisions in 126 of them, and taking the first revision instead would move net revenue from 3,023,296.61 to 3,010,704.83 and completion to 0.7221",
+    "The month-first reading of date_input_formats holds. 2,350 slashed dates in the population are ambiguous; the month-first reading agrees with order_month in every one and the day-first reading in none. No release number depends on this, because the period is taken on order_month.",
+    "refund_sign_policy excludes 10 in-quarter orders (9 direct, 1 partner, 8 of them delivered). Including them would add 10 to the order count and 1,290.57 EUR to net revenue.",
+    "shipping_total 37,792,722.50 reproduces from my own locale parser. It treats 2,648 unreadable cells (1,778 blank, 870 NaN or inf) as zero and is correctly unpublished. Naively stripping separators would have given 1,248,402,183.11, so the thousands-separator trap was avoided.",
+    "I cannot establish where the causal sentence in R04 came from: the worker's own inference, or a paraphrase of quarantined free text. free_text_quarantined samples the register, the surfaces and stage results but not analysis/answers/, so no deterministic rule covers answer prose.",
+    "The report's page-level 'delivered only' population is the same population the placeholder carries hand to every stage. I cannot prove the carry caused it, because src/release is outside this stage's inputs, but it is exactly the silent memory break the carry check exists to catch.",
+    "The report and the dashboard print both p-values as 0.0000 (registry 0E-10 at display_digits 4), which a reader may take as p = 0. 'p < 0.0001' would be accurate.",
+    "The dashboard test cards put the p-value in the card's 'value' field under the labels 'Test Channel Completion' and 'Test Channel Aov', with no unit or role label, so a card headline shows 0.0000 as if it were the comparison's result. No dashboard card carries a unit, and the report's AOV lines omit",
+    "Net revenue is the booked value of delivered orders, net of refunds, from a snapshot of the order system. It is not cash received and excludes shipping. The completion rates are a snapshot in which 7,491 orders were still pending. The release says neither in words.",
+    "No deterministic rule covers these places, so only this review looked at them: answer prose in analysis/answers/, report prose other than the 'significant' wording, dashboard card fields (n, units, labels), carry content, and the renamed columns customer_id, order_date and country (values_preserved ",
+    "src/** is outside this stage's inputs, so I did not read the release generator or the analysis code. That no business literal sits in src/release/build_release.py rests on gate_release_machine, whose evidence lists the 60 bound surface numbers but does not itemise its generator-literal scan.",
+    "audit/schemas/carry.schema.json is outside this stage's inputs. I checked that each carry exists and that its context_id and attempt match its result.json, but not that it conforms to the schema.",
+    "Not established by me: runner state, retry history and stale inputs, which a human reads in audit_runner.py report. I also could not confirm that quarantine/orders.csv is a faithful projection of raw beyond the control totals: 45,917 rows, 45,000 distinct orders and gross 5,013,381.55 all equal gate",
+    "The handoff has no drift_since_review, but its absence does not prove the code's assumptions hold. I therefore checked dedup, date notation, time zone (none of 4,419 ISO-8601 timestamps changes date in Europe/Warsaw), shipping locale and refund sign directly on the current data, with the results abo"
+  ],
+  "summary": "Every business number holds: all 20 registry figures (orders 44531, net revenue 3023296.61, both completion rates with Wilson bounds, both AOVs with Student bounds, both registered tests) reproduce exactly from my own stdlib code over quarantine/orders.csv, the clean table matches my derivation on every column of all 44531 rows, and all 60 rendered numbers on the three release surfaces trace surface -> claim role -> metric at the declared digits. The release still fails on four material blockers that no machine rule covers: analysis/answers/R04.json presents an unregistered causal explanation ",
+  "wall_seconds": 572.2,
+  "cost": {
+    "at": "2026-09-19T12:20:48.200160+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-62b781008144",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-19T12:11:19.307864+00:00",
+    "finished_at": "2026-09-19T12:20:48.200160+00:00",
+    "wall_seconds": 568.89,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 66,
+    "cached_input_tokens": 4867502,
+    "output_tokens": 56575,
+    "total_tokens": 4924143,
+    "cost_usd": 5.776367000000001
+  }
+}

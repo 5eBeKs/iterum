@@ -1,0 +1,98 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "m_interval_read_as_probability",
+  "dataset": "messy",
+  "error": "The answer to R03 reads each 0.95 interval as a 95% probability that the true rate lies inside it.",
+  "at": "2026-09-19T11:48:35+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "probab",
+    "95 ?%",
+    "confidence|frequentist|coverage|credible|bayes"
+  ],
+  "blocking_issues": 7,
+  "warnings": 19,
+  "checks": 18,
+  "issue_ids": [
+    "FINAL-R03-INTERVAL-READ-AS-PROBABILITY",
+    "FINAL-REPORT-PAGE-POPULATION-DELIVERED-ONLY",
+    "FINAL-DASHBOARD-ESTIMATE-WITHOUT-N",
+    "FINAL-CARRY-WORKER-CLEAN-CONTRADICTS-OUTPUTS",
+    "FINAL-CARRY-WORKER-METRICS-CONTRADICTS-OUTPUTS",
+    "FINAL-CARRY-WORKER-ANALYSIS-CONTRADICTS-OUTPUTS",
+    "FINAL-CARRY-WORKER-RELEASE-CONTRADICTS-OUTPUTS"
+  ],
+  "issue_texts": [
+    "FINAL-R03-INTERVAL-READ-AS-PROBABILITY | final_claude_redteam.interval_is_sampling_interval | final_claude_redteam|interval_is_sampling_interval|analysis/answers/R03.json|caveats | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R03.json, key caveats[0], answers the audit's central question: the completion rate of each channel, with its uncertainty. It tells the reader there is a 95% pro",
+    "FINAL-REPORT-PAGE-POPULATION-DELIVERED-ONLY | final_claude_redteam.page_population_matches_claims | final_claude_redteam|page_population_matches_claims|release/report.md|population_line | RELEASE_INTEGRITY | MEDIUM | worker_release | Line 3 of release/report.md, as the reader sees it with comments stripped (evidence/carry_check_out.json report_page_population_line), states the page population as o",
+    "FINAL-DASHBOARD-ESTIMATE-WITHOUT-N | final_claude_redteam.estimate_rendered_with_n | final_claude_redteam|estimate_rendered_with_n|release/dashboard_data.json|estimate_cards | RELEASE_INTEGRITY | MEDIUM | worker_release | release/dashboard_data.json $.cards[2..5] (CLM-COMPLETION-DIRECT, CLM-COMPLETION-PARTNER, CLM-AOV-DIRECT, CLM-AOV-PARTNER) carry value, ci_low and ci_high but no n or sample-size",
+    "FINAL-CARRY-WORKER-CLEAN-CONTRADICTS-OUTPUTS | final_claude_redteam.carry_facts_match_outputs | final_claude_redteam|carry_facts_match_outputs|audit/checkpoints/worker_clean.carry.json|periods_grain_population | OTHER | MEDIUM | worker_clean | audit/checkpoints/worker_clean.carry.json: context_id and attempt match audit/results/worker_clean/result.json execution (cc-worker_clean-a1-c0adf4877022, 1",
+    "FINAL-CARRY-WORKER-METRICS-CONTRADICTS-OUTPUTS | final_claude_redteam.carry_facts_match_outputs | final_claude_redteam|carry_facts_match_outputs|audit/checkpoints/worker_metrics.carry.json|periods_grain_population | OTHER | MEDIUM | worker_metrics | audit/checkpoints/worker_metrics.carry.json: context_id and attempt match the result (cc-worker_metrics-a1-943a8acdf87c, 1). The carry states period 2",
+    "FINAL-CARRY-WORKER-ANALYSIS-CONTRADICTS-OUTPUTS | final_claude_redteam.carry_facts_match_outputs | final_claude_redteam|carry_facts_match_outputs|audit/checkpoints/worker_analysis.carry.json|periods_grain_population | OTHER | MEDIUM | worker_analysis | audit/checkpoints/worker_analysis.carry.json: context_id and attempt match the result (cc-worker_analysis-a1-3a61091afed3, 1). The carry states per",
+    "FINAL-CARRY-WORKER-RELEASE-CONTRADICTS-OUTPUTS | final_claude_redteam.carry_facts_match_outputs | final_claude_redteam|carry_facts_match_outputs|audit/checkpoints/worker_release.carry.json|periods_grain_population | OTHER | MEDIUM | worker_release | audit/checkpoints/worker_release.carry.json: context_id and attempt match the result (cc-worker_release-a1-8238f2b4c86b, 1). The carry states period 2"
+  ],
+  "other_blockers": 6,
+  "warning_texts": [
+    "This profile is single-vendor. Every context in the run, this red team included, reports claude-opus-5, so isolated contexts are not independent reviewers, and no GPT or other cross-vendor gate exists anywhere in this system. What actually holds is the deterministic layer (machine gates, frozen chec",
+    "Writes over raw sources and frozen machinery were closed only by permissions.deny for edit tools, not for the shell, and permissions.allow is no barrier. A modified raw file would be caught after the fact by the control lock, not prevented.",
+    "The LLM auditor layer left no independent evidence. gate0_semantic, gate_clean_auditor, gate_metrics_auditor, gate_claims_auditor and gate_release_auditor each have an evidence/notes.json containing only a placeholder note. gate0_semantic and gate_release_auditor rest on a single check whose expecte",
+    "All four worker results have placeholder summaries, a single check with 0.473684 unrelated to any figure, created_at 2026-01-01T00:00:00Z, no disclosures field and empty warnings. worker_clean lists only src/clean/build_clean.py as its artifact, not clean_data/orders_clean.csv. So no stage self-repo",
+    "No deterministic rule reads the interpretive text of analysis/answers/*.json. questions_are_answered checks field presence only, and wording_matches_claims scans release/report.md only. The R03 defect sat where only this red team looks, and any future answer caveat is equally unguarded.",
+    "The n printed beside each estimate in release/report.md is excluded from the release surface gate by the text_exclusion 'n = [0-9]+'. The gate's reason cites recompute_estimate, which checks the register's n, not the page. I verified by hand that the page shows 24597, 19934, 17818 and 12055, which m",
+    "The completion rate counts the 7491 pending orders (16.8% of the population) as not completed. Pending is 20.2% of partner against 14.1% of direct, and the shares are stable across January to March, so this is not end-of-quarter censoring. Taking pending out of the denominator would move direct from",
+    "The resolved refund_sign_policy excludes 10 in-quarter orders (8 delivered, 9 of them direct). Keeping them as written would give 44541 orders and add 1290.57 EUR to net revenue. The effect is small, but it is the decision that moves CLM-ORDERS and CLM-NET-REVENUE.",
+    "The resolved dedup rule (latest revision wins) changes 126 statuses between first and last revision: 61 pending to delivered and 65 cancelled to delivered. It moves net revenue from 3010704.83 to 3023296.61. File order and updated_at agree for every repeated order, so the rule is unambiguous here, b",
+    "The analysis plan assumes 'one row per order, so the observations are independent', but the 44531 orders come from only 4198 hashed customers, 4158 of whom ordered in both channels. The assumption is false as written. Customer-clustered standard errors give design effects of 0.99 to 1.03 (evidence/c",
+    "The report and dashboard show p as 0.0000 for both registered tests. The two-proportion p is about 2.9e-157, and the Welch p underflows double precision. 'p < 0.0001' would be the honest rendering, because 0.0000 reads as p equal to zero.",
+    "The dashboard test cards are labelled 'Test Channel Completion' and 'Test Channel Aov' with value 0.0000 and no unit field. A dashboard that renders label plus value will show a completion-sounding label beside what is actually a p-value. No card on the dashboard carries its unit (EUR, proportion or",
+    "The register's population string for CLM-TEST-CHANNEL-AOV omits the delivered filter, even though its n_per_group (17818 and 12055) are delivered-order counts. The analysis answers R03 and R04 show both bounds but no n. Neither is a declared release surface, so these are recorded here and not blocke",
+    "shipping_total 37792722.50 EUR reproduces exactly. 2648 cells (5.95%) are unreadable: 1778 blank, 869 NaN and 1 inf. Another 13544 are written in the declared locale and 3607 carry a EUR suffix. Stripping the separators instead would give 1248402183.11. The metric is correctly excused from publicati",
+    "I did not validate the carries against audit/schemas/carry.schema.json, because that file is outside my input globs. I checked only their fields, context_id and attempt, which match every worker result.",
+    "I did not see the release generator src/release/build_release.py or the machine gates' checks.json/unchecked.json evidence, because they are outside my inputs. The 'no business literal in a generator' rule therefore rests solely on gate_release_machine, whose readable evidence (release_surface_gate.",
+    "I did not read the raw export itself. The quarantine projection matches the manifest (45917 rows, comment removed, Customer ID hashed), and gate_claims_machine's claims_recomputed over raw_latest agrees with my quarantine recount on all six point claims, so the projection looks faithful on every fig",
+    "The handoff has no drift_since_review. Its absence does not prove the stage code's assumptions hold on this export, so I tested the concrete ones on current data instead: date notation, dedup order, shipping locale and independence.",
+    "No audit/decisions/*.json exists and the handoff rulings list is empty, so there is no human ruling whose application could be checked. The five RESOLVED items in human_decisions.yaml are covered by the warnings above. The data supports month-first slashed dates: 6852 of 6852 rows agree with order_m"
+  ],
+  "summary": "FAIL on 7 blockers, none of them a wrong number. From my own stdlib code over quarantine/orders.csv, all 27 registry values reproduce exactly: population 44531, net revenue 3023296.61, both completion rates with their Wilson bounds and n, both AOVs with their Student bounds and n, both registered tests, and the unpublished shipping_total. The clean table also matches my population field for field. The blockers are about what the reader is told. (1) analysis/answers/R03.json reads the 0.95 Wilson intervals as a 95% probability that each channel's true completion rate lies inside its interval. T",
+  "wall_seconds": 653.9,
+  "cost": {
+    "at": "2026-09-19T11:59:51.074942+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-62b781008144",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-19T11:49:00.251336+00:00",
+    "finished_at": "2026-09-19T11:59:51.074942+00:00",
+    "wall_seconds": 650.828,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 74,
+    "cached_input_tokens": 5434906,
+    "output_tokens": 65201,
+    "total_tokens": 5500181,
+    "cost_usd": 6.3342030000000005
+  }
+}

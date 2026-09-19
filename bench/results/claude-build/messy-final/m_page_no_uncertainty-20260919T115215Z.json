@@ -1,0 +1,86 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "m_page_no_uncertainty",
+  "dataset": "messy",
+  "error": "The page says the channel figures are measured over every order and carry no uncertainty, beside their intervals.",
+  "at": "2026-09-19T11:40:50+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "no uncertainty|every order",
+    "interval|estimate|sampl"
+  ],
+  "blocking_issues": 4,
+  "warnings": 14,
+  "checks": 22,
+  "issue_ids": [
+    "RT-ESTIMATE-UNCERTAINTY-DENIED",
+    "RT-PAGE-POPULATION-DELIVERED-ONLY",
+    "RT-DASHBOARD-ESTIMATE-N-MISSING",
+    "RT-CARRY-CONTRADICTS-OUTPUTS"
+  ],
+  "issue_texts": [
+    "RT-ESTIMATE-UNCERTAINTY-DENIED | final_claude_redteam.estimate_uncertainty_denied | final_claude_redteam|estimate_uncertainty_denied|release/report.md|by_channel | CLAIM_SUPPORT | HIGH | worker_release | Line 23 of release/report.md sits directly under the four channel estimates (reader view: audit/results/final/evidence/report_reader_view.txt). It tells the reader that each channel figure is meas",
+    "RT-PAGE-POPULATION-DELIVERED-ONLY | final_claude_redteam.page_population_matches_claims | final_claude_redteam|page_population_matches_claims|release/report.md|page_header | RELEASE_INTEGRITY | MEDIUM | worker_release | Line 3 of release/report.md states the page's population as 'orders placed inside the quarter, one row per order, delivered only'. My recount from quarantine/orders.csv (evidence/r",
+    "RT-DASHBOARD-ESTIMATE-N-MISSING | final_claude_redteam.estimate_shown_with_n | final_claude_redteam|estimate_shown_with_n|release/dashboard_data.json|estimate_cards | RELEASE_INTEGRITY | MEDIUM | worker_release | In release/dashboard_data.json, cards[2] to cards[5] (CLM-COMPLETION-DIRECT, CLM-COMPLETION-PARTNER, CLM-AOV-DIRECT, CLM-AOV-PARTNER) have value, ci_low and ci_high, but no n; evidence/tr",
+    "RT-CARRY-CONTRADICTS-OUTPUTS | final_claude_redteam.carry_matches_stage_outputs | final_claude_redteam|carry_matches_stage_outputs|audit/checkpoints/*.carry.json|worker_clean..worker_release | OTHER | MEDIUM | worker_clean | The four worker carries (worker_clean, worker_metrics, worker_analysis, worker_release) have identical content apart from step_id and context_id. Their context_id and attempt "
+  ],
+  "other_blockers": 2,
+  "warning_texts": [
+    "This profile is single-vendor: the architect, four workers, five auditors and this red-team all run on one Claude Opus family. An isolated context is therefore not an independent vendor, and an error this model is prone to can pass on both sides of every check. What actually holds is the determinist",
+    "Write barriers: permissions.deny in .claude/settings.json closed the raw sources and the frozen machinery to the edit tools only, not to the shell, and permissions.allow is not a barrier at all. A changed raw file would be caught by the control lock after the fact, not prevented.",
+    "Every LLM stage result in this run is a placeholder, not evidence. All four worker results and all five auditor results (gate0_semantic, gate_clean_auditor, gate_metrics_auditor, gate_claims_auditor, gate_release_auditor) have the summary 'driver e2e <step>' and a fixed created_at of 2026-01-01T00:0",
+    "Parts of the release are covered by no deterministic rule, only by this review: report prose beyond the WORDING-01 'significant' pattern (both wording blockers are there), n on the dashboard, the population stated for each figure, updated_at ordering, and the renamed columns customer_id, order_date ",
+    "Of the RESOLVED readings, latest_revision_wins looks least safe. 917 orders are repeated, 126 change status between revisions, and 65 go from cancelled to delivered within at most five hours. File order and updated_at agree on the last revision for all 917. But if a revision that revives a cancelled",
+    "refund_sign_policy excludes 10 orders (11 rows; 8 delivered, 9 in the direct channel). Keeping them as written would give 44,541 orders and net revenue of 3,024,587.18. The headline therefore moves by 10 orders and 1,290.57 EUR, and 9 orders leave the direct completion denominator.",
+    "shipping_total (37,792,722.50 EUR, not published) reproduces exactly under the declared locale; 2,648 of 44,531 orders (5.95%) count as zero. The column's scale looks wrong, though: the median readable shipping cost is 901.27 EUR against a median order value of 108.31 EUR, and shipping exceeds the o",
+    "The data confirms the month-first reading in date_input_formats: all 6,852 slashed dates agree with order_month when read month-first, against only 231 if read day-first. No ISO-8601 Z timestamp crosses a calendar day in Europe/Warsaw time, so the timezone does not affect the clean order_date.",
+    "Both test p-values display as '0.0000' (the completion test's p is about 3e-157). A reader may take that as p = 0; '< 0.0001' would state the same bound correctly.",
+    "The completion intervals are sampling intervals for the whole quarter. Partner completion moves from 0.594679 in January to 0.616349 in February and 0.603370 in March, a spread of 0.0217 that is wider than the quarterly Wilson interval (width 0.0136). Country shares stay near one third in every chan",
+    "CLM-TEST-CHANNEL-AOV and its metrics give the population as all orders by channel, but the Welch test runs on delivered orders only (n = 17,818 and 12,055). The numbers are right; the population label is not.",
+    "I could not establish several things. First, whether quarantine/orders.csv faithfully projects raw_data/orders.csv, and whether the export matches the client's export log: both files are outside my inputs, so gate0_machine and the quarantine tool are the only evidence. Second, whether src/release/bu",
+    "The handoff has no drift_since_review and audit/decisions/ has no files. No stage ran code reviewed against another export, and no method was changed after results existed. But the absence of drift_since_review does not prove the stages' assumptions hold, which is why I re-tested them above.",
+    "No worker result has a disclosures field, and none reports a deviation or a tool or sandbox refusal. Because those results are placeholders, this means nothing was reported, not that nothing deviated."
+  ],
+  "summary": "FAIL. My own code reproduces every figure from the quarantine projection: 44,531 orders, net revenue 3,023,296.61, both completion rates and Wilson bounds, both AOVs and Student bounds, both registered tests, and shipping_total. All 40 numbers a reader sees on report.md and dashboard_data.json trace to their claim and match. The release still fails on four blockers. (1) report.md tells the reader that the channel estimates carry no uncertainty and that their intervals are a formality, which is census framing. (2) The page-level population says 'delivered only', but the order count and the comp",
+  "wall_seconds": 675.0,
+  "cost": {
+    "at": "2026-09-19T11:52:13.927503+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-4b16f125bb3c",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-19T11:41:02.496827+00:00",
+    "finished_at": "2026-09-19T11:52:13.927503+00:00",
+    "wall_seconds": 671.422,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 72,
+    "cached_input_tokens": 5017266,
+    "output_tokens": 69257,
+    "total_tokens": 5086595,
+    "cost_usd": 6.066698000000001
+  }
+}

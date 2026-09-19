@@ -1,0 +1,81 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "headline_relabelled_gross",
+  "dataset": "orders",
+  "error": "The page calls net revenue 'Gross revenue'; the number is net of refunds.",
+  "at": "2026-09-19T12:20:32+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "gross",
+    "label",
+    "net revenue"
+  ],
+  "blocking_issues": 1,
+  "warnings": 14,
+  "checks": 16,
+  "issue_ids": [
+    "FINAL-HEADLINE-LABELLED-GROSS"
+  ],
+  "issue_texts": [
+    "FINAL-HEADLINE-LABELLED-GROSS | final_claude_redteam.headline_label_matches_metric | final_claude_redteam|headline_label_matches_metric|release/report.md|CLM-NET-REVENUE | RELEASE_INTEGRITY | CRITICAL | worker_release | release/report.md line 7, read as text with HTML comments stripped, shows the label 'Gross revenue, EUR' followed by 35,741.52. That value is anchored to claim CLM-NET-REVENUE, whi"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "This profile runs on one vendor. The architect, the four workers, the five auditors and this red team are all the same Claude model family in isolated contexts, which is not independent review. A mistake the model family is prone to can pass on both sides of every check. Only the machine gates, the ",
+    "Writes to raw sources and frozen machinery were blocked only by permissions.deny in .claude/settings.json, and only for edit tools, not the shell. permissions.allow is no barrier at all. A raw file changed through the shell would have been caught after the fact by the control lock on the next runner",
+    "Coverage gap: no deterministic rule ties a rendered label to the metric it shows. release_surface_contract.json label_requirements covers only the three country codes, and the gross-is-not-net trap is checked only against metrics/calculated_metrics.json. That is why the 'Gross revenue' label on the ",
+    "Every LLM stage result on my inputs (gate0_semantic, worker_clean, worker_metrics, worker_analysis, worker_release and the clean, metrics, claims and release auditors) has a 'driver e2e ...' summary, a placeholder created_at of 2026-01-01T00:00:00Z, and evidence notes with no content. gate_release_a",
+    "The four worker carries are identical boilerplate apart from step_id and context_id. Their populations.definition reads only 'status=delivered' and leaves out the period filter, which is listed separately under periods. No pitfall records that the headline is net and not gross, and that is exactly t",
+    "The spec pins population.period.end to 2025-03-30, but questions.md asks about 'the reported quarter' and the metrics registry names the window '2025-Q1-delivered', while calendar Q1 ends on 2025-03-31. This export has no rows dated 2025-03-31, so no figure moves (net revenue is 35,741.52 either way",
+    "The refund_rate_basis=paying_customers ruling is applied and stated on both surfaces, and it decides the headline rate. The same data gives 0.473684 (27/57 customers) on this basis, 0.189655 (33/174) per order row, and 0.111681 by amount (4,493.50/40,235.02). No customer's quarter net is zero, so 'p",
+    "The timezone_for_dates=Europe/Warsaw ruling moves no figure, because order_date has no time component. Neither release surface states it.",
+    "metrics/calculated_metrics.json gives net_revenue an undeclared numerator of 40235.02, which equals the population gross, on a metric that is not a ratio. It is not rendered today. But a gross figure stored under a ratio role could be published inside the net claim by any generator that binds roles ",
+    "check_plan.json accepted_unproven lists gate_release_document claims_rendered and caveats_rendered, because the proof harness raised FileNotFoundError. gate0_machine plan_proven instead reports '0 accepted unproven' and '4 gate(s) not provable before the lock'. Neither release-document rule has ever",
+    "The release surface gate evidence does not itemize REC-COUNTRY-SUM, REC-REFUND-RATE or the generator-literal scan. I verified both reconciliations independently (11,181.67 + 11,032.61 + 13,527.24 = 35,741.52; 27/57 = 0.473684), but I could not see a generator-literal result on my inputs.",
+    "Places no machine rule covered, which I checked myself: excluded_outside_period and excluded_order_rows are only pinned by sums (I recomputed 1, which is O00201 dated 2025-04-01, and 27), and values_preserved leaves out order_date (all 174 clean dates match raw). Both period boundaries hold: rows da",
+    "Twelve delivered orders inside the period are fully refunded (net 0). The spec keeps them in the population and in the paying-customer count. That is within contract, but a reader of 'delivered orders' will see them counted as sales.",
+    "Things I could not establish: I did not validate the carries against audit/schemas/carry.schema.json, which is outside my inputs, though context_id and attempt match each worker's result.json execution block. I did not read src/release/build_release.py, which is also outside my inputs, so whether th"
+  ],
+  "summary": "Every business number reproduces from raw_data/orders.csv with my own code (net revenue 35,741.52; refund rate 0.473684 = 27/57 paying customers; PL 11,181.67, DE 11,032.61, CZ 13,527.24; rows 201 = 174 + 26 + 1), and all 21 numbers on the three release surfaces match. One material blocker: release/report.md line 7 labels the net headline (CLM-NET-REVENUE, 35,741.52) as 'Gross revenue, EUR'. The real gross for the population is 40,235.02. This breaks the spec trap 'gross is not net', the ruling revenue_recognition=net_of_refunds, and the dashboard's own 'Net revenue (EUR)' label. No machine ga",
+  "wall_seconds": 344.9,
+  "cost": {
+    "at": "2026-09-19T12:26:25.059369+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-0cdb94b85940",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-19T12:20:43.230645+00:00",
+    "finished_at": "2026-09-19T12:26:25.059369+00:00",
+    "wall_seconds": 341.828,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 50,
+    "cached_input_tokens": 2567885,
+    "output_tokens": 34130,
+    "total_tokens": 2602065,
+    "cost_usd": 3.45457
+  }
+}

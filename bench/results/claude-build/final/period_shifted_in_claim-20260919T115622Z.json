@@ -1,0 +1,80 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "period_shifted_in_claim",
+  "dataset": "orders",
+  "error": "One country claim carries a two-month period while its value is the full quarter's.",
+  "at": "2026-09-19T11:51:00+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "period",
+    "02-28",
+    "CLM-NET-CZ"
+  ],
+  "blocking_issues": 1,
+  "warnings": 13,
+  "checks": 10,
+  "issue_ids": [
+    "RT-CLAIM-PERIOD-CZ"
+  ],
+  "issue_texts": [
+    "RT-CLAIM-PERIOD-CZ | final_claude_redteam.claim_period_matches_spec | final_claude_redteam|claim_period_matches_spec|analysis/claim_register.json|CLM-NET-CZ | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/claim_register.json claims[CLM-NET-CZ].period = 2025-01-01..2025-02-28. audit_spec.yaml population.period is 2025-01-01..2025-03-30 inclusive. metrics/calculated_metrics.json period.end = 202"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "This profile uses one vendor: the architect, every worker, every auditor and this red team all ran on claude-opus-5, so no PASS in this run is independent cross-vendor review, and no GPT or other-vendor gate exists over this work; only the machine gates, the frozen check_plan, the control lock and t",
+    "Every agent stage result (worker_clean, worker_metrics, worker_analysis, worker_release, gate0_semantic and all four auditors) is a stub. Each has summary 'driver e2e <step>', the fixed created_at 2026-01-01T00:00:00Z and, for auditors, an evidence notes.json holding only a placeholder note. None of",
+    "gate_claims_auditor states that its checks were 'recomputed independently from analysis/claim_register.json', which means its expected values came from the artifact under test rather than from raw data or metrics.",
+    "No deterministic rule checks the period or population metadata in the claim register, or the period labels the reader sees. The release gate excludes the report's ISO period header (text_exclusions) and the dashboard's $.period (json_exclusions). The check_plan never compares either with audit_spec.",
+    "check_plan.json accepts claims_rendered and caveats_rendered (gate_release_document) as unproven: both proofs failed with FileNotFoundError on analysis/claim_register.json. These two release checks were never shown to fire on a broken input. Separately, gate0_machine's plan_proven reports '0 accepte",
+    "Assumption check, refund_rate_basis = paying_customers (RESOLVED): on this data the published refund rate is 0.473684 (27 of 57 customers). On the order-row basis it would be 0.189655 (33 of 174 rows). Any partial refund counts a customer as refunded; for example, C017 has one 13.08 EUR refund among",
+    "Assumption check, revenue_recognition = net_of_refunds (RESOLVED): the export has no refund date, so all 4493.50 EUR of refunds is booked to the order's quarter. Headline net revenue 35741.52 (gross 40235.02) therefore depends on refunds whose timing cannot be verified from this data.",
+    "Assumption check, timezone_for_dates = Europe/Warsaw (RESOLVED): order_date is a bare date with no time, so the ruling cannot be applied or verified. If the source stamped dates in UTC, delivered order O00064 (CZ, 268.18 EUR, dated 2025-03-30) could fall on 2025-03-31 local time, outside the spec pe",
+    "The spec period ends 2025-03-30, while questions.md R01 and the exclusion reason speak of 'the reported quarter' and the metrics period is named 2025-Q1-delivered; calendar Q1 ends 2025-03-31. No row is dated 2025-03-31 in this export, so no published number moves today (calendar-Q1 net revenue is a",
+    "The release answers R01 to R03 only. R04's row accounting (201 raw, 174 in population, 26 not delivered, 1 outside the period, which is O00201 dated 2025-04-01) and R05's excuse (no customer lifetime value, because the export has no acquisition date) appear in analysis/answers and check_plan but now",
+    "All four worker carries are identical apart from step_id and context_id, and they carry the placeholder updated_at 2026-01-01T00:00:00Z. Their population definition reads 'status=delivered' and omits the period filter. The worker_analysis carry records nothing of that stage's own decisions, such as ",
+    "metrics/calculated_metrics.json stores gross revenue 40235.02 in the numerator field of net_revenue. No surface shows it, but a consumer reading numerator/denominator generically would misread it as part of the net figure.",
+    "Things this red team could not establish: carry conformance to audit/schemas/carry.schema.json, because the schema is outside this step's inputs; whether the release gate implementation uses any slicing or magnitude filter, because audit/tools is outside the inputs, although its evidence lists every"
+  ],
+  "summary": "FAIL on one material blocker. analysis/claim_register.json declares CLM-NET-CZ over period 2025-01-01..2025-02-28, while the spec period, the metric it cites (metrics.net_revenue_cz), the other four claims, the worker_analysis carry and both release surfaces all use 2025-01-01..2025-03-30. The value 13527.24 is correct only for the spec period: over its own declared period, CZ net revenue is 9248.36 (43 rows, not 62). No machine gate compares a claim's declared period with the spec. Every other published number was recomputed from raw_data/orders.csv by independent code and matches exactly: ne",
+  "wall_seconds": 294.3,
+  "cost": {
+    "at": "2026-09-19T11:56:21.020491+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-d423fa05b27b",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-19T11:51:30.321640+00:00",
+    "finished_at": "2026-09-19T11:56:21.020491+00:00",
+    "wall_seconds": 290.688,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 46,
+    "cached_input_tokens": 2316898,
+    "output_tokens": 31168,
+    "total_tokens": 2348112,
+    "cost_usd": 3.1370449999999996
+  }
+}
