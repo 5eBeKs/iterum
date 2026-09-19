@@ -1,0 +1,75 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "m_completion_population_delivered",
+  "dataset": "messy",
+  "error": "The direct completion rate says its population is delivered orders, over which a completion rate is always 1.",
+  "at": "2026-09-19T07:12:31+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "CLM-COMPLETION-DIRECT",
+    "population",
+    "delivered",
+    "denominator|cancel|always|trivial|1\\.0|100 ?%"
+  ],
+  "blocking_issues": 3,
+  "warnings": 8,
+  "checks": 49,
+  "issue_ids": [
+    "CLAIMS-AUD-COMPLETION-DIRECT-POPULATION",
+    "CLAIMS-AUD-AOV-DIRECT-CAVEATS",
+    "CLAIMS-AUD-AOV-PARTNER-CAVEATS"
+  ],
+  "issue_texts": [
+    "CLAIMS-AUD-COMPLETION-DIRECT-POPULATION | gate_claims_auditor.population.CLM-COMPLETION-DIRECT | gate_claims_auditor|claim_population_matches_denominator|analysis/claim_register.json|CLM-COMPLETION-DIRECT | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/claim_register.json CLM-COMPLETION-DIRECT.population contains the qualifier 'delivered' before 'channel = direct', but metrics/calculated_metri",
+    "CLAIMS-AUD-AOV-DIRECT-CAVEATS | gate_claims_auditor.caveats.CLM-AOV-DIRECT | gate_claims_auditor|aov_caveats_delivered_net_of_refunds|analysis/claim_register.json|CLM-AOV-DIRECT | CLAIM_SUPPORT | MEDIUM | worker_analysis | analysis/claim_register.json CLM-AOV-DIRECT.caveats has two entries: the channel-quarter scope and the sampling-interval-only statement. Neither says delivered orders only, and ",
+    "CLAIMS-AUD-AOV-PARTNER-CAVEATS | gate_claims_auditor.caveats.CLM-AOV-PARTNER | gate_claims_auditor|aov_caveats_delivered_net_of_refunds|analysis/claim_register.json|CLM-AOV-PARTNER | CLAIM_SUPPORT | MEDIUM | worker_analysis | analysis/claim_register.json CLM-AOV-PARTNER.caveats has the same two entries as the direct claim and has neither the delivered-only nor the net-of-refunds statement. The val"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The check plan has no deterministic rule that compares a claim's population text with the population and denominator of the metric it cites. The only thing that caught the CLM-COMPLETION-DIRECT defect was this auditor's reading.",
+    "caveats_declared requires only the channel-population and sampling-interval topics for the AOV claims. It does not require delivered-only or net-of-refunds, so the gate's PASS on those caveats says nothing about whether they are present.",
+    "Neither completion claim says in words that cancelled and pending orders are in the denominator. The rest of the audit hinges on that point, so the worker should state it when fixing CLM-COMPLETION-DIRECT.",
+    "Both test claims give their p as 0.0000000000, which displays as 0.0000 at four digits. The release should show it as below 0.0001 rather than as a p of zero.",
+    "The registry states alpha 0.05 with Bonferroni over the two registered tests but never states the adjusted per-test alpha of 0.025. Both p values are far below 0.025, so no conclusion changes.",
+    "CLM-TEST-CHANNEL-AOV gives its population as orders inside the quarter by channel without saying the test runs on delivered orders only. n_per_group is 17818 and 12055, which are the delivered counts, so the text understates the filter the plan registered.",
+    "recompute_estimate and recompute_test read clean_data/orders_clean.csv. Only claims_recomputed goes back to raw, and it does not cover the intervals, test statistics or p values. This auditor's recompute from quarantine/orders.csv agrees with both, so there is no discrepancy today.",
+    "The channel differences are consistent across strata. Direct completes more and has the higher AOV in every country (CZ, DE, PL) and every month (2026-01..2026-03), and the country mix is near-even in both channels. There is no sign of Simpson's paradox or of confounding by country or month."
+  ],
+  "summary": "Every figure in all eight claims reproduces from quarantine/orders.csv (last revision per order_id, Q1 by order_month, refund_amount >= 0; 44531 orders). Each value, bound, n, statistic, p and effect matches the metrics registry byte for byte and matches the plan's level, method, alpha and correction. The analysis step still fails on the text of the claims. First, CLM-COMPLETION-DIRECT declares its population as delivered orders only, but the rate is 17818 delivered out of all 24597 direct orders, 3322 cancelled and 3457 pending included; over a delivered-only population the rate would be 1. S",
+  "wall_seconds": 264.9,
+  "cost": {
+    "at": "2026-09-19T07:17:04.200565+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-19T07:12:42.523771+00:00",
+    "finished_at": "2026-09-19T07:17:04.200565+00:00",
+    "wall_seconds": 261.687,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 40,
+    "cached_input_tokens": 2331834,
+    "output_tokens": 27513,
+    "total_tokens": 2359387,
+    "cost_usd": 3.1754585
+  }
+}

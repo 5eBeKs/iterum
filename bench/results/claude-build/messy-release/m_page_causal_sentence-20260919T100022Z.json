@@ -1,0 +1,70 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "m_page_causal_sentence",
+  "dataset": "messy",
+  "error": "The page explains the smaller partner baskets by bargain hunters, which nothing in the audit measures.",
+  "at": "2026-09-19T09:56:24+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "caus|explan|unsupported|no (evidence|metric|claim)"
+  ],
+  "blocking_issues": 3,
+  "warnings": 6,
+  "checks": 18,
+  "issue_ids": [
+    "REL-AUD-CAUSAL-SENTENCE",
+    "REL-AUD-PAGE-POPULATION",
+    "REL-AUD-DASHBOARD-CARD-CONTEXT"
+  ],
+  "issue_texts": [
+    "REL-AUD-CAUSAL-SENTENCE | gate_release_auditor.no_unsupported_claims | gate_release_auditor|no_unsupported_claims|release/report.md|channel-aov-causal-sentence | CLAIM_SUPPORT | HIGH | worker_release | release/report.md line 32, the last line of the registered-comparisons section, carries no claim anchor. It explains the partner channel's smaller baskets by the kind of customer that channel brings",
+    "REL-AUD-PAGE-POPULATION | gate_release_auditor.population_matches_claims | gate_release_auditor|population_matches_claims|release/report.md|page-population-line | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3 gives the population of the whole page as orders placed inside the quarter, one row per order, delivered only. That is the population of CLM-NET-REVENUE alone. CLM-ORDE",
+    "REL-AUD-DASHBOARD-CARD-CONTEXT | gate_release_auditor.card_population_period_n_level | gate_release_auditor|card_population_period_n_level|release/dashboard_data.json|all-cards | VISUALIZATION | MEDIUM | worker_release | In release/dashboard_data.json, none of the 8 cards ($.cards[0..7]) has a population or period field. The period exists only at the top level ($.period). The four estimate cards ("
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "release/report.md line 32 adds a causal explanation of why partner baskets are smaller. The analysis did not test it, and a reader would take it as a finding of the audit.",
+    "release/report.md line 3 describes the whole page's population as delivered orders only. The order count 44,531 and both completion rates are over all orders (cancelled and pending included), so a reader would misread them.",
+    "The release surface contract declares no reconciliations (reconciliations: []). No machine gate checks that the channel parts add up to the headlines. I checked them myself and they hold: 24597 + 19934 = 44531 orders, and 1971306.75 + 1051989.86 = 3023296.61 EUR net revenue.",
+    "Neither release gate wrote any evidence on the generator-literal rule for src/release/build_release.py, and that file was outside this auditor's inputs. Whether a business number is hardcoded in the generator is still unverified by anyone at this gate.",
+    "Every release rule that reads the page reads digits or fixed caveat phrases. An unanchored sentence without digits, like report.md line 32, is checked only by an auditor's reading. That is a gap in the check plan, not just in this release.",
+    "The p values on the page are shown as 0.0000 at 4 display digits. The recomputed two-proportion p is about 3e-157 (Bonferroni about 6e-157), so the 'significant' wording holds, but a reader cannot tell the p value was rounded to zero."
+  ],
+  "summary": "All 64 numbers on report.md, dashboard_data.json and release_number_manifest.json are bound to a claim, have the right role and match the registry and my own recompute at their display_digits. The reconciliation identities hold. The release fails on its prose. (1) report.md line 32 gives a causal explanation for the AOV difference between the channels, and no claim, registered hypothesis or analysis answer supports it. (2) report.md line 3 says the page population is delivered orders only. That is wrong for the order count and for both completion rates, whose denominator is every order in the ",
+  "wall_seconds": 233.1,
+  "cost": {
+    "at": "2026-09-19T10:00:21.491136+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-1ec424ea468d",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-19T09:56:31.596167+00:00",
+    "finished_at": "2026-09-19T10:00:21.491136+00:00",
+    "wall_seconds": 229.891,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 42,
+    "cached_input_tokens": 2062829,
+    "output_tokens": 22608,
+    "total_tokens": 2085479,
+    "cost_usd": 2.6183785000000004
+  }
+}

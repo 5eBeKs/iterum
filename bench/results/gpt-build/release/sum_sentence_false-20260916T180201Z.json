@@ -1,0 +1,58 @@
+{
+  "profile": "gpt-build",
+  "stage": "release",
+  "case": "sum_sentence_false",
+  "error": "The page says the country figures sum to the headline before refunds; both are net of refunds.",
+  "at": "2026-09-16T17:55:26+00:00",
+  "max_v2_revision": "fa38876",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "before refunds",
+    "sum"
+  ],
+  "blocking_issues": 1,
+  "warnings": 2,
+  "checks": 47,
+  "issue_ids": [
+    "RELEASE-COUNTRY-SUM-NARRATIVE"
+  ],
+  "warning_texts": [
+    "audit/check_plan.json records claims_rendered and caveats_rendered as accepted without a breaker at plan-proof time; the runtime gate later passed, and this audit independently reproduced all 15 document comparisons.",
+    "audit/results/gate_release_machine/evidence/release_surface_gate.json contains 21 per-number comparisons but no evidence/checks.json check identifiers, so the independently reproduced bindings are recorded with machine_check null while their exact agreement is preserved in independent_release_audit."
+  ],
+  "summary": "All 21 rendered-number bindings, all 15 release-document comparisons, and both numeric reconciliations independently pass, but release/report.md:22 reverses the refund timing and contradicts the net-of-refunds figures.",
+  "wall_seconds": 391.6,
+  "cost": {
+    "at": "2026-09-16T18:02:00.617928+00:00",
+    "launcher": "codex_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-b1152f2fcb84",
+    "agent_role": "gpt-audit-release",
+    "started_at": "2026-09-16T17:55:31.478028+00:00",
+    "finished_at": "2026-09-16T18:02:00.616409+00:00",
+    "wall_seconds": 389.125,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "gpt-5.6-sol",
+    "model_used": null,
+    "input_tokens": 1674861,
+    "cached_input_tokens": null,
+    "output_tokens": 17468,
+    "total_tokens": 1692329,
+    "cost_usd": null
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "m_completion_population_delivered",
+  "dataset": "messy",
+  "error": "The direct completion rate says its population is delivered orders, over which a completion rate is always 1.",
+  "at": "2026-09-19T09:26:15+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "CLM-COMPLETION-DIRECT",
+    "population",
+    "delivered",
+    "denominator|cancel|always|trivial|1\\.0|100 ?%"
+  ],
+  "blocking_issues": 1,
+  "warnings": 1,
+  "checks": 13,
+  "issue_ids": [
+    "CLM-COMPLETION-DIRECT-POPULATION-DELIVERED"
+  ],
+  "issue_texts": [
+    "CLM-COMPLETION-DIRECT-POPULATION-DELIVERED | gate_claims_auditor.claim_population_misdescribed | gate_claims_auditor|claim_population_misdescribed|analysis/claim_register.json|CLM-COMPLETION-DIRECT | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/claim_register.json CLM-COMPLETION-DIRECT population = 'orders placed inside the quarter, one row per order, delivered, channel = direct', while claim"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "shipping_total is correctly excused by name in R05 and never published as a claim; no action needed, noted for the release stage to keep it off every surface."
+  ],
+  "summary": "All eight claims independently recomputed from the quarantine projection (44531 orders; net revenue 3023296.61; completion 0.724397 direct / 0.604746 partner with matching wilson intervals; AOV 110.64 / 87.27 with matching student intervals; z=26.718455 and welch t=42.699880 with p~0, effects 0.119652 / 0.486900) - every number matches the register and the machine gate. Answers R01-R05, plan conformance, multiplicity and recalc rooting all check out. One blocker: CLM-COMPLETION-DIRECT's population field says 'delivered' although its denominator 24597 is all direct orders including cancelled an",
+  "wall_seconds": 424.1,
+  "cost": {
+    "at": "2026-09-19T09:33:26.315917+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-59d3e2626936",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-19T09:26:26.435021+00:00",
+    "finished_at": "2026-09-19T09:33:26.315465+00:00",
+    "wall_seconds": 419.875,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 99438,
+    "cached_input_tokens": 430976,
+    "output_tokens": 7041,
+    "total_tokens": 538900,
+    "cost_usd": 0.019252788
+  }
+}

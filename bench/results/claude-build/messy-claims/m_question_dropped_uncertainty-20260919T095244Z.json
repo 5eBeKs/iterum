@@ -1,0 +1,67 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "m_question_dropped_uncertainty",
+  "dataset": "messy",
+  "error": "R03 is restated without the half of the brief that asks how precisely each rate is known.",
+  "at": "2026-09-19T09:47:39+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R03",
+    "uncertain|precis|interval",
+    "restat|narrow|question|brief"
+  ],
+  "blocking_issues": 1,
+  "warnings": 5,
+  "checks": 38,
+  "issue_ids": [
+    "CLAIMS-AUD-R03-QUESTION-DROPS-UNCERTAINTY"
+  ],
+  "issue_texts": [
+    "CLAIMS-AUD-R03-QUESTION-DROPS-UNCERTAINTY | gate_claims_auditor.question_fidelity.R03 | gate_claims_auditor|question_fidelity|analysis/answers/R03.json|R03 | CLAIM_SUPPORT | MEDIUM | worker_analysis | raw_data/questions.md R03 asks for the completion rate of each channel and how precisely it is known; analysis/answers/R03.json field `question` keeps only the first part (evidence/questions_check.py"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "analysis/answers/R01.json restates its question without the delivered-orders qualifier that raw_data/questions.md R01 carries; the claim CLM-NET-REVENUE is itself delivered-only and says so in its caveats, so the number is right, but the restated question is looser than the one asked.",
+    "The machine rule questions_are_answered only checks that each answer file has question and facts fields; nothing deterministic compares an answer's restated question with raw_data/questions.md, so question drift like R03's is visible only to this auditor.",
+    "recompute_estimate, recompute_test and min_group_size are rooted in clean_data/orders_clean.csv, not raw; only claims_recomputed (six of eight claims, points only) reads raw_latest. My recompute from the quarantine projection of raw agrees with all of them, so the clean-rooted checks are corroborate",
+    "Both test p-values are stored as ten zero decimals with display_digits 4; a release that renders them literally shows a p of zero rather than a bound such as below 0.0001, which the release stage should handle.",
+    "The H-CHANNEL-COMPLETION assumption that neither channel changed how it books orders during the quarter cannot be verified from the export; the direct-minus-partner completion gap is stable in each of the three months, which is consistent with it but does not prove it."
+  ],
+  "summary": "All eight claims trace claim -> metric -> source without a gap: my raw-rooted recompute from quarantine/orders.csv (last revision per order_id, order_month 2026-01..03, refund >= 0) reproduces every value, bound, n, statistic and effect, and method/level/alpha/correction match audit/analysis_plan.json. No confounding or Simpson reversal by country or month, no selection in the denominators, two tests against two registered. One blocker: analysis/answers/R03.json restates the question as the completion rate of each channel and drops its second half, how precisely the rate is known, so the answe",
+  "wall_seconds": 296.5,
+  "cost": {
+    "at": "2026-09-19T09:52:42.901432+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-19T09:47:49.377094+00:00",
+    "finished_at": "2026-09-19T09:52:42.901432+00:00",
+    "wall_seconds": 293.532,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 50,
+    "cached_input_tokens": 2626843,
+    "output_tokens": 29855,
+    "total_tokens": 2656748,
+    "cost_usd": 3.1881524999999997
+  }
+}

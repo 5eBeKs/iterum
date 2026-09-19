@@ -1,0 +1,66 @@
+{
+  "profile": "grok-build",
+  "stage": "claims",
+  "case": "m_interval_read_as_probability",
+  "dataset": "messy",
+  "error": "The answer to R03 reads each 0.95 interval as a 95% probability that the true rate lies inside it.",
+  "at": "2026-09-19T06:51:38+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "probab",
+    "95 ?%"
+  ],
+  "blocking_issues": 2,
+  "warnings": 3,
+  "checks": 53,
+  "issue_ids": [
+    "INTERVAL-READ-AS-PROBABILITY",
+    "BARE-NUMBER-IN-CAVEAT-R03"
+  ],
+  "issue_texts": [
+    "INTERVAL-READ-AS-PROBABILITY | gate_claims_auditor.interval_as_probability.R03 | gate_claims_auditor|interval_as_probability|analysis/answers/R03.json|CLM-COMPLETION | CLAIM_SUPPORT | CRITICAL | worker_analysis | analysis/answers/R03.json caveats[0] assigns a probability that each channel true completion rate lies inside its Wilson interval. analysis/claim_register.json for CLM-COMPLETION-DIRECT a",
+    "BARE-NUMBER-IN-CAVEAT-R03 | gate_claims_auditor.bare_number_in_caveat.R03 | gate_claims_auditor|bare_number_in_caveat|analysis/answers/R03.json|R03 | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R03.json caveats[0] contains the digit figure 95. Register estimate caveats contain no digits. A panel scanner reads digits in caveat strings as unbound numbers. | no unbound digit figure in a"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "Machine-gate caveats_declared inspects analysis/claim_register.json only, so the R03 answer-file interval misread had no deterministic rule.",
+    "CLM-TEST-CHANNEL-AOV population text does not say delivered-only, but n_per_group 17818/12055 equals the delivered AOV denominators and the plan filter is_delivered.",
+    "CLM-AOV-* caveats do not repeat the words net of refunds; the means were still computed on delivered net_amount."
+  ],
+  "summary": "Headline numbers recompute from quarantine/orders.csv and match the register and gate_claims_machine, but analysis/answers/R03.json reads the Wilson sampling interval as a 95 percent probability that the true completion rate lies inside the bounds, and that caveat also carries an unbound 95.",
+  "wall_seconds": 739.0,
+  "cost": {
+    "at": "2026-09-19T07:04:05.471678+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-7262c6e05655",
+    "agent_role": "grok-audit-claims",
+    "started_at": "2026-09-19T06:51:49.845653+00:00",
+    "finished_at": "2026-09-19T07:04:05.471678+00:00",
+    "wall_seconds": 735.625,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 153120,
+    "cached_input_tokens": 2829696,
+    "output_tokens": 44168,
+    "total_tokens": 3026984,
+    "cost_usd": 0.67527264
+  }
+}

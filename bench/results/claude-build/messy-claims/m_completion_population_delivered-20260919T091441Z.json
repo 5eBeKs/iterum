@@ -1,0 +1,70 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "m_completion_population_delivered",
+  "dataset": "messy",
+  "error": "The direct completion rate says its population is delivered orders, over which a completion rate is always 1.",
+  "at": "2026-09-19T09:10:49+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "CLM-COMPLETION-DIRECT",
+    "population",
+    "delivered",
+    "denominator|cancel|always|trivial|1\\.0|100 ?%"
+  ],
+  "blocking_issues": 1,
+  "warnings": 7,
+  "checks": 36,
+  "issue_ids": [
+    "CLM-COMPLETION-DIRECT-POPULATION-DELIVERED"
+  ],
+  "issue_texts": [
+    "CLM-COMPLETION-DIRECT-POPULATION-DELIVERED | gate_claims_auditor.population.CLM-COMPLETION-DIRECT | gate_claims_auditor|claim_population_matches_metric|analysis/claim_register.json|CLM-COMPLETION-DIRECT | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/claim_register.json, claim CLM-COMPLETION-DIRECT, field population, adds 'delivered' to the population. metrics/calculated_metrics.json completio"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "CLM-COMPLETION-DIRECT describes its population as delivered orders only, though the rate is computed over all direct orders. If this text reaches the release, the headline completion rate will read as a rate over its own numerator.",
+    "Neither completion claim has a caveat saying that cancelled and pending orders are in the denominator. The spec treats this as the central trap of the audit, and adding that caveat would stop the population text above from misleading anyone.",
+    "No rule in audit/check_plan.json compares a claim's population or period text with its metric. claims_recomputed, recompute_estimate and min_group_size fix their own filters, so they pass a claim whose declared population is wrong. Only this auditor's judgement covers population text.",
+    "recompute_estimate, recompute_test and min_group_size read clean_data/orders_clean.csv, not the raw export. Only the six point claims in independent_claim_recalc.json are rooted in raw_data/orders.csv. My quarantine-based recount of the intervals and tests agrees with the gate, so there is no discre",
+    "Both test p-values are stored as 0.0000000000 with display_digits 4. They will render as 0.0000, not as a bound such as below 0.0001. My recomputed p is about 2.9e-157 for completion and underflows to 0 for AOV.",
+    "Both test claims carry the family alpha 0.05 with correction bonferroni but never state the per-test alpha of 0.025. With p far below either threshold the conclusion is unaffected. The applied threshold is still not written down anywhere.",
+    "Pending orders (7491 in the quarter) are counted as not completed. This is the spec's definition. Some of them may still complete, so the completion rates are a snapshot at export time, not a final outcome."
+  ],
+  "summary": "All eight claims recompute exactly from quarantine/orders.csv (dedup last-wins, quarter by order_month, negative refunds excluded): values, both bounds, n, statistics, effects and p all match metrics and the machine gate. One blocker: CLM-COMPLETION-DIRECT declares its population as 'delivered, channel = direct', but the number was computed over the whole direct channel (24597 orders, 3322 cancelled and 3457 pending included); on the declared population the rate would be 1.0 by construction. The claim contradicts its own metric, its partner twin and the spec's completion-rate denominator rule.",
+  "wall_seconds": 224.3,
+  "cost": {
+    "at": "2026-09-19T09:14:40.420248+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-19T09:10:59.386238+00:00",
+    "finished_at": "2026-09-19T09:14:40.420248+00:00",
+    "wall_seconds": 221.031,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 40,
+    "cached_input_tokens": 2341778,
+    "output_tokens": 23526,
+    "total_tokens": 2365344,
+    "cost_usd": 3.06832
+  }
+}

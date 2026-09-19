@@ -1,0 +1,78 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "m_channel_labels_swapped_page",
+  "dataset": "messy",
+  "error": "On the page the direct and partner completion lines carry each other's labels; the figures and anchors are untouched.",
+  "at": "2026-09-16T20:16:56+00:00",
+  "max_v2_revision": "fa38876",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "label",
+    "swap|transpos|mislabel",
+    "direct|partner"
+  ],
+  "blocking_issues": 4,
+  "warnings": 5,
+  "checks": 11,
+  "issue_ids": [
+    "FINAL-REPORT-CHANNEL-LABEL-SWAP",
+    "FINAL-REPORT-PAGE-POPULATION-DELIVERED-ONLY",
+    "FINAL-DASHBOARD-ESTIMATE-N-MISSING",
+    "FINAL-CARRY-FACTS-CONTRADICT-OUTPUTS"
+  ],
+  "issue_texts": [
+    "FINAL-REPORT-CHANNEL-LABEL-SWAP | final_claude_redteam.surface_label_matches_claim | final_claude_redteam|surface_label_matches_claim|release/report.md|completion_by_channel | RELEASE_INTEGRITY | CRITICAL | worker_release | release/report.md read as text without HTML comments: line 14 reads 'completion partner: 0.724397 (0.95 interval 0.718779 to 0.729946, n = 24597)' but its anchors are CLM-COMPL",
+    "FINAL-REPORT-PAGE-POPULATION-DELIVERED-ONLY | final_claude_redteam.card_population_matches_claim | final_claude_redteam|card_population_matches_claim|release/report.md|page_population | RELEASE_INTEGRITY | HIGH | worker_release | Line 3 of release/report.md states one population for the whole document: orders placed inside the quarter, one row per order, delivered only. Under it, line 9 shows CLM-",
+    "FINAL-DASHBOARD-ESTIMATE-N-MISSING | final_claude_redteam.estimate_rendered_with_n | final_claude_redteam|estimate_rendered_with_n|release/dashboard_data.json|estimate_cards | RELEASE_INTEGRITY | MEDIUM | worker_release | release/dashboard_data.json cards[2..5] (CLM-COMPLETION-DIRECT, CLM-COMPLETION-PARTNER, CLM-AOV-DIRECT, CLM-AOV-PARTNER) carry value, ci_low and ci_high, but no n field or text a",
+    "FINAL-CARRY-FACTS-CONTRADICT-OUTPUTS | final_claude_redteam.carry_facts_match_outputs | final_claude_redteam|carry_facts_match_outputs|audit/checkpoints|worker_stages | OTHER | MEDIUM | worker_clean | audit/checkpoints/worker_clean, worker_metrics, worker_analysis and worker_release .carry.json are present. Each matches the carry schema shape, and each context_id and attempt equal its result's exe"
+  ],
+  "other_blockers": 2,
+  "warning_texts": [
+    "Assumption that looks wrong: human_decisions.yaml shipping_locale RESOLVED, with the column read as a per-order EUR cost. The locale parsing is consistent (no cell mixes comma and dot; 13544 locale-formatted, 3607 EUR-suffixed, 1778 blank, 869 NaN and 1 inf in the population, which matches the spec'",
+    "The LLM auditor and worker results carry no evidence behind their PASS or STAGE_COMPLETE. gate0_semantic, gate_clean_auditor and gate_release_auditor results have placeholder summaries and one 'recomputed independently' check whose value 0.473684 equals no figure in any registry. gate_metrics_audito",
+    "Check-plan coverage that no deterministic rule held, which I checked by hand: (a) label words and page-level population or period sentences on release/report.md, where the planted-looking defects were; (b) the n printed beside an estimate, which release_surface_contract.json excludes by text pattern",
+    "CLM-AOV-DIRECT and CLM-AOV-PARTNER are delivered-only by population (n = 17818 and 12055 delivered orders), but their declared caveats say only 'one quarter of orders in this channel' plus the sampling-interval note. caveats_declared does not require delivered-only for them, so the dashboard AOV car",
+    "Assumption sensitivity, where the data support the recorded choice. dedup_rule latest_revision_wins: file order agrees with updated_at on every repeated order, and the only column that changes between revisions is status (61 pending to delivered, 65 cancelled to delivered). Keeping the first revisio"
+  ],
+  "summary": "FAIL on 4 blockers. Every business number is right. I recomputed all 27 registry values (the metrics, the claims with their intervals and n, and both registered tests) from quarantine/orders.csv, and the clean table matched row by row on every column. All 42 rendered numbers go back to the correct claims and values. The report is still wrong for a reader. (1) CRITICAL: in release/report.md lines 14 and 16 the channel labels are swapped. The direct estimate (0.724397, n = 24597) is labelled partner and the partner estimate (0.604746, n = 19934) is labelled direct, so the page reverses the chann",
+  "wall_seconds": 572.6,
+  "cost": {
+    "at": "2026-09-16T20:26:37.040024+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-4b16f125bb3c",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-16T20:17:07.051950+00:00",
+    "finished_at": "2026-09-16T20:26:37.040024+00:00",
+    "wall_seconds": 570.0,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 62,
+    "cached_input_tokens": 3902541,
+    "output_tokens": 57563,
+    "total_tokens": 3960166,
+    "cost_usd": 4.927033499999999
+  }
+}

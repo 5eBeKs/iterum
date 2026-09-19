@@ -1,0 +1,74 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "m_dashboard_aov_labelled_revenue",
+  "dataset": "messy",
+  "error": "On the dashboard the direct average order value card is labelled revenue.",
+  "at": "2026-09-18T20:15:16+00:00",
+  "max_v2_revision": "b7adc4a",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "Revenue Direct",
+    "label",
+    "aov|average order"
+  ],
+  "blocking_issues": 4,
+  "warnings": 6,
+  "checks": 19,
+  "issue_ids": [
+    "REL-AUD-DASH-AOV-LABELLED-REVENUE",
+    "REL-AUD-DASH-ESTIMATE-NO-N-LEVEL",
+    "REL-AUD-DASH-CARD-NO-POPULATION-PERIOD",
+    "REL-AUD-REPORT-POPULATION-DELIVERED-ONLY-PAGEWIDE"
+  ],
+  "issue_texts": [
+    "REL-AUD-DASH-AOV-LABELLED-REVENUE | gate_release_auditor.dashboard_label_matches_claim | gate_release_auditor|label_matches_claim|release/dashboard_data.json|cards[4].CLM-AOV-DIRECT | VISUALIZATION | HIGH | worker_release | In release/dashboard_data.json, $.cards[4] has claim_id CLM-AOV-DIRECT (metric aov_direct, unit EUR per delivered order, value 110.64, CI 109.88..111.39) and label 'Revenue Dir",
+    "REL-AUD-DASH-ESTIMATE-NO-N-LEVEL | gate_release_auditor.estimate_rendering_point_bounds_n_level | gate_release_auditor|estimate_rendering|release/dashboard_data.json|estimate_cards | VISUALIZATION | MEDIUM | worker_release | In release/dashboard_data.json, cards[2..5] (CLM-COMPLETION-DIRECT, CLM-COMPLETION-PARTNER, CLM-AOV-DIRECT, CLM-AOV-PARTNER) carry value, ci_low and ci_high but no n and no le",
+    "REL-AUD-DASH-CARD-NO-POPULATION-PERIOD | gate_release_auditor.card_population_period | gate_release_auditor|card_population_period|release/dashboard_data.json|all_cards | VISUALIZATION | HIGH | worker_release | None of the 8 cards in release/dashboard_data.json has a population or period field. The period appears only as the top-level $.period, and no population appears anywhere on the surface. Th",
+    "REL-AUD-REPORT-POPULATION-DELIVERED-ONLY-PAGEWIDE | gate_release_auditor.report_population_per_claim | gate_release_auditor|population_per_claim|release/report.md|page_population | VISUALIZATION | HIGH | worker_release | release/report.md line 3 is the only population statement on the page, and it is CLM-NET-REVENUE's population ('... delivered only'), written page-wide by src/release/build_releas"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The two p values are rendered as '0.0000' on the report and dashboard, which reads as exactly zero. The recomputed z-test p is about 3e-157. A form such as '< 0.0001' would be accurate, but this matches the registry's display_digits 4 and is not a binding mismatch.",
+    "src/release/build_release.py:61 writes 'significant' by comparing p to the unadjusted alpha 0.05 while printing 'bonferroni correction'. The adjusted threshold for the plan's two confirmatory hypotheses is 0.025. Both p values are near zero, so today's wording is right, but the rule is wrong for any",
+    "The dashboard test cards (cards[6], cards[7]) show p, effect and statistic without the hypothesis id, alpha or correction. A reader of the dashboard alone cannot tell what the p was tested against.",
+    "The release machine gates never check card labels, per-card population or period, or n and level on the dashboard. The check_plan runs claims_rendered and wording_matches_claims on report.md only, and release_surface_contract.json has empty reconciliations and card_caveat_requirements. All four bloc",
+    "The report prints the estimate n unformatted (n = 24597) and the headline count with a thousands separator (44,531). This is inconsistent display, though both match the claims.",
+    "Release gate evidence agrees with my recompute on all 60 rows, including all rows with scale 1 (no scaled roles exist). My only disagreement with gate_release_document is that its caveats_rendered PASS on dashboard_data.json does not cover population or period, which it does not claim to check."
+  ],
+  "summary": "I re-derived all 60 rendered numbers (report 20, dashboard 20, manifest 20) from metrics/calculated_metrics.json. Every one matches its claim_id, role and display_digits exactly. The reconciliation identities also hold: net revenue equals the sum of the channel AOV numerators, orders equal the sum of the channel denominators, the Wilson bounds and the z-test recompute exactly, and the Welch t and Cohen's d agree approximately. The release still fails on four presentation blockers, all owned by worker_release. (1) Dashboard card $.cards[4] carries the AOV-direct estimate (110.64 EUR per deliver",
+  "wall_seconds": 231.3,
+  "cost": {
+    "at": "2026-09-18T20:19:11.610095+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-1ec424ea468d",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-18T20:15:23.441233+00:00",
+    "finished_at": "2026-09-18T20:19:11.608092+00:00",
+    "wall_seconds": 228.172,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 34,
+    "cached_input_tokens": 1642121,
+    "output_tokens": 23879,
+    "total_tokens": 1666034,
+    "cost_usd": 2.5071145
+  }
+}

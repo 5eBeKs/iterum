@@ -1,0 +1,82 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "sum_sentence_false",
+  "dataset": "orders",
+  "error": "The page says the country figures sum to the headline before refunds; both are net of refunds.",
+  "at": "2026-09-19T10:45:18+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "before refunds",
+    "net of refunds",
+    "sum"
+  ],
+  "blocking_issues": 1,
+  "warnings": 15,
+  "checks": 18,
+  "issue_ids": [
+    "FINAL-REPORT-SUM-SENTENCE-FALSE"
+  ],
+  "issue_texts": [
+    "FINAL-REPORT-SUM-SENTENCE-FALSE | final_claude_redteam.reconciliation_statement | final_claude_redteam|reconciliation_statement_matches_numbers|release/report.md|REC-COUNTRY-SUM | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 22 says the country figures sum to the headline before refunds are taken off; audit/results/final/evidence/recalc_output.json (sum_sentence) shows the ne"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "This profile is single-vendor: all ten LLM contexts of the run, this red team included, are claude-opus-5, so a blind spot the model shares would pass every LLM check; the only independent control is the deterministic layer (machine gates, frozen check_plan, control lock, release surface gate), and ",
+    "Writes to raw sources and frozen machinery were blocked for edit tools by permissions.deny in .claude/settings.json, not for the shell; a changed raw file would be caught afterwards by the control lock, not prevented.",
+    "All nine earlier LLM-stage results (worker_clean, worker_metrics, worker_analysis, worker_release, gate0_semantic, gate_clean_auditor, gate_metrics_auditor, gate_claims_auditor, gate_release_auditor) carry the summary 'driver e2e <step>', empty warnings and created_at 2026-01-01T00:00:00Z, and each ",
+    "No deterministic rule reads the prose of the release: release_surface_gate binds numbers only and gate_release_document checks that claims and caveats are present, so sentences about how the figures relate (such as report.md line 22) were checked only by this red team.",
+    "check_plan.json lists gate_release_document claims_rendered and caveats_rendered under accepted_unproven (the plan proof failed with FileNotFoundError), while gate0_machine plan_proven reports '0 accepted unproven', so these two rules were never shown to catch a broken release and the two records di",
+    "release_surface_gate.json records no outcome for the declared reconciliations REC-COUNTRY-SUM and REC-REFUND-RATE; both hold on my recalculation (35,741.52 and 27/57 = 0.473684), but I cannot show that the gate evaluated them.",
+    "The refund rate 0.473684 counts a customer as refunded after any refund > 0, including 15 customers with only partial refunds; counting only fully refunded customers gives 12/57 = 0.210526 and the order-row basis gives 33/174 = 0.189655, and the report does not tell the reader that partial refunds c",
+    "revenue_recognition net_of_refunds nets all 4,493.50 EUR of refunds on each order's order_date because orders.csv has no refund date, so the headline 35,741.52 and every country figure include refunds whatever their timing, and the report does not say so.",
+    "The spec pins the period end at 2025-03-30 while the registry names the period '2025-Q1-delivered' and R01 asks for 'the reported quarter'; the export has no 2025-03-31 rows so no figure moves here, but on another export a 31 March order would be silently excluded as outside the quarter.",
+    "timezone_for_dates Europe/Warsaw cannot be verified because order_date carries no time or offset; if the source dates were UTC, boundary rows O00008, O00082, O00198 (2025-01-01) and O00064 (2025-03-30) could sit on the other side of a boundary and move net revenue and the refund rate.",
+    "The four worker carries are identical except for step_id and context_id, all have updated_at 2026-01-01T00:00:00Z, define the population as 'status=delivered' with the period only in a separate field, and none carries the gross-is-not-net trap, which is the fact missing from the release's false reco",
+    "No worker result has a disclosures field and every worker warnings list is empty, so no stage reported a deviation; I cannot tell whether that is true or just unreported.",
+    "metrics/calculated_metrics.json stores the gross total 40235.02 under 'numerator' of net_revenue, which is not a ratio metric; it is not rendered and no rule reads it, but a release that read that field as a figure would publish gross as net.",
+    "The release does not tell its reader that R05 (customer lifetime value) was excused for missing acquisition data or that R04 row accounting exists (201 raw rows, 174 kept, 26 not delivered, 1 outside the period); both appear only in analysis/answers and check_plan.",
+    "Not established by me: retry history, stale inputs and runner state (outside my inputs, see audit_runner.py report); which line of src/release/build_release.py produced the false sentence (generator code not among my inputs); carry validation against carry.schema.json (schema not among my inputs); d"
+  ],
+  "summary": "FAIL on one material blocker: release/report.md line 22 tells the reader the country figures sum to the headline 'before refunds are taken off', but the shown country figures are net and sum to the net headline (11,181.67 + 11,032.61 + 13,527.24 = 35,741.52), while the before-refund sum is 40,235.02; no deterministic rule reads that prose. Every published number (net revenue 35,741.52, refund rate 0.473684 = 27/57, PL/DE/CZ, R04 row accounting 201/174/26/1) was recomputed from raw_data/orders.csv with my own code and matches the registry, claim register, clean_data and all three release surfac",
+  "wall_seconds": 317.7,
+  "cost": {
+    "at": "2026-09-19T10:50:43.861132+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-0cdb94b85940",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-19T10:45:29.013699+00:00",
+    "finished_at": "2026-09-19T10:50:43.861132+00:00",
+    "wall_seconds": 314.844,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 50,
+    "cached_input_tokens": 2483762,
+    "output_tokens": 35603,
+    "total_tokens": 2519415,
+    "cost_usd": 3.480731
+  }
+}

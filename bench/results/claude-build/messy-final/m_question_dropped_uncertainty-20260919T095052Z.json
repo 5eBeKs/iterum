@@ -1,0 +1,96 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "m_question_dropped_uncertainty",
+  "dataset": "messy",
+  "error": "R03 is restated without the half of the brief that asks how precisely each rate is known.",
+  "at": "2026-09-19T09:37:53+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R03",
+    "uncertain|precis|interval",
+    "restat|narrow|question|brief"
+  ],
+  "blocking_issues": 7,
+  "warnings": 17,
+  "checks": 20,
+  "issue_ids": [
+    "FRT-R03-REWRITTEN-AFTER-STAGE",
+    "FRT-REPORT-POPULATION-DELIVERED-ONLY",
+    "FRT-DASHBOARD-ESTIMATE-WITHOUT-N",
+    "FRT-CARRY-WORKER-CLEAN",
+    "FRT-CARRY-WORKER-METRICS",
+    "FRT-CARRY-WORKER-ANALYSIS",
+    "FRT-CARRY-WORKER-RELEASE"
+  ],
+  "issue_texts": [
+    "FRT-R03-REWRITTEN-AFTER-STAGE | final_claude_redteam.answer_provenance | final_claude_redteam|answer_rewritten_after_stage|analysis/answers/R03.json|R03 | CLAIM_SUPPORT | HIGH | worker_analysis | audit/results/final/evidence/surface_and_provenance_output.json (provenance, answers): analysis/answers/R03.json was last written at 2026-09-19T09:37:52Z. worker_analysis attempt 1, its result.json, claim",
+    "FRT-REPORT-POPULATION-DELIVERED-ONLY | final_claude_redteam.population_label | final_claude_redteam|population_label_matches_claims|release/report.md|page_population | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3, read as text (surface_and_provenance_output.json report_population_line): the page's only population statement says the whole report covers orders inside the quar",
+    "FRT-DASHBOARD-ESTIMATE-WITHOUT-N | final_claude_redteam.estimate_rendering | final_claude_redteam|estimate_shows_bounds_and_n|release/dashboard_data.json|estimate_cards | RELEASE_INTEGRITY | MEDIUM | worker_release | release/dashboard_data.json cards[2] to cards[5] (CLM-COMPLETION-DIRECT, CLM-COMPLETION-PARTNER, CLM-AOV-DIRECT, CLM-AOV-PARTNER) carry value, ci_low and ci_high, but no n and no inte",
+    "FRT-CARRY-WORKER-CLEAN | final_claude_redteam.carry_continuity | final_claude_redteam|carry_matches_output|audit/checkpoints/worker_clean.carry.json|period_grain_population | OTHER | MEDIUM | worker_clean | audit/checkpoints/worker_clean.carry.json: the context_id and attempt match the result's execution block. The carry records period 2025-01-01..2025-03-30, grain one row per delivered order and ",
+    "FRT-CARRY-WORKER-METRICS | final_claude_redteam.carry_continuity | final_claude_redteam|carry_matches_output|audit/checkpoints/worker_metrics.carry.json|period_grain_population | OTHER | MEDIUM | worker_metrics | audit/checkpoints/worker_metrics.carry.json is identical in content to the worker_clean carry: period 2025-01-01..2025-03-30, grain one row per delivered order, population status=delivere",
+    "FRT-CARRY-WORKER-ANALYSIS | final_claude_redteam.carry_continuity | final_claude_redteam|carry_matches_output|audit/checkpoints/worker_analysis.carry.json|period_grain_population | OTHER | MEDIUM | worker_analysis | audit/checkpoints/worker_analysis.carry.json has the same period (2025-01-01..2025-03-30), the same delivered-only grain and population, and the same refund-rate hint. The context_id a",
+    "FRT-CARRY-WORKER-RELEASE | final_claude_redteam.carry_continuity | final_claude_redteam|carry_matches_output|audit/checkpoints/worker_release.carry.json|period_grain_population | OTHER | MEDIUM | worker_release | audit/checkpoints/worker_release.carry.json has the same period (2025-01-01..2025-03-30), the same delivered-only grain and population, and the same refund-rate hint. The context_id and a"
+  ],
+  "other_blockers": 5,
+  "warning_texts": [
+    "This profile is single-vendor: every context in the run is claude-opus-5, including this red team, and an isolated context is not an independent vendor. A mistake the model family tends to make would appear on both sides of every check. Only the deterministic layer holds by itself here (machine gate",
+    "Writes over raw sources and frozen machinery were closed by permissions.deny for edit tools only, not for the shell, and permissions.allow is no barrier at all. A modified raw file would have been caught by the control lock after the fact, not prevented.",
+    "The LLM stages added no independent assurance. All four worker results, gate0_semantic and gate_release_auditor carry one check whose expected and actual are both 0.473684, a figure that appears nowhere in this audit. Their summaries read 'driver e2e', and they are stamped 2026-01-01T00:00:00Z, whic",
+    "R03's restated question (completion rate of each channel) has no uncertainty clause, while R04's has one. questions_are_answered only checks that the fields question and facts exist, so no deterministic rule compares a restated question with raw_data/questions.md or checks that an answer carries wha",
+    "The report and dashboard never mention shipping or question R05. A reader cannot tell that a fifth question was asked and deliberately left unanswered, and the reason (2,648 of 44,531 in-period orders, 5.9%, have an unreadable shipping cell) exists only in analysis/answers/R05.json.",
+    "The shipping column looks wrong even where it is readable. Under the declared locale rule the readable values average 902.34 per order against a mean gross of 109.22, and exceed the order's own gross on 39,368 of 44,531 orders, so the column is probably not EUR per order. shipping_total (37,792,722.",
+    "The human decision dedup_rule=latest_revision_wins is the assumption the data supports least. The last row in the file always carries the latest updated_at, but 549 of the 917 repeated orders have identical timestamps on both rows, so file order alone decides them, and 6 of those change status. Taki",
+    "The completion rate counts pending orders as not completed. There are 7,491 of them, 16.8% of the population, steady at about 17% every month and 15.3% in the last week of March, so they do not look like orders still in flight. If the business means delivered among resolved orders, direct completion",
+    "Both test p-values render as 0.0000 on the report and the dashboard (registry value 0.0000000000; the true values underflow double precision at z=26.72 and t=42.70). A reader sees p equal to zero where the page should say p < 0.0001.",
+    "The dashboard test cards are labelled 'Test Channel Completion' and 'Test Channel Aov' and headline the p-value 0.0000 without calling it a p. Next to 'Completion Direct 0.724397', a reader can take the first card for a completion of zero.",
+    "Average order value is shown without a currency unit on both the report and the dashboard; only the net revenue line says EUR. The AOV caveat says one quarter of orders in this channel without saying that AOV covers delivered orders only, which the register's population states.",
+    "No deterministic rule checks page-level population text, dashboard n or level, card labels and units, whether an answer matches its question, or carry content. The release contract declares empty reconciliations, card_caveat_requirements and visual_evidence, so on these points this red team's judgem",
+    "I did not verify that the carries conform to the schema, because audit/schemas/carry.schema.json is outside this step's inputs.",
+    "The handoff has no drift_since_review. Its absence does not prove that the stage code's assumptions hold on this export; it only means the index saw no distribution shift.",
+    "There are no audit/decisions/*.json rulings (rulings is empty), so no figure rests on a recorded human ruling beyond the five RESOLVED entries in human_decisions.yaml.",
+    "gate0 matched the export against the order system's own log (45,917 rows, 45,000 orders, 5,013,381.55 gross). That shows the export is everything the system holds, not everything that happened, and the release does not say so.",
+    "Not established by this step: what R03.json contained before it was rewritten; whether release/report.md and dashboard_data.json differ from any earlier generation; and retry history and stale inputs, which only a human can see through audit_runner.py report."
+  ],
+  "summary": "FAIL on seven blockers. None of them is a wrong number. I recomputed every published figure from quarantine/orders.csv with my own stdlib code. That covers 21 registry metrics, including both Wilson and both Student intervals and both registered tests, plus all 60 numbers on the three release surfaces, and every one reproduces. The clean table also matches the deduplicated, period-cut export on every field of all 44,531 orders. The blockers are elsewhere. (1) analysis/answers/R03.json was rewritten in place 3h02m after worker_analysis completed, by a writer other than the one that wrote the ot",
+  "wall_seconds": 757.1,
+  "cost": {
+    "at": "2026-09-19T09:50:51.571380+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-62b781008144",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-19T09:38:17.449333+00:00",
+    "finished_at": "2026-09-19T09:50:51.571380+00:00",
+    "wall_seconds": 754.125,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 74,
+    "cached_input_tokens": 5837045,
+    "output_tokens": 78999,
+    "total_tokens": 5916118,
+    "cost_usd": 7.21543
+  }
+}

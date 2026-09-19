@@ -1,0 +1,73 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "m_page_interval_certainty",
+  "dataset": "messy",
+  "error": "The page says each interval is where the true value lies with near certainty.",
+  "at": "2026-09-16T17:26:10+00:00",
+  "max_v2_revision": "920704d",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "certaint|true value",
+    "sampling interval|interval"
+  ],
+  "blocking_issues": 4,
+  "warnings": 6,
+  "checks": 19,
+  "issue_ids": [
+    "REL-AUD-INTERVAL-CERTAINTY",
+    "REL-AUD-PAGE-POPULATION",
+    "REL-AUD-DASHBOARD-CARD-CONTEXT",
+    "REL-AUD-UNIT-MISSING"
+  ],
+  "issue_texts": [
+    "REL-AUD-INTERVAL-CERTAINTY | gate_release_auditor.interval_interpretation | gate_release_auditor|interval_interpretation|release/report.md|page | CLAIM_SUPPORT | HIGH | worker_release | release/report.md line 23, the closing sentence under 'By channel'. It says the interval shown beside each channel figure is where the channel's true value lies, and with near certainty. analysis/claim_register.jso",
+    "REL-AUD-PAGE-POPULATION | gate_release_auditor.population_label | gate_release_auditor|population_label|release/report.md|page | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3 is the page's only population statement, and it says delivered only. By the register, only CLM-NET-REVENUE, CLM-AOV-DIRECT and CLM-AOV-PARTNER are over delivered orders. CLM-ORDERS (line 9, 44,531) and ",
+    "REL-AUD-DASHBOARD-CARD-CONTEXT | gate_release_auditor.card_population_period_n | gate_release_auditor|card_population_period_n|release/dashboard_data.json|cards | VISUALIZATION | MEDIUM | worker_release | release/dashboard_data.json $.cards[0..5] carry only claim_id, label, value, _claim_roles and caveats (plus ci_low/ci_high on the four estimates). None carries population, period, n or confidence",
+    "REL-AUD-UNIT-MISSING | gate_release_auditor.unit_rendered | gate_release_auditor|unit_rendered|release|aov_and_cards | VISUALIZATION | MEDIUM | worker_release | In release/report.md, lines 18 and 20 (aov direct 110.64 [109.88, 111.39], aov partner 87.27 [86.50, 88.03]) print EUR figures with no currency. Only the net revenue line names EUR. In release/dashboard_data.json, no card has a unit, so 'N"
+  ],
+  "other_blockers": 2,
+  "warning_texts": [
+    "gate_release_document wording_matches_claims.all reported PASS because none of its dictionary words appear on the page. The interval-certainty sentence at release/report.md line 23 went through that gate unseen. The dictionary does not cover interpretations of intervals.",
+    "audit/release_surface_contract.json declares reconciliations, card_caveat_requirements and visual_evidence as empty lists. So on this release, no deterministic rule checks the reconciliation identities, the population, period and n on cards, or the rendered page itself. In this stage those rest on t",
+    "analysis/claim_register.json: all four estimate claims carry the caveat 'one quarter of orders in this channel'. A reader can take that as a 25% share of the channel. On the AOV claims it also says 'orders' where the population is delivered orders. The text originates at worker_analysis and is copie",
+    "release/dashboard_data.json labels read 'Aov Direct' and 'Aov Partner': the acronym is title-cased and not expanded.",
+    "The Student intervals for CLM-AOV-DIRECT/PARTNER could not be recomputed from this stage's inputs, which contain no row data. They are consistent with R04's Welch statistic: an implied t of about 42.6 against the reported 42.70, within the rounding of 2-digit bounds. Points are inside the bounds, an",
+    "The rule forbidding numeric literals in the release generator could not be checked here: src/release/build_release.py is not among this stage's inputs, and gate_release_machine evidence has no per-file literal scan row."
+  ],
+  "summary": "Every rendered figure is right: all 14 render roles on report.md, dashboard_data.json and the manifest exactly match the register, and my own arithmetic reproduces the ratios, Wilson bounds and the orders and revenue reconciliations. The release still fails on wording and context the numbers gate cannot see. (1) report.md line 23 tells the reader the interval is where the channel's true value lies with near certainty, an assertion no claim supports and that contradicts the 0.95 level and each claim's sampling-only caveat. (2) report.md line 3 labels the whole page 'delivered only', but 44,531 ",
+  "wall_seconds": 300.4,
+  "cost": {
+    "at": "2026-09-16T17:31:14.408823+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-1ec424ea468d",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-16T17:26:16.742142+00:00",
+    "finished_at": "2026-09-16T17:31:14.408823+00:00",
+    "wall_seconds": 297.672,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 32,
+    "cached_input_tokens": 1422944,
+    "output_tokens": 31307,
+    "total_tokens": 1454283,
+    "cost_usd": 2.3927315
+  }
+}

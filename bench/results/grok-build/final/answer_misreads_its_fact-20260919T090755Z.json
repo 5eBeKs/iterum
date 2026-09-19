@@ -1,0 +1,82 @@
+{
+  "profile": "grok-build",
+  "stage": "final",
+  "case": "answer_misreads_its_fact",
+  "dataset": "orders",
+  "error": "The answer to R02 calls a 47% refund rate low, fewer than one order in ten.",
+  "at": "2026-09-19T08:57:56+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_grok_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R02",
+    "one order in ten",
+    "\\blow\\b",
+    "0\\.47|47 ?%"
+  ],
+  "blocking_issues": 1,
+  "warnings": 14,
+  "checks": 27,
+  "issue_ids": [
+    "FINAL-R02-MISREADS-FACT"
+  ],
+  "issue_texts": [
+    "FINAL-R02-MISREADS-FACT | final.answer_caveat_matches_fact | final|answer_caveat_matches_fact|analysis/answers/R02.json|R02 | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R02.json facts cite CLM-REFUND-RATE value 0.473684. caveats[0] correctly names paying_customers. caveats[1] then calls that rate low and reads it as fewer than one order in ten. Independent raw recalc in audit/result"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "This run is one Grok model family on every stage; a shared bias can pass both sides of a check, so the deterministic layer (check_plan, machine gates, control lock, release surface gate) is what actually holds, and this verdict does not replace it.",
+    "No permissions.deny file exists in this profile, so write tools over raw_data were not blocked in advance.",
+    "Prior auditor and worker result.json files are driver e2e stubs (summaries named driver e2e, created_at 2026-01-01T00:00:00Z) and are not independent semantic review.",
+    "All four worker carries and worker result execution blocks share context_id ctx-worker_clean-a1-4c20722bb98f; they match each other as required, but they do not prove four distinct executions.",
+    "Each worker carry names the population as status=delivered and puts the window only under periods, so a later reused stage that read only populations would drop the inclusive 2025-01-01..2025-03-30 filter.",
+    "check_plan.accepted_unproven lists gate_release_document.claims_rendered and caveats_rendered; on the files now on disk those two rules hold (every claim and every registered caveat is on report.md and the dashboard cards).",
+    "gate_metrics_machine/evidence/unchecked.json leaves excluded_order_rows and excluded_outside_period without a from-source recompute; this recalc got 27 and 1 from raw, matching the registry via the component_sum pins.",
+    "wording_matches_claims is not in the frozen check_plan, so release and answer prose had no deterministic wording gate; a scan of release surfaces found none of the default WORDING-01..05 tokens, and R02's false magnitude reading is outside that dictionary.",
+    "handoff has no drift_since_review field; that absence does not prove the builders' assumptions still hold on this extract.",
+    "audit/decisions/ is absent, so there was no rulings journal to apply beyond audit/human_decisions.yaml.",
+    "None of the three RESOLVED rulings looks internally inconsistent with these rows; switching refund_rate_basis from paying_customers to order_rows would move CLM-REFUND-RATE from 0.473684 to 0.189655.",
+    "Runner state, retry history and stale-input reports were not inspected, as they are outside this stage's inputs.",
+    "No image surfaces exist under release/, and this headless run did not render any.",
+    "Worker disclosures and worker warnings arrays are empty, so no stage-reported command or sandbox failure was present to re-evaluate."
+  ],
+  "summary": "This profile is single-vendor Grok: an isolated fresh context is not an independent vendor, the PASS chain of prior stages is not proof, and there is no GPT gate over this work. No permissions.deny file closed write tools over raw sources; a raw edit would be caught by the control lock after the fact, not prevented. Independent recalc from raw_data/orders.csv reproduced every registry and release figure (net revenue 35741.52 EUR, refund rate 27/57=0.473684 on paying_customers, country components 11181.67+11032.61+13527.24, row accounting 201=174+26+1). The machine release gate bound 21/21 numb",
+  "wall_seconds": 579.1,
+  "cost": {
+    "at": "2026-09-19T09:07:53.652394+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "final_grok_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_grok_redteam-a1-62c54bc51bfb",
+    "agent_role": "grok-final-redteam",
+    "started_at": "2026-09-19T08:58:17.570599+00:00",
+    "finished_at": "2026-09-19T09:07:53.652394+00:00",
+    "wall_seconds": 576.094,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 153221,
+    "cached_input_tokens": 1991936,
+    "output_tokens": 33157,
+    "total_tokens": 2178314,
+    "cost_usd": 0.51045968
+  }
+}

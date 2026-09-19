@@ -1,0 +1,44 @@
+{
+  "profile": "claude-build",
+  "stage": "analysis",
+  "worker": "worker_analysis",
+  "kind": "worker",
+  "at": "2026-09-15T18:35:58+00:00",
+  "max_v2_revision": "1d34cf0",
+  "verdict": "PASS",
+  "stop_code": null,
+  "summary": "Rewrote src/analysis/build_claims.py to read period, population, refund rate basis, revenue recognition, countries, units, display digits and tolerances from audit/audit_spec.yaml and audit/release_surface_contract.json (stopping on any missing key) instead of hardcoding them; regenerated analysis/claim_register.json with five point claims bound one metric each and analysis/answers R01-R04 citing registry figures as metric_id/value (R05 excused by the check plan); no hypothesis tests were run since analysis_plan registers none; gate_claims_machine self-check PASS (39 checks) and tests/analysis",
+  "wall_seconds": 348.0,
+  "cost": {
+    "at": "2026-09-15T18:41:46.013577+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "worker_analysis",
+    "attempt": 1,
+    "context_id": "cc-worker_analysis-a1-d0ec172e12c5",
+    "agent_role": "claude-worker",
+    "started_at": "2026-09-15T18:36:01.226678+00:00",
+    "finished_at": "2026-09-15T18:41:46.013577+00:00",
+    "wall_seconds": 344.782,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 642,
+    "cached_input_tokens": 2245965,
+    "output_tokens": 30368,
+    "total_tokens": 2276975,
+    "cost_usd": 2.933422999999999
+  },
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "outcome": "gate_pass",
+  "fingerprints": []
+}

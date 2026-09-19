@@ -1,0 +1,57 @@
+{
+  "profile": "gpt-build",
+  "stage": "release",
+  "case": "population_line_wrong",
+  "error": "The page's population line says all orders; every figure is over delivered orders.",
+  "at": "2026-09-15T18:39:26+00:00",
+  "max_v2_revision": "1d34cf0",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "all orders"
+  ],
+  "blocking_issues": 1,
+  "warnings": 1,
+  "checks": 22,
+  "issue_ids": [
+    "REL-POPULATION-001"
+  ],
+  "warning_texts": [
+    "The configured release machine and document gates do not test the report's visible global population sentence, so all recorded gate comparisons pass despite the material contradiction at release/report.md line 3."
+  ],
+  "summary": "Release numbers, formatting, country reconciliation, refund-rate arithmetic, claim bindings, and configured document checks all reconcile, but release/report.md line 3 gives the reader the wrong population: all orders inside the period instead of delivered orders inside the period.",
+  "wall_seconds": 13722.8,
+  "cost": {
+    "at": "2026-09-15T22:28:12.575933+00:00",
+    "launcher": "codex_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-57757ed9e888",
+    "agent_role": "gpt-audit-release",
+    "started_at": "2026-09-15T22:25:05.014651+00:00",
+    "finished_at": "2026-09-15T22:28:12.575933+00:00",
+    "wall_seconds": 187.562,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "gpt-5.6-sol",
+    "model_used": null,
+    "input_tokens": 1548774,
+    "cached_input_tokens": null,
+    "output_tokens": 15453,
+    "total_tokens": 1564227,
+    "cost_usd": null
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "profile": "glm-build",
+  "stage": "release",
+  "case": "sum_sentence_false",
+  "error": "The page says the country figures sum to the headline before refunds; both are net of refunds.",
+  "at": "2026-09-15T18:49:45+00:00",
+  "max_v2_revision": "1d34cf0",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "before refunds",
+    "net of refunds",
+    "sum"
+  ],
+  "blocking_issues": 1,
+  "warnings": 2,
+  "checks": 13,
+  "issue_ids": [
+    "BLK-RELEASE-SUM-SENTENCE-FALSE"
+  ],
+  "warning_texts": [
+    "report.md line 22 makes a false arithmetic claim to the reader: the by-country net figures sum to the headline net revenue (35,741.52), not to any pre-refund total (40,235.02 is the gross figure the headline never shows).",
+    "audit/results/gate_release_machine/evidence/release_surface_gate.json contains no checks.json and records only bind/registry comparisons with no check_id fields; audit/results/gate_release_document/evidence/checks.json contains only claims_rendered/caveats_rendered comparisons and no recompute_*, co"
+  ],
+  "summary": "All 21 displayed numbers on the three release surfaces bind correctly to the claim register with exact display formatting, component sum (35,741.52 == headline), refund rate 27/57 = 0.473684 (6 digits) and paying_customers caveat verified independently. FAIL: report.md line 22 tells the reader 'Country figures sum to the headline before refunds are taken off', but the country figures (35,741.52) sum exactly to the headline which is NET of refunds; the pre-refund figure is 40,235.02. The sentence is false as displayed.",
+  "wall_seconds": 119.6,
+  "cost": {
+    "at": "2026-09-15T18:51:47.363972+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-78ba73bc147a",
+    "agent_role": "glm-audit-release",
+    "started_at": "2026-09-15T18:49:51.235278+00:00",
+    "finished_at": "2026-09-15T18:51:47.363972+00:00",
+    "wall_seconds": 116.125,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 25558,
+    "cached_input_tokens": 200704,
+    "output_tokens": 5357,
+    "total_tokens": 232918,
+    "cost_usd": 0.006591409999999999
+  }
+}

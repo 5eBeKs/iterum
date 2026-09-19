@@ -1,0 +1,67 @@
+{
+  "profile": "grok-build",
+  "stage": "claims",
+  "case": "answer_misreads_its_fact",
+  "dataset": "orders",
+  "error": "The answer to R02 calls a 47% refund rate low, fewer than one order in ten.",
+  "at": "2026-09-19T06:44:14+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R02",
+    "one order in ten",
+    "\\blow\\b",
+    "0\\.47|47 ?%"
+  ],
+  "blocking_issues": 1,
+  "warnings": 4,
+  "checks": 33,
+  "issue_ids": [
+    "R02-MISREADS-REFUND-RATE-FACT"
+  ],
+  "issue_texts": [
+    "R02-MISREADS-REFUND-RATE-FACT | gate_claims_auditor.R02_misreads_CLM-REFUND-RATE | gate_claims_auditor|answer_misreads_fact|analysis/answers/R02.json|CLM-REFUND-RATE | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R02.json facts cite CLM-REFUND-RATE 0.473684. Independent recalc from raw_data/orders.csv (delivered, 2025-01-01..2025-03-30 inclusive) is 27 refunded paying customers / 57 p"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "gate_claims_machine questions_are_answered only requires that analysis/answers/R02.json exist with question and facts fields; it does not test whether those caveats describe the cited fact, which is the gap this FAIL occupies.",
+    "audit/check_plan.json has no wording or answer-prose rule on gate_claims_machine, so qualitative recasting of a FACT claim is auditor-only coverage.",
+    "independent_claim_recalc.json lists actual, reported and raw source_paths but no formula or tolerance; sources are raw_data/orders.csv and the values match this recalc.",
+    "check_plan accepted_unproven names caveats_rendered and claims_rendered on gate_release_document; those holes belong to a later stage and were not treated as a pass here."
+  ],
+  "summary": "FAIL: analysis/answers/R02.json cites CLM-REFUND-RATE 0.473684, which raw_data/orders.csv recomputes as 27/57 paying customers, then describes that rate as low and as fewer than one order in ten refunded. Independent raw path for all five claims matches the register (net 35741.52 EUR; PL 11181.67, DE 11032.61, CZ 13527.24; rate 0.473684); independent_claim_recalc.json is rooted in raw_data/orders.csv. R01, R03, R04 and the register caveats hold; R05 stays excused.",
+  "wall_seconds": 617.4,
+  "cost": {
+    "at": "2026-09-19T06:54:35.618154+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-009832e9c8d5",
+    "agent_role": "grok-audit-claims",
+    "started_at": "2026-09-19T06:44:21.491893+00:00",
+    "finished_at": "2026-09-19T06:54:35.618154+00:00",
+    "wall_seconds": 614.14,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 282055,
+    "cached_input_tokens": 1800704,
+    "output_tokens": 31557,
+    "total_tokens": 2114316,
+    "cost_usd": 0.56229336
+  }
+}

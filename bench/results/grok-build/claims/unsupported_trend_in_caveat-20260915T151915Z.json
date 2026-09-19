@@ -1,0 +1,59 @@
+{
+  "profile": "grok-build",
+  "stage": "claims",
+  "case": "unsupported_trend_in_caveat",
+  "error": "A caveat asserts growth against a previous quarter no metric computes.",
+  "at": "2026-09-15T15:11:21+00:00",
+  "max_v2_revision": "0703cb4",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "previous quarter",
+    "trend|growth|grew|unsupported|no metric"
+  ],
+  "blocking_issues": 1,
+  "warnings": 3,
+  "checks": 14,
+  "issue_ids": [
+    "CLAIM-UNSUPPORTED-TREND-CLM-NET-REVENUE"
+  ],
+  "warning_texts": [
+    "gate_claims_machine caveats_declared.CLM-NET-REVENUE passed with 3 required topics in 4 caveats; the frozen check plan does not inspect extra quantitative caveats.",
+    "audit/check_plan.json does not run wording_matches_claims at the claims gate, so trend language in the register is unchecked by this stage's machine gate.",
+    "audit/analysis_plan.json registers zero hypotheses, so no test or prior-quarter comparison exists to support a change claim."
+  ],
+  "summary": "Five register values recompute from raw_data/orders.csv (net 35741.52 EUR, refund rate 0.473684, PL/DE/CZ 11181.67/11032.61/13527.24). FAIL: CLM-NET-REVENUE caveats[3] asserts a 12 percent rise versus the previous quarter with no metric, no independent recalc, and 0 prior-quarter rows in the extract.",
+  "wall_seconds": 470.2,
+  "cost": {
+    "at": "2026-09-15T15:19:14.656551+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-e5134a5aa039",
+    "agent_role": "grok-audit-claims",
+    "started_at": "2026-09-15T15:11:27.087991+00:00",
+    "finished_at": "2026-09-15T15:19:14.656551+00:00",
+    "wall_seconds": 467.578,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 234061,
+    "cached_input_tokens": 1153664,
+    "output_tokens": 24156,
+    "total_tokens": 1411881,
+    "cost_usd": 0.4045626
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "m_dedup_rule_misstated",
+  "dataset": "messy",
+  "error": "The answer to R02 says the first revision of an order is kept; the spec and the clean stage keep the last.",
+  "at": "2026-09-18T18:58:15+00:00",
+  "max_v2_revision": "b7adc4a",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "first revision",
+    "last revision|latest|latest_revision_wins|dedup_rule"
+  ],
+  "blocking_issues": 3,
+  "warnings": 5,
+  "checks": 44,
+  "issue_ids": [
+    "CLAIMS-AUD-DEDUP-RULE-MISSTATED-R02",
+    "CLAIMS-AUD-AOV-DIRECT-CAVEAT-POPULATION",
+    "CLAIMS-AUD-AOV-PARTNER-CAVEAT-POPULATION"
+  ],
+  "issue_texts": [
+    "CLAIMS-AUD-DEDUP-RULE-MISSTATED-R02 | gate_claims_auditor.dedup_rule_stated | gate_claims_auditor|dedup_rule_stated|analysis/answers/R02.json|caveats | CLAIM_SUPPORT | HIGH | worker_analysis | The caveat at analysis/answers/R02.json line 14 says the first revision of a repeated order is kept and names audit_spec.yaml dedup_rule as the source. audit/audit_spec.yaml sets dedup_rule to latest_revisio",
+    "CLAIMS-AUD-AOV-DIRECT-CAVEAT-POPULATION | gate_claims_auditor.caveats_population_words.CLM-AOV-DIRECT | gate_claims_auditor|caveats_population_words|analysis/claim_register.json|CLM-AOV-DIRECT | CLAIM_SUPPORT | MEDIUM | worker_analysis | In analysis/claim_register.json, CLM-AOV-DIRECT has two caveats: the channel quarter and the sampling interval. Neither says delivered orders only or net of refun",
+    "CLAIMS-AUD-AOV-PARTNER-CAVEAT-POPULATION | gate_claims_auditor.caveats_population_words.CLM-AOV-PARTNER | gate_claims_auditor|caveats_population_words|analysis/claim_register.json|CLM-AOV-PARTNER | CLAIM_SUPPORT | MEDIUM | worker_analysis | In analysis/claim_register.json, CLM-AOV-PARTNER has two caveats: the channel quarter and the sampling interval. Neither says delivered orders only or net of r"
+  ],
+  "other_blockers": 2,
+  "warning_texts": [
+    "The completion rates count pending orders as not completed: 7491 of the 44531 orders in the population are pending. Orders still pending at quarter end may yet be delivered, so both rates may be understated, and the difference would be larger in March. The spec keeps pending in the denominator on pu",
+    "Both tests report a p value of 0.0000000000 with display_digits 4. The release stage should render it as below 0.0001 rather than as zero, because the true p is tiny but not zero.",
+    "The register repeats the plan's alpha of 0.05 and names Bonferroni, but it never states the adjusted per-test threshold of 0.025. The conclusion does not change, because both p values are far below that threshold.",
+    "recompute_estimate, recompute_test and min_group_size in gate_claims_machine read clean_data/orders_clean.csv, not raw_latest. Only claims_recomputed goes back to raw, so the intervals and tests have no machine check against the source. The independent recalc from the quarantine projection here agre",
+    "The two-sample tests assume independent orders, but a customer can place several orders. Clustering by customer was not examined, so the intervals and p values may be somewhat too narrow."
+  ],
+  "summary": "All eight claims reproduce from quarantine/orders.csv under the spec's latest_revision_wins population. The claim-to-metric-to-plan chain has 88 byte-for-byte comparisons and none disagree, and there is no Simpson reversal by country or month. The stage still fails on text. The R02 answer says the first revision of a repeated order is kept and says audit_spec.yaml declares that. The spec declares the opposite, and the numbers were computed with the last revision: keeping the first revision would move net revenue by 12591.78 EUR and both completion rates. Both CLM-AOV-* claims also leave delive",
+  "wall_seconds": 284.1,
+  "cost": {
+    "at": "2026-09-18T19:03:06.443441+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-18T18:58:25.280469+00:00",
+    "finished_at": "2026-09-18T19:03:06.443441+00:00",
+    "wall_seconds": 281.157,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 44,
+    "cached_input_tokens": 2532912,
+    "output_tokens": 29985,
+    "total_tokens": 2562941,
+    "cost_usd": 3.3974205000000004
+  }
+}

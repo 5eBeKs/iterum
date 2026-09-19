@@ -1,0 +1,71 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "m_interval_read_as_probability",
+  "dataset": "messy",
+  "error": "The answer to R03 reads each 0.95 interval as a 95% probability that the true rate lies inside it.",
+  "at": "2026-09-19T06:40:36+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "probab",
+    "confidence|frequentist|coverage|credible|bayes"
+  ],
+  "blocking_issues": 3,
+  "warnings": 6,
+  "checks": 39,
+  "issue_ids": [
+    "CLAIMS-AUD-R03-INTERVAL-AS-PROBABILITY",
+    "CLAIMS-AUD-R03-BARE-NUMBER",
+    "CLAIMS-AUD-AOV-CAVEATS-MISSING-DELIVERED-NET"
+  ],
+  "issue_texts": [
+    "CLAIMS-AUD-R03-INTERVAL-AS-PROBABILITY | gate_claims_auditor.interval_interpretation.R03 | gate_claims_auditor|interval_interpretation|analysis/answers/R03.json|caveats | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R03.json, caveats[0]. This answer to the completion-rate question says there is a stated-percent probability that each channel's true rate lies inside its interval. The in",
+    "CLAIMS-AUD-R03-BARE-NUMBER | gate_claims_auditor.caveat_bare_number.R03 | gate_claims_auditor|caveat_bare_number|analysis/answers/R03.json|caveats | CLAIM_SUPPORT | MEDIUM | worker_analysis | The same R03 caveat has a bare percent figure written as digits. No claim_id, source_ref or display_digits binds it, so a release scanner would read it as an unbound number. Every caveat in analysis/claim_reg",
+    "CLAIMS-AUD-AOV-CAVEATS-MISSING-DELIVERED-NET | gate_claims_auditor.caveats_population_words.CLM-AOV | gate_claims_auditor|caveats_population_words|analysis/claim_register.json|CLM-AOV-* | CLAIM_SUPPORT | MEDIUM | worker_analysis | In analysis/claim_register.json, CLM-AOV-DIRECT and CLM-AOV-PARTNER have only two caveats each: channel population and sampling interval only. Neither says in words that"
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "The Wilson intervals, the Welch and two-proportion tests and min_group_size are recomputed by the machine gate from clean_data only. Only the six point values in claims_recomputed go back to raw_latest. This auditor's recompute from quarantine/orders.csv closes that gap for this run, and every inter",
+    "Both test p-values are stored as ten zero decimals and are displayed at four digits. A release that shows them as a plain zero instead of 'below 0.0001' would state an impossible p-value.",
+    "The machine rule claims_are_single_assertions reports every role of both test claims as unit p. The statistic and the effect actually carry units 'statistic', 'proportion_difference' and 'cohens_d', so that rule does not really check unit consistency for tests.",
+    "The CLM-COMPLETION-* caveats do not say in words that cancelled and pending orders are in the denominator. The numbers confirm it: 24597 + 19934 = 44531, every order in the period.",
+    "The R03 and R04 fact entries give each estimate's interval but not its n. The spec's estimate_rendering rule will need n from the claim register at release.",
+    "The plan assumption that neither channel changed how it books orders during the quarter cannot be checked from the data. Monthly completion and AOV differences stay the same sign and a similar size across January to March, which is consistent with it."
+  ],
+  "summary": "Every figure in all eight claims was recomputed independently from quarantine/orders.csv (45917 rows, 45000 order_ids, 44531 in the population after the declared exclusions) and matches the metrics registry, the frozen plan and the claims gate exactly. There are two text blockers for worker_analysis. First, analysis/answers/R03.json says the Wilson confidence interval has a probability of containing the true rate. That is a probability statement about a frequentist interval, and the registry's own caveats and the spec's semantic trap say the opposite. Second, CLM-AOV-DIRECT and CLM-AOV-PARTNER",
+  "wall_seconds": 263.6,
+  "cost": {
+    "at": "2026-09-19T06:45:07.210075+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-19T06:40:46.657621+00:00",
+    "finished_at": "2026-09-19T06:45:07.208029+00:00",
+    "wall_seconds": 260.546,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 42,
+    "cached_input_tokens": 2538184,
+    "output_tokens": 26801,
+    "total_tokens": 2565027,
+    "cost_usd": 3.2565874999999997
+  }
+}

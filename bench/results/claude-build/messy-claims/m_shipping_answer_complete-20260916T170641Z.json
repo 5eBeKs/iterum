@@ -1,0 +1,68 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "m_shipping_answer_complete",
+  "dataset": "messy",
+  "error": "The answer to R05 calls the shipping total complete; about six per cent of its cells are blank, NaN or inf.",
+  "at": "2026-09-16T17:03:36+00:00",
+  "max_v2_revision": "05bbc25",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R05|shipping",
+    "readable|blank|NaN|\\binf\\b|six per ?cent|6 ?%|unknown amount|underst|complete"
+  ],
+  "blocking_issues": 1,
+  "warnings": 7,
+  "checks": 28,
+  "issue_ids": [
+    "CLAIMS-AUD-R05-SHIPPING-EXEMPTION-MISSTATED"
+  ],
+  "issue_texts": [
+    "CLAIMS-AUD-R05-SHIPPING-EXEMPTION-MISSTATED | gate_claims_auditor.r05_shipping_exemption | gate_claims_auditor|r05_shipping_exemption|analysis/answers/R05.json|shipping_total | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R05.json caveats[0] says every shipping cell was readable, the total is complete and it is left out only for brevity. audit_spec.yaml metrics.shipping_total (publish"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "R05 was not checked by any deterministic rule beyond field presence (questions_are_answered requires only question and facts), so the false caveat there was caught only by this review; answer caveat text in general is unchecked by the plan.",
+    "independent_claim_recalc.json lists raw_data/orders.csv as its source path and check_plan.json declares claims_recomputed over raw_latest, while the stage prompt describes it as rooted in clean_data; either way it is not rooted in analysis/ or release/, so it is not self-checking and this is recorde",
+    "R03 and R04 carry the method, alpha, correction and n_per_group of the registered hypotheses but do not name the groups explicitly; the group order is inferable only from the plan's assumption that direct is first, and the n values match direct then partner.",
+    "audit/human_decisions.yaml and audit/prompts/COMMON_CONTRACT.md are not in this attempt's allowed input paths and were not read; the common contract text embedded in the stage prompt was used instead.",
+    "Recomputation used quarantine/orders.csv (in the handoff's input_globs) with dedup by last row in file order; dedup by latest updated_at gives the identical population (0 disagreements).",
+    "scipy was unavailable, so Student t and normal quantiles came from closed-form approximations in evidence/recompute_claims.py; the resulting bounds agree with the gate to well within 0.01 EUR and 0.000001.",
+    "One exploratory shell command (directory listing plus reading the handoff) was refused by the permission layer and did not run; files were then read with the file-reading tool only, and the only writes are evidence/recompute_claims.py, its output evidence/recompute_claims.out.json and this result."
+  ],
+  "summary": "All six claims recompute independently from quarantine/orders.csv and chain byte-for-byte to calculated_metrics.json and analysis_plan.json (values, bounds, n, level, method, caveats, R03/R04 test statistics). One blocker: analysis/answers/R05.json states that every shipping cell was readable, that the shipping total is complete and that it was omitted only for brevity; the spec, the check plan's excuse for shipping_total and a recount (2648 of 44531 in-period orders have a blank, NaN or inf shipping cell) all contradict it.",
+  "wall_seconds": 178.1,
+  "cost": {
+    "at": "2026-09-16T17:06:40.314013+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-16T17:03:44.862517+00:00",
+    "finished_at": "2026-09-16T17:06:40.314013+00:00",
+    "wall_seconds": 175.453,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 26,
+    "cached_input_tokens": 1256135,
+    "output_tokens": 18439,
+    "total_tokens": 1274600,
+    "cost_usd": 2.081058
+  }
+}

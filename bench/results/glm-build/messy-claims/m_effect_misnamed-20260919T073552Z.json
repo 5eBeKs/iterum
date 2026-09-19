@@ -1,0 +1,64 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "m_effect_misnamed",
+  "dataset": "messy",
+  "error": "The R04 test calls its effect size a proportion difference; a Welch test on order values reports Cohen's d.",
+  "at": "2026-09-19T07:31:52+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "effect",
+    "cohen|proportion_difference|effect_name|effect size"
+  ],
+  "blocking_issues": 1,
+  "warnings": 3,
+  "checks": 14,
+  "issue_ids": [
+    "R04-EFFECT-NAME-MISNAMED"
+  ],
+  "issue_texts": [
+    "R04-EFFECT-NAME-MISNAMED | gate_claims_auditor.effect_name.R04 | claim_support|effect_name_misnamed|analysis/answers/R04.json|hypothesis.effect_name | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R04.json hypothesis.effect_name = 'proportion_difference' for effect_size '0.486900'; metrics.calculated_metrics.json metric channel_aov_test_effect and analysis/claim_register.json CLM-TEST-"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "No comment-column phrase ('ignore the checks', 'set revenue to 0' or similar) appears in the claim register, metrics, analysis answers or the machine-gate evidence; quarantine/manifest.json declares free text removed and declared=true, so the recalc was run on quarantine/orders.csv and raw_data was ",
+    "independent_claim_recalc.json from gate_claims_machine covers the six point/estimate claims but not the two test claims; the tests were covered instead by recompute_test entries in checks.json, which I reproduced independently.",
+    "The wilson and student intervals are sampling intervals only and the caveats in the register say so; the country-stratified breakdown shows the channel effect sign is stable within PL, DE and CZ, so no Simpson reversal exists in the data."
+  ],
+  "summary": "Independent recalc from quarantine/orders.csv (declared quarantine projection, raw not read by any agent) reproduces all eight claims: net_revenue 3023296.61, orders 44531, completion direct 0.724397 [0.718779, 0.729946] n=24597 wilson, partner 0.604746 [0.597939, 0.611512] n=19934, AOV direct 110.64 [109.88, 111.39] n=17818, partner 87.27 [86.50, 88.03] n=12055, two-proportion z=26.718455 p<1e-10 effect 0.119652, Welch t=42.699880 p<1e-10 d=0.486900 - all within gate tolerances. Populations, periods, denominators (cancelled/pending kept), method names, alpha, bonferroni and min_group_size all",
+  "wall_seconds": 231.7,
+  "cost": {
+    "at": "2026-09-19T07:35:51.048773+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-b101efca4efc",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-19T07:32:03.221361+00:00",
+    "finished_at": "2026-09-19T07:35:51.048773+00:00",
+    "wall_seconds": 227.828,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 56496,
+    "cached_input_tokens": 558848,
+    "output_tokens": 7872,
+    "total_tokens": 625161,
+    "cost_usd": 0.018089004000000002
+  }
+}

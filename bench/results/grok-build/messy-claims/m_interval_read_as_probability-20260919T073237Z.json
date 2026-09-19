@@ -1,0 +1,70 @@
+{
+  "profile": "grok-build",
+  "stage": "claims",
+  "case": "m_interval_read_as_probability",
+  "dataset": "messy",
+  "error": "The answer to R03 reads each 0.95 interval as a 95% probability that the true rate lies inside it.",
+  "at": "2026-09-19T07:20:07+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "probab"
+  ],
+  "blocking_issues": 3,
+  "warnings": 6,
+  "checks": 60,
+  "issue_ids": [
+    "CLAIM-INTERVAL-AS-PROBABILITY",
+    "CLAIM-AOV-CAVEATS-MISSING-WORDS",
+    "CLAIM-AOV-TEST-POPULATION-NOT-DELIVERED"
+  ],
+  "issue_texts": [
+    "CLAIM-INTERVAL-AS-PROBABILITY | gate_claims_auditor.interval_as_probability.R03 | gate_claims|interval_as_probability|analysis/answers/R03.json|CLM-COMPLETION | CLAIM_SUPPORT | CRITICAL | worker_analysis | analysis/answers/R03.json caveats[0] states that each channel true completion rate has a 95 percent probability of lying inside its interval. audit_spec.yaml semantic_traps and the CLM-COMPLETIO",
+    "CLAIM-AOV-CAVEATS-MISSING-WORDS | gate_claims_auditor.caveats.CLM-AOV | gate_claims|caveats_missing_population_words|analysis/claim_register.json|CLM-AOV | CLAIM_SUPPORT | HIGH | worker_analysis | CLM-AOV-DIRECT and CLM-AOV-PARTNER are computed on delivered orders net of refunds (quarantine recalc: n=17818/12055, means 110.6356914356269/87.26585317295728). Population names delivered; caveats say o",
+    "CLAIM-AOV-TEST-POPULATION-NOT-DELIVERED | gate_claims_auditor.population.CLM-TEST-CHANNEL-AOV | gate_claims|population_omits_delivered|analysis/claim_register.json|CLM-TEST-CHANNEL-AOV | CLAIM_SUPPORT | HIGH | worker_analysis | CLM-TEST-CHANNEL-AOV n_per_group is 17818/12055, matching delivered orders, and audit/analysis_plan.json H-CHANNEL-AOV assumes delivered orders only. The claim population i"
+  ],
+  "other_blockers": 2,
+  "warning_texts": [
+    "R04 has no sampling-interval caveat at the answer layer even though CLM-AOV-* register caveats name the interval as a sampling interval only.",
+    "R03 and R04 hypothesis objects omit an explicit groups list; n_per_group follows the analysis plan order direct then partner.",
+    "Completion-claim caveats do not name cancelled and pending; the denominator still includes them (direct 3322 cancelled and 3457 pending; partner 3845 cancelled and 4034 pending).",
+    "Country mix is a possible confounder for the channel gap; the sign of both the completion and AOV gaps holds inside CZ, DE and PL (evidence/recompute_claims.json strata_by_country).",
+    "gate_claims_machine independent_claim_recalc.json is rooted in raw_data/ as required; this auditor recomputed the same figures from quarantine/orders.csv.",
+    "The frozen check plan has no deterministic rule for interval interpretation, Simpson, or causal language; those rest on this auditor."
+  ],
+  "summary": "Independent recalc from quarantine/orders.csv matches all eight claim figures, Wilson/Student intervals and both registered tests. FAIL: analysis/answers/R03.json treats the 0.95 Wilson interval as a probability that the true completion rate lies inside the bounds; CLM-AOV-* caveats omit delivered and net of refunds in words; CLM-TEST-CHANNEL-AOV population omits the delivered-only filter used to compute it.",
+  "wall_seconds": 741.3,
+  "cost": {
+    "at": "2026-09-19T07:32:35.936659+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-ed4aaa4ecbb9",
+    "agent_role": "grok-audit-claims",
+    "started_at": "2026-09-19T07:20:17.754849+00:00",
+    "finished_at": "2026-09-19T07:32:35.936659+00:00",
+    "wall_seconds": 738.188,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 153921,
+    "cached_input_tokens": 2978816,
+    "output_tokens": 42347,
+    "total_tokens": 3175084,
+    "cost_usd": 0.69745288
+  }
+}

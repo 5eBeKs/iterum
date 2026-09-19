@@ -1,0 +1,65 @@
+{
+  "profile": "grok-build",
+  "stage": "claims",
+  "case": "population_relabelled",
+  "dataset": "orders",
+  "error": "The headline claim says its population is all orders, while the spec and its own caveats say delivered orders.",
+  "at": "2026-09-19T06:36:21+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "all orders",
+    "CLM-NET-REVENUE"
+  ],
+  "blocking_issues": 1,
+  "warnings": 3,
+  "checks": 30,
+  "issue_ids": [
+    "CLM-NET-REVENUE-POPULATION-MISLABEL"
+  ],
+  "issue_texts": [
+    "CLM-NET-REVENUE-POPULATION-MISLABEL | gate_claims_auditor.population.CLM-NET-REVENUE | gate_claims_auditor|population_matches_computation|analysis/claim_register.json|CLM-NET-REVENUE | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/claim_register.json CLM-NET-REVENUE.population is all orders inside the period. Spec population and metric net_revenue.population are delivered orders inside the per"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "audit/check_plan.json has no rule that a claim.population string must match the filters used to compute the claim; gate_claims_machine passed CLM-NET-REVENUE on the delivered-only formula while the population field named a different set.",
+    "CLM-NET-REVENUE caveats already say delivered orders only, so caveats_declared cannot see the mislabelled population field.",
+    "No hypothesis is registered and no claim has kind estimate or test, so the inferential checklist does not apply to this register."
+  ],
+  "summary": "CLM-NET-REVENUE is computed on delivered orders inside 2025-01-01..2025-03-30 (35741.52 EUR from raw_data/orders.csv) but its population field names all orders inside the period, a set whose net is 41881.34. The other four claims match their populations, periods, and paying-customer refund-rate basis. Machine-gate source recomputes agree with this independent recalc.",
+  "wall_seconds": 487.7,
+  "cost": {
+    "at": "2026-09-19T06:44:34.475577+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-c6eff88a18f9",
+    "agent_role": "grok-audit-claims",
+    "started_at": "2026-09-19T06:36:31.733544+00:00",
+    "finished_at": "2026-09-19T06:44:34.475577+00:00",
+    "wall_seconds": 482.734,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 100464,
+    "cached_input_tokens": 1347072,
+    "output_tokens": 29227,
+    "total_tokens": 1476763,
+    "cost_usd": 0.35694084
+  }
+}

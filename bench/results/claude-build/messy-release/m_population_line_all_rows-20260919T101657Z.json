@@ -1,0 +1,71 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "m_population_line_all_rows",
+  "dataset": "messy",
+  "error": "The page's population line says every export row; the figures are over one row per order after deduplication.",
+  "at": "2026-09-19T10:13:13+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "every row|export row|revision|dedup|one row per order"
+  ],
+  "blocking_issues": 4,
+  "warnings": 4,
+  "checks": 16,
+  "issue_ids": [
+    "REL-AUD-POPULATION-LINE",
+    "REL-AUD-POPULATION-PER-FIGURE",
+    "REL-AUD-DASHBOARD-CARD-CONTEXT",
+    "REL-AUD-DASHBOARD-ESTIMATE-N"
+  ],
+  "issue_texts": [
+    "REL-AUD-POPULATION-LINE | gate_release_auditor.population_line_matches_register | gate_release_auditor|population_line_matches_register|release/report.md|page_population | RELEASE_INTEGRITY | CRITICAL | worker_release | release/report.md line 3 reads 'Population: every row of the export inside the quarter, delivered only.' Regenerating the report from the current analysis/claim_register.json with ",
+    "REL-AUD-POPULATION-PER-FIGURE | gate_release_auditor.population_beside_each_figure | gate_release_auditor|population_beside_each_figure|release/report.md|all_claims | VISUALIZATION | HIGH | worker_release | src/release/build_release.py line 86 prints one page-level 'Population:' line and takes it from CLM-NET-REVENUE only (revenue['population'], which is delivered-only). None of the 8 figure lines",
+    "REL-AUD-DASHBOARD-CARD-CONTEXT | gate_release_auditor.dashboard_card_population_period | gate_release_auditor|dashboard_card_population_period|release/dashboard_data.json|all_cards | VISUALIZATION | MEDIUM | worker_release | release/dashboard_data.json: none of the 8 cards has a population field, and the period exists only at top-level $.period, which is itself exempt from binding (card_has_popula",
+    "REL-AUD-DASHBOARD-ESTIMATE-N | gate_release_auditor.dashboard_estimate_n_and_level | gate_release_auditor|dashboard_estimate_n_and_level|release/dashboard_data.json|estimate_cards | VISUALIZATION | MEDIUM | worker_release | release/dashboard_data.json cards[2..5] (CLM-COMPLETION-DIRECT, CLM-COMPLETION-PARTNER, CLM-AOV-DIRECT, CLM-AOV-PARTNER) show value, ci_low and ci_high but no n and no interval"
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "Both registered tests show p as '0.0000', which reads as a p of exactly zero. My recomputed two-sided p for the completion test is about 3e-157, so '< 0.0001' would be accurate where '0.0000' is not.",
+    "The frozen check plan has no deterministic rule for population text, per-card population or period, or n and level on dashboard cards. Every blocker in this result sits where the machine gates were silent, and their PASS on those points is not approval.",
+    "The completion caveat 'one quarter of orders in this channel' is the only wording that says the denominator is the whole channel. It is too weak to outweigh a page-level line that says 'delivered only'.",
+    "The Welch statistic and Cohen's d for H-CHANNEL-AOV could only be checked approximately, from standard deviations backed out of the 2-dp interval bounds: 42.62 against 42.70 in the register, and 0.485 against 0.4869. The direction and significance agree, but an exact check needs the clean table, whi"
+  ],
+  "summary": "Every one of the 60 numbers on report.md, dashboard_data.json and the manifest is bound to its claim role and matches the register's own formatting. The reconciliation identities hold (44531 = 24597 + 19934; 3023296.61 = 1971306.75 + 1051989.86; AOV n = delivered count per channel), and the Wilson intervals, the z test and the completion effect recompute exactly. The release still fails, on context rather than numbers. First, report.md line 3 states the population as every export row in the quarter, delivered only. That contradicts the deduplicated one-row-per-order population, and it tells th",
+  "wall_seconds": 218.6,
+  "cost": {
+    "at": "2026-09-19T10:16:55.913255+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-1ec424ea468d",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-19T10:13:20.648378+00:00",
+    "finished_at": "2026-09-19T10:16:55.913255+00:00",
+    "wall_seconds": 215.266,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 28,
+    "cached_input_tokens": 1274805,
+    "output_tokens": 21428,
+    "total_tokens": 1296261,
+    "cost_usd": 2.221786
+  }
+}

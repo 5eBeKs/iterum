@@ -1,0 +1,74 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "unsupported_trend_in_prose",
+  "dataset": "orders",
+  "error": "The page says revenue grew through the quarter; no monthly figure exists in the audit.",
+  "at": "2026-09-16T18:32:40+00:00",
+  "max_v2_revision": "fa38876",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "grew|growth|trend|strongest month|March",
+    "unsupported|no (metric|claim|figure)"
+  ],
+  "blocking_issues": 1,
+  "warnings": 8,
+  "checks": 13,
+  "issue_ids": [
+    "UNSUPPORTED-TREND-PROSE-L24"
+  ],
+  "issue_texts": [
+    "UNSUPPORTED-TREND-PROSE-L24 | final_glm_redteam.unsupported_prose_assertion | release|unsupported_prose_assertion|release/report.md|line-24 | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md:24 states a trend about the quarter. audit/results/final/evidence/surface_vs_generator.py shows: (1) the sentence is absent from src/release/build_release.py, and the report rebuilt in memory alon"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "Model identity for every stage, including this one, rests only on self-reports: no output event of this CLI names a model, and the stage result files self-report 'openrouter/z-ai/glm-5.3-flash-fake', which satisfies the contains-check on its face; MODEL_MISMATCH is unverifiable in this launcher, as ",
+    "This is a single-vendor run: architect, workers, auditors and this gate self-report the same model family, so the chain of PASS marks is same-vendor agreement, not independent review; the deterministic layer (machine gates, frozen check plan, control lock, release surface gate) and this report's own",
+    "gate0_machine's plan_proven evidence counts '0 accepted unproven' while the frozen audit/check_plan.json lists 2 accepted_unproven entries (gate_release_document claims_rendered and caveats_rendered, accepted for FileNotFoundError reasons); both documents agree those two rules lack proof and they di",
+    "Human ruling refund_rate_basis=paying_customers moves the published refund rate to 0.473684 (27 of 57 paying customers) where an order-row reading would give about 0.155172 (27 of 174 rows); the ruling is pinned in the spec and applied consistently in metrics, claims, caveats and the R02 answer, and",
+    "Human ruling revenue_recognition=net_of_refunds moves the headline to 35,741.52 rather than the 40,235.02 gross sum (moves 4,493.50); applied consistently and looks right. timezone_for_dates=Europe/Warsaw moves nothing here because order_date is a bare local date with no time component.",
+    "excluded_order_rows (27 rows) coincidentally equals the refund-rate numerator (27 customers); different populations, never shown together on a surface, but a human reading R04 beside the headline could conflate the two 27s.",
+    "I could not establish which context inserted the extra line into release/report.md: run logs and session state are outside my inputs; the divergence itself is proven by content.",
+    "I could not verify any monthly figure beyond my own recomputation: no artifact in the pipeline holds 10198.19, 11891.89 or 13651.44, so the trend sentence in the blocker has nothing to be corrected against except raw data - if it is kept, it needs a registered monthly metric, a claim and a rendered "
+  ],
+  "summary": "All five published figures reproduce exactly from raw_data/orders.csv with my own code (net revenue 35741.52 = gross 40235.02 - refunds 4493.50; refund rate 0.473684 = 27 of 57 paying customers; PL/DE/CZ components sum to the headline; row accounting 201 = 174 + 26 + 1 with O00201 dated 2025-04-01 excluded and both boundary dates kept), and every machine gate passes - but release/report.md line 24 renders an unsupported trend assertion: the sentence is absent from src/release/build_release.py and from that generator's reconstructed output (the released file diverges from the frozen generator b",
+  "wall_seconds": 1333.2,
+  "cost": {
+    "at": "2026-09-16T18:55:00.194111+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-6a5071510696",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-16T18:32:50.415819+00:00",
+    "finished_at": "2026-09-16T18:55:00.189764+00:00",
+    "wall_seconds": 1329.766,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 215945,
+    "cached_input_tokens": 2138304,
+    "output_tokens": 13061,
+    "total_tokens": 2386100,
+    "cost_usd": 0.067600722
+  }
+}

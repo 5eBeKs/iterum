@@ -1,0 +1,72 @@
+{
+  "profile": "glm-build",
+  "stage": "release",
+  "case": "caveat_dropped_where_repeated",
+  "dataset": "orders",
+  "error": "The headline's caveat line no longer says net of refunds; only a sentence about the country table still does.",
+  "at": "2026-09-18T18:12:46+00:00",
+  "max_v2_revision": "b7adc4a",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "net of refunds.{0,160}(headline|CLM-NET-REVENUE|net revenue)",
+    "(headline|CLM-NET-REVENUE|net revenue).{0,160}net of refunds",
+    "caveat.{0,80}(missing|dropped|lost|absent|omitted|removed)",
+    "(missing|dropped|lost|absent|omitted|removed).{0,80}caveat"
+  ],
+  "blocking_issues": 3,
+  "warnings": 5,
+  "checks": 9,
+  "issue_ids": [
+    "CAVEAT-DROPPED-HEADLINE-CARD",
+    "REPORT-NOT-REPRODUCIBLE-FROM-GENERATOR",
+    "DOC-GATE-RULES-ACCEPTED-UNPROVEN"
+  ],
+  "issue_texts": [
+    "CAVEAT-DROPPED-HEADLINE-CARD | release.caveat_on_card.CLM-NET-REVENUE | release|caveat_missing_on_card|release/report.md|CLM-NET-REVENUE | RELEASE_INTEGRITY | CRITICAL | worker_release | analysis/claim_register.json CLM-NET-REVENUE.caveats = ['net of refunds','delivered orders only','period boundaries are inclusive on both ends']; release/report.md headline card (line 8) shows only 'delivered orde",
+    "REPORT-NOT-REPRODUCIBLE-FROM-GENERATOR | release.generator_reproducibility | release|artifact_diverges_from_generator|release/report.md|src/release/build_release.py | RELEASE_INTEGRITY | HIGH | worker_release | src/release/build_release.py line 39 renders f\"Caveats: {'; '.join(revenue['caveats'])}.\" from the full registry caveat list (3 items), and analysis/claim_register.json still carries all 3 ",
+    "DOC-GATE-RULES-ACCEPTED-UNPROVEN | release.gate_rule_provenance | release|rule_accepted_unproven|audit/check_plan.json|gate_release_document:caveats_rendered,claims_rendered | RELEASE_INTEGRITY | HIGH | gate_release_document | audit/check_plan.json accepted_unproven records both gate_release_document rules (caveats_rendered, claims_rendered, scope claims) accepted without a passing prove-plan run:"
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "src/release/build_release.py comments narrate past audit findings (a live red team, a demo-messy generator) and cite a 'GENERATOR-02' rule from the contract; the text contains no directive to the auditor and was treated as data only.",
+    "Numeric-literal scan of src/release/build_release.py: no business figure literals; the only numeric literals are the formatting constants covered by generator_literal_exclusions in audit/release_surface_contract.json.",
+    "No UNVERIFIED_CLAIM marker appears on any release surface; every shown number is a plain render of a registered claim.",
+    "audit/release_surface_contract.json card_caveat_requirements is an empty list, so no machine rule enforced per-card caveats; the caveat check ran only as the (unproven, and here wrong) document-gate rule.",
+    "Refund-rate caveat wording is present on both surfaces, so CLM-REFUND-RATE is not read as a share of orders; the defect is confined to the CLM-NET-REVENUE headline card."
+  ],
+  "summary": "All 21 released numbers recompute and format correctly against metrics/calculated_metrics.json and analysis/claim_register.json (money to 0.01, proportion to 1e-6, country components sum to the headline, 27/57 renders as 0.473684). But release/report.md drops the registry caveat 'net of refunds' from the CLM-NET-REVENUE headline card while repeating the phrase later in the country section, the gate_release_document caveats_rendered check for that surface is a false PASS, and the artifact on disk cannot be reproduced from src/release/build_release.py + the claim register. FAIL: worker_release.",
+  "wall_seconds": 222.8,
+  "cost": {
+    "at": "2026-09-18T18:16:32.141901+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-9d1c1f31f5e7",
+    "agent_role": "glm-audit-release",
+    "started_at": "2026-09-18T18:12:53.459395+00:00",
+    "finished_at": "2026-09-18T18:16:32.140385+00:00",
+    "wall_seconds": 218.688,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 45050,
+    "cached_input_tokens": 223616,
+    "output_tokens": 5329,
+    "total_tokens": 277182,
+    "cost_usd": 0.010654488
+  }
+}

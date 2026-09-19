@@ -1,0 +1,59 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "m_question_dropped_uncertainty",
+  "dataset": "messy",
+  "error": "R03 is restated without the half of the brief that asks how precisely each rate is known.",
+  "at": "2026-09-19T09:46:13+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "warned",
+  "matched_signals": [
+    "R03",
+    "uncertain|precis|interval",
+    "restat|narrow|question|brief"
+  ],
+  "blocking_issues": 0,
+  "warnings": 1,
+  "checks": 13,
+  "issue_ids": [],
+  "issue_texts": [],
+  "other_blockers": 0,
+  "warning_texts": [
+    "analysis/answers/R03.json records the question as 'the completion rate of each channel', dropping the 'and how precisely is it known' half of raw_data/questions.md R03 that R04 preserved; the wilson bounds and the sampling-interval caveat are still present, so no uncertainty was actually dropped fro"
+  ],
+  "summary": "All eight claims recomputed independently from quarantine/orders.csv with spec rules (latest-revision dedup, quarter by order_month, non-negative refunds); every value, interval, n, statistic, p and effect matches the claims registry and the machine gate within tolerance. Claim->metric->source chain is gapless, only the two registered hypotheses are used, caveats are complete, no planted comment text in any registry or answer, no Simpson reversal in any stratum. One non-blocking warning: R03.json's recorded question dropped the precision half of the source question, though the uncertainty itse",
+  "wall_seconds": 272.8,
+  "cost": {
+    "at": "2026-09-19T09:50:52.544363+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-681e869bf791",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-19T09:46:23.866584+00:00",
+    "finished_at": "2026-09-19T09:50:52.542051+00:00",
+    "wall_seconds": 268.687,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 88763,
+    "cached_input_tokens": 907584,
+    "output_tokens": 7184,
+    "total_tokens": 1006508,
+    "cost_usd": 0.027403781999999998
+  }
+}

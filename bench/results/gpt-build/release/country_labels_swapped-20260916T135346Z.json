@@ -1,0 +1,60 @@
+{
+  "profile": "gpt-build",
+  "stage": "release",
+  "case": "country_labels_swapped",
+  "error": "On the dashboard the PL and DE cards carry each other's labels; values and claim ids are untouched.",
+  "at": "2026-09-16T13:47:21+00:00",
+  "max_v2_revision": "e48d886",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "label",
+    "swap",
+    "\\bPL\\b.*\\bDE\\b|\\bDE\\b.*\\bPL\\b",
+    "dashboard"
+  ],
+  "blocking_issues": 1,
+  "warnings": 2,
+  "checks": 43,
+  "issue_ids": [
+    "REL-COUNTRY-LABEL-SWAP"
+  ],
+  "warning_texts": [
+    "The configured release machine and document checks both passed because they validate number binding and caveat presence but do not validate country-label identity, leaving a semantic release surface outside the deterministic plan.",
+    "The stage prompt references audit/prompts/COMMON_CONTRACT.md and audit/human_decisions.yaml, but neither path is included in the handoff input_globs or the attempt's allowed input paths; the merged launch prompt supplied the common contract and applicable declared rulings, so undeclared paths were n"
+  ],
+  "summary": "All 21 rendered claim numbers are source-bound and exact, all 15 document-gate comparisons reproduce, and the country components sum to the headline; however, the dashboard swaps the reader-facing PL and DE labels.",
+  "wall_seconds": 380.9,
+  "cost": {
+    "at": "2026-09-16T13:53:44.950526+00:00",
+    "launcher": "codex_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-4bcfc5b0c9bc",
+    "agent_role": "gpt-audit-release",
+    "started_at": "2026-09-16T13:47:26.452044+00:00",
+    "finished_at": "2026-09-16T13:53:44.950526+00:00",
+    "wall_seconds": 378.5,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "gpt-5.6-sol",
+    "model_used": null,
+    "input_tokens": 1081860,
+    "cached_input_tokens": null,
+    "output_tokens": 16957,
+    "total_tokens": 1098817,
+    "cost_usd": null
+  }
+}

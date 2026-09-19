@@ -1,0 +1,75 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "m_page_interval_certainty",
+  "dataset": "messy",
+  "error": "The page says each interval is where the true value lies with near certainty.",
+  "at": "2026-09-18T19:43:21+00:00",
+  "max_v2_revision": "b7adc4a",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "certaint|true value",
+    "sampling interval|interval"
+  ],
+  "blocking_issues": 5,
+  "warnings": 6,
+  "checks": 18,
+  "issue_ids": [
+    "REL-AUD-INTERVAL-CERTAINTY",
+    "REL-AUD-SURFACE-NOT-GENERATED",
+    "REL-AUD-PAGE-POPULATION",
+    "REL-AUD-AOV-CAVEATS",
+    "REL-AUD-DASHBOARD-ESTIMATE-CONTEXT"
+  ],
+  "issue_texts": [
+    "REL-AUD-INTERVAL-CERTAINTY | gate_release_auditor.interval_wording | gate_release_auditor|interval_wording|release/report.md|channel-estimates | CLAIM_SUPPORT | HIGH | worker_release | release/report.md line 23, the sentence under the four channel estimates, describes the 0.95 interval as locating the channel's true value with near certainty (evidence/release_recheck.json certainty_wording). A 0.9",
+    "REL-AUD-SURFACE-NOT-GENERATED | gate_release_auditor.surface_matches_generator | gate_release_auditor|surface_matches_generator|release/report.md|body-text | RELEASE_INTEGRITY | HIGH | worker_release | Re-running src/release/build_release.py against the current claim register into audit/results/gate_release_auditor/evidence/regen_report.md reproduces the dashboard and the manifest byte-for-byte bu",
+    "REL-AUD-PAGE-POPULATION | gate_release_auditor.population_beside_figure | gate_release_auditor|population_beside_figure|release/report.md|page-population | VISUALIZATION | HIGH | worker_release | release/report.md line 3 gives one population for the whole page, and it is CLM-NET-REVENUE's population including 'delivered only' (build_release.py line 86 prints revenue['population'] as the page popul",
+    "REL-AUD-AOV-CAVEATS | gate_release_auditor.aov_caveats_beside_figure | gate_release_auditor|caveats_beside_figure|release/report.md|CLM-AOV-DIRECT,CLM-AOV-PARTNER | CLAIM_SUPPORT | MEDIUM | worker_analysis | report.md lines 18-21 and dashboard cards[4], cards[5]: the AOV caveats are only 'one quarter of orders in this channel' and the sampling-interval caveat. Neither 'net of refunds' nor 'deliver",
+    "REL-AUD-DASHBOARD-ESTIMATE-CONTEXT | gate_release_auditor.dashboard_estimate_rendering | gate_release_auditor|estimate_rendering|release/dashboard_data.json|estimate-cards | VISUALIZATION | HIGH | worker_release | release/dashboard_data.json cards[2..5] (the four CLM-COMPLETION-*/CLM-AOV-* estimates) carry value, ci_low and ci_high but no n and no interval level, and no card carries its population"
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "The machine gates passed a page that says the interval locates the true value with near certainty: gate_release_document's wording_matches_claims covers only 'significant' beside a test, so the gates don't check any other sentence about uncertainty.",
+    "The check plan requires only the channel-population and sampling-interval caveat topics for CLM-AOV-*. The 'net of refunds' and 'delivered orders only' topics this stage expects beside AOV are required by no rule, so caveats_rendered passes while they are missing.",
+    "In release_surface_contract.json, reconciliations and card_caveat_requirements are empty, so no deterministic rule checks per-card population and period or the identities orders = direct n + partner n and net revenue = sum of the channel AOV numerators. I checked the identities by hand and they hold",
+    "Both test p-values show as 0.0000, which reads as p equal to zero. The recomputed two-sided p for the completion test is about 3e-157. 'p < 0.0001' would state it without claiming zero.",
+    "build_release.py labels a test 'significant … bonferroni correction' after comparing p with the uncorrected alpha 0.05 rather than 0.05/2 = 0.025. With p near zero the outcome here is the same, but a p between 0.025 and 0.05 would be called significant under a correction that was never applied.",
+    "The AOV test statistic and effect could only be checked for consistency. Standard deviations backed out of the cent-rounded Student intervals give Welch t ≈ 42.62 and d ≈ 0.4854 against the registered 42.70 and 0.4869, which agrees within the precision rounding allows. No clean or raw data is among "
+  ],
+  "summary": "All 60 rendered numbers on report.md, dashboard_data.json and the manifest are bound, exactly formatted and agree with my independent recompute from registry numerators/denominators (Wilson bounds, AOV, z statistic, effect, reconciliation identities). The release still fails on five blockers about what the reader is told: report.md line 23 was hand-edited away from the generator's output and now says the 0.95 interval is where the true channel value lies with near certainty; the page-wide population line says 'delivered only' for figures that include every status (orders count, completion-rate",
+  "wall_seconds": 252.4,
+  "cost": {
+    "at": "2026-09-18T19:47:37.286908+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-1ec424ea468d",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-18T19:43:27.853787+00:00",
+    "finished_at": "2026-09-18T19:47:37.286908+00:00",
+    "wall_seconds": 249.437,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 32,
+    "cached_input_tokens": 1568069,
+    "output_tokens": 25646,
+    "total_tokens": 1593747,
+    "cost_usd": 2.5502299999999996
+  }
+}

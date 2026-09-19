@@ -1,0 +1,65 @@
+{
+  "profile": "grok-build",
+  "stage": "release",
+  "case": "caveat_dropped_where_repeated",
+  "dataset": "orders",
+  "error": "The headline's caveat line no longer says net of refunds; only a sentence about the country table still does.",
+  "at": "2026-09-18T18:13:28+00:00",
+  "max_v2_revision": "b7adc4a",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "net of refunds.{0,160}(headline|CLM-NET-REVENUE|net revenue)",
+    "(headline|CLM-NET-REVENUE|net revenue).{0,160}net of refunds",
+    "caveat.{0,80}(missing|dropped|lost|absent|omitted|removed)"
+  ],
+  "blocking_issues": 1,
+  "warnings": 3,
+  "checks": 39,
+  "issue_ids": [
+    "CAVEAT-DROPPED-HEADLINE-NET-REFUNDS"
+  ],
+  "issue_texts": [
+    "CAVEAT-DROPPED-HEADLINE-NET-REFUNDS | gate_release_auditor.caveats_on_card.CLM-NET-REVENUE.report | gate_release_auditor|caveats_on_card|release/report.md|CLM-NET-REVENUE | RELEASE_INTEGRITY | HIGH | worker_release | analysis/claim_register.json CLM-NET-REVENUE caveats list net of refunds, delivered orders only, and period boundaries are inclusive on both ends. After stripping HTML comments, the h"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "Document-gate caveats_rendered.CLM-NET-REVENUE on release/report.md is PASS/present while the headline card itself omits net of refunds; that rule searches the whole visible surface, so a later sentence satisfies it.",
+    "audit/check_plan.json lists caveats_rendered and claims_rendered under accepted_unproven because claim_register.json was missing during plan proof, so the document-gate PASS is not a breaker-proven check of card-level placement.",
+    "Period dates 2025-01-01..2025-03-30 sit in the report H1 and the dashboard period field rather than being restated on each number card; the cards refer to the period in their caveat lines."
+  ],
+  "summary": "Headline net revenue 35741.52 is numerically correct (clean, raw, and PL+DE+CZ all recompute to 35741.52) but release/report.md drops the register caveat net of refunds from the headline card; the phrase appears only in the closing sentence after the country list, which is how caveats_rendered on the document gate still passed.",
+  "wall_seconds": 727.1,
+  "cost": {
+    "at": "2026-09-18T18:25:38.770929+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-db512ff7fa00",
+    "agent_role": "grok-audit-release",
+    "started_at": "2026-09-18T18:13:34.553313+00:00",
+    "finished_at": "2026-09-18T18:25:38.770929+00:00",
+    "wall_seconds": 724.219,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 260708,
+    "cached_input_tokens": 2358656,
+    "output_tokens": 41461,
+    "total_tokens": 2660825,
+    "cost_usd": 0.6628334
+  }
+}

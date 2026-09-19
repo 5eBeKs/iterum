@@ -1,0 +1,66 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "m_effect_misnamed",
+  "dataset": "messy",
+  "error": "The R04 test calls its effect size a proportion difference; a Welch test on order values reports Cohen's d.",
+  "at": "2026-09-19T09:52:45+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "effect",
+    "cohen|proportion_difference|effect_name|effect size"
+  ],
+  "blocking_issues": 1,
+  "warnings": 5,
+  "checks": 36,
+  "issue_ids": [
+    "CLAIMS-AUD-R04-EFFECT-NAME"
+  ],
+  "issue_texts": [
+    "CLAIMS-AUD-R04-EFFECT-NAME | gate_claims_auditor.R04.effect_name | gate_claims_auditor|effect_name_matches_metric|analysis/answers/R04.json|H-CHANNEL-AOV | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R04.json hypothesis.effect_name vs metrics/calculated_metrics.json channel_aov_test_effect.unit and analysis/claim_register.json CLM-TEST-CHANNEL-AOV render_values.effect.unit; evidence/"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "No machine rule compares an answer file's effect_name (or any other hypothesis field in analysis/answers/) with the metric it quotes; the R04 mislabel passed gate_claims_machine with 114 green checks and was visible only to a reader.",
+    "The hypothesis blocks in analysis/answers/R03.json and R04.json do not name the groups; the direct-first order is carried only by n_per_group order and by the claim caveat about the registered order.",
+    "Pending orders count as not completed, and partner has the larger pending share (4034 of 19934 against 3457 of 24597 for direct), so part of the completion gap may be orders not yet resolved at export time rather than orders that failed; the gap stays in the same direction among resolved orders only",
+    "recompute_estimate, recompute_test and min_group_size read clean_data/orders_clean.csv, not raw; only claims_recomputed (six point claims, independent_claim_recalc.json rooted in raw_data/orders.csv) goes back to the source, so the test statistics and intervals are anchored to raw only by this audit",
+    "Both tests are far past the Bonferroni per-test alpha of 0.025 (z = 26.72, Welch t = 42.70), so p is published as 0.0000000000; a report should render this as below a threshold rather than as an exact zero."
+  ],
+  "summary": "All eight claims trace claim -> metric -> source without a gap: every value, bound, n, statistic, p and effect is byte-equal to its metric, method/level/alpha/correction match audit/analysis_plan.json, and an independent recompute from quarantine/orders.csv (last revision per order_id, Q1 by order_month, negative refunds excluded) reproduces every number the machine gate recomputed. One blocker: analysis/answers/R04.json labels the H-CHANNEL-AOV effect as a proportion difference, while the number it carries (0.486900) is Cohen's d on delivered net_amount, as metrics.channel_aov_test_effect and",
+  "wall_seconds": 215.9,
+  "cost": {
+    "at": "2026-09-19T09:56:27.734396+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-19T09:52:54.956063+00:00",
+    "finished_at": "2026-09-19T09:56:27.734396+00:00",
+    "wall_seconds": 212.782,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 34,
+    "cached_input_tokens": 1600741,
+    "output_tokens": 22217,
+    "total_tokens": 1622992,
+    "cost_usd": 2.388074
+  }
+}

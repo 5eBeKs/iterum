@@ -1,0 +1,74 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "population_line_wrong",
+  "dataset": "orders",
+  "error": "The page's population line says all orders; every figure is over delivered orders.",
+  "at": "2026-09-16T17:51:38+00:00",
+  "max_v2_revision": "fa38876",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "all orders"
+  ],
+  "blocking_issues": 1,
+  "warnings": 8,
+  "checks": 10,
+  "issue_ids": [
+    "RT-POPULATION-LINE"
+  ],
+  "issue_texts": [
+    "RT-POPULATION-LINE | final_redteam.population_statement_matches_declared_population | final_redteam|population_statement_mismatch|release/report.md|population_line | CLAIM_SUPPORT | HIGH | worker_release | release/report.md line 3: 'Population: all orders inside the period.' audit/audit_spec.yaml population.name is 'delivered orders inside the period' with include_status [delivered]; analysis/clai"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "release/report.md is stale or hand-edited relative to analysis/claim_register.json plus src/release/build_release.py: regenerating fixes both the wrong Population line and the drift, so the worker_release reset needed for the blocker also clears this.",
+    "The agent steps of this run are harness stubs, as README.md discloses: worker_* and gate_*_auditor results carry model 'openrouter/z-ai/glm-5.3-flash-fake' with template single-check PASSes, so in this run the real assurance is the machine gates plus this final review, not the agent-stage PASS chain",
+    "No output event of this CLI names the model, so 'run executed on model X' is confirmed by nothing except the stages' own reports; MODEL_MISMATCH is unverifiable here and execution.model is self-reported, as the launcher's Capabilities note says.",
+    "check_plan.json accepted_unproven: caveats_rendered and claims_rendered of gate_release_document were accepted without a proof run (FileNotFoundError in the prover's temp path); they did later execute green on the real artifacts (15 checks PASS), so this weakens plan-proven, not the run.",
+    "All four carry files are identical templates and put raw_data/orders.csv in do_not_reread, though it is a raw source rather than a previous-stage output, and state the population without its period bound; no stage consumed raw after clean in this run, so no harm resulted.",
+    "The quarantine manifest says declared:false: no free-text column was removed, raw_data/orders.csv was read as-is, and its text (questions.md, README) was treated as data and claims only, never as instructions.",
+    "analysis_plan.json registers no hypotheses and none were run: all five claims are claim_type FACT, no kind:test claim exists, and a search over release/, analysis/, src/, metrics/, clean_data/ found no significance or test language.",
+    "Every risk in audit/risk_register.yaml is held by a machine control I saw pass: refund basis (recompute_ratio on paying_customers), period edge (population_matches plus my boundary recount), and REC-COUNTRY-SUM (components sum exactly to the headline)."
+  ],
+  "summary": "Every published number is independently reproduced from raw_data/orders.csv by my own code (net_revenue 35741.52 = 40235.02-4493.50 over 174 delivered in-period rows; refund_rate 0.473684 = 27 refunded customers / 57 paying customers; PL 11181.67 + DE 11032.61 + CZ 13527.24 = 35741.52; row accounting 201 = 174 + 26 not-delivered + 1 outside-period; inclusive boundaries enforced, O00201/2025-04-01 excluded), and all 21 rendered numbers are bound to their claims with no UNVERIFIED_CLAIM. One material blocker: release/report.md line 3 states 'Population: all orders inside the period.' while the s",
+  "wall_seconds": 640.1,
+  "cost": {
+    "at": "2026-09-16T18:02:25.312258+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-0b0d3c56611b",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-16T17:51:48.555285+00:00",
+    "finished_at": "2026-09-16T18:02:25.309402+00:00",
+    "wall_seconds": 636.766,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 62603,
+    "cached_input_tokens": 1137920,
+    "output_tokens": 8949,
+    "total_tokens": 1222174,
+    "cost_usd": 0.032612129999999996
+  }
+}

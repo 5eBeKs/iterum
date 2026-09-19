@@ -1,0 +1,64 @@
+{
+  "profile": "grok-build",
+  "stage": "release",
+  "case": "country_labels_swapped",
+  "error": "On the dashboard the PL and DE cards carry each other's labels; values and claim ids are untouched.",
+  "at": "2026-09-15T16:40:25+00:00",
+  "max_v2_revision": "0703cb4",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "label",
+    "swap",
+    "\\bPL\\b.*\\bDE\\b|\\bDE\\b.*\\bPL\\b",
+    "dashboard"
+  ],
+  "blocking_issues": 2,
+  "warnings": 5,
+  "checks": 66,
+  "issue_ids": [
+    "DASH-LABEL-CLM-NET-PL",
+    "DASH-LABEL-CLM-NET-DE"
+  ],
+  "warning_texts": [
+    "audit/check_plan.json lists claims_rendered and caveats_rendered under accepted_unproven because prove-plan could not open analysis/claim_register.json, so those document-gate rules have no recorded breaker.",
+    "The frozen check plan has no deterministic rule that compares a dashboard card label country code with the bound claim_id, which is the gap the PL/DE swap sits in.",
+    "release/dashboard_data.json has no reader-visible statement that the three country figures sum to headline net_revenue; that sentence exists only on release/report.md.",
+    "gate_release_machine wrote evidence/release_surface_gate.json and no evidence/checks.json, so this stage has no recompute_*, claims_recomputed, component_sum or column_identity comparison to cite.",
+    "Country identity on the dashboard lives only in the card label; the card caveats never name PL or DE, so a swapped label is not rescued by the caveat list the document gate checked."
+  ],
+  "summary": "21 displayed numbers on report.md, dashboard_data.json and release_number_manifest.json bind to claim_id:role, match claim_register and calculated_metrics, keep display_digits, and the country components 11181.67 + 11032.61 + 13527.24 sum to headline 35741.52. Dashboard cards swap the PL and DE labels: CLM-NET-PL 11,181.67 is titled Net revenue DE and CLM-NET-DE 11,032.61 is titled Net revenue PL, so a dashboard reader reverses the two countries. report.md labels match the claim_ids. Machine surface gate did not skip a required surface and did not recompute any recompute_* figure.",
+  "wall_seconds": 797.4,
+  "cost": {
+    "at": "2026-09-15T16:53:45.866336+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-fc91a6b9cf6e",
+    "agent_role": "grok-audit-release",
+    "started_at": "2026-09-15T16:40:31.341532+00:00",
+    "finished_at": "2026-09-15T16:53:45.866336+00:00",
+    "wall_seconds": 794.531,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 141263,
+    "cached_input_tokens": 2680448,
+    "output_tokens": 37650,
+    "total_tokens": 2859361,
+    "cost_usd": 0.628541
+  }
+}

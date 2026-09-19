@@ -1,0 +1,81 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "m_question_dropped_uncertainty",
+  "dataset": "messy",
+  "error": "R03 is restated without the half of the brief that asks how precisely each rate is known.",
+  "at": "2026-09-19T10:11:34+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R03",
+    "uncertain|precis|interval",
+    "restat|narrow|question|brief"
+  ],
+  "blocking_issues": 4,
+  "warnings": 8,
+  "checks": 14,
+  "issue_ids": [
+    "R03-ANSWER-QUESTION-TEXT-DROPPED-UNCERTAINTY",
+    "REPORT-POPULATION-LINE-DELIVERED-ONLY-OVER-ALL-STATUSES",
+    "DASHBOARD-ESTIMATE-CARDS-MISSING-N",
+    "CARRY-FILES-STATE-FALSE-PERIOD-AND-POPULATION"
+  ],
+  "issue_texts": [
+    "R03-ANSWER-QUESTION-TEXT-DROPPED-UNCERTAINTY | final_redteam.answer_question_text_matches_frozen_code | final_glm_redteam|answer_question_text_matches_frozen_code|analysis/answers/R03.json|R03 | RELEASE_INTEGRITY | HIGH | worker_analysis | src/analysis/build_claims.py write_answers() writes R03 question 'the completion rate of each channel, with its uncertainty'; analysis/answers/R03.json reads 't",
+    "REPORT-POPULATION-LINE-DELIVERED-ONLY-OVER-ALL-STATUSES | final_redteam.wording_matches_claims.population_line | final_glm_redteam|wording_matches_claims.population_line|release/report.md|headline_population | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3: 'Population: orders placed inside the quarter, one row per order, delivered only.' sits above the headline card 'Orders ",
+    "DASHBOARD-ESTIMATE-CARDS-MISSING-N | final_redteam.estimate_rendering.n_beside_interval | final_glm_redteam|estimate_rendering.n_beside_interval|release/dashboard_data.json|estimate_cards | RELEASE_INTEGRITY | MEDIUM | worker_release | release/dashboard_data.json cards CLM-COMPLETION-DIRECT/PARTNER and CLM-AOV-DIRECT/PARTNER carry value, ci_low, ci_high and caveats but no n anywhere in the file, w",
+    "CARRY-FILES-STATE-FALSE-PERIOD-AND-POPULATION | final_redteam.carry_facts_match_stage_output | final_glm_redteam|carry_facts_match_stage_output|audit/checkpoints/worker_*.carry.json|all_worker_stages | OTHER | MEDIUM | worker_clean | All four audit/checkpoints/worker_*.carry.json are the same template: periods '2025-Q1-delivered', 2025-01-01..2025-03-30 'source: audit/audit_spec.yaml'; grain 'one "
+  ],
+  "other_blockers": 2,
+  "warning_texts": [
+    "Every worker and stage-auditor result.json in this run is a driver e2e stub (one placeholder check '0.473684', empty warnings and disclosures), so stage-level assurance rests entirely on the machine gates' evidence and this red-team recalculation, not on worker attestations.",
+    "The direction of the R03 edit cannot be proven from this step's inputs because raw_data/questions.md is outside them; the conclusion rests on the stage's frozen code string, the attested R04 sibling symmetry, and the out-of-band mtime, and the artifact-versus-frozen-code mismatch stands under any re",
+    "shipping_total 37792722.50 EUR over 41883 readable cells (2648 unreadable zeroed as declared, mean about 902 EUR per order) reproduces the declared locale parse exactly, is excused from publication by name in the check plan, appears on no surface, and understates itself by an unknown amount - it mus",
+    "Both test p-values render as 0.0000 from registry value 0E-10 with display_digits 4; the exact p is not zero but far below it, inside the claim tolerance 0.0001, and a reader should not read the screen as an exact zero.",
+    "Month-by-channel mix is stable across the quarter (partner share 0.4508 / 0.4476 / 0.4445 for 2026-01/02/03), so the plan's assumption that neither channel changed how it books orders is not contradicted by the data visible to this step.",
+    "The four carry files also name a pitfall ('refund rate is per paying customer') for a metric this audit never computes - part of the carry blocker, listed here for the human reader.",
+    "Unverified by this step: raw_data/orders.csv itself (quarantined, outside my inputs; the trace ran on quarantine/orders.csv whose manifest rows 45917 agree with gate0's control totals against the export log) and the text of raw_data/questions.md; everything else on the release path was recomputed.",
+    "No drift_since_review field exists in the handoff, so absence of that warning proves nothing about whether worker assumptions still hold; the assumptions I could test (dedup, direction of registered effect, stable channel mix) hold."
+  ],
+  "summary": "Every business number reproduces independently from the quarantine projection (population 44531; net_revenue 3023296.61; completion 0.724397/0.604746 with Wilson bounds; AOV 110.64/87.27 with Student bounds; z=26.718455, welch t=42.699880, d=0.486900; shipping_total 37792722.50 under the declared locale, 2648 unreadable cells zeroed as declared; 0 real cell mismatches between clean and my parse; release gate binds all 60 rendered roles to the register with no [:N], no magnitude filter and 0 UNVERIFIED_CLAIM). Four material blockers, none of them numeric: (1) analysis/answers/R03.json was rewri",
+  "wall_seconds": 1077.0,
+  "cost": {
+    "at": "2026-09-19T10:29:54.022988+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-074c01c44606",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-19T10:12:01.206389+00:00",
+    "finished_at": "2026-09-19T10:29:54.007784+00:00",
+    "wall_seconds": 1072.797,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 146608,
+    "cached_input_tokens": 2967872,
+    "output_tokens": 16117,
+    "total_tokens": 3169566,
+    "cost_usd": 0.08321181599999998
+  }
+}

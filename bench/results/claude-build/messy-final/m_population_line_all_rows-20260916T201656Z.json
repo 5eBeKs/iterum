@@ -1,0 +1,82 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "m_population_line_all_rows",
+  "dataset": "messy",
+  "error": "The page's population line says every export row; the figures are over one row per order after deduplication.",
+  "at": "2026-09-16T20:07:03+00:00",
+  "max_v2_revision": "fa38876",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "every row|export row|revision|dedup|one row per order"
+  ],
+  "blocking_issues": 5,
+  "warnings": 8,
+  "checks": 11,
+  "issue_ids": [
+    "FINAL-REPORT-POPULATION-LINE",
+    "FINAL-CARRY-WORKER-CLEAN",
+    "FINAL-CARRY-WORKER-METRICS",
+    "FINAL-CARRY-WORKER-ANALYSIS",
+    "FINAL-CARRY-WORKER-RELEASE"
+  ],
+  "issue_texts": [
+    "FINAL-REPORT-POPULATION-LINE | final_claude_redteam.population_statement_matches_claims | final_claude_redteam|population_statement_matches_claims|release/report.md|report_population_line | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3 (read as text, evidence/report_as_reader_sees_it.txt) gives one population for the whole report: every export row inside the quarter, deliver",
+    "FINAL-CARRY-WORKER-CLEAN | final_claude_redteam.carry_matches_stage_output | final_claude_redteam|carry_matches_stage_output|audit/checkpoints/worker_clean.carry.json|facts | OTHER | MEDIUM | worker_clean | audit/checkpoints/worker_clean.carry.json: context_id and attempt match audit/results/worker_clean/result.json (cc-worker_clean-a1-e64600cbe903, attempt 1). Its facts contradict what the stage ",
+    "FINAL-CARRY-WORKER-METRICS | final_claude_redteam.carry_matches_stage_output | final_claude_redteam|carry_matches_stage_output|audit/checkpoints/worker_metrics.carry.json|facts | OTHER | MEDIUM | worker_metrics | audit/checkpoints/worker_metrics.carry.json: context_id and attempt match the result (cc-worker_metrics-a1-db62891f86f0, attempt 1). The carry states period 2025-01-01..2025-03-30 and a d",
+    "FINAL-CARRY-WORKER-ANALYSIS | final_claude_redteam.carry_matches_stage_output | final_claude_redteam|carry_matches_stage_output|audit/checkpoints/worker_analysis.carry.json|facts | OTHER | MEDIUM | worker_analysis | audit/checkpoints/worker_analysis.carry.json: context_id and attempt match the result (cc-worker_analysis-a1-69d833e46efd, attempt 1). The carry states period 2025-01-01..2025-03-30 an",
+    "FINAL-CARRY-WORKER-RELEASE | final_claude_redteam.carry_matches_stage_output | final_claude_redteam|carry_matches_stage_output|audit/checkpoints/worker_release.carry.json|facts | OTHER | MEDIUM | worker_release | audit/checkpoints/worker_release.carry.json: context_id and attempt match the result (cc-worker_release-a1-f3eee6b73c2f, attempt 1). The carry states period 2025-01-01..2025-03-30 and a d"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The LLM auditor layer left no independent evidence. audit/results/gate0_semantic, gate_clean_auditor, gate_metrics_auditor, gate_claims_auditor and gate_release_auditor each have an evidence/notes.json holding only a placeholder note, and a summary marked as a driver end-to-end run. gate0_semantic a",
+    "The four audit/results/worker_*/result.json files have the same placeholder pattern: summary marked as a driver end-to-end run, one check claiming independent recomputation with value 0.473684 (matching no metric), artifacts listing only src/*.py and not the data outputs, created_at 2026-01-01T00:00",
+    "Unchecked by any declared rule: (a) population, grain and period wording on surfaces (see the blocker); (b) the rendered 'n = ' values in release/report.md, which text_exclusions removes from the release gate and no rule compares with claim n (I compared: 24597/19934/17818/12055 equal claim n and my",
+    "Assumption refund_sign_policy (RESOLVED: exclude): 10 in-quarter orders carry a negative refund, and in every one |refund| is almost exactly one third of gross (8 delivered, 2 pending). If these are sign-flipped refunds rather than export faults, CLM-ORDERS would be 44,541 (+10) and CLM-NET-REVENUE ",
+    "Completion rate definition (spec formula COUNT(delivered)/COUNT(orders)): pending orders count as not completed, 3,457 direct (14.05%) and 4,034 partner (20.24%). The pending share is flat across January, February and March, so these are not just orders too recent to resolve. No surface tells the re",
+    "Assumption dedup_rule latest_revision_wins looks right. Of 917 repeated orders, 543 are byte-identical duplicates. 126 change status, always pending or cancelled to delivered, and the last row never has an earlier updated_at than its sibling. For 6 status-changing orders, though, both rows carry the",
+    "Assumption date_input_formats month-first is confirmed: of 6,661 slashed dates in the population, 4,084 are impossible when read day-first, 2,350 would contradict order_month when read day-first, and none contradict it when read month-first. No ISO-8601 UTC timestamp lands on a different calendar da",
+    "The hypothesis results in analysis/answers/R03.json and R04.json (H-CHANNEL-COMPLETION two_proportion_z, H-CHANNEL-AOV welch_t) are registered, and their method, alpha 0.05 and Bonferroni correction match audit/analysis_plan.json. I reproduced the statistic 26.718455 (pooled z), difference 0.119652,"
+  ],
+  "summary": "FAIL, 5 blockers. All 42 published numbers (6 claims × value/CI roles × 3 surfaces), the clean table (44,531 rows, every column), the metrics, the Wilson/Student intervals and the two registered tests reproduce independently from quarantine/orders.csv. (1) release/report.md line 3 says the report covers every export row in the quarter, delivered orders only. That contradicts the claim register: the order count 44,531 and both completion rates cover all statuses after deduplication (29,873 delivered, 7,167 cancelled, 7,491 pending). Under a delivered-only population each completion rate would b",
+  "wall_seconds": 583.7,
+  "cost": {
+    "at": "2026-09-16T20:16:55.028838+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-4b16f125bb3c",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-16T20:07:13.983768+00:00",
+    "finished_at": "2026-09-16T20:16:55.028838+00:00",
+    "wall_seconds": 581.047,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 58,
+    "cached_input_tokens": 3969969,
+    "output_tokens": 60438,
+    "total_tokens": 4030465,
+    "cost_usd": 5.268364000000001
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "profile": "glm-build",
+  "stage": "release",
+  "case": "m_page_causal_sentence",
+  "dataset": "messy",
+  "error": "The page explains the smaller partner baskets by bargain hunters, which nothing in the audit measures.",
+  "at": "2026-09-19T07:33:06+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "bargain",
+    "caus|explan|unsupported|no (evidence|metric|claim)"
+  ],
+  "blocking_issues": 3,
+  "warnings": 4,
+  "checks": 19,
+  "issue_ids": [
+    "RELEASE-CAUSAL-CLAIM-UNREGISTERED",
+    "RELEASE-POPULATION-MISMATCH-ORDERS",
+    "RELEASE-ESTIMATE-MISSING-N-DASHBOARD"
+  ],
+  "issue_texts": [
+    "RELEASE-CAUSAL-CLAIM-UNREGISTERED | gate_release_auditor.causal_claim_unregistered | gate_release_auditor|unregistered_causal_claim|release/report.md|line32 | CLAIM_SUPPORT | CRITICAL | worker_release | release/report.md:32 'The partner channel brings in bargain hunters, so its baskets are smaller.' has no claim anchor, no CLM-TEST-* beside it, is not emitted by src/release/build_release.py (the r",
+    "RELEASE-POPULATION-MISMATCH-ORDERS | gate_release_auditor.population_mismatch_headline | gate_release_auditor|population_mismatch|release/report.md|headline_population | CLAIM_SUPPORT | HIGH | worker_release | release/report.md line 3 prints 'Population: orders placed inside the quarter, one row per order, delivered only.' above the Headline. That string is CLM-NET-REVENUE's registered population ",
+    "RELEASE-ESTIMATE-MISSING-N-DASHBOARD | gate_release_auditor.estimate_n_missing_dashboard | gate_release_auditor|estimate_missing_n|release/dashboard_data.json|estimate_cards | CLAIM_SUPPORT | MEDIUM | worker_release | release_surface_contract.json rule 'An estimate is rendered with its interval and its n beside it, always.' Cards 2-5 of release/dashboard_data.json (CLM-COMPLETION-*, CLM-AOV-*) car"
+  ],
+  "other_blockers": 2,
+  "warning_texts": [
+    "gate_release_document's free_text_quarantined.values check sampled 25 values of the quarantined column across 14 stage results; a sample is not a proof, though no quarantined phrase appears on any surface I read in full.",
+    "The completion-rate caveat 'one quarter of orders in this channel' never says the denominator is the whole channel including cancelled and pending orders; the registry caveat was rendered as-is so the gate passes it, but the rate can still be misread as a share among delivered orders.",
+    "check_plan.json has no deterministic rule over release prose, so gate silence on the causal sentence is not approval; my judgment is the only check over it.",
+    "The 'bargain hunters' sentence means release/report.md no longer byte-matches its generator output; regenerating from src/release/build_release.py would silently drop it, so the divergence itself should be recorded when the release is rebuilt."
+  ],
+  "summary": "All 60 rendered numbers across the three release surfaces were independently recomputed from raw_data/orders.csv (check_plan raw_latest recipe) and match the claim registry exactly at every display_digits tolerance (net revenue 3023296.61, orders 44531, both completion rates with wilson bounds, both AOVs with t bounds, both test claims). Generator carries no business literal. FAIL: release/report.md line 32 carries an unregistered causal sentence not produced by the generator and anchored to no claim; the page-wide population line says 'delivered only', which is false for the 44531 orders head",
+  "wall_seconds": 329.9,
+  "cost": {
+    "at": "2026-09-19T07:38:39.918052+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-edfb1e98269b",
+    "agent_role": "glm-audit-release",
+    "started_at": "2026-09-19T07:33:14.363946+00:00",
+    "finished_at": "2026-09-19T07:38:39.916293+00:00",
+    "wall_seconds": 325.562,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 66773,
+    "cached_input_tokens": 876736,
+    "output_tokens": 9274,
+    "total_tokens": 959187,
+    "cost_usd": 0.026527518000000003
+  }
+}

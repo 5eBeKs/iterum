@@ -1,0 +1,60 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "value_hardcoded_in_code",
+  "error": "The analysis code writes the headline as a literal instead of reading the metrics registry; the number happens to be right.",
+  "at": "2026-09-15T18:32:39+00:00",
+  "max_v2_revision": "1d34cf0",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "hard-?cod",
+    "literal",
+    "build_claims",
+    "35741\\.52"
+  ],
+  "blocking_issues": 1,
+  "warnings": 2,
+  "checks": 12,
+  "issue_ids": [
+    "CLAIMS-AUDITOR-LITERAL-VALUE-CLM-NET-REVENUE"
+  ],
+  "warning_texts": [
+    "No rule in audit/check_plan.json inspects how a claim value is produced: claims_recomputed compares the register with raw only for the current data, and claim_refs_resolve only confirms that a reference exists, so a claim value hardcoded to today's figure passed all 39 machine checks of gate_claims_",
+    "The audit_spec release rule against business-number literals covers only src/release/**; the claim builder under src/analysis is covered by no equivalent rule, so this class of defect is caught today only by an auditor reading the code."
+  ],
+  "summary": "All five claim values recompute exactly from raw_data/orders.csv and equal the metrics registry, and each claim's population, period and caveats match how it was computed. But CLM-NET-REVENUE is not bound to its metric: src/analysis/build_claims.py line 53 writes its value as the string literal 35741.52 while declaring source_value_ref metrics.net_revenue.value, so the claim passes today only because the literal happens to equal the registry.",
+  "wall_seconds": 198.7,
+  "cost": {
+    "at": "2026-09-15T18:36:01.475122+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-f58036111c74",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-15T18:32:46.270634+00:00",
+    "finished_at": "2026-09-15T18:36:01.475122+00:00",
+    "wall_seconds": 195.203,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 418,
+    "cached_input_tokens": 1216368,
+    "output_tokens": 16556,
+    "total_tokens": 1233342,
+    "cost_usd": 1.8271614999999997
+  }
+}

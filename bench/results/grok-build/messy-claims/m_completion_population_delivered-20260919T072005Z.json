@@ -1,0 +1,72 @@
+{
+  "profile": "grok-build",
+  "stage": "claims",
+  "case": "m_completion_population_delivered",
+  "dataset": "messy",
+  "error": "The direct completion rate says its population is delivered orders, over which a completion rate is always 1.",
+  "at": "2026-09-19T07:06:11+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "CLM-COMPLETION-DIRECT",
+    "population",
+    "delivered",
+    "denominator|cancel|always|trivial|1\\.0|100 ?%"
+  ],
+  "blocking_issues": 4,
+  "warnings": 3,
+  "checks": 63,
+  "issue_ids": [
+    "CLM-COMPLETION-DIRECT-POPULATION-DELIVERED",
+    "CLM-TEST-CHANNEL-AOV-POPULATION-OMITS-DELIVERED",
+    "CLM-AOV-DIRECT-CAVEATS-MISSING-DELIVERED-NET",
+    "CLM-AOV-PARTNER-CAVEATS-MISSING-DELIVERED-NET"
+  ],
+  "issue_texts": [
+    "CLM-COMPLETION-DIRECT-POPULATION-DELIVERED | gate_claims_auditor.population.CLM-COMPLETION-DIRECT | gate_claims_auditor|population_mismatch|analysis/claim_register.json|CLM-COMPLETION-DIRECT | CLAIM_SUPPORT | CRITICAL | worker_analysis | analysis/claim_register.json CLM-COMPLETION-DIRECT.population names delivered, but n=24597 and the bound metric completion_rate_direct use the full direct channel",
+    "CLM-TEST-CHANNEL-AOV-POPULATION-OMITS-DELIVERED | gate_claims_auditor.population.CLM-TEST-CHANNEL-AOV | gate_claims_auditor|population_mismatch|analysis/claim_register.json|CLM-TEST-CHANNEL-AOV | CLAIM_SUPPORT | HIGH | worker_analysis | CLM-TEST-CHANNEL-AOV.n_per_group is [17818, 12055], the delivered counts, and audit/analysis_plan.json H-CHANNEL-AOV filters to delivered. The claim population str",
+    "CLM-AOV-DIRECT-CAVEATS-MISSING-DELIVERED-NET | gate_claims_auditor.caveats.CLM-AOV-DIRECT | gate_claims_auditor|caveats_delivered_net|analysis/claim_register.json|CLM-AOV-DIRECT | CLAIM_SUPPORT | HIGH | worker_analysis | CLM-AOV-DIRECT is computed on delivered nets (n=17818). Population names delivered. Caveats only say one quarter of orders in this channel and that the interval is a sampling inte",
+    "CLM-AOV-PARTNER-CAVEATS-MISSING-DELIVERED-NET | gate_claims_auditor.caveats.CLM-AOV-PARTNER | gate_claims_auditor|caveats_delivered_net|analysis/claim_register.json|CLM-AOV-PARTNER | CLAIM_SUPPORT | HIGH | worker_analysis | CLM-AOV-PARTNER is computed on delivered nets (n=12055). Population names delivered. Caveats only say one quarter of orders in this channel and that the interval is a sampling "
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The claims machine gate does not compare claim population text to the n behind the figure, so the delivered label on CLM-COMPLETION-DIRECT passed every machine rule.",
+    "R05 caveats describe the unreadable shipping share in words and do not bind a digit to a claim_id.",
+    "Country mix is similar across channels and does not reverse the completion gap; that check is auditor-only."
+  ],
+  "summary": "Independent recalc from quarantine/orders.csv matches the eight claim values, intervals and tests the machine gate recomputed. CLM-COMPLETION-DIRECT is labelled delivered while its n=24597 and rate 0.724397 use the full direct channel (cancelled 3322, pending 3457 included). CLM-TEST-CHANNEL-AOV omits the delivered filter that its n_per_group actually uses. Both AOV estimate caveats omit delivered-only and net-of-refunds wording.",
+  "wall_seconds": 825.3,
+  "cost": {
+    "at": "2026-09-19T07:20:04.124786+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-a004d841004a",
+    "agent_role": "grok-audit-claims",
+    "started_at": "2026-09-19T07:06:21.946555+00:00",
+    "finished_at": "2026-09-19T07:20:04.124786+00:00",
+    "wall_seconds": 822.172,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 256493,
+    "cached_input_tokens": 2736384,
+    "output_tokens": 42683,
+    "total_tokens": 3035560,
+    "cost_usd": 0.72667384
+  }
+}

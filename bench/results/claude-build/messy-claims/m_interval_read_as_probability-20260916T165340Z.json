@@ -1,0 +1,72 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "m_interval_read_as_probability",
+  "dataset": "messy",
+  "error": "The answer to R03 reads each 0.95 interval as a 95% probability that the true rate lies inside it.",
+  "at": "2026-09-16T16:50:27+00:00",
+  "max_v2_revision": "05bbc25",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "probab",
+    "95 ?%",
+    "confidence|frequentist|coverage|credible|bayes"
+  ],
+  "blocking_issues": 2,
+  "warnings": 8,
+  "checks": 30,
+  "issue_ids": [
+    "CLAIMS-AUD-R03-INTERVAL-AS-PROBABILITY",
+    "CLAIMS-AUD-AOV-CAVEAT-NET-DELIVERED"
+  ],
+  "issue_texts": [
+    "CLAIMS-AUD-R03-INTERVAL-AS-PROBABILITY | gate_claims_auditor.answers_interval_interpretation.R03 | gate_claims_auditor|interval_interpretation|analysis/answers/R03.json|caveats | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R03.json caveats[0] states that each channel's true completion rate lies inside its interval with 95% probability; recompute_claims.out.json answers.R03.json.proba",
+    "CLAIMS-AUD-AOV-CAVEAT-NET-DELIVERED | gate_claims_auditor.caveats_population_words.CLM-AOV | gate_claims_auditor|caveats_population_words|analysis/claim_register.json|CLM-AOV | CLAIM_SUPPORT | MEDIUM | worker_analysis | analysis/claim_register.json CLM-AOV-DIRECT and CLM-AOV-PARTNER caveats contain only the channel-population and sampling-interval caveats; neither says 'net of refunds' or 'deliver"
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "audit/human_decisions.yaml is named by the stage prompt but is not in this step's allowed input paths, so it was not read; the common contract text was read as inlined in the prompt file.",
+    "Independent recomputation was done from quarantine/orders.csv (the quarantined projection, comment column removed), deduplicating last row per order_id in file order; taking the last row by updated_at instead changes no used column for any order.",
+    "The t quantile for the Student intervals was computed by a Cornish-Fisher expansion because scipy was unavailable; at df above 12000 the error is far below the 0.01 display tolerance and the unrounded bounds agree with the gate to 1e-7.",
+    "independent_claim_recalc.json records raw_data/orders.csv as source_paths (claims_recomputed reads raw_latest per check_plan), not clean_data as the stage prompt anticipated; it is rooted neither in analysis/ nor release/, so it does not check itself. recompute_estimate and min_group_size still read",
+    "The hypothesis blocks in analysis/answers/R03.json and R04.json sit outside the claim register, so hypotheses_registered, multiplicity, effect_floor and power_declared all saw zero tests; I recomputed both statistics and effect sizes myself (they match), but no machine rule covers them.",
+    "No machine rule reads the wording of analysis/answers/*; questions_are_answered checks existence only. This is the unchecked surface where the R03 blocker sits.",
+    "No phrase from the quarantined comment column was found in analysis/claim_register.json or analysis/answers/*.",
+    "The completion claims' caveats do not say in words that cancelled and pending orders are in the denominator; the recount confirms they are (direct 3322 cancelled and 3457 pending in 24597), so this is recorded as a wording weakness rather than a blocker."
+  ],
+  "summary": "All six claims, their bounds, n, level and method recompute exactly from quarantine/orders.csv and chain byte-for-byte to metrics/calculated_metrics.json and audit/analysis_plan.json; the hypothesis statistics in R03/R04 also reproduce. The stage fails on wording: analysis/answers/R03.json caveat reads the Wilson confidence intervals as a 95% probability that the true completion rate lies inside them (a frequentist interval makes no such statement, and this contradicts the register's own sampling-interval caveat), and the CLM-AOV-* caveats never say in words that the value is delivered-only an",
+  "wall_seconds": 186.2,
+  "cost": {
+    "at": "2026-09-16T16:53:39.230109+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-16T16:50:35.721434+00:00",
+    "finished_at": "2026-09-16T16:53:39.230109+00:00",
+    "wall_seconds": 183.516,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 30,
+    "cached_input_tokens": 1475943,
+    "output_tokens": 19361,
+    "total_tokens": 1495334,
+    "cost_usd": 2.2143264999999994
+  }
+}

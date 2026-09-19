@@ -1,0 +1,64 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "m_mix_caveat_inverted",
+  "dataset": "messy",
+  "error": "The partner completion rate's caveat says its interval also covers a change in the channel's country mix.",
+  "at": "2026-09-16T19:06:26+00:00",
+  "max_v2_revision": "fa38876",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "mix of countries|country mix",
+    "also covers|covers a channel",
+    "CLM-COMPLETION-PARTNER"
+  ],
+  "blocking_issues": 1,
+  "warnings": 2,
+  "checks": 13,
+  "issue_ids": [
+    "CLM-COMPLETION-PARTNER-CAVEAT-INVERTED"
+  ],
+  "issue_texts": [
+    "CLM-COMPLETION-PARTNER-CAVEAT-INVERTED | gate_claims_auditor.caveat_meaning.CLM-COMPLETION-PARTNER | gate_claims|CLAIM_SUPPORT|analysis/claim_register.json|CLM-COMPLETION-PARTNER.caveat.interval_mix | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/claim_register.json CLM-COMPLETION-PARTNER.caveats[1] states the sampling interval 'also covers a channel whose mix of countries changes'; sibling cl"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The partner-completion caveat inversion is invisible to the machine gate because caveats_declared counts caveat topics, not what they assert; meaning checks of caveats remain human/judgement work.",
+    "The machine gate's independent_claim_recalc.json lists raw_data/orders.csv as its source root; in this run that is a stronger root than the one the stage prompt describes for this dataset, so it is not a finding, but the gate read the file that contains the quarantined comment column (as a script, n"
+  ],
+  "summary": "All six claims reproduce exactly from quarantine/orders.csv by independent recalc (net_revenue 3023296.61; orders 44531; completion direct 0.724397 wilson [0.718779, 0.729946] n=24597; partner 0.604746 [0.597939, 0.611512] n=19934; aov direct 110.64 student [109.88, 111.39] n=17818; partner 87.27 [86.50, 88.03] n=12055); claim-to-metric chain is byte-consistent; R01..R05 present, R03/R04 use only the two registered hypotheses with plan method/alpha; sign of the channel effect is stable in every country stratum; no quarantined comment text in the registry. One blocker: the caveat on CLM-COMPLET",
+  "wall_seconds": 309.7,
+  "cost": {
+    "at": "2026-09-16T19:11:42.097746+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-209ed68e518b",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-16T19:06:35.911255+00:00",
+    "finished_at": "2026-09-16T19:11:42.094229+00:00",
+    "wall_seconds": 306.187,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 93200,
+    "cached_input_tokens": 603840,
+    "output_tokens": 7733,
+    "total_tokens": 707408,
+    "cost_usd": 0.02237682
+  }
+}

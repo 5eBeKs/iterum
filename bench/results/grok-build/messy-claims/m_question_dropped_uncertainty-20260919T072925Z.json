@@ -1,0 +1,66 @@
+{
+  "profile": "grok-build",
+  "stage": "claims",
+  "case": "m_question_dropped_uncertainty",
+  "dataset": "messy",
+  "error": "R03 is restated without the half of the brief that asks how precisely each rate is known.",
+  "at": "2026-09-19T07:14:26+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R03",
+    "uncertain|precis|interval",
+    "restat|narrow|question|brief"
+  ],
+  "blocking_issues": 1,
+  "warnings": 4,
+  "checks": 49,
+  "issue_ids": [
+    "R03-QUESTION-DROPPED-UNCERTAINTY"
+  ],
+  "issue_texts": [
+    "R03-QUESTION-DROPPED-UNCERTAINTY | gate_claims_auditor.R03.uncertainty_requested | gate_claims_auditor|question_dropped_uncertainty|analysis/answers/R03.json|R03 | CLAIM_SUPPORT | HIGH | worker_analysis | raw_data/questions.md R03 asks for the completion rate of each channel and how precisely it is known. analysis/answers/R03.json question is only the completion rate of each channel. R04 keeps wit"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "CLM-AOV-DIRECT and CLM-AOV-PARTNER are computed on delivered orders net of refunds, but their caveats do not say delivered or net of refunds; only the population field says delivered.",
+    "CLM-TEST-CHANNEL-AOV population text matches the unfiltered channel comparison, while the test itself is restricted to delivered orders (n 17818 and 12055).",
+    "check_plan caveats_declared does not require a cancelled-or-pending denominator phrase on CLM-COMPLETION-*; the rates were still recomputed over the full channel.",
+    "Country mix is nearly the same across channels, so country is not a material confounder of the registered channel tests."
+  ],
+  "summary": "Independent recalc from quarantine/orders.csv matches the eight registered claims, intervals, tests and metric bindings. R03 drops the requested precision clause from its restated question while questions.md asks how precisely each channel completion rate is known.",
+  "wall_seconds": 890.2,
+  "cost": {
+    "at": "2026-09-19T07:29:23.929279+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-d425aacce01d",
+    "agent_role": "grok-audit-claims",
+    "started_at": "2026-09-19T07:14:36.989157+00:00",
+    "finished_at": "2026-09-19T07:29:23.929279+00:00",
+    "wall_seconds": 886.937,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 152348,
+    "cached_input_tokens": 2826624,
+    "output_tokens": 43543,
+    "total_tokens": 3022515,
+    "cost_usd": 0.67295044
+  }
+}

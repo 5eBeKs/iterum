@@ -1,0 +1,72 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "sum_sentence_false",
+  "dataset": "orders",
+  "error": "The page says the country figures sum to the headline before refunds; both are net of refunds.",
+  "at": "2026-09-19T08:24:14+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "before refunds",
+    "net of refunds",
+    "sum"
+  ],
+  "blocking_issues": 1,
+  "warnings": 5,
+  "checks": 12,
+  "issue_ids": [
+    "FINAL-RT-001"
+  ],
+  "issue_texts": [
+    "FINAL-RT-001 | final_redteam.report_reconciliation_truth | final_redteam|reconciliation_statement_false|release/report.md|country_components_vs_headline | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 22 states the country figures sum to the headline before refunds are taken off. My independent recalc from raw_data/orders.csv (audit/results/final/evidence/final_recalc.json, re"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "check_plan.json declares 2 accepted_unproven entries (gate_release_document claims_rendered and caveats_rendered, reason FileNotFoundError in the prove harness), while gate0_machine's plan_proven actual reads '0 accepted unproven' - the proof accounting in the two frozen files disagrees, though both",
+    "Model identity rests on self-reports alone: every stage result names 'openrouter/z-ai/glm-5.3-flash-fake', no output event names a model, and no gate can verify MODEL_MISMATCH in this profile, so the claim 'run on GLM flash' is confirmed by nothing except the stages' own declarations.",
+    "Two row-accounting metrics (excluded_order_rows, excluded_outside_period) are not source-recomputed by any machine rule per gate_metrics_machine's own unchecked list; my raw recalculation confirms 27 and 1, closing that gap only in final evidence, not at gate level.",
+    "This run is a driver e2e fixture: worker and stage-auditor results carry placeholder timestamps (2026-01-01T00:00:00Z) and one-check 'recomputed' entries, so their PASSes are stubs; the deterministic layer is the machine gates, and prose truth is covered by nothing but this verdict.",
+    "The rejected alternative reading of refund rate (order-rows basis) would publish 0.189655 instead of 0.473684 - the human ruling is applied and disclosed, but anyone reusing the published figure outside the ruled basis moves it by a factor of ~2.5."
+  ],
+  "summary": "Independent raw recalculation (my own code, audit/results/final/evidence/final_recalc.py and release_trace.py) reproduces every published number exactly: net_revenue 35741.52 (gross 40235.02 - refunds 4493.50), refund_rate 27/57 = 0.473684 on the ruled paying_customers basis, country components 11181.67 / 11032.61 / 13527.24 summing to 35741.52, row accounting 201 = 174 + 26 + 1, boundary enforced (2025-04-01 order O00201 excluded, 2025-01-01 and 2025-03-30 rows included). One material blocker: release/report.md line 22 tells the reader 'Country figures sum to the headline before refunds are t",
+  "wall_seconds": 778.1,
+  "cost": {
+    "at": "2026-09-19T08:37:20.506508+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-666aa061da66",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-19T08:24:26.476202+00:00",
+    "finished_at": "2026-09-19T08:37:20.502442+00:00",
+    "wall_seconds": 774.031,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 95240,
+    "cached_input_tokens": 1800320,
+    "output_tokens": 11227,
+    "total_tokens": 1927322,
+    "cost_usd": 0.05071806
+  }
+}

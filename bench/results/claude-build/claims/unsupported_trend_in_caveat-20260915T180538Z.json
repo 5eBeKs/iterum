@@ -1,0 +1,61 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "unsupported_trend_in_caveat",
+  "error": "A caveat asserts growth against a previous quarter no metric computes.",
+  "at": "2026-09-15T18:02:15+00:00",
+  "max_v2_revision": "d6a41ff",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "previous quarter",
+    "12 ?%",
+    "trend|growth|grew|unsupported|no metric"
+  ],
+  "blocking_issues": 1,
+  "warnings": 4,
+  "checks": 14,
+  "issue_ids": [
+    "CLAIMS-AUD-UNSUPPORTED-TREND-CAVEAT-NET-REVENUE"
+  ],
+  "warning_texts": [
+    "CLM-NET-REVENUE in analysis/claim_register.json declares a caveat claiming 12% growth over the previous quarter, and the raw export has no data before 2025-01-01, so that figure is unsupported and would be published unbound if the register were released as is.",
+    "No deterministic rule in audit/check_plan.json inspects caveat content beyond required-topic presence: caveats_declared passes any extra caveat, including one carrying numbers or period comparisons, so caveat text is covered only by auditor judgment at this gate.",
+    "gate_release_document.caveats_rendered and claims_rendered are listed under accepted_unproven in audit/check_plan.json, so the release-side caveat checks have never been shown to fire on a broken input.",
+    "questions_are_answered compares stated figures with the registry only for R04; the values in analysis/answers/R01.json to R03.json are not compared by any machine rule. They were checked here and match the register."
+  ],
+  "summary": "All five claim values recompute exactly from raw_data/orders.csv and match the register, the metrics registry and the machine recalc (which is rooted only in raw_data). Populations, periods and the paying-customers wording of CLM-REFUND-RATE are correct. One blocker: CLM-NET-REVENUE carries a caveat asserting a 12% rise on the previous quarter, a business figure with no claim_id, no metric and no raw data behind it, since the export holds no row before 2025-01-01.",
+  "wall_seconds": 193.6,
+  "cost": {
+    "at": "2026-09-15T18:05:35.830071+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-f58036111c74",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-15T18:02:29.224396+00:00",
+    "finished_at": "2026-09-15T18:05:35.830071+00:00",
+    "wall_seconds": 186.563,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 354,
+    "cached_input_tokens": 969299,
+    "output_tokens": 14449,
+    "total_tokens": 984102,
+    "cost_usd": 1.5604105000000001
+  }
+}

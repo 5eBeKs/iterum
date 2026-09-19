@@ -1,0 +1,90 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "m_interval_read_as_probability",
+  "dataset": "messy",
+  "error": "The answer to R03 reads each 0.95 interval as a 95% probability that the true rate lies inside it.",
+  "at": "2026-09-16T18:09:14+00:00",
+  "max_v2_revision": "fa38876",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "probab",
+    "95 ?%",
+    "confidence|frequentist|coverage|credible|bayes"
+  ],
+  "blocking_issues": 8,
+  "warnings": 9,
+  "checks": 11,
+  "issue_ids": [
+    "FINAL-R03-INTERVAL-AS-PROBABILITY",
+    "FINAL-REPORT-POPULATION-DELIVERED-ONLY",
+    "FINAL-AOV-CAVEAT-POPULATION",
+    "FINAL-DASHBOARD-ESTIMATE-N-MISSING",
+    "FINAL-CARRY-CONTRADICTS-OUTPUT-WORKER-CLEAN",
+    "FINAL-CARRY-CONTRADICTS-OUTPUT-WORKER-METRICS",
+    "FINAL-CARRY-CONTRADICTS-OUTPUT-WORKER-ANALYSIS",
+    "FINAL-CARRY-CONTRADICTS-OUTPUT-WORKER-RELEASE"
+  ],
+  "issue_texts": [
+    "FINAL-R03-INTERVAL-AS-PROBABILITY | final_claude_redteam.interval_is_sampling_interval | final_claude_redteam|interval_is_sampling_interval|analysis/answers/R03.json|CLM-COMPLETION-DIRECT,CLM-COMPLETION-PARTNER | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R03.json caveats[0] tells the reader there is a 95% probability that each channel's true completion rate lies inside its interval",
+    "FINAL-REPORT-POPULATION-DELIVERED-ONLY | final_claude_redteam.card_local_population | final_claude_redteam|card_local_population|release/report.md|page_population_line | RELEASE_INTEGRITY | HIGH | worker_release | The visible text of release/report.md line 3 sets a single population for the whole page: orders placed inside the quarter, one row per order, delivered only. Only CLM-NET-REVENUE has th",
+    "FINAL-AOV-CAVEAT-POPULATION | final_claude_redteam.card_local_population | final_claude_redteam|card_local_population|analysis/claim_register.json|CLM-AOV-DIRECT,CLM-AOV-PARTNER | CLAIM_SUPPORT | MEDIUM | worker_analysis | CLM-AOV-DIRECT and CLM-AOV-PARTNER are means over delivered orders net of refunds: n 17,818 and 12,055, per the audit_spec.yaml metrics.aov_by_channel formula and the analysis_p",
+    "FINAL-DASHBOARD-ESTIMATE-N-MISSING | final_claude_redteam.estimate_rendering | final_claude_redteam|estimate_rendering|release/dashboard_data.json|CLM-COMPLETION-DIRECT,CLM-COMPLETION-PARTNER,CLM-AOV-DIRECT,CLM-AOV-PARTNER | RELEASE_INTEGRITY | MEDIUM | worker_release | audit_spec.yaml release.estimate_rendering says an estimate is rendered with its interval and its n beside it, always, and the ha",
+    "FINAL-CARRY-CONTRADICTS-OUTPUT-WORKER-CLEAN | final_claude_redteam.carry_continuity | final_claude_redteam|carry_continuity|audit/checkpoints/worker_clean.carry.json|grain,periods,populations | OTHER | MEDIUM | worker_clean | audit/checkpoints/worker_clean.carry.json: context_id cc-worker_clean-a1-c0adf4877022 and attempt 1 match audit/results/worker_clean/result.json execution. Its facts contradi",
+    "FINAL-CARRY-CONTRADICTS-OUTPUT-WORKER-METRICS | final_claude_redteam.carry_continuity | final_claude_redteam|carry_continuity|audit/checkpoints/worker_metrics.carry.json|grain,periods,populations | OTHER | MEDIUM | worker_metrics | audit/checkpoints/worker_metrics.carry.json: context_id cc-worker_metrics-a1-943a8acdf87c and attempt 1 match the result execution. The content is identical to the work",
+    "FINAL-CARRY-CONTRADICTS-OUTPUT-WORKER-ANALYSIS | final_claude_redteam.carry_continuity | final_claude_redteam|carry_continuity|audit/checkpoints/worker_analysis.carry.json|grain,periods,populations | OTHER | MEDIUM | worker_analysis | audit/checkpoints/worker_analysis.carry.json: context_id cc-worker_analysis-a1-3a61091afed3 and attempt 1 match the result execution. The content is the same deliver",
+    "FINAL-CARRY-CONTRADICTS-OUTPUT-WORKER-RELEASE | final_claude_redteam.carry_continuity | final_claude_redteam|carry_continuity|audit/checkpoints/worker_release.carry.json|grain,periods,populations | OTHER | MEDIUM | worker_release | audit/checkpoints/worker_release.carry.json: context_id cc-worker_release-a1-8238f2b4c86b and attempt 1 match the result execution. The content is the same delivered-on"
+  ],
+  "other_blockers": 6,
+  "warning_texts": [
+    "The LLM stage results attest nothing that can be checked. Every worker_* result and the gate0_semantic, gate_clean_auditor, gate_metrics_auditor, gate_claims_auditor and gate_release_auditor results have the summary 'driver e2e <step>'. worker_clean, worker_metrics, worker_analysis, worker_release, ",
+    "The frozen plan assumes independence, and the data contradict it. H-CHANNEL-COMPLETION assumes that one row per order makes observations independent, but the 44,531 orders come from 4,198 pseudonymous customers: 4,196 of them have more than one order (up to 23), and 4,158 order in both channels. The",
+    "The five RESOLVED readings in human_decisions.yaml all hold up against the data; none looks wrong. Slashed dates read month-first agree with order_month on 6852 of 6852 rows, against 231 read day-first. Dotted dates read day-first agree on 9184 of 9184. The last file revision never has an earlier up",
+    "The hypothesis tests live outside the claim register. analysis/answers/R03.json and R04.json carry test results (statistic, p_value, effect_size) with no claim_id, and the register has no kind: test claim. hypotheses_registered, multiplicity, effect_floor and power_declared therefore passed vacuousl",
+    "There is more unchecked surface than the stages can carry. No check_plan rule reads analysis/answers text, a report population line, the dashboard's estimate n, the units printed beside figures, or the 'n = ...' and '0.95 interval' text. release_surface_contract text_exclusions exempt the last two f",
+    "The page does not define completion, and some units are missing. Pending orders count as not completed: pending is 13.4-14.6% of direct and 19.2-20.8% of partner orders in every month, January included, so it is a standing status rather than end-of-quarter censoring. Left out of the denominator, com",
+    "The caveat 'one quarter of orders in this channel' (report.md lines 15-21 and 23, and every estimate card) can be read as 25% of the channel's orders rather than the orders of 2026-Q1.",
+    "The change the interval does not cover is visible, but the caveat names the wrong driver. Monthly completion ranges 0.594679-0.616349 for partner, wider than the quarter's Wilson interval 0.597939-0.611512, and 0.719305-0.732054 for direct. The country mix within each channel is flat, with every cou",
+    "shipping_total recomputes exactly: 37792722.50, with 2,648 of 44,531 orders (5.95%) unreadable and treated as zero. It is not published, and the R05 caveat is accurate. However, the median shipping cost is 8.3 times the median gross_amount (about 905 vs 108.31), which casts doubt on whether ' Shippi"
+  ],
+  "summary": "FAIL. Every figure I recomputed matches. From the quarantine projection: orders 44531, net revenue 3023296.61, completion 0.724397 [0.718779, 0.729946] n=24597 and 0.604746 [0.597939, 0.611512] n=19934, AOV 110.64 [109.88, 111.39] n=17818 and 87.27 [86.50, 88.03] n=12055, unpublished shipping_total 37792722.50, and both registered tests (z 26.718455, Welch t 42.699880). That is 55 of 55 comparisons within tolerance. The clean table equals the deduplicated, filtered quarantine population key for key and column for column, renamed columns included. The failures are about what the reader is told,",
+  "wall_seconds": 634.4,
+  "cost": {
+    "at": "2026-09-16T18:20:06.651286+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-62b781008144",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-16T18:09:34.866731+00:00",
+    "finished_at": "2026-09-16T18:20:06.651286+00:00",
+    "wall_seconds": 631.797,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 64,
+    "cached_input_tokens": 4692629,
+    "output_tokens": 64951,
+    "total_tokens": 4757644,
+    "cost_usd": 5.691933000000001
+  }
+}

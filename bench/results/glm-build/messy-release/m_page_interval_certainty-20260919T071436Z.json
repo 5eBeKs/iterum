@@ -1,0 +1,66 @@
+{
+  "profile": "glm-build",
+  "stage": "release",
+  "case": "m_page_interval_certainty",
+  "dataset": "messy",
+  "error": "The page says each interval is where the true value lies with near certainty.",
+  "at": "2026-09-19T07:07:59+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "certaint|true value",
+    "sampling interval|interval"
+  ],
+  "blocking_issues": 2,
+  "warnings": 3,
+  "checks": 16,
+  "issue_ids": [
+    "REL-WORDING-INTERVAL-CERTAINTY",
+    "REL-POPULATION-DELIVERED-ONLY-HEADER"
+  ],
+  "issue_texts": [
+    "REL-WORDING-INTERVAL-CERTAINTY | gate_release_auditor.wording_not_stronger_than_interval | release|wording_not_stronger_than_interval|release/report.md|line-23 | CLAIM_SUPPORT | HIGH | worker_release | release/report.md line 23: 'The interval beside it is where the true value of the channel lies, with near certainty.' Same page, lines 14/16/18/20 caveats say 'the interval is the sampling interval ",
+    "REL-POPULATION-DELIVERED-ONLY-HEADER | gate_release_auditor.population_label_matches_claim | release|population_mislabel|release/report.md|line-3 | METRIC_DEFINITION | MEDIUM | worker_release | release/report.md line 3: 'Population: orders placed inside the quarter, one row per order, delivered only.' The CLM-ORDERS card on the same page shows 44,531 with claim population 'orders placed inside the"
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "The completion-rate cards say 'one quarter of orders in this channel' but never state in so many words that the denominator is the whole channel including cancelled and pending orders; the claim register text was certified at gate_claims so this is not a release fault, but a reader can still misread",
+    "The release machine gate verified binding, rendering and anchor proximity for 60 numbers and the document gate verified rendering and caveats, but no deterministic rule covered the report's narrative prose; that prose is where both findings sit.",
+    "The registered two-proportion z statistic 26.718455 reproduces only with the pooled standard error; my unpooled recomputation gives 26.683193. The pooled form is the standard method and renders identically to 2 digits differently (26.72 vs 26.68), so the registry's choice is documented here, not dis"
+  ],
+  "summary": "All 60 rendered numbers independently recompute from clean_data/orders_clean.csv and match the claim register exactly (net_revenue 3023296.61, orders 44531, completion 0.724397/0.604746 with Wilson bounds, AOV 110.64/87.27 with t bounds, pooled two-prop z 26.718455, welch t 42.699880, d 0.486900, p->0.0000; component identity 1971306.75+1051989.86=3023296.61 holds; generator has no business literals; no UNVERIFIED_CLAIM, no shipping_total, no quarantined text on any surface; both machine gates agree). FAIL on page wording: line 23 states the interval holds the true value 'with near certainty',",
+  "wall_seconds": 391.1,
+  "cost": {
+    "at": "2026-09-19T07:14:34.533281+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-9d284071cfee",
+    "agent_role": "glm-audit-release",
+    "started_at": "2026-09-19T07:08:07.703562+00:00",
+    "finished_at": "2026-09-19T07:14:34.533281+00:00",
+    "wall_seconds": 386.829,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 39150,
+    "cached_input_tokens": 680448,
+    "output_tokens": 10549,
+    "total_tokens": 734346,
+    "cost_usd": 0.020199264
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "m_effect_misnamed",
+  "dataset": "messy",
+  "error": "The R04 test calls its effect size a proportion difference; a Welch test on order values reports Cohen's d.",
+  "at": "2026-09-16T17:15:59+00:00",
+  "max_v2_revision": "920704d",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "effect",
+    "cohen|proportion_difference|effect_name|effect size"
+  ],
+  "blocking_issues": 1,
+  "warnings": 5,
+  "checks": 32,
+  "issue_ids": [
+    "CLAIMS-R04-EFFECT-MISNAMED"
+  ],
+  "issue_texts": [
+    "CLAIMS-R04-EFFECT-MISNAMED | gate_claims_auditor.effect_name_matches_method | gate_claims_auditor|effect_name_matches_method|analysis/answers/R04.json|H-CHANNEL-AOV | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R04.json hypothesis block (H-CHANNEL-AOV, method welch_t, value_column net_amount): effect_size 0.486900 with effect_name proportion_difference. Independent recalc (audit/resu"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "analysis/answers/R03.json and R04.json publish test results (statistic, p_value, effect_size, alpha, correction) that are not in analysis/claim_register.json and carry no claim_id. As a result hypotheses_registered, multiplicity, effect_floor and power_declared in gate_claims_machine all passed on '",
+    "analysis/answers/R03.json and R04.json give p_value as 0.0000000000. Recomputed p is below double precision (z = 26.72, t = 42.70 on ~28537 df); it is not zero and should be presented as a bound (e.g. < 1e-10), not as an exact value.",
+    "Both tests declare correction bonferroni with alpha 0.05, but neither answer records the per-test alpha (0.025 for two registered tests) or an adjusted p. With p far below any threshold the decision is unchanged, but the correction is mentioned rather than shown as applied.",
+    "Pending orders count as not completed (per spec, deliberately). Pending share differs by channel: direct 3457/24597 (14.1%), partner 4034/19934 (20.2%), stable across Jan-Mar, so this is not end-of-quarter censoring. If pending orders later deliver, the completion gap narrows (excluding pending: dir",
+    "Deterministic coverage gap: answers/*.json hypothesis blocks (method, effect naming, p formatting, correction application) and the direction convention of effects have no rule in audit/check_plan.json; only this auditor's judgment covers them, which is how the blocker above reached Gate 3."
+  ],
+  "summary": "All six registered claims (orders 44531, net revenue 3023296.61 EUR, completion rates and AOV per channel with Wilson/Student intervals) and both test statistics (z 26.718455, Welch t 42.699880) reproduce exactly from an independent recalculation over quarantine/orders.csv. Confounders (country mix, month), Simpson strata and denominator selection were checked and hold. One blocker: analysis/answers/R04.json reports the H-CHANNEL-AOV effect size 0.486900 under effect_name proportion_difference, but that number is Cohen's d on the pooled SD of net_amount (a standardised mean difference); the ac",
+  "wall_seconds": 253.6,
+  "cost": {
+    "at": "2026-09-16T17:20:19.404667+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-16T17:16:08.739887+00:00",
+    "finished_at": "2026-09-16T17:20:19.404667+00:00",
+    "wall_seconds": 250.672,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 38,
+    "cached_input_tokens": 1829923,
+    "output_tokens": 25343,
+    "total_tokens": 1855304,
+    "cost_usd": 2.4660654999999996
+  }
+}

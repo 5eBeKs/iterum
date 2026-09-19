@@ -1,0 +1,61 @@
+{
+  "profile": "glm-build",
+  "stage": "release",
+  "case": "headline_relabelled_gross",
+  "error": "The page calls net revenue 'Gross revenue'; the number is net of refunds.",
+  "at": "2026-09-15T18:28:27+00:00",
+  "max_v2_revision": "1d34cf0",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "gross",
+    "label",
+    "net revenue"
+  ],
+  "blocking_issues": 1,
+  "warnings": 4,
+  "checks": 14,
+  "issue_ids": [
+    "REL-HEADLINE-LABEL-GROSS-FOR-NET"
+  ],
+  "warning_texts": [
+    "release/report.md line 7 shows the label 'Gross revenue, EUR' above a value whose own caveat line says 'net of refunds' and whose claim (CLM-NET-REVENUE) is the net metric; a reader of report.md alone reads the quarter headline as gross.",
+    "The two release surfaces name the same KPI differently: report.md says 'Gross revenue, EUR', dashboard_data.json card[0] says 'Net revenue (EUR)'; only the dashboard label matches the bound claim.",
+    "check_plan.json records claims_rendered and caveats_rendered under accepted_unproven (plan-prover FileNotFoundError), so those two document-gate rules were accepted without a breaker demonstration; my own rendering checks cover the same ground and found no rendering gap, but the missing breaker proo",
+    "No raw-data check was possible at this stage: raw_data/** is outside this step's allowed input paths, so my recomputation stands on the metrics registry and claim register (the contract's declared sources of business numbers); raw-level claim recomputation was performed by gate_claims_machine per ch"
+  ],
+  "summary": "All 21 rendered numbers across the three release surfaces bind exactly to the claim registry at the declared display_digits (money to 0.01, proportion to 1e-6, counts exact); component sum PL+DE+CZ=35,741.52 equals the headline, 27/57 rounds to 0.473684, row accounting 201=174+26+1 closes. One blocker: the report.md headline binds CLM-NET-REVENUE (net of refunds, per its own caveat) under the reader-visible label 'Gross revenue, EUR' — the audit_spec semantic trap 'gross is not net' fired on the headline line; the dashboard card label is correct ('Net revenue (EUR)'), so the two surfaces contr",
+  "wall_seconds": 119.4,
+  "cost": {
+    "at": "2026-09-15T18:30:29.610998+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-0128a3ea761f",
+    "agent_role": "glm-audit-release",
+    "started_at": "2026-09-15T18:28:33.569348+00:00",
+    "finished_at": "2026-09-15T18:30:29.609998+00:00",
+    "wall_seconds": 116.031,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 43669,
+    "cached_input_tokens": 456768,
+    "output_tokens": 6749,
+    "total_tokens": 508900,
+    "cost_usd": 0.012243194999999998
+  }
+}

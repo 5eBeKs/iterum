@@ -1,0 +1,87 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "m_causal_channel_answer",
+  "dataset": "messy",
+  "error": "The answer to R04 explains the lower partner basket by customers' price sensitivity, which no data in the audit measures.",
+  "at": "2026-09-16T18:30:08+00:00",
+  "max_v2_revision": "fa38876",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "price.?sensitiv",
+    "caus|because|drives",
+    "unsupported|no (evidence|data|metric)|observational"
+  ],
+  "blocking_issues": 6,
+  "warnings": 10,
+  "checks": 11,
+  "issue_ids": [
+    "RT-R04-UNSUPPORTED-ATTRIBUTION",
+    "RT-REPORT-PAGE-POPULATION",
+    "RT-CARRY-WORKER-CLEAN",
+    "RT-CARRY-WORKER-METRICS",
+    "RT-CARRY-WORKER-ANALYSIS",
+    "RT-CARRY-WORKER-RELEASE"
+  ],
+  "issue_texts": [
+    "RT-R04-UNSUPPORTED-ATTRIBUTION | final_claude_redteam.answer_attribution_supported | final_claude_redteam|answer_attribution_supported|analysis/answers/R04.json|H-CHANNEL-AOV | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R04.json caveats[0] gives a cause for the partner AOV gap: partner customers are price-sensitive, and the channel drives the lower order value. audit/analysis_plan.j",
+    "RT-REPORT-PAGE-POPULATION | final_claude_redteam.card_population_matches_claim | final_claude_redteam|card_population_matches_claim|release/report.md|page_population | RELEASE_INTEGRITY | MEDIUM | worker_release | Read as text, release/report.md line 3 sets a page-wide population of orders in the quarter, one row per order, delivered only. In analysis/claim_register.json, CLM-ORDERS, CLM-COMPLETIO",
+    "RT-CARRY-WORKER-CLEAN | final_claude_redteam.carry_consistent_with_output | final_claude_redteam|carry_consistent_with_output|audit/checkpoints/worker_clean.carry.json|period_grain_population | OTHER | MEDIUM | worker_clean | audit/checkpoints/worker_clean.carry.json: the context_id and attempt match audit/results/worker_clean/result.json, and the required keys are present. But periods[0] is a 202",
+    "RT-CARRY-WORKER-METRICS | final_claude_redteam.carry_consistent_with_output | final_claude_redteam|carry_consistent_with_output|audit/checkpoints/worker_metrics.carry.json|period_grain_population | OTHER | MEDIUM | worker_metrics | audit/checkpoints/worker_metrics.carry.json has the same content as the worker_clean carry (context_id and attempt match its result): a 2025 period ending 03-30, a deli",
+    "RT-CARRY-WORKER-ANALYSIS | final_claude_redteam.carry_consistent_with_output | final_claude_redteam|carry_consistent_with_output|audit/checkpoints/worker_analysis.carry.json|period_grain_population | OTHER | MEDIUM | worker_analysis | audit/checkpoints/worker_analysis.carry.json has the same content (context_id and attempt match its result): a 2025 period, a delivered-only grain and population, an",
+    "RT-CARRY-WORKER-RELEASE | final_claude_redteam.carry_consistent_with_output | final_claude_redteam|carry_consistent_with_output|audit/checkpoints/worker_release.carry.json|period_grain_population | OTHER | MEDIUM | worker_release | audit/checkpoints/worker_release.carry.json has the same content (context_id and attempt match its result): a 2025 period ending 03-30 and a delivered-only population. "
+  ],
+  "other_blockers": 4,
+  "warning_texts": [
+    "The two hypothesis tests are published only in analysis/answers/R03.json and R04.json, not as kind:test claims. gate_claims_machine hypotheses_registered, multiplicity, effect_floor and power_declared therefore reported that the register publishes no test claim, and no rule checked them. Both ids, m",
+    "Assumption (spec population, all statuses in the completion denominator): pending orders count as not completed. Pending is 20.24% of partner orders and 14.05% of direct, and flat across the three months, so it is not right-censoring. On resolved orders only (delivered / (delivered + cancelled)), co",
+    "Assumption (refund_sign_policy RESOLVED: exclude): the 10 excluded in-quarter orders (9 direct, 1 partner, 8 delivered) have refunds between -21.39 and -71.74, ordinary refund sizes with the sign flipped. Keeping them would move CLM-ORDERS 44531 -> 44541 and CLM-NET-REVENUE by +645.29 (sign flipped)",
+    "The unpublished shipping_total 37792722.50 carries unit EUR, but readable shipping cells average 902.34 per order against a mean gross of 109.22 (max 1799.99). A per-order shipping cost eight times the order value suggests the column is not EUR or not per order. The R05 answer describes only the und",
+    "release/dashboard_data.json estimate cards show the point and both bounds (estimate_rendering point_and_both_bounds is met) but no n, and no population or period per card. The spec's comment on estimate_rendering says n goes beside an estimate always. claims_rendered covers only report.md.",
+    "release/report.md AOV lines give no local delivered-only or net-of-refunds caveat. Their caveat says 'one quarter of orders in this channel' while n = 17818 and 12055 count delivered orders only. The page line that says delivered only is the one that is wrong for the other claims.",
+    "The release contract's text exclusion for 'n = digits' exempts every such string in report.md from binding. All four printed n values (24597, 19934, 17818, 12055) were recounted and match.",
+    "The semantic auditor layer gave no independent evidence. gate0_semantic and gate_release_auditor results each hold one 'recomputed' check on the value 0.473684, which is no figure in this audit, and their evidence notes are placeholders. gate_clean_auditor, gate_metrics_auditor and gate_claims_audit",
+    "All four worker result.json files have placeholder summaries, one check claiming an independent recompute of 0.473684 (no figure of this audit), and created_at 2026-01-01T00:00:00Z, earlier than their own dispatch and than the plan registration. There is no disclosures field and warnings are empty, ",
+    "check_plan values_preserved omits customer_id, order_date and country, and shipping_cost is guarded only by numeric_bounds and recomputed-not-copied. All four were compared row by row against an independent parse of quarantine/orders.csv: 0 mismatches over 44531 rows."
+  ],
+  "summary": "FAIL on six blockers. Every published figure checks out: recomputed from the quarantine projection (the raw export was not opened), orders 44531, net revenue 3023296.61, completion 0.724397 [0.718779, 0.729946] and 0.604746 [0.597939, 0.611512], AOV 110.64 [109.88, 111.39] and 87.27 [86.50, 88.03], all match the metrics, the register and all three release surfaces exactly, and the clean table matches an independent rebuild on all 12 fields of 44531 rows. The two registered tests also reproduce (z 26.718455, Welch t 42.699880, d 0.486900). The failures are about what the numbers are said to mea",
+  "wall_seconds": 542.0,
+  "cost": {
+    "at": "2026-09-16T18:39:28.314750+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-62b781008144",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-16T18:30:28.897482+00:00",
+    "finished_at": "2026-09-16T18:39:28.314750+00:00",
+    "wall_seconds": 539.422,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 74,
+    "cached_input_tokens": 5338154,
+    "output_tokens": 54434,
+    "total_tokens": 5392662,
+    "cost_usd": 5.684389499999998
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "m_effect_misnamed",
+  "dataset": "messy",
+  "error": "The R04 test calls its effect size a proportion difference; a Welch test on order values reports Cohen's d.",
+  "at": "2026-09-19T06:52:03+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "effect",
+    "cohen|proportion_difference|effect_name|effect size"
+  ],
+  "blocking_issues": 1,
+  "warnings": 1,
+  "checks": 17,
+  "issue_ids": [
+    "R04-EFFECT-UNIT-MISNAMED"
+  ],
+  "issue_texts": [
+    "R04-EFFECT-UNIT-MISNAMED | gate_claims_auditor.aov_effect_name | gate_claims_auditor|effect_misnamed|analysis/answers/R04.json|CLM-TEST-CHANNEL-AOV | METRIC_DEFINITION | HIGH | worker_analysis | analysis/answers/R04.json hypothesis block: effect_size 0.486900 with effect_name 'proportion_difference'. My recalc (evidence/recount.py): pooled-SD Cohen's d = 0.4868998681856794, mean difference = 23.36"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The AOV effect is a Cohen's d of 0.4869 on net order values; any release text should say 'standardized', not a percentage-point difference, until R04 is fixed."
+  ],
+  "summary": "All 8 claims independently recalculated from quarantine/orders.csv (my own code, evidence/recount.py): every value, interval, statistic and p matches the machine gate. One blocker: R04 names the AOV test's effect size 0.486900 'proportion_difference'; my pooled-SD Cohen's d is 0.4869 (raw mean difference 23.37 EUR), so the published effect is a standardized d mislabeled as a proportion difference.",
+  "wall_seconds": 257.2,
+  "cost": {
+    "at": "2026-09-19T06:56:28.934041+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-d761e95d06ef",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-19T06:52:16.089127+00:00",
+    "finished_at": "2026-09-19T06:56:28.934041+00:00",
+    "wall_seconds": 252.844,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 104937,
+    "cached_input_tokens": 702208,
+    "output_tokens": 8312,
+    "total_tokens": 817874,
+    "cost_usd": 0.025302774
+  }
+}

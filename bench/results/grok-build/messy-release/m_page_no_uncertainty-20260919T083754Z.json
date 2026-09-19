@@ -1,0 +1,64 @@
+{
+  "profile": "grok-build",
+  "stage": "release",
+  "case": "m_page_no_uncertainty",
+  "dataset": "messy",
+  "error": "The page says the channel figures are measured over every order and carry no uncertainty, beside their intervals.",
+  "at": "2026-09-19T08:27:25+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "no uncertainty|every order",
+    "interval|estimate|sampl"
+  ],
+  "blocking_issues": 1,
+  "warnings": 3,
+  "checks": 34,
+  "issue_ids": [
+    "REL-ESTIMATE-CENSUS-WORDING"
+  ],
+  "issue_texts": [
+    "REL-ESTIMATE-CENSUS-WORDING | gate_release_auditor.estimate_wording_not_stronger_than_interval | gate_release_auditor|wording_matches_claims|release/report.md|channel-estimates | VISUALIZATION | HIGH | worker_release | release/report.md By channel closing sentence: channel figures are described as carrying no uncertainty, after CLM-COMPLETION-DIRECT, CLM-COMPLETION-PARTNER, CLM-AOV-DIRECT and CLM-"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "gate_release_document wording_matches_claims recorded PASS for WORDING-01 on the two test claims (significant beside a test whose p is below alpha). That dictionary has no census-strength entry, so the document gate's PASS is not a finding on the By channel closing sentence of release/report.md.",
+    "Dashboard estimate cards carry ci_low and ci_high and no n field. The report prints n beside each of the four estimates, matching claim n. src/release/build_release.py never writes n onto dashboard cards.",
+    "The report page-level population line is the CLM-NET-REVENUE population (delivered only). Orders and completion claims keep their own caveats on the same bullets; completion still says orders in this channel."
+  ],
+  "summary": "Displayed business numbers on release/report.md, release/dashboard_data.json and release/release_number_manifest.json match analysis/claim_register.json and metrics/calculated_metrics.json, including independent recasts from clean_data/orders_clean.csv. The four channel estimates on the report carry both bounds, n, and a 0.95 interval label. gate_release_machine bound 60/60 numbers and did not skip a contracted surface. The report then tells the reader those channel figures carry no uncertainty, which is stronger than the sampling interval beside them and stronger than the registered caveat th",
+  "wall_seconds": 623.6,
+  "cost": {
+    "at": "2026-09-19T08:37:52.236575+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-eca0ee23dd1a",
+    "agent_role": "grok-audit-release",
+    "started_at": "2026-09-19T08:27:32.050080+00:00",
+    "finished_at": "2026-09-19T08:37:52.236575+00:00",
+    "wall_seconds": 620.188,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 203377,
+    "cached_input_tokens": 2322432,
+    "output_tokens": 38050,
+    "total_tokens": 2563859,
+    "cost_usd": 0.6107318
+  }
+}

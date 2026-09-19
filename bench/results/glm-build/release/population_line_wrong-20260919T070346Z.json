@@ -1,0 +1,64 @@
+{
+  "profile": "glm-build",
+  "stage": "release",
+  "case": "population_line_wrong",
+  "dataset": "orders",
+  "error": "The page's population line says all orders; every figure is over delivered orders.",
+  "at": "2026-09-19T06:57:35+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "all orders"
+  ],
+  "blocking_issues": 1,
+  "warnings": 3,
+  "checks": 19,
+  "issue_ids": [
+    "REPORT-POPULATION-LINE-WRONG"
+  ],
+  "issue_texts": [
+    "REPORT-POPULATION-LINE-WRONG | gate_release_auditor.population_line_matches_register | gate_release|population_line_mismatch|release/report.md|headline | CLAIM_SUPPORT | HIGH | worker_release | release/report.md line 3 reads 'Population: all orders inside the period.'; analysis/claim_register.json CLM-NET-REVENUE.population (source of every caveat rendered on the same card) and audit_spec.yaml pop"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "Neither gate_release_machine nor gate_release_document recorded any comparison covering the population line of release/report.md, so the wrong population was invisible to both machine gates and only a human-style reading catches it.",
+    "The generator src/release/build_release.py renders the population from the register, so release/report.md as it stands could not have been produced by a fresh run of the committed generator: the file on disk and the generator disagree, which points at a post-generation edit of the release surface.",
+    "audit/check_plan.json assigns no deterministic rule to the population statement, a gap this audit fills only once per run."
+  ],
+  "summary": "21 of 21 rendered numbers on all 3 surfaces bind to the claim registry exactly (money to 0.01, rate to 1e-6, display_digits respected), arithmetic identities hold (PL+DE+CZ=35741.52=headline; 27/57=0.473684; 40235.02-4493.50=35741.52), no UNVERIFIED_CLAIM, no business literals in the generator — but report.md line 3 states the population as 'all orders inside the period' while the claim register, the spec and every caveat on the same card say 'delivered orders inside the period'. Neither release gate checked the population line; my independent check caught it.",
+  "wall_seconds": 366.6,
+  "cost": {
+    "at": "2026-09-19T07:03:45.393403+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-8061b094dbe7",
+    "agent_role": "glm-audit-release",
+    "started_at": "2026-09-19T06:57:43.105367+00:00",
+    "finished_at": "2026-09-19T07:03:45.391395+00:00",
+    "wall_seconds": 362.281,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 51195,
+    "cached_input_tokens": 920448,
+    "output_tokens": 7823,
+    "total_tokens": 983423,
+    "cost_usd": 0.024728214000000005
+  }
+}

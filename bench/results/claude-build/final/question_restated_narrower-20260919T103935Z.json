@@ -1,0 +1,87 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "question_restated_narrower",
+  "dataset": "orders",
+  "error": "R02 is restated without the half that asks on which basis the rate is taken.",
+  "at": "2026-09-19T10:31:04+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R02",
+    "basis",
+    "restat|narrow|half|question"
+  ],
+  "blocking_issues": 2,
+  "warnings": 18,
+  "checks": 16,
+  "issue_ids": [
+    "FINAL-R02-QUESTION-RESTATED-NARROWER",
+    "FINAL-R01-QUESTION-RESTATED-NARROWER"
+  ],
+  "issue_texts": [
+    "FINAL-R02-QUESTION-RESTATED-NARROWER | final_claude_redteam.question_answered_as_asked.R02 | final_claude_redteam|question_answered_as_asked|analysis/answers/R02.json|R02 | CLAIM_SUPPORT | MEDIUM | worker_analysis | raw_data/questions.md R02 asks for the refund rate and on which basis, order rows or paying customers. analysis/answers/R02.json records its question as 'the refund rate', and its fact",
+    "FINAL-R01-QUESTION-RESTATED-NARROWER | final_claude_redteam.question_answered_as_asked.R01 | final_claude_redteam|question_answered_as_asked|analysis/answers/R01.json|R01 | CLAIM_SUPPORT | LOW | worker_analysis | raw_data/questions.md R01 asks for net revenue for the reported quarter over delivered orders inside the period. analysis/answers/R01.json records its question as 'net revenue for the rep"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "This profile is single-vendor: every context in the run, this red team included, was claude-opus-5. An isolated context is not an independent vendor, so an error the model is prone to would reproduce on both sides of every check. What actually holds here is the deterministic layer (machine gates, fr",
+    "Per this stage's prompt, writes over raw sources and frozen machinery were closed for edit tools only, by permissions.deny in .claude/settings.json, not for the shell. A modified raw file would have been caught after the fact by the control lock, not prevented. I did not read settings.json or the lo",
+    "The LLM auditor layer added no independent evidence I could use. gate0_semantic, gate_clean_auditor, gate_metrics_auditor, gate_claims_auditor and gate_release_auditor all summarize as 'driver e2e', and their evidence notes are placeholders. Their checks cite recomputation from the very artifact und",
+    "The four worker results (worker_clean, worker_metrics, worker_analysis, worker_release) summarize as 'driver e2e', have no disclosures field and empty warnings, and each reports a boilerplate 'recomputed' refund rate 0.473684, even worker_clean, which produces no rate. So no stage reported a deviati",
+    "Every worker result, auditor result and carry is stamped 2026-01-01T00:00:00Z, a placeholder rather than a clock read. The timestamps give no ordering evidence for this run, which was dispatched 2026-09-19.",
+    "All four carries define 'delivered orders inside the period' as 'status=delivered' and leave the period filter to a separate periods entry. A stage that applied the definition alone would select 175 rows and net revenue 36741.51 instead of 174 and 35741.52: the 2025-04-01 order O00201 (PL, 999.99 EU",
+    "The four carries are identical apart from step_id and context_id. Each says grain 'one row per delivered order' even for the metrics, analysis and release stages, none has a denominators entry for refund_rate, and each lists raw_data/orders.csv under do_not_reread, which is a raw source rather than ",
+    "Assumption most likely to be wrong: the spec period ends 2025-03-30, one day short of calendar Q1, while questions.md asks for 'the reported quarter' and the metrics period is named 2025-Q1-delivered. The export has no 2025-03-31 row, so no number moves here, but a future export with March-31 orders",
+    "The Europe/Warsaw reading of order_date (timezone_for_dates RESOLVED) cannot be checked, because order_date is a bare date. If the dates were UTC, the only row that could cross a boundary is O00064 (CZ, 2025-03-30, net 268.18; DST began that day), which would lower net revenue and CZ by 268.18 and l",
+    "Net of refunds (revenue_recognition RESOLVED) attributes each refund to its order's date because the export carries no refund date. The headline 35741.52 is gross 40235.02 minus refunds 4493.50, including 12 fully refunded orders. That is accrual by order date, not cash received in the quarter, and ",
+    "The refund_rate_basis paying_customers ruling looks right on this data. It gives 27/57 = 0.473684, versus 33/174 = 0.189655 on order rows (2.498x smaller). Every one of the 57 customers has positive net, so reading 'paying' as net above zero gives the same 57. Any partial refund counts a customer as",
+    "The check_plan leaves several places without a deterministic rule. excluded_outside_period and excluded_order_rows are only pinned by component sums (gate_metrics_machine unchecked.json); I recomputed them as 1 and 27. No rule compares the answer files' question text or the R01-R03 fact values; I fo",
+    "check_plan lists claims_rendered and caveats_rendered (gate_release_document) as accepted_unproven because their proof crashed with FileNotFoundError, yet gate0_machine plan_proven reports 0 accepted unproven. Those two rules were never shown to fire on a broken input. I checked independently that e",
+    "I could not verify the spec's release rule that no business literal may appear in a generator. release_surface_gate.json records only rendered-number bindings and says nothing about scanning src/release/build_release.py, and src/ is outside this stage's inputs.",
+    "The net_revenue registry row carries numerator 40235.02, the gross sum, with denominator null. It is a gross figure stored under a ratio role on a non-ratio metric. It is rendered nowhere today, but a surface that bound metric:net_revenue:numerator would print gross beside a net label.",
+    "Nowhere in the release does a reader learn that R05 (customer lifetime value) was excused as unanswerable from this export, or see the R04 row accounting (201 raw rows; 26 excluded as not delivered: 16 cancelled, 10 pending; 1 excluded as outside the period). Both live only in check_plan excusals an",
+    "R03 answers whether the parts sum to the headline with a caveat pointing at a gate rather than with a fact. I verified the sum exactly: 11181.67 + 11032.61 + 13527.24 = 35741.52. R04 paraphrases 'under which of the spec's allowed exclusions' as 'under which rule', but its facts use the spec's exact ",
+    "Not established by me: runner state, retry history and stale inputs (not in the handoff; see audit_runner.py report), whether the raw file still matches the Gate 0 lock, and the generator literal scan. There are no audit/decisions/*.json and no rulings in the handoff, and the handoff has no drift_si"
+  ],
+  "summary": "Every published number reproduces exactly from raw_data/orders.csv with my own code: net revenue 35741.52, PL 11181.67, DE 11032.61, CZ 13527.24, refund rate 0.473684 (27/57 paying customers), rows 201 = 174 + 26 + 1. All 21 rendered numbers on the three release surfaces are bound, labelled and caveated correctly, and the carries are continuous. FAIL on two blockers in analysis/answers that no machine rule can see. R02.json records its question only as 'the refund rate', dropping the basis clause (order rows or paying customers) that is the ruling this dataset exists to demonstrate, and its fa",
+  "wall_seconds": 493.3,
+  "cost": {
+    "at": "2026-09-19T10:39:34.270888+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-d423fa05b27b",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-19T10:31:23.837661+00:00",
+    "finished_at": "2026-09-19T10:39:34.270888+00:00",
+    "wall_seconds": 490.422,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 66,
+    "cached_input_tokens": 3712757,
+    "output_tokens": 52488,
+    "total_tokens": 3765311,
+    "cost_usd": 4.555975
+  }
+}

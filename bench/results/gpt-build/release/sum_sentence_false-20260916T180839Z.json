@@ -1,0 +1,58 @@
+{
+  "profile": "gpt-build",
+  "stage": "release",
+  "case": "sum_sentence_false",
+  "error": "The page says the country figures sum to the headline before refunds; both are net of refunds.",
+  "at": "2026-09-16T18:02:12+00:00",
+  "max_v2_revision": "fa38876",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "before refunds",
+    "net of refunds",
+    "sum"
+  ],
+  "blocking_issues": 1,
+  "warnings": 1,
+  "checks": 41,
+  "issue_ids": [
+    "REL-AUD-COUNTRY-RECONCILIATION-WORDING"
+  ],
+  "warning_texts": [
+    "The frozen release checks validate numeric binding and declared-caveat presence but not the semantic truth of free-form reconciliation prose, allowing the false sentence at release/report.md:22 to pass both machine gates."
+  ],
+  "summary": "All 21 displayed business-number instances, exact display precision, refund ratio, country sum, and 15 document-gate comparisons independently match; release/report.md:22 nevertheless reverses the refund timing in its reader-facing reconciliation sentence.",
+  "wall_seconds": 382.7,
+  "cost": {
+    "at": "2026-09-16T18:08:38.054952+00:00",
+    "launcher": "codex_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-abaeb9f45a8d",
+    "agent_role": "gpt-audit-release",
+    "started_at": "2026-09-16T18:02:17.874168+00:00",
+    "finished_at": "2026-09-16T18:08:38.052946+00:00",
+    "wall_seconds": 380.172,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "gpt-5.6-sol",
+    "model_used": null,
+    "input_tokens": 1684550,
+    "cached_input_tokens": null,
+    "output_tokens": 16137,
+    "total_tokens": 1700687,
+    "cost_usd": null
+  }
+}

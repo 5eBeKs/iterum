@@ -1,0 +1,66 @@
+{
+  "profile": "grok-build",
+  "stage": "claims",
+  "case": "period_shifted_in_claim",
+  "dataset": "orders",
+  "error": "One country claim carries a two-month period while its value is the full quarter's.",
+  "at": "2026-09-19T06:36:23+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "period",
+    "02-28",
+    "CLM-NET-CZ"
+  ],
+  "blocking_issues": 1,
+  "warnings": 4,
+  "checks": 27,
+  "issue_ids": [
+    "CLAIM-PERIOD-CLM-NET-CZ"
+  ],
+  "issue_texts": [
+    "CLAIM-PERIOD-CLM-NET-CZ | gate_claims_auditor.claim_period.CLM-NET-CZ | gate_claims_auditor|claim_period|analysis/claim_register.json|CLM-NET-CZ | CLAIM_SUPPORT | CRITICAL | worker_analysis | analysis/claim_register.json CLM-NET-CZ.period is 2025-01-01..2025-02-28 while source_value_ref metrics.net_revenue_cz.value and the claim value 13527.24 are the spec-window figure. Independent recalc from ra"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "audit/check_plan.json has no deterministic rule that a claim.period string equals the spec population period or the window used to compute the bound metric; claims_recomputed.CLM-NET-CZ passing is approval of the euro amount only.",
+    "analysis/answers/R03.json presents CLM-NET-PL, CLM-NET-DE and CLM-NET-CZ as one country split that sums to the headline, so the shifted period on CLM-NET-CZ also mislabels that split.",
+    "No claim has kind estimate or kind test, and audit/analysis_plan.json lists no hypotheses, so the inferential checklist has nothing to score.",
+    "refund_amount_total and the five population_row_accounting metrics are excused from claims in the frozen check plan; they are answered in analysis/answers/R04.json rather than as headline claims."
+  ],
+  "summary": "Four of five claims recompute from raw_data/orders.csv on the spec window 2025-01-01..2025-03-30 and match both the register and gate_claims_machine. CLM-NET-CZ does not: its value 13527.24 is net revenue for delivered CZ orders on that full window, but analysis/claim_register.json sets period to 2025-01-01..2025-02-28, a window that independently totals 9248.36. The machine gate only recomputes the number against spec filters, so it passed; the period label is a claims-support defect owned by worker_analysis.",
+  "wall_seconds": 461.7,
+  "cost": {
+    "at": "2026-09-19T06:44:11.307206+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-6135e4649eb3",
+    "agent_role": "grok-audit-claims",
+    "started_at": "2026-09-19T06:36:34.505275+00:00",
+    "finished_at": "2026-09-19T06:44:11.307206+00:00",
+    "wall_seconds": 456.813,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 211373,
+    "cached_input_tokens": 1271936,
+    "output_tokens": 25779,
+    "total_tokens": 1509088,
+    "cost_usd": 0.41255192
+  }
+}

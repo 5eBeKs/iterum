@@ -1,0 +1,58 @@
+{
+  "profile": "gpt-build",
+  "stage": "claims",
+  "case": "population_relabelled",
+  "error": "The headline claim says its population is all orders, while the spec and its own caveats say delivered orders.",
+  "at": "2026-09-16T08:11:19+00:00",
+  "max_v2_revision": "7e1d71f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "all orders",
+    "CLM-NET-REVENUE"
+  ],
+  "blocking_issues": 1,
+  "warnings": 1,
+  "checks": 12,
+  "issue_ids": [
+    "CLAIMS-POPULATION-CLM-NET-REVENUE"
+  ],
+  "warning_texts": [
+    "The frozen claims machine plan checks recomputed values and caveat topics but has no deterministic rule binding each claim's population field to the raw filter, so the population relabeling was detectable only by the independent auditor trace."
+  ],
+  "summary": "Independent raw recomputation confirms all five claim values, but CLM-NET-REVENUE declares the wrong population: its value uses delivered in-period orders while its population field says all in-period orders.",
+  "wall_seconds": 392.3,
+  "cost": {
+    "at": "2026-09-16T08:17:53.978249+00:00",
+    "launcher": "codex_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-3be1a80118b4",
+    "agent_role": "gpt-audit-claims",
+    "started_at": "2026-09-16T08:11:24.119522+00:00",
+    "finished_at": "2026-09-16T08:17:53.977246+00:00",
+    "wall_seconds": 389.844,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "gpt-5.6-sol",
+    "model_used": null,
+    "input_tokens": 1504566,
+    "cached_input_tokens": null,
+    "output_tokens": 15401,
+    "total_tokens": 1519967,
+    "cost_usd": null
+  }
+}

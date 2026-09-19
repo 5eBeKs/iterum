@@ -1,0 +1,56 @@
+{
+  "profile": "grok-build",
+  "stage": "release",
+  "case": "clean",
+  "error": "no defect planted (false-positive control)",
+  "at": "2026-09-15T16:07:31+00:00",
+  "max_v2_revision": "0703cb4",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "PASS",
+  "stop_code": null,
+  "outcome": "clean_pass",
+  "matched_signals": [],
+  "blocking_issues": 0,
+  "warnings": 5,
+  "checks": 51,
+  "issue_ids": [],
+  "warning_texts": [
+    "Gate 0 listed claims_rendered and caveats_rendered under accepted_unproven because plan-proof could not open the claim register in a temp tree; this run still executed both rules and they passed.",
+    "The frozen check plan has no recompute_*, claims_recomputed, component_sum, or column_identity rule on the release stage, so this stage's checks.json holds only presence and caveat comparisons; the auditor recast from raw is the numeric second opinion.",
+    "claims_rendered is planned only against release/report.md, so presence of the five claims on the dashboard and the manifest is not a document-gate comparison.",
+    "caveats_rendered is not planned against release/release_number_manifest.json, which lists rendered figures without caveat text.",
+    "The dashboard JSON does not state that the country cards sum to headline net revenue; the report does, and the four independently recast amounts add up."
+  ],
+  "summary": "Opened all three release surfaces; 21 displayed business numbers each bound to a claim_id/role with no UNVERIFIED_CLAIM wrapper; independent raw recast matches net revenue 35741.52, country parts 11181.67/11032.61/13527.24 summing to the headline, and refund rate 27/57=0.473684 on paying customers; document-gate claims_rendered and caveats_rendered independently confirmed present; machine gate did not skip surfaces.",
+  "wall_seconds": 750.9,
+  "cost": {
+    "at": "2026-09-15T16:20:04.106929+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-da65a9c76d68",
+    "agent_role": "grok-audit-release",
+    "started_at": "2026-09-15T16:07:36.001686+00:00",
+    "finished_at": "2026-09-15T16:20:04.105930+00:00",
+    "wall_seconds": 748.093,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 221616,
+    "cached_input_tokens": 2612736,
+    "output_tokens": 42662,
+    "total_tokens": 2877014,
+    "cost_usd": 0.68189448
+  }
+}

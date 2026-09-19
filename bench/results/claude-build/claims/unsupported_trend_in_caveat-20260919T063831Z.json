@@ -1,0 +1,66 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "unsupported_trend_in_caveat",
+  "dataset": "orders",
+  "error": "A caveat asserts growth against a previous quarter no metric computes.",
+  "at": "2026-09-19T06:36:21+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "previous quarter",
+    "trend|growth|grew|unsupported|no metric"
+  ],
+  "blocking_issues": 1,
+  "warnings": 5,
+  "checks": 13,
+  "issue_ids": [
+    "CLAIMS-AUD-UNSUPPORTED-TREND-NET-REVENUE"
+  ],
+  "issue_texts": [
+    "CLAIMS-AUD-UNSUPPORTED-TREND-NET-REVENUE | gate_claims_auditor.caveat_support.CLM-NET-REVENUE | gate_claims_auditor|caveat_supported_by_data|analysis/claim_register.json|CLM-NET-REVENUE | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/claim_register.json, claims[CLM-NET-REVENUE].caveats[3] states a percentage change against the previous quarter. evidence/recalc_output.json: min order_date 2025-"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The claims machine gate has no rule that checks caveat text for unsupported assertions: caveats_declared only requires listed topics to appear, so any extra caveat, including one carrying a number, passes silently; this auditor is the only check on that surface.",
+    "CLM-REFUND-RATE counts a customer as refunded if any delivered in-period order has refund_amount > 0, including partial refunds (for example 13.08 on a 26.15 order); the caveats state the paying-customer denominator but not that partial refunds count, and a reader may read 47.4% as customers fully r",
+    "On the order-row basis the same population gives 33/174 = 0.189655, so the paying-customer ruling roughly multiplies the headline refund figure by 2.5; any release text must keep the basis next to the number.",
+    "The period is 2025-01-01..2025-03-30 per audit_spec.yaml while metrics names it 2025-Q1 and questions.md calls it the reported quarter; the export has 0 rows dated 2025-03-31, so no figure changes, but the label is slightly wider than the population.",
+    "metrics/calculated_metrics.json writes the country formula as SUM(net_amount) WHERE country = country, which is a tautology as text; the values are correct, but the definition should name the country explicitly."
+  ],
+  "summary": "All five published claim values reproduce exactly from raw_data/orders.csv (net 35741.52; refund rate 27/57 = 0.473684 on paying customers; PL 11181.67, DE 11032.61, CZ 13527.24, summing to the headline), and the machine gate's independent recalc is rooted in raw only. One blocker: CLM-NET-REVENUE carries a caveat asserting a quarter-over-quarter growth percentage that has no comparison base in the data (0 rows before 2025-01-01), no metric and no claim binding, so it is an unsupported trend claim and an unregistered business number; worker_analysis must remove it.",
+  "wall_seconds": 123.6,
+  "cost": {
+    "at": "2026-09-19T06:38:30.294835+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-f58036111c74",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-19T06:36:31.610425+00:00",
+    "finished_at": "2026-09-19T06:38:30.294835+00:00",
+    "wall_seconds": 118.687,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 24,
+    "cached_input_tokens": 885198,
+    "output_tokens": 12508,
+    "total_tokens": 897730,
+    "cost_usd": 1.5178035
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "m_causal_channel_answer",
+  "dataset": "messy",
+  "error": "The answer to R04 explains the lower partner basket by customers' price sensitivity, which no data in the audit measures.",
+  "at": "2026-09-16T16:56:54+00:00",
+  "max_v2_revision": "05bbc25",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "price.?sensitiv",
+    "caus|because|drives",
+    "unsupported|no (evidence|data|metric)|observational"
+  ],
+  "blocking_issues": 1,
+  "warnings": 8,
+  "checks": 23,
+  "issue_ids": [
+    "CLAIMS-AUD-R04-CAUSAL-CAVEAT"
+  ],
+  "issue_texts": [
+    "CLAIMS-AUD-R04-CAUSAL-CAVEAT | gate_claims_auditor.answer_causal_language | gate_claims_auditor|answer_causal_language|analysis/answers/R04.json|caveats | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R04.json caveats[0] says the partner channel drives the lower order value and explains it by partner customers being price-sensitive. The registered hypothesis H-CHANNEL-AOV (audit/analys"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The stage prompt says independent_claim_recalc.json is rooted in clean_data/, but audit/check_plan.json sets claims_recomputed to read raw_latest (raw_data/orders.csv deduplicated and filtered) and the recalc file lists raw_data/orders.csv as source; this is stronger than the prompt describes, not a",
+    "Nothing in audit/check_plan.json checks the prose of analysis/answers/*.json, nor the hypothesis statistics in R03/R04 (hypotheses_registered, multiplicity, effect_floor and power_declared read only the claim register, which publishes no test claim), so those were checked by this auditor alone; I re",
+    "I read audit/human_decisions.yaml because the common contract requires it, although the handoff's allowed input paths do not list it; all five decisions there are RESOLVED.",
+    "The handoff's instructions field describes orchestrator dispatch (plan-spawn, record-spawn, register-context); I did not run those commands, performed the audit directly in this session and used the context_id given in the stage prompt.",
+    "scipy is not installed, so the Student t quantile in evidence/recompute_claims.py uses a Cornish-Fisher expansion; its bounds agree with the gate's recompute_estimate to better than 1e-7.",
+    "I ran two recompute scripts as one-line python commands (evidence/recompute_claims.py and evidence/channel_mix.py), reading quarantine/orders.csv, analysis/, metrics/ and audit/analysis_plan.json, and writing only their .out.json files into evidence/.",
+    "No phrase from the quarantined comment column appears anywhere under analysis/ (regex scan in evidence/recompute_claims.py); the comment column is absent from quarantine/orders.csv as the manifest declares.",
+    "Deduplication by last row in file order and by latest updated_at give the same population of 44531 orders, so the dedup rule is not sensitive to row order in this export."
+  ],
+  "summary": "All six claims recompute exactly from quarantine/orders.csv (44531 orders, net revenue, both completion rates and both AOVs with Wilson/Student bounds), the claim->metric->gate chain holds byte for byte, and R03/R04 test statistics reproduce; but analysis/answers/R04.json adds a causal caveat that asserts the channel causes the lower partner order value and names a customer trait no column measures, which the registered H-CHANNEL-AOV (a difference test on observational data) cannot support. No deterministic rule reads answer caveats, so this is caught only here. Blocker to worker_analysis.",
+  "wall_seconds": 184.7,
+  "cost": {
+    "at": "2026-09-16T17:00:05.461000+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-16T16:57:03.402073+00:00",
+    "finished_at": "2026-09-16T17:00:05.461000+00:00",
+    "wall_seconds": 182.046,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 30,
+    "cached_input_tokens": 1422749,
+    "output_tokens": 18510,
+    "total_tokens": 1441289,
+    "cost_usd": 2.1466185000000007
+  }
+}

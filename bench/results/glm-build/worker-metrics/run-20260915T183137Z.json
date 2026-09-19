@@ -1,0 +1,44 @@
+{
+  "profile": "glm-build",
+  "stage": "metrics",
+  "worker": "worker_metrics",
+  "kind": "worker",
+  "at": "2026-09-15T18:29:17+00:00",
+  "max_v2_revision": "1d34cf0",
+  "verdict": "PASS",
+  "stop_code": null,
+  "summary": "metrics/calculated_metrics.json written with the four spec metrics plus five row-accounting counts; refund_rate computed on the declared paying_customers basis (27/57 = 0.473684); country components sum exactly to net_revenue (35741.52); exclusions.json cross-checked against the clean table (201=174+26+1); independent verification script passes and gate_metrics_machine self-check PASS (25 checks).",
+  "wall_seconds": 137.8,
+  "cost": {
+    "at": "2026-09-15T18:31:34.503500+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "worker_metrics",
+    "attempt": 1,
+    "context_id": "ctx-worker_metrics-a1-2aeff068c86f",
+    "agent_role": "glm-worker",
+    "started_at": "2026-09-15T18:29:20.127298+00:00",
+    "finished_at": "2026-09-15T18:31:34.499372+00:00",
+    "wall_seconds": 134.359,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 56478,
+    "cached_input_tokens": 1451968,
+    "output_tokens": 7307,
+    "total_tokens": 1517733,
+    "cost_usd": 0.028337619999999997
+  },
+  "machine": {
+    "gates": {
+      "gate_metrics_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "outcome": "gate_pass",
+  "fingerprints": []
+}

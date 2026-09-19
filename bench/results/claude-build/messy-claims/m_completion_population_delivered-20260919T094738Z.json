@@ -1,0 +1,67 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "m_completion_population_delivered",
+  "dataset": "messy",
+  "error": "The direct completion rate says its population is delivered orders, over which a completion rate is always 1.",
+  "at": "2026-09-19T09:43:36+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "CLM-COMPLETION-DIRECT",
+    "population",
+    "delivered",
+    "denominator|cancel|always|trivial|1\\.0|100 ?%"
+  ],
+  "blocking_issues": 1,
+  "warnings": 4,
+  "checks": 41,
+  "issue_ids": [
+    "CLAIMS-AUD-COMPLETION-DIRECT-POPULATION"
+  ],
+  "issue_texts": [
+    "CLAIMS-AUD-COMPLETION-DIRECT-POPULATION | gate_claims_auditor.population.CLM-COMPLETION-DIRECT | gate_claims_auditor|claim_population_matches_computation|analysis/claim_register.json|CLM-COMPLETION-DIRECT | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/claim_register.json, claim CLM-COMPLETION-DIRECT, field population, restricts the population to delivered orders. The number is 17818 delivered"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "Neither CLM-COMPLETION-DIRECT nor CLM-COMPLETION-PARTNER has a caveat saying that cancelled and pending orders are in the denominator. The rate is computed correctly, but the register only states that fact through the population field, and for the direct claim that field is wrong.",
+    "The machine gate checks the numbers in the claim register but not its population and period text. caveats_declared only matches phrases, so a claim whose population contradicts its own metric passes every rule. For the population text of the eight claims, this audit is the only check.",
+    "Both test claims have a p-value of 0.0000000000 against a display_digits of 4, so the release could render them as 0.0000. A p this small should be shown as below the display floor, for example < 0.0001, not as zero.",
+    "Both test claims have claim_type FACT. The p-values sit far below the Bonferroni-adjusted alpha of 0.025, so the finding holds either way. The two tests compare channels observationally and justify no causal reading. The claims use no causal language today, and the release should keep it that way."
+  ],
+  "summary": "I recomputed all eight claims independently from quarantine/orders.csv: 45917 rows, 45000 order_ids, last revision wins, 459 rows outside the period and 10 negative refunds excluded, 44531 orders left. Every value, bound, n, statistic and effect matches metrics/calculated_metrics.json and the machine gate exactly, and the claim-to-metric-to-plan chain has no mismatches. There is one blocker. CLM-COMPLETION-DIRECT gives its population as delivered orders in the direct channel, but its number is computed over the whole channel (24597 orders, cancelled and pending included). Read literally, that ",
+  "wall_seconds": 233.6,
+  "cost": {
+    "at": "2026-09-19T09:47:37.409071+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-19T09:43:46.811651+00:00",
+    "finished_at": "2026-09-19T09:47:37.404649+00:00",
+    "wall_seconds": 230.594,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 38,
+    "cached_input_tokens": 2208398,
+    "output_tokens": 24423,
+    "total_tokens": 2232859,
+    "cost_usd": 3.02262
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "m_channel_labels_swapped_page",
+  "dataset": "messy",
+  "error": "On the page the direct and partner completion lines carry each other's labels; the figures and anchors are untouched.",
+  "at": "2026-09-19T07:22:31+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "label",
+    "swap|transpos|mislabel",
+    "direct|partner"
+  ],
+  "blocking_issues": 5,
+  "warnings": 5,
+  "checks": 21,
+  "issue_ids": [
+    "REL-AUD-001",
+    "REL-AUD-002",
+    "REL-AUD-003",
+    "REL-AUD-004",
+    "REL-AUD-005"
+  ],
+  "issue_texts": [
+    "REL-AUD-001 | gate_release_auditor.label_matches_claim | gate_release_auditor|label_matches_claim|release/report.md|completion_by_channel | VISUALIZATION | CRITICAL | worker_release | release/report.md line 14 has the visible label 'completion partner' but carries the CLM-COMPLETION-DIRECT anchors, with value, bounds and n = 24597 all from the direct claim. Line 16 has the visible label 'completio",
+    "REL-AUD-002 | gate_release_auditor.population_statement_true | gate_release_auditor|population_statement_true|release/report.md|page_population | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3 sets a page-wide population ending in 'delivered only', which is CLM-NET-REVENUE's population. CLM-ORDERS (44,531) counts orders of every status. The completion claims have the whole ch",
+    "REL-AUD-003 | gate_release_auditor.aov_caveats_rendered | gate_release_auditor|aov_caveats_rendered|analysis/claim_register.json|CLM-AOV | CLAIM_SUPPORT | MEDIUM | worker_analysis | release/report.md lines 18-21 and dashboard_data.json cards[4..5] (CLM-AOV-DIRECT, CLM-AOV-PARTNER) show only 'one quarter of orders in this channel' and the sampling-interval caveat. The claims' own caveats in analysi",
+    "REL-AUD-004 | gate_release_auditor.population_period_on_card | gate_release_auditor|population_period_on_card|release|all_cards | VISUALIZATION | MEDIUM | worker_release | In release/report.md the period 2026-01-01..2026-03-31 appears only in the H1 title (line 1), and no figure line from 7 to 29 names its own population. In release/dashboard_data.json the period appears only once, at $.period, an",
+    "REL-AUD-005 | gate_release_auditor.estimate_n_and_level_shown | gate_release_auditor|estimate_n_and_level_shown|release/dashboard_data.json|CLM-COMPLETION,CLM-AOV | VISUALIZATION | MEDIUM | worker_release | In release/dashboard_data.json, cards[2..5] (the four estimates) carry value, ci_low and ci_high but no n and no interval level. The claims carry n (24597, 19934, 17818, 12055) and level 0.95, "
+  ],
+  "other_blockers": 3,
+  "warning_texts": [
+    "gate_release_machine certified release/report.md lines 14 and 16 as bound to CLM-COMPLETION-DIRECT and CLM-COMPLETION-PARTNER because it follows the hidden anchors and never reads the visible label. The swapped channel labels therefore passed it, and passed gate_release_document's claims_rendered an",
+    "Both p values are printed as '0.0000' (display_digits 4 in the registry). A reader will take that as p equal to zero; 'p < 0.0001' would state the same registry value honestly.",
+    "The dashboard test cards (cards[6..7]) show p, effect and statistic with no hypothesis id, alpha, correction or group order beyond the direction caveat.",
+    "audit/release_surface_contract.json declares reconciliations = [] and card_caveat_requirements = [], so the component identities and per-card population and period rest on this auditor alone. I recomputed the identities and they hold.",
+    "The generator src/release/build_release.py is outside this step's inputs, and release_surface_gate.json records no rows for generator literals. This stage has not verified that the generator is free of business-number literals."
+  ],
+  "summary": "Every one of the 30 visible numbers on release/report.md is accounted for: 20 anchored figures equal the registry at its display_digits, plus 4 n values, 4 interval labels and the period. The registry identities hold: 24597+19934=44531 orders and 1971306.75+1051989.86=3023296.61 EUR, and Wilson, z and effect recompute exactly. The release still fails. Report lines 14 and 16 print the direct completion rate under the label 'completion partner' and the partner rate under 'completion direct', which inverts the headline channel finding for the reader, and both machine gates passed it. Also: a page",
+  "wall_seconds": 210.0,
+  "cost": {
+    "at": "2026-09-19T07:26:05.515044+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-1ec424ea468d",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-19T07:22:38.827217+00:00",
+    "finished_at": "2026-09-19T07:26:05.515044+00:00",
+    "wall_seconds": 206.688,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 26,
+    "cached_input_tokens": 1052172,
+    "output_tokens": 21239,
+    "total_tokens": 1073437,
+    "cost_usd": 2.0016144999999996
+  }
+}

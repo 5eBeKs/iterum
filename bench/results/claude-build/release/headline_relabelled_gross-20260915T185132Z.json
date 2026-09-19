@@ -1,0 +1,63 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "headline_relabelled_gross",
+  "error": "The page calls net revenue 'Gross revenue'; the number is net of refunds.",
+  "at": "2026-09-15T18:46:55+00:00",
+  "max_v2_revision": "1d34cf0",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "gross",
+    "label",
+    "net revenue"
+  ],
+  "blocking_issues": 1,
+  "warnings": 6,
+  "checks": 17,
+  "issue_ids": [
+    "REL-HEADLINE-LABEL-GROSS"
+  ],
+  "warning_texts": [
+    "The headline on release/report.md line 7 is labelled gross revenue while its figure 35,741.52 and its own caveat are net of refunds (gross would be 40,235.02), and release/dashboard_data.json labels the same claim net revenue, so the two surfaces disagree on what the headline is.",
+    "No rule in audit/check_plan.json compares a visible label with the metric its claim is bound to, and the gross-is-not-net semantic trap is mapped only to gate_metrics_machine.recompute_metric, so the release surface has no deterministic guard against exactly this relabelling and both release gates p",
+    "audit/check_plan.json lists claims_rendered and caveats_rendered under accepted_unproven because the plan proof could not find analysis/claim_register.json, so the only two rules of gate_release_document were never shown to fire on a broken release and their PASS carries no proven weight.",
+    "The line 22 sentence that country figures sum to the headline is arithmetically true (11,181.67 + 11,032.61 + 13,527.24 = 35,741.52) but, under the gross label, tells the reader that net components add up to gross revenue.",
+    "audit/results/gate_release_machine/evidence/release_surface_gate.json records number binding on three surfaces but no outcome for the generator literal scan of src/release/build_release.py named in release_surface_contract.json, so the spec rule that generators carry no business literals is not visi",
+    "The frozen spec period ends 2025-03-30 while metrics/calculated_metrics.json names it 2025-Q1-delivered; a calendar quarter ends 2025-03-31, and whether any delivered 2025-03-31 order sits among the excluded_outside_period rows cannot be seen from release-stage inputs, so a human should confirm the "
+  ],
+  "summary": "All 21 rendered numbers (7 per surface on report.md, dashboard_data.json and the manifest) equal the registry at their display_digits, the country parts sum to net_revenue 35741.52, refund_rate 27/57 = 0.473684, and every required caveat is visible outside HTML comments; but release/report.md line 7 labels the CLM-NET-REVENUE headline 'Gross revenue, EUR' over a net-of-refunds figure (gross would be 40,235.02) while the dashboard labels the same claim 'Net revenue (EUR)', so the headline misstates what it is and both machine gates passed it.",
+  "wall_seconds": 272.5,
+  "cost": {
+    "at": "2026-09-15T18:51:31.281617+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-b0dc8f415661",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-15T18:47:01.419070+00:00",
+    "finished_at": "2026-09-15T18:51:31.281617+00:00",
+    "wall_seconds": 269.875,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 290,
+    "cached_input_tokens": 714455,
+    "output_tokens": 23129,
+    "total_tokens": 737874,
+    "cost_usd": 1.6181855
+  }
+}

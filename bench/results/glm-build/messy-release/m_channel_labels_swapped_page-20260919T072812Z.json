@@ -1,0 +1,70 @@
+{
+  "profile": "glm-build",
+  "stage": "release",
+  "case": "m_channel_labels_swapped_page",
+  "dataset": "messy",
+  "error": "On the page the direct and partner completion lines carry each other's labels; the figures and anchors are untouched.",
+  "at": "2026-09-19T07:18:16+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "label",
+    "swap|transpos|mislabel",
+    "direct|partner"
+  ],
+  "blocking_issues": 3,
+  "warnings": 4,
+  "checks": 12,
+  "issue_ids": [
+    "RELEASE-LABEL-SWAP-COMPLETION-DIRECT",
+    "RELEASE-LABEL-SWAP-COMPLETION-PARTNER",
+    "RELEASE-POPULATION-LINE-CONTRADICTS-ORDERS"
+  ],
+  "issue_texts": [
+    "RELEASE-LABEL-SWAP-COMPLETION-DIRECT | gate_release.label_matches_population | gate_release|label_matches_population|release/report.md|CLM-COMPLETION-DIRECT | VISUALIZATION | CRITICAL | worker_release | release/report.md line 14: label 'completion partner' carries anchor CLM-COMPLETION-DIRECT with value 0.724397, ci 0.718779..0.729946, n = 24597, whose registered population is 'orders placed insid",
+    "RELEASE-LABEL-SWAP-COMPLETION-PARTNER | gate_release.label_matches_population | gate_release|label_matches_population|release/report.md|CLM-COMPLETION-PARTNER | VISUALIZATION | CRITICAL | worker_release | release/report.md line 16: label 'completion direct' carries anchor CLM-COMPLETION-PARTNER (0.604746, ci 0.597939..0.611512, n = 19934, population channel = partner). Companion finding to RELEASE",
+    "RELEASE-POPULATION-LINE-CONTRADICTS-ORDERS | gate_release.population_line_contradicts_claim | gate_release|population_line_contradicts_claim|release/report.md|CLM-ORDERS | CLAIM_SUPPORT | MEDIUM | worker_release | release/report.md line 3 states the page population as CLM-NET-REVENUE's: 'orders placed inside the quarter, one row per order, delivered only.' The headline Orders figure 44,531 (CLM-OR"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "Neither machine gate could have caught the label swap: no rule in audit/check_plan.json (any gate) checks a visible label against the claim's population, and the surface gate's 60 per-number rows verify values, roles, anchors and precision only; label-vs-population is an unverified dimension that on",
+    "No completion-rate caveat explicitly says the denominator is all orders in the channel (delivered and not delivered); 'one quarter of orders in this channel' is the only wording, which leaves the 'share of delivered' misreading one step away.",
+    "dashboard_data.json cards carry caveats but no per-card period field; the period is only at the document top level ('2026-01-01..2026-03-31'), which is on the page but not bound to each card.",
+    "The p value rendered as '0.0000' (display_digits 4 from registry 0E-10) reads as exactly zero to a reader; the claim's tolerance 0.0001 covers it, but the page never says the p is below display resolution rather than zero."
+  ],
+  "summary": "All 20 rendered figures re-derived independently from claim render_values and display_digits match every surface to tolerance (money 0.01, proportions 1e-6); component sums, n values, interval bounds, caveats and test wording verified. FAIL: report.md labels the CLM-COMPLETION-DIRECT estimate (0.724397, n=24597, population channel=direct) as 'completion partner' on line 14 and CLM-COMPLETION-PARTNER as 'completion direct' on line 16, inverting the channel story the page tells and contradicting its own test caveat; the shipped page also diverges from what its registered generator produces. Seco",
+  "wall_seconds": 590.6,
+  "cost": {
+    "at": "2026-09-19T07:28:11.380998+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-378faedb4389",
+    "agent_role": "glm-audit-release",
+    "started_at": "2026-09-19T07:18:24.952520+00:00",
+    "finished_at": "2026-09-19T07:28:11.380998+00:00",
+    "wall_seconds": 586.422,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 97736,
+    "cached_input_tokens": 980352,
+    "output_tokens": 11497,
+    "total_tokens": 1094563,
+    "cost_usd": 0.031393476000000003
+  }
+}

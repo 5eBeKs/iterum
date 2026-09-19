@@ -1,0 +1,69 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "m_population_line_all_rows",
+  "dataset": "messy",
+  "error": "The page's population line says every export row; the figures are over one row per order after deduplication.",
+  "at": "2026-09-18T19:56:05+00:00",
+  "max_v2_revision": "b7adc4a",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "every row|export row|revision|dedup|one row per order"
+  ],
+  "blocking_issues": 3,
+  "warnings": 4,
+  "checks": 18,
+  "issue_ids": [
+    "REL-POPULATION-LINE-MISSTATED",
+    "REL-PER-CLAIM-POPULATION-ABSENT",
+    "REL-DASHBOARD-ESTIMATE-N-LEVEL"
+  ],
+  "issue_texts": [
+    "REL-POPULATION-LINE-MISSTATED | gate_release_auditor.population_line | gate_release_auditor|population_line|release/report.md|page_population | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3 says the population is every row of the export inside the quarter, delivered only. Running src/release/build_release.py into audit/results/gate_release_auditor/evidence/regen/ gives 'orde",
+    "REL-PER-CLAIM-POPULATION-ABSENT | gate_release_auditor.per_claim_population | gate_release_auditor|per_claim_population|release/report.md+release/dashboard_data.json|all_claims | VISUALIZATION | HIGH | worker_release | None of the 8 claim population strings in analysis/claim_register.json appears in release/report.md or release/dashboard_data.json (evidence/recheck_output.json text.per_claim_popul",
+    "REL-DASHBOARD-ESTIMATE-N-LEVEL | gate_release_auditor.dashboard_estimate_n_level | gate_release_auditor|estimate_rendering|release/dashboard_data.json|estimate_cards | VISUALIZATION | MEDIUM | worker_release | In release/dashboard_data.json, cards[2..5] (CLM-COMPLETION-DIRECT, CLM-COMPLETION-PARTNER, CLM-AOV-DIRECT, CLM-AOV-PARTNER) have value, ci_low and ci_high but no n and no level (evidence/re"
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "Both machine release gates passed a report whose population line had been edited by hand. No rule in audit/check_plan.json or audit/release_surface_contract.json checks population or period text on a surface, because card_caveat_requirements and reconciliations are empty. The population wording is c",
+    "gate_release_machine re-rendered every number from the register but did not compare report.md with the generator's output, so a hand edit of any line that has no digits in it passes that gate.",
+    "Both registered tests show p as 0.0000 (the register holds 0.0000000000; my own z test gives about 3e-157). A reader may take this as a p of exactly zero, and '< 0.0001' would say what the figure supports.",
+    "The dashboard labels 'Aov Direct' and 'Aov Partner' come from a title-cased claim id and do not name the metric or its unit (EUR)."
+  ],
+  "summary": "Every shown number (20 in report.md, 20 in dashboard_data.json, 20 in the manifest) is bound to its claim and role and matches the registry and my own recompute from the registry components. But report.md line 3 is a hand edit that is not what the generator produces from the register. It gives the population of the whole page as 'every row of the export inside the quarter, delivered only'. That contradicts the one-row-per-order count right below it, and it makes the completion rates read as rates among delivered orders. The register's own populations are shown on no report entry and no dashboa",
+  "wall_seconds": 222.2,
+  "cost": {
+    "at": "2026-09-18T19:59:50.718680+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-1ec424ea468d",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-18T19:56:11.524734+00:00",
+    "finished_at": "2026-09-18T19:59:50.718680+00:00",
+    "wall_seconds": 219.203,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 30,
+    "cached_input_tokens": 1391146,
+    "output_tokens": 22736,
+    "total_tokens": 1413912,
+    "cost_usd": 2.3088474999999997
+  }
+}

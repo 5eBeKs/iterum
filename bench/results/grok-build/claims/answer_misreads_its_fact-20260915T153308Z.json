@@ -1,0 +1,58 @@
+{
+  "profile": "grok-build",
+  "stage": "claims",
+  "case": "answer_misreads_its_fact",
+  "error": "The answer to R02 calls a 47% refund rate low, fewer than one order in ten.",
+  "at": "2026-09-15T15:19:27+00:00",
+  "max_v2_revision": "0703cb4",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R02",
+    "\\blow\\b",
+    "0\\.47|47 ?%"
+  ],
+  "blocking_issues": 1,
+  "warnings": 1,
+  "checks": 16,
+  "issue_ids": [
+    "R02-ANSWER-MISREADS-REFUND-RATE"
+  ],
+  "warning_texts": [
+    "The frozen check plan has no rule that compares answer caveat prose with the cited fact's grain or magnitude; questions_are_answered only requires the answer file and, for R04, metric_id values against the metrics registry, so machine silence on R02 caveats[1] is not approval."
+  ],
+  "summary": "Five registered claims recompute from raw_data/orders.csv and match gate_claims_machine; analysis/answers/R02.json caveats[1] misreads CLM-REFUND-RATE 0.473684 (27 of 57 paying customers) as a low order-row rate below one in ten.",
+  "wall_seconds": 817.9,
+  "cost": {
+    "at": "2026-09-15T15:33:07.534445+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-8eba4f657f4b",
+    "agent_role": "grok-audit-claims",
+    "started_at": "2026-09-15T15:19:32.323071+00:00",
+    "finished_at": "2026-09-15T15:33:07.534445+00:00",
+    "wall_seconds": 815.219,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 103636,
+    "cached_input_tokens": 1390848,
+    "output_tokens": 26210,
+    "total_tokens": 1520694,
+    "cost_usd": 0.36038504
+  }
+}

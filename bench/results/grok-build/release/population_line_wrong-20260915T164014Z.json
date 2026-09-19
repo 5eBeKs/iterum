@@ -1,0 +1,59 @@
+{
+  "profile": "grok-build",
+  "stage": "release",
+  "case": "population_line_wrong",
+  "error": "The page's population line says all orders; every figure is over delivered orders.",
+  "at": "2026-09-15T16:30:09+00:00",
+  "max_v2_revision": "0703cb4",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "all orders"
+  ],
+  "blocking_issues": 1,
+  "warnings": 3,
+  "checks": 54,
+  "issue_ids": [
+    "REL-POPULATION-LINE"
+  ],
+  "warning_texts": [
+    "The frozen check plan's release rules (claims_rendered, caveats_rendered) and the surface-number binder never read the Population line, so a green machine gate is not approval of the shown population.",
+    "claims_rendered and caveats_rendered are listed under accepted_unproven from Gate 0 because the claim register did not exist at prove-plan time; they did run at this gate and an independent read of the two surfaces agreed with those PASS findings.",
+    "The current generator src/release/build_release.py would write the claim-register population string, so the wrong line is a stale or hand-edited surface rather than a live render of the register."
+  ],
+  "summary": "Release figures match an independent raw recast (net revenue 35741.52 EUR, PL 11181.67 + DE 11032.61 + CZ 13527.24, refund rate 27/57 = 0.473684 on paying customers) and are bound on all three surfaces, but release/report.md line 3 tells the reader the population is all orders inside the period instead of delivered orders inside the period.",
+  "wall_seconds": 599.9,
+  "cost": {
+    "at": "2026-09-15T16:40:12.746174+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-b0e490846cc1",
+    "agent_role": "grok-audit-release",
+    "started_at": "2026-09-15T16:30:15.781062+00:00",
+    "finished_at": "2026-09-15T16:40:12.746174+00:00",
+    "wall_seconds": 596.969,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 143224,
+    "cached_input_tokens": 1818240,
+    "output_tokens": 35963,
+    "total_tokens": 1997427,
+    "cost_usd": 0.47985764
+  }
+}

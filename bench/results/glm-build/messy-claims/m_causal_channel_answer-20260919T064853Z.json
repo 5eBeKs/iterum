@@ -1,0 +1,64 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "m_causal_channel_answer",
+  "dataset": "messy",
+  "error": "The answer to R04 explains the lower partner basket by customers' price sensitivity, which no data in the audit measures.",
+  "at": "2026-09-19T06:44:15+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "price.?sensitiv",
+    "caus|because|drives",
+    "unsupported|no (evidence|data|metric)|observational"
+  ],
+  "blocking_issues": 1,
+  "warnings": 2,
+  "checks": 17,
+  "issue_ids": [
+    "AUDIT_CLAIMS_R04_CAUSAL_CAVEAT"
+  ],
+  "issue_texts": [
+    "AUDIT_CLAIMS_R04_CAUSAL_CAVEAT | gate_claims_auditor.causal_language.R04 | gate_claims_auditor|causal_beyond_evidence|analysis/answers/R04.json|H-CHANNEL-AOV-caveat | CLAIM_SUPPORT | MEDIUM | worker_analysis | audit/answers/R04.json caveats[0] asserts causality: 'Partner baskets are smaller because partner customers are price-sensitive: the channel drives the lower order value.' The dataset has no"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "analysis/answers/R04.json contains a causal caveat (the channel drives the lower order value, customers price-sensitive) that a dashboard reader could take as an established mechanism; consider rephrasing as a difference in means.",
+    "The stratified check that supports the block above is itself evidence the effect is robust: no stratum reverses the sign, so the analysis overstates attribution, not direction."
+  ],
+  "summary": "All 8 claims' numbers reproduce independently from quarantine/orders.csv (pop 44531 after dedup, quarter filter by order_month, negative-refund exclusion): net_revenue 3023296.61, completion 0.724397/0.604746 with Wilson bounds, AOV 110.64/87.27 with student bounds, z=26.718455, Welch t=42.699880, d=0.486900 — byte-equal to metrics and claim register; hypotheses, alpha, bonferroni and method match audit/analysis_plan.json; R01-R03, R05 clean. One blocker: R04 carries a causal caveat ('the channel drives the lower order value' / 'price-sensitive') that goes beyond the evidence — no price variab",
+  "wall_seconds": 268.8,
+  "cost": {
+    "at": "2026-09-19T06:48:51.722225+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-100a424d1fd9",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-19T06:44:27.487670+00:00",
+    "finished_at": "2026-09-19T06:48:51.721210+00:00",
+    "wall_seconds": 264.234,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 72217,
+    "cached_input_tokens": 451968,
+    "output_tokens": 6877,
+    "total_tokens": 532435,
+    "cost_usd": 0.017127054
+  }
+}

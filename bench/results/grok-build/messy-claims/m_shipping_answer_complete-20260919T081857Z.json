@@ -1,0 +1,70 @@
+{
+  "profile": "grok-build",
+  "stage": "claims",
+  "case": "m_shipping_answer_complete",
+  "dataset": "messy",
+  "error": "The answer to R05 calls the shipping total complete; about six per cent of its cells are blank, NaN or inf.",
+  "at": "2026-09-19T08:06:50+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R05|shipping",
+    "readable|blank|NaN|\\binf\\b|six per ?cent|6 ?%|unknown amount|underst|complete"
+  ],
+  "blocking_issues": 4,
+  "warnings": 3,
+  "checks": 58,
+  "issue_ids": [
+    "CLAIMS-R05-SHIPPING-COMPLETE",
+    "CLAIMS-AOV-DIRECT-CAVEATS",
+    "CLAIMS-AOV-PARTNER-CAVEATS",
+    "CLAIMS-AOV-TEST-POPULATION"
+  ],
+  "issue_texts": [
+    "CLAIMS-R05-SHIPPING-COMPLETE | gate_claims_auditor.R05.shipping_total_excuse | gate_claims_auditor|shipping_excuse|analysis/answers/R05.json|shipping_total | CLAIM_SUPPORT | CRITICAL | worker_analysis | analysis/answers/R05.json caveats assert every shipping cell was readable and the total is left out only for brevity. Independent parse of quarantine/orders.csv on the quarter population finds 2648",
+    "CLAIMS-AOV-DIRECT-CAVEATS | gate_claims_auditor.CLM-AOV-DIRECT.caveats | gate_claims_auditor|aov_caveats|analysis/claim_register.json|CLM-AOV-DIRECT | CLAIM_SUPPORT | HIGH | worker_analysis | CLM-AOV-DIRECT is computed on delivered net_amount (independent 17818 rows, 1971306.75 / 17818). Population says delivered but not net of refunds. Caveats say only 'one quarter of orders in this channel' and ",
+    "CLAIMS-AOV-PARTNER-CAVEATS | gate_claims_auditor.CLM-AOV-PARTNER.caveats | gate_claims_auditor|aov_caveats|analysis/claim_register.json|CLM-AOV-PARTNER | CLAIM_SUPPORT | HIGH | worker_analysis | CLM-AOV-PARTNER is computed on delivered net_amount (independent 12055 rows, 1051989.86 / 12055). Population says delivered but not net of refunds. Caveats omit both required phrases, same template as the ",
+    "CLAIMS-AOV-TEST-POPULATION | gate_claims_auditor.CLM-TEST-CHANNEL-AOV.population | gate_claims_auditor|population|analysis/claim_register.json|CLM-TEST-CHANNEL-AOV | CLAIM_SUPPORT | HIGH | worker_analysis | CLM-TEST-CHANNEL-AOV.population is the full-channel sentence also used for the completion test. Independent Welch n_per_group is 17818/12055 delivered, not 24597/19934 all-status. audit/analysi"
+  ],
+  "other_blockers": 3,
+  "warning_texts": [
+    "Country is a candidate confounder the channel tests do not adjust for; mix is nearly even (direct share 0.550/0.555/0.552 in CZ/DE/PL) and the sign does not reverse inside those strata.",
+    "gate_claims_machine has no deterministic rule that the R05 caveat must state unreadability, which is why the false completeness sentence survived the machine gate.",
+    "CLM-AOV-* population names delivered but still does not name net of refunds, so even a caveats-only fix would leave the population field short of the formula."
+  ],
+  "summary": "Independent quarantine recalc matches the eight registered figures (net revenue 3023296.61, orders 44531, completion 0.724397/0.604746, AOV 110.64/87.27, both tests). R05 names shipping_total but states the export's shipping cells were all readable and the total was omitted for brevity; 2648 of 44531 population shipping cells are unreadable (share 0.059464) and that is why shipping_total is excused. CLM-AOV-* caveats omit delivered-only and net of refunds. CLM-TEST-CHANNEL-AOV publishes a full-channel population while the Welch test ran on delivered rows only.",
+  "wall_seconds": 718.6,
+  "cost": {
+    "at": "2026-09-19T08:18:56.136244+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-1f5251056126",
+    "agent_role": "grok-audit-claims",
+    "started_at": "2026-09-19T08:07:00.850138+00:00",
+    "finished_at": "2026-09-19T08:18:56.136244+00:00",
+    "wall_seconds": 715.297,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 260538,
+    "cached_input_tokens": 2439424,
+    "output_tokens": 41064,
+    "total_tokens": 2741026,
+    "cost_usd": 0.67563848
+  }
+}

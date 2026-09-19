@@ -1,0 +1,79 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "m_causal_channel_answer",
+  "dataset": "messy",
+  "error": "The answer to R04 explains the lower partner basket by customers' price sensitivity, which no data in the audit measures.",
+  "at": "2026-09-16T21:04:19+00:00",
+  "max_v2_revision": "fa38876",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "price.?sensitiv",
+    "caus|because|drives",
+    "unsupported|no (evidence|data|metric)|observational"
+  ],
+  "blocking_issues": 2,
+  "warnings": 10,
+  "checks": 9,
+  "issue_ids": [
+    "FINAL-CAUSAL-OVERREACH-R04",
+    "FINAL-POPULATION-HEADER-REPORT"
+  ],
+  "issue_texts": [
+    "FINAL-CAUSAL-OVERREACH-R04 | final_redteam.unsupported_causal_claim | final_redteam|causal_overreach|analysis/answers/R04.json|caveats | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R04.json, key caveats[0]: the answer to the AOV question appends an interpretation attributing the smaller partner basket to price-sensitive partner customers and asserting the channel drives the lower ord",
+    "FINAL-POPULATION-HEADER-REPORT | final_redteam.population_header_mislabels_report | final_redteam|population_header_overclaims|release/report.md|header | CLAIM_SUPPORT | MEDIUM | worker_release | release/report.md line 3 states a single page-level population ending in 'delivered only'; src/release/build_release.py line 62 renders it from CLM-NET-REVENUE's population field, so one card's population"
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "All four worker carry files (audit/checkpoints/worker_*.carry.json) are identical boilerplate contradicting the delivered work: grain 'one row per delivered order', period '2025-Q1-delivered' 2025-01-01..2025-03-30 sourced 'audit/audit_spec.yaml', and a refund-rate pitfall for a metric this audit ne",
+    "The review layer of the PASS chain is not evidenced: gate0_semantic, gate_clean_auditor, gate_claims_auditor and gate_release_auditor each wrote a one-line note ('driver e2e evidence') with no substantive findings, and the four worker results carry empty warnings and disclosures; the deterministic m",
+    "Every stage result self-reports model 'openrouter/z-ai/glm-5.3-flash-fake' and created_at '2026-01-01T00:00:00Z'; the path contains the lane key 'glm' so the spec's lane rule passes, but the suffix and the frozen timestamps mark the provenance record as a placeholder, not a measurement.",
+    "Model identity is unverifiable by design: no output event of this CLI names a model, MODEL_MISMATCH is unprovable, and execution.model on every stage including this one is self-report; the human reading 'the run was done on model X' is relying on the stages' word.",
+    "raw_data/orders.csv was never read by me under the quarantine policy; the raw-to-clean trace runs through the quarantine projection, whose fidelity to the raw bytes rests on Gate 0's machine checks and the manifest (declared: true), not on my own eyes.",
+    "The analysis plan's registered assumptions (observations independent after dedup; neither channel changed its booking behaviour within the quarter) cannot be verified from the export; dedup to unique order keys was verified, the booking-behaviour assumption stands unverified and moves no number, and",
+    "R03 and R04's hypothesis blocks are the only test executions and both are the two registered hypotheses (two_proportion_z, welch_t) at alpha 0.05 with bonferroni named; p-values near zero make the Bonferroni-adjusted 0.025 threshold moot; no unregistered test or claim appears anywhere.",
+    "shipping_total 37,792,722.50 was reproduced independently (own locale parse; 2,648 unreadable cells of 44,531 = 1,778 blank + 869 NaN + 1 inf, about 5.9%) and appears on no release surface, matching the spec's publish:never and the R05 answer.",
+    "The 'n = 24597' style sample sizes and '0.95 interval' level on report.md are excluded from number-binding by declared contract rules; both were verified against my recalculation instead (each n equals its claim's n; the level equals the plan's 0.95).",
+    "audit/decisions/ contains no files, matching the handoff's empty rulings; all five human_decisions.yaml entries are RESOLVED and each is verifiably applied in the artifacts (last-revision dedup, month-first slashed dates, space-thousands comma-decimal parse, negative-refund exclusion, pre-agent quar"
+  ],
+  "summary": "Independent recalculation from the quarantine projection (own code, 5 scripts in evidence/) reproduced every registry value within declared tolerance: orders 44531, net revenue 3023296.61, both completion rates and both Wilson intervals to 1e-6, both AOV points and both Student intervals to 0.01, shipping_total 37792722.50, and both registered hypothesis statistics (z 26.718455, Welch t 42.699880, Cohen d 0.486900); the clean table's key set equals the declared population exactly, values preserved, locale parse correct (2648 unreadable shipping cells = 1778 blank + 869 NaN + 1 inf), last-revis",
+  "wall_seconds": 582.3,
+  "cost": {
+    "at": "2026-09-16T21:14:20.103983+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-63dfb3cbd6d1",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-16T21:04:41.203634+00:00",
+    "finished_at": "2026-09-16T21:14:20.097257+00:00",
+    "wall_seconds": 578.891,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 100970,
+    "cached_input_tokens": 3035456,
+    "output_tokens": 19405,
+    "total_tokens": 3182344,
+    "cost_usd": 0.07755670799999997
+  }
+}

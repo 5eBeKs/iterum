@@ -1,0 +1,72 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "m_page_causal_sentence",
+  "dataset": "messy",
+  "error": "The page explains the smaller partner baskets by bargain hunters, which nothing in the audit measures.",
+  "at": "2026-09-19T10:08:31+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "caus|explan|unsupported|no (evidence|metric|claim)"
+  ],
+  "blocking_issues": 5,
+  "warnings": 4,
+  "checks": 22,
+  "issue_ids": [
+    "REL-UNSUPPORTED-CAUSAL-SENTENCE",
+    "REL-REPORT-NOT-GENERATOR-OUTPUT",
+    "REL-POPULATION-MISLABELLED",
+    "REL-DASHBOARD-ESTIMATE-N-LEVEL",
+    "REL-AOV-CAVEATS-MISSING"
+  ],
+  "issue_texts": [
+    "REL-UNSUPPORTED-CAUSAL-SENTENCE | gate_release_auditor.no_unclaimed_assertions | gate_release_auditor|no_unclaimed_assertions|release/report.md|channel-aov-cause | CLAIM_SUPPORT | HIGH | worker_release | release/report.md line 32, in the 'registered comparisons' section, is a sentence with no claim anchor. It names a cause for the partner channel's lower AOV, a customer type drawn to the channel. ",
+    "REL-REPORT-NOT-GENERATOR-OUTPUT | gate_release_auditor.surface_reproducible_from_generator | gate_release_auditor|surface_reproducible_from_generator|release/report.md|whole-surface | RELEASE_INTEGRITY | HIGH | worker_release | evidence/recheck_release.py imported src/release/build_release.py and redirected its three outputs to evidence/regenerated/, reading the same analysis/claim_register.json. ",
+    "REL-POPULATION-MISLABELLED | gate_release_auditor.population_period_beside_each_figure | gate_release_auditor|population_period_beside_each_figure|release/report.md,release/dashboard_data.json|all-cards | VISUALIZATION | HIGH | worker_release | release/report.md line 3 is the only population on the page, and build_release.py line 86 fills it from CLM-NET-REVENUE's population, which ends in 'delive",
+    "REL-DASHBOARD-ESTIMATE-N-LEVEL | gate_release_auditor.estimate_shows_n_and_level | gate_release_auditor|estimate_shows_n_and_level|release/dashboard_data.json|estimate-cards | VISUALIZATION | MEDIUM | worker_release | release/dashboard_data.json cards 2 to 5 (CLM-COMPLETION-DIRECT, CLM-COMPLETION-PARTNER, CLM-AOV-DIRECT, CLM-AOV-PARTNER) have only the keys _claim_roles, caveats, ci_high, ci_low, c",
+    "REL-AOV-CAVEATS-MISSING | gate_release_auditor.aov_caveats_beside_figure | gate_release_auditor|aov_caveats_beside_figure|analysis/claim_register.json|CLM-AOV-* | CLAIM_SUPPORT | MEDIUM | worker_analysis | In release/report.md lines 18 to 21 and dashboard cards 4 and 5, the AOV figures carry only 'one quarter of orders in this channel' and the sampling-interval caveat. evidence/recheck_release.jso"
+  ],
+  "other_blockers": 3,
+  "warning_texts": [
+    "Both p values are displayed as '0.0000' because the registry formats p to 4 digits. A reader takes that as exactly zero; the recomputed completion-test p is about 2.9e-157, and the page would read more truthfully as 'p < 0.0001'.",
+    "The release machine gates left most of this page unchecked. release_surface_contract.json has empty reconciliations and card_caveat_requirements. wording_matches_claims looks only for the word 'significant'. caveats_rendered checks only the caveats a claim declares. Nothing checks per-card populatio",
+    "gate_release_machine (60 of 60 bound) and gate_release_document (28 PASS) agree with my number-level recheck but missed every blocker listed here. None of the blockers involves a number, so a gate that reads only digits cannot catch them.",
+    "The Welch t (42.70) and Cohen's d (0.4869) for CLM-TEST-CHANNEL-AOV could only be approximated from the cent-rounded published intervals (t about 42.62, d about 0.4854). They are consistent but not exactly recomputed, because metrics/calculated_metrics.json carries no per-channel standard deviations"
+  ],
+  "summary": "Every one of the 60 rendered numbers on report.md, dashboard_data.json and the manifest is bound to its claim and role and matches the registry formatting exactly. The reconciliation identities hold when recomputed from metric components: channel denominators sum to 44531 orders, channel AOV numerators sum to net revenue 3023296.61, and the Wilson bounds and two-proportion z match the register to 6 digits. The release still fails on four blockers. (1) Report line 32 adds a causal sentence about why partner baskets are smaller. No claim, test or analysis answer supports it, and the committed ge",
+  "wall_seconds": 275.5,
+  "cost": {
+    "at": "2026-09-19T10:13:10.579235+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-1ec424ea468d",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-19T10:08:38.263175+00:00",
+    "finished_at": "2026-09-19T10:13:10.579235+00:00",
+    "wall_seconds": 272.312,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 38,
+    "cached_input_tokens": 1833973,
+    "output_tokens": 26712,
+    "total_tokens": 1860723,
+    "cost_usd": 2.6903585000000003
+  }
+}

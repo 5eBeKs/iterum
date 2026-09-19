@@ -1,0 +1,53 @@
+{
+  "profile": "grok-build",
+  "stage": "claims",
+  "case": "clean",
+  "error": "no defect planted (false-positive control)",
+  "at": "2026-09-15T17:35:05+00:00",
+  "max_v2_revision": "2a6f8dc",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "PASS",
+  "stop_code": null,
+  "outcome": "clean_pass",
+  "matched_signals": [],
+  "blocking_issues": 0,
+  "warnings": 2,
+  "checks": 20,
+  "issue_ids": [],
+  "warning_texts": [
+    "The machine plan does not numerically compare claim.value to metrics.value, only that source_value_ref resolves; that equality was checked here from raw and the registry and all five claims match.",
+    "An order-row refund rate on the same delivered-in-period rows is 0.189655 (33/174), which is not the published 0.473684 paying-customer rate, so the CLM-REFUND-RATE basis caveat is load-bearing."
+  ],
+  "summary": "Five claims recomputed from raw_data/orders.csv match the register and gate_claims_machine: net revenue 35741.52 EUR, refund rate 0.473684 (27/57 paying customers), country parts PL 11181.67 + DE 11032.61 + CZ 13527.24. Independent recalc is rooted only in the raw export. Populations, inclusive period 2025-01-01..2025-03-30, and refund-rate paying-customer caveats hold. R04 row accounting 201=174+26+1 matches raw.",
+  "wall_seconds": 485.0,
+  "cost": {
+    "at": "2026-09-15T17:43:11.235650+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-7b1fc8d5d432",
+    "agent_role": "grok-audit-claims",
+    "started_at": "2026-09-15T17:35:11.267494+00:00",
+    "finished_at": "2026-09-15T17:43:11.233454+00:00",
+    "wall_seconds": 479.953,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 186916,
+    "cached_input_tokens": 2225920,
+    "output_tokens": 28221,
+    "total_tokens": 2441057,
+    "cost_usd": 0.56308012
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "m_question_dropped_uncertainty",
+  "dataset": "messy",
+  "error": "R03 is restated without the half of the brief that asks how precisely each rate is known.",
+  "at": "2026-09-16T22:35:42+00:00",
+  "max_v2_revision": "fa38876",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R03",
+    "uncertain|precis|interval",
+    "restat|narrow|question|brief"
+  ],
+  "blocking_issues": 1,
+  "warnings": 8,
+  "checks": 11,
+  "issue_ids": [
+    "R03-QUESTION-TEXT-DRIFT"
+  ],
+  "issue_texts": [
+    "R03-QUESTION-TEXT-DRIFT | final_glm_redteam.answer_matches_stage_output_and_question | final_glm_redteam|answer_matches_stage_output_and_question|analysis/answers/R03.json|question_text | CLAIM_SUPPORT | HIGH | worker_analysis | audit/results/final/evidence/r03_question_drift.py + r03_question_drift.json: raw_data/questions.md R03 asks 'What is the completion rate of each channel, and how precisel"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "All four worker carry files (audit/checkpoints/*.carry.json) are identical stubs describing a 2025-Q1 delivered-only period and a refund-rate-per-paying-customer pitfall that belongs to no metric of this audit; nothing in this run computed from them, but a future stage that trusts them would be misl",
+    "The four worker result bodies are harness stubs (summary 'driver e2e', created_at 2026-01-01, worker_analysis checking a 0.473684 that names no metric of this dataset); the evidence this verdict rests on is the artifacts and machine-gate checks, which I recomputed independently.",
+    "No output event of this CLI names the model that served a stage, so every execution.model including mine is self-report: worker_analysis reports openrouter/z-ai/glm-5.3-flash-fake, and the runner can verify none of the model lines - the 'frontier tier ran this gate' statement is corroborated by noth",
+    "analysis/answers/R03.json and R04.json print p_value as 0.0000000000; the true two-sided p for the completion comparison is about 2.9e-157, so the display is an underflowed zero rather than a measured one (the answers are not release surfaces and the register publishes no test claim).",
+    "The wording rule passed vacuously this quarter ('no word in the dictionary appears on any surface'), so no deterministic check covered the report's sentences; I read release/report.md as a reader with comments stripped and found no sentence claiming more than its figure supports.",
+    "Assumption 3 of H-CHANNEL-COMPLETION (neither channel changed how it books orders inside the quarter) is recorded but untested by anything in the run; the only number it could move is the p-about-zero test conclusion in the answers, which is not a published claim, and the sampling-interval caveat co",
+    "The re-audit record audit/.runner/reaudit_worker_analysis_20260916T223544Z.json shows the drift's downstream reset happened but its origin never did; retry history and stale-input handling belong to the human in audit_runner.py report, so I recorded this as corroboration, not as a verified remediati",
+    "Unverified by me: the wording rule's dictionary (defined in frozen machinery outside my inputs) and the contents of the quarantined comment column, which this profile forbids any agent including me to read."
+  ],
+  "summary": "Independent recount from quarantine/orders.csv with own parsers and own Wilson/Student-t (incomplete-beta) math reproduces every registry metric exactly: population 44531 (45000 distinct of 45917 raw, -459 outside 2026-Q1, -10 negative-refund after last-revision dedup), net_revenue 3023296.61, completion 0.724397 [0.718779..0.729946] direct / 0.604746 [0.597939..0.611512] partner, aov 110.64 [109.88..111.39] / 87.27 [86.50..88.03]; clean table equals the rule-derived population on every shared and derived column; all 42 rendered numbers on the three release surfaces are bound, every estimate s",
+  "wall_seconds": 851.9,
+  "cost": {
+    "at": "2026-09-16T22:50:12.509913+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-be4a4ce1e330",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-16T22:36:04.197128+00:00",
+    "finished_at": "2026-09-16T22:50:12.505894+00:00",
+    "wall_seconds": 848.297,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 123793,
+    "cached_input_tokens": 3617536,
+    "output_tokens": 24121,
+    "total_tokens": 3799988,
+    "cost_usd": 0.094000518
+  }
+}

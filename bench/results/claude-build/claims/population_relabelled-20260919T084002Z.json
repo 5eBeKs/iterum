@@ -1,0 +1,67 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "population_relabelled",
+  "dataset": "orders",
+  "error": "The headline claim says its population is all orders, while the spec and its own caveats say delivered orders.",
+  "at": "2026-09-19T08:37:48+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "all orders",
+    "CLM-NET-REVENUE"
+  ],
+  "blocking_issues": 1,
+  "warnings": 5,
+  "checks": 18,
+  "issue_ids": [
+    "CLAIMS-AUD-POP-NET-REVENUE"
+  ],
+  "issue_texts": [
+    "CLAIMS-AUD-POP-NET-REVENUE | gate_claims_auditor.population_label.CLM-NET-REVENUE | gate_claims_auditor|claim_population_matches_computation|analysis/claim_register.json|CLM-NET-REVENUE | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/claim_register.json claims[CLM-NET-REVENUE].population is 'all orders inside the period'. The value 35741.52 equals net revenue over status=delivered AND 2025-01-"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "No rule in audit/check_plan.json binds a claim's free-text population or period field to the filters it was computed on. claims_recomputed reads its filters from the plan, not the claim, and caveats_declared matches only caveat wording. A mislabelled population therefore passes gate_claims_machine u",
+    "metrics/calculated_metrics.json names the period '2025-Q1-delivered', but the spec period ends 2025-03-30, not 2025-03-31. No row in the export is dated 2025-03-31, so no figure moves. Still, a reader told 'the quarter' is shown 89 of Q1's 90 days, and the spec does not say why.",
+    "The CLM-REFUND-RATE caveat writes the basis as the spec token 'unique paying_customers, not order rows'; the plain-words form ('paying customers') appears only in analysis/answers/R02.json. The meaning is unambiguous, but the release should render it in words.",
+    "The customer-basis refund rate (27/57 = 0.473684) is 2.5 times the order-row reading (33/174 = 0.189655). It also does not decompose by country: per-country customer rates are 0.279070 (CZ), 0.243243 (DE) and 0.297297 (PL), because customers who buy in several countries appear in several strata. Any",
+    "The per-country metrics in metrics/calculated_metrics.json state their formula as 'SUM(net_amount) WHERE country = country', a tautological filter text. The values are correct; the formula string is not a usable definition."
+  ],
+  "summary": "I recomputed all five claim values from raw_data/orders.csv. Each one matches the register and the gate_claims_machine comparisons exactly. The failing check is the population label on CLM-NET-REVENUE: it says 'all orders inside the period', but the figure is computed only on delivered orders inside the period (174 rows). The same set with every status gives 41881.34 over 200 rows. The claim's own caveat ('delivered orders only') also contradicts its population field. The other four claims have the right population and period, the refund-rate caveat names the paying-customer basis, and indepen",
+  "wall_seconds": 128.8,
+  "cost": {
+    "at": "2026-09-19T08:40:00.883419+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-f58036111c74",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-19T08:37:55.921088+00:00",
+    "finished_at": "2026-09-19T08:40:00.883007+00:00",
+    "wall_seconds": 124.953,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 28,
+    "cached_input_tokens": 1077878,
+    "output_tokens": 13798,
+    "total_tokens": 1091704,
+    "cost_usd": 1.6590580000000004
+  }
+}

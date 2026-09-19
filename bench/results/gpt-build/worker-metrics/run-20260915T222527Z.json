@@ -1,0 +1,44 @@
+{
+  "profile": "gpt-build",
+  "stage": "metrics",
+  "worker": "worker_metrics",
+  "kind": "worker",
+  "at": "2026-09-15T18:34:09+00:00",
+  "max_v2_revision": "1d34cf0",
+  "verdict": "PASS",
+  "stop_code": null,
+  "summary": "Built 11 contract-driven metrics and passed the 25-check metric machine gate, including distinct-customer refund rate and complete row accounting.",
+  "wall_seconds": 13876.0,
+  "cost": {
+    "at": "2026-09-15T22:25:24.930697+00:00",
+    "launcher": "codex_headless_launcher",
+    "step": "worker_metrics",
+    "attempt": 1,
+    "context_id": "ctx-worker_metrics-a1-38df4179a829",
+    "agent_role": "gpt-worker",
+    "started_at": "2026-09-15T22:25:05.014651+00:00",
+    "finished_at": "2026-09-15T22:25:24.928656+00:00",
+    "wall_seconds": 19.922,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "gpt-5.6-sol",
+    "model_used": null,
+    "input_tokens": 1655097,
+    "cached_input_tokens": null,
+    "output_tokens": 19422,
+    "total_tokens": 1674519,
+    "cost_usd": null
+  },
+  "machine": {
+    "gates": {
+      "gate_metrics_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "outcome": "gate_pass",
+  "fingerprints": []
+}

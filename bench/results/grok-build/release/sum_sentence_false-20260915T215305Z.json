@@ -1,0 +1,61 @@
+{
+  "profile": "grok-build",
+  "stage": "release",
+  "case": "sum_sentence_false",
+  "error": "The page says the country figures sum to the headline before refunds; both are net of refunds.",
+  "at": "2026-09-15T21:43:07+00:00",
+  "max_v2_revision": "7e1d71f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "before refunds",
+    "net of refunds",
+    "sum"
+  ],
+  "blocking_issues": 1,
+  "warnings": 4,
+  "checks": 50,
+  "issue_ids": [
+    "REL-FALSE-COUNTRY-SUM-SENTENCE"
+  ],
+  "warning_texts": [
+    "audit/check_plan.json accepted_unproven lists gate_release_document rules claims_rendered and caveats_rendered because plan-proof could not open analysis/claim_register.json, so those document rules were never shown to fire on a broken dataset.",
+    "Frozen check_plan.json has no wording or reader-sum rule for release prose, so both machine gates passed while release/report.md line 22 tells the reader that country figures sum to the headline before refunds.",
+    "release/dashboard_data.json has no statement that the three country cards add to headline net_revenue; only the report has a sum sentence, and that sentence is false.",
+    "gate_release_machine wrote evidence/release_surface_gate.json rather than evidence/checks.json, so this stage has no recompute_*, claims_recomputed, component_sum, or column_identity comparisons to cite; the surface gate still bound 21 numbers on all three contracted surfaces."
+  ],
+  "summary": "FAIL: all 21 displayed numbers match the claim register and an independent raw recast (net_revenue 35741.52 equals PL 11181.67 + DE 11032.61 + CZ 13527.24), but release/report.md line 22 tells the reader those country figures sum to the headline before refunds, which is false; both machine gates passed because neither rule inspects that sentence.",
+  "wall_seconds": 595.0,
+  "cost": {
+    "at": "2026-09-15T21:53:04.860972+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-da6ab7862747",
+    "agent_role": "grok-audit-release",
+    "started_at": "2026-09-15T21:43:12.239876+00:00",
+    "finished_at": "2026-09-15T21:53:04.860972+00:00",
+    "wall_seconds": 592.625,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 229662,
+    "cached_input_tokens": 2464640,
+    "output_tokens": 35669,
+    "total_tokens": 2729971,
+    "cost_usd": 0.64792372
+  }
+}

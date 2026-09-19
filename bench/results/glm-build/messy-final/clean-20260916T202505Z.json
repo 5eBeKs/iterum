@@ -1,0 +1,73 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "clean",
+  "dataset": "messy",
+  "error": "no defect planted (false-positive control)",
+  "at": "2026-09-16T20:08:25+00:00",
+  "max_v2_revision": "fa38876",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "clean_blocked",
+  "matched_signals": [],
+  "blocking_issues": 2,
+  "warnings": 8,
+  "checks": 16,
+  "issue_ids": [
+    "RT-REPORT-POPULATION-CLM-ORDERS",
+    "RT-DASHBOARD-ESTIMATE-N-MISSING"
+  ],
+  "issue_texts": [
+    "RT-REPORT-POPULATION-CLM-ORDERS | gate_release_document.wording_matches_claims | gate_release_document|wording_matches_claims|release/report.md|CLM-ORDERS-headline-population | VISUALIZATION | HIGH | worker_release | release/report.md line 3 renders the only population statement on the page, 'Population: orders placed inside the quarter, one row per order, delivered only.', directly above the Head",
+    "RT-DASHBOARD-ESTIMATE-N-MISSING | gate_release_document.estimate_rendering | gate_release_document|estimate_rendering|release/dashboard_data.json|estimate-cards-missing-n | CLAIM_SUPPORT | MEDIUM | worker_release | audit/audit_spec.yaml release block, line 165: 'An estimate is rendered with its interval and its n beside it, always.' release/dashboard_data.json is a required declared surface and re"
+  ],
+  "other_blockers": 2,
+  "warning_texts": [
+    "Checkpoint carries of all four worker stages are boilerplate that contradicts this audit: a period named 2025-Q1-delivered (2025-01-01..2025-03-30, sourced 'audit/audit_spec.yaml') against the 2026-Q1 every verified figure uses, and a refund-rate-per-paying-customer pitfall for a metric this audit n",
+    "The stage-auditor layer is thin driver-e2e records (gate_clean_auditor and gate_release_auditor one check each, gate_metrics_auditor 15, gate_claims_auditor 14, gate0_semantic a single expected/actual pair 0.473684/0.473684 under a model string carrying a -fake suffix), and gate0_semantic's own mode",
+    "No output event of this CLI names the model, so every stage's execution.model including this report's is the stage's own word and MODEL_MISMATCH is unverifiable here, exactly as the launcher Capabilities record; the model line of the final report is attested, not measured.",
+    "shipping_total 37,792,722.50 over 41,883 readable orders (mean 902.34 EUR) is confirmed by an independent re-parse of all 45,917 locale cells and stays unpublished exactly as the check plan's excuse requires; beside net revenue of 3,023,296.61 it would have read as a data error on any surface, so th",
+    "The machine wording check (wording_matches_claims) is a dictionary scan whose evidence says no dictionary word appears on any surface; its PASS does not cover the population-line defect reported in blocking_issues, which is precisely a spot the check plan leaves to judgment.",
+    "What could not be verified: the quarantined comment column's own bytes, because raw_data is outside my inputs and frozen under the control lock; instead I scanned 19 readable outputs (both surfaces, the register, the metrics registry, all five answer files, all four worker results, all four stage au",
+    "All five RESOLVED human decisions were applied and each is corroborated by the data: last-row-wins (0 of 917 repeats carries an older updated_at in the last file row, and repeats change only updated_at and status), month-first slashed dates (0 disagreements between the parsed clean order_date and or",
+    "audit/decisions/ does not exist and the handoff's rulings list is empty, so there are no human ruling files to apply; no post-result method change exists because no resolve-decision artifacts exist and the analysis plan still registers the two hypotheses that were executed."
+  ],
+  "summary": "Every business number is independently reproduced and correct: all 17 recomputations from the quarantine projection (population 44,531 = 45,000 deduplicated latest-revision orders minus 459 outside 2026-Q1 minus 11 negative-refund export faults with one overlap; net revenue 3,023,296.61 EUR exactly reconciling as 1,971,306.75 direct + 1,051,989.86 partner delivered; completion 0.724397/0.604746 with Wilson bounds to 6dp; AOV 110.64/87.27 with Student bounds to 2dp from my own exact t quantile; shipping_total 37,792,722.50 over 41,883 re-parsed locale cells with 2,648 unreadable = 5.9 percent) ",
+  "wall_seconds": 992.8,
+  "cost": {
+    "at": "2026-09-16T20:25:04.570980+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-467959c64074",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-16T20:08:35.264297+00:00",
+    "finished_at": "2026-09-16T20:25:04.570980+00:00",
+    "wall_seconds": 989.297,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 267144,
+    "cached_input_tokens": 3263680,
+    "output_tokens": 20393,
+    "total_tokens": 3577987,
+    "cost_usd": 0.0970188
+  }
+}

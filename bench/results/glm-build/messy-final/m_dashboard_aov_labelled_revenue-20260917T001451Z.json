@@ -1,0 +1,76 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "m_dashboard_aov_labelled_revenue",
+  "dataset": "messy",
+  "error": "On the dashboard the direct average order value card is labelled revenue.",
+  "at": "2026-09-17T00:01:07+00:00",
+  "max_v2_revision": "fa38876",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "Revenue Direct",
+    "label",
+    "aov|average order"
+  ],
+  "blocking_issues": 2,
+  "warnings": 7,
+  "checks": 14,
+  "issue_ids": [
+    "FINAL-AOV-LABELLED-REVENUE",
+    "FINAL-DASHBOARD-SURFACE-DIVERGES-FROM-GENERATOR"
+  ],
+  "issue_texts": [
+    "FINAL-AOV-LABELLED-REVENUE | final_glm_redteam.dashboard_label_matches_claim | final_glm_redteam|dashboard_label_matches_claim|release/dashboard_data.json|CLM-AOV-DIRECT.label | VISUALIZATION | HIGH | worker_release | release/dashboard_data.json cards[4]: claim_id CLM-AOV-DIRECT, label 'Revenue Direct', value 110.64. analysis/claim_register.json CLM-AOV-DIRECT is 'the average order value for the d",
+    "FINAL-DASHBOARD-SURFACE-DIVERGES-FROM-GENERATOR | final_glm_redteam.surface_matches_generator | final_glm_redteam|surface_matches_generator|release/dashboard_data.json|cards[4].label | RELEASE_INTEGRITY | HIGH | worker_release | audit/release_surface_contract.json declares generator_sources src/release/build_release.py, whose label expression (line 91: claim_id.removeprefix('CLM-').replace('-', ' "
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "All four worker result.json files, all four carry files and all four stage-auditor notes are harness stubs (summaries 'driver e2e', created_at 2026-01-01T00:00:00Z, execution.model 'openrouter/z-ai/glm-5.3-flash-fake', notes 'driver e2e evidence'), so this run's stage results carry no real execution",
+    "All four worker carry files state period 2025-01-01..2025-03-30 while citing audit_spec.yaml, which pins 2026-01-01..2026-03-31, and name a refund-rate-per-paying-customer pitfall although this audit has no such metric; downstream readers should not rely on carry facts.",
+    "The four dashboard estimate cards carry ci_low and ci_high but no n, while audit_spec.yaml's release comment says an estimate is rendered with its interval and its n beside it always; report.md does show n and the machine contract (point_and_both_bounds) is satisfied, so I record the tension rather ",
+    "The report page header states the revenue claim's population ('delivered only') above an Orders figure of 44,531 that counts all statuses; each bullet's own caveats are correct, but the header could be read as governing both headline figures.",
+    "The machine wording rule ran with an empty dictionary ('no word in the dictionary appears on any surface') and gate_release_document's claims_rendered rule covers report.md only, so no machine rule checked any dashboard card's label against its claim - the hole the planted mislabel fell through.",
+    "I could not read raw_data/orders.csv or raw_data/questions.md (not in my inputs, comment column quarantined), so the question texts behind analysis/answers/R01-R05 were taken from the answer files themselves; the questions_are_answered gate read the questions file, and every answer fact traces to a ",
+    "audit/source_profile.json is not among my input paths, so the shape claims in analysis_plan.json's comment were taken from the plan and the frozen Gate 0 machine result (profile_recomputed, plan_written_over_profile: PASS) rather than recomputed from the profile file itself."
+  ],
+  "summary": "Numeric chain verified end-to-end by my own code (42+18 checks, all PASS): from quarantine/orders.csv, dedup latest-wins (917 revised ids, 126 changed status), the two declared exclusions only (459 outside-quarter + 10 negative-refund), net_revenue 3023296.61, orders 44531, completion 0.724397/0.604746 with Wilson 0.95 bounds and AOV 110.64/87.27 with Student 0.95 bounds all reproduce within tolerance, shipping locale parse matches the clean column row-for-row (2648 unreadable = 5.95%, excused metric absent from every surface), both registered hypotheses reproduce (z=26.718455, welch t=42.6998",
+  "wall_seconds": 816.2,
+  "cost": {
+    "at": "2026-09-17T00:14:50.518603+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-cba68f66cf29",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-17T00:01:17.733477+00:00",
+    "finished_at": "2026-09-17T00:14:50.510586+00:00",
+    "wall_seconds": 812.782,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 85072,
+    "cached_input_tokens": 4235072,
+    "output_tokens": 21899,
+    "total_tokens": 4367406,
+    "cost_usd": 0.0763005019
+  }
+}

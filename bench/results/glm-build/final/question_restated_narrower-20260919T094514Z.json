@@ -1,0 +1,74 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "question_restated_narrower",
+  "dataset": "orders",
+  "error": "R02 is restated without the half that asks on which basis the rate is taken.",
+  "at": "2026-09-19T09:20:31+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "PASS",
+  "stop_code": null,
+  "outcome": "warned",
+  "matched_signals": [
+    "R02",
+    "basis",
+    "restat|narrow|half|question"
+  ],
+  "blocking_issues": 0,
+  "warnings": 11,
+  "checks": 13,
+  "issue_ids": [],
+  "issue_texts": [],
+  "other_blockers": 0,
+  "warning_texts": [
+    "This profile is single-vendor by design (architect, workers, five auditors and this final gate are one model family), so the PASS chain is not cross-vendor review and the verdict rests on the deterministic layer - machine gates, frozen check_plan, control lock, release surface gate - plus this stage",
+    "No output event of this CLI names the model, so MODEL_MISMATCH is unverifiable here and every stage's execution.model field, including this result's, is a self-report rather than a measurement; the reader of the final report should know the model line is confirmed by nothing but the stages' words.",
+    "The opencode permission map closed raw sources and frozen machinery for edit tools but not for shell, so a raw-file write would have been caught by the control lock after the fact, not prevented - the barrier was detection, not prevention.",
+    "All worker, semantic and auditor stage results in this run are driver e2e stubs: they self-report model openrouter/z-ai/glm-5.3-flash-fake with created_at 2026-01-01T00:00:00Z under parent max-driver-bb18e9826ca0 and carry no disclosures content, so their PASS lines are not live review evidence; the",
+    "The analysis answers restate their questions narrower than asked: R01 drops the qualifier 'over delivered orders inside the period' and R02 drops the 'on which basis' clause, but no number changes meaning because the linked claims carry the full population and the basis is stated in the R02 caveat a",
+    "The audit_spec release rule forbidding business-number literals in src/release/** has no deterministic check declared in the frozen check_plan (figures_not_hardcoded covers src/analysis only) and its enforcement is not visible in release_surface_gate.json; src/ files are outside this stage's allowed",
+    "gate_metrics_machine/evidence/unchecked.json records that excluded_order_rows and excluded_outside_period are not recomputed from source by that gate (they are pinned only by component sums); I recomputed both directly from raw (27 and 1) and they hold, so the gap is closed for this run.",
+    "check_plan accepted_unproven still lists claims_rendered and caveats_rendered for gate_release_document because their breaker test could not run before the lock (no claim register existed yet); both rules did execute on the real artifacts and pass, so the acceptance concerns the plan proof, not the ",
+    "All four worker carries list raw_data/orders.csv under do_not_reread, which is a raw source rather than a previous-stage output; the runner's rejection list for this field covers audit/** and control dirs only and no stage was starved (every machine gate recomputed from raw), so this is chat-hygiene",
+    "The handoff carries no drift_since_review field, so nothing was tested for drift; per the contract its absence does not prove the assumptions hold, and I substituted a full recount from the current export instead.",
+    "What I could not verify: src/release/build_release.py and audit/plan_proof.json are outside my declared inputs (the literal rule in warning 6 and the plan-proof acceptance in warning 8 are reported, not independently confirmed), and README.md and bench_base.json were deliberately not read since thei"
+  ],
+  "summary": "Independent recount from raw reproduces every machine-gate comparison and every rendered number: population 174 = 201 - 26 - 1 with O00201 (2025-04-01) excluded and 2025-01-01 kept inclusive; net revenue 35741.52 EUR = 40235.02 gross - 4493.50 refunds; refund rate 27/57 paying customers = 0.473684 within 1e-6 (the order-rows basis would read 0.189655, so the ruled basis is load-bearing and is stated to the reader); country components sum to the headline (REC-COUNTRY-SUM) and the rate equals its own numerator over denominator (REC-REFUND-RATE); all 21 rendered numbers across report.md, dashboar",
+  "wall_seconds": 1460.1,
+  "cost": {
+    "at": "2026-09-19T09:45:12.685073+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-f86ab91a5629",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-19T09:20:56.820115+00:00",
+    "finished_at": "2026-09-19T09:45:12.685073+00:00",
+    "wall_seconds": 1455.875,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 131949,
+    "cached_input_tokens": 3501312,
+    "output_tokens": 18257,
+    "total_tokens": 3684337,
+    "cost_usd": 0.09042822599999997
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "m_shipping_answer_complete",
+  "dataset": "messy",
+  "error": "The answer to R05 calls the shipping total complete; about six per cent of its cells are blank, NaN or inf.",
+  "at": "2026-09-16T21:36:33+00:00",
+  "max_v2_revision": "fa38876",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R05|shipping",
+    "readable|blank|NaN|\\binf\\b|six per ?cent|6 ?%|unknown amount|underst|complete"
+  ],
+  "blocking_issues": 2,
+  "warnings": 8,
+  "checks": 14,
+  "issue_ids": [
+    "FINAL-R05-SHIPPING-COMPLETE",
+    "FINAL-REPORT-POPULATION-HEADER"
+  ],
+  "issue_texts": [
+    "FINAL-R05-SHIPPING-COMPLETE | final_redteam.shipping_total_excuse_in_R05 | final_glm_redteam|metrics_are_claimed_or_excused|analysis/answers/R05.json|caveat-contradicts-excuse | CLAIM_SUPPORT | HIGH | worker_analysis | audit/check_plan.json gate_claims_machine.metrics_are_claimed_or_excused excused shipping_total on the basis that about six cells in a hundred are unreadable and the sum treats them",
+    "FINAL-REPORT-POPULATION-HEADER | final_redteam.report_population_header | final_glm_redteam|wording_matches_claims|release/report.md|header-population | VISUALIZATION | HIGH | worker_release | release/report.md line 3 reads 'Population: orders placed inside the quarter, one row per order, delivered only.' Under it: CLM-ORDERS shows 44,531 (population all statuses; my recount e02: 29,873 delivered "
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "Model identity is unverifiable in this run: no output event of the CLI names the model, so every execution.model in audit/results is a stage self-report, and the stage results record 'openrouter/z-ai/glm-5.3-flash-fake' - a string no runner compares against anything.",
+    "All four worker results and all five stage-auditor results are driver-e2e stubs whose single check carries 0.473684 (the demo-orders reference rate) and whose carry files describe a 2025-Q1 delivered-only dataset with a refund-rate pitfall that does not exist in this audit; the LLM review layer cont",
+    "The release gate's free_text_quarantined.values check verified absence of comment values on a sample of 25 rows, not exhaustively; I could not read the comment column myself (forbidden by the quarantine policy), so no-leak rests on that sample plus my own greps of the surfaces, the register, metrics",
+    "values_preserved has no column mapping, so the renamed columns customer_id, order_date and country are covered by no standing machine rule (recorded in the check plan); I verified them row-by-row in evidence/e03 (0 mismatches, 0 month-order disagreements over 44,531 rows), but next month nothing wou",
+    "The wording gate's dictionary is five overclaim words; population statements, units and card labels are outside every machine rule, which is how the report header defect survived a green gate.",
+    "README.md and raw_data/** are outside this context's inputs; the README's claims were not checked and the raw file was not opened, per the quarantine policy and the handoff.",
+    "The five RESOLVED decisions in audit/human_decisions.yaml all look right against the data: dedup (last revision wins, 917 superseded rows), month-first slashed dates (0 disagreements between parsed month and order_month), space-thousands/comma-decimal shipping (0 per-row mismatches, 0 factor-100 row",
+    "R03/R04 p-values print as 0.0000000000 from a .10f format; the true two-sided p is far below 1e-10 for z=26.72 and t=42.70, so the display is honest rounding, not a computed zero, and the tests live in the answers, not in the claim register."
+  ],
+  "summary": "Independent recount from the quarantine projection reproduces every published number exactly (44,531 orders; net revenue 3,023,296.61; completion 0.724397/0.604746 with Wilson bounds; AOV 110.64/87.27 with Student bounds; shipping_total 37,792,722.50 under the declared locale, verified per row against the clean table), and both registered hypotheses reproduce (z=26.718455, Welch t=42.699880, Cohen d=0.486900). Two material blockers remain, both sentences rather than figures: analysis/answers/R05.json asserts the shipping total is complete because every shipping cell was readable, which is the ",
+  "wall_seconds": 934.8,
+  "cost": {
+    "at": "2026-09-16T21:52:26.036492+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-7506876c64d0",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-16T21:36:54.623730+00:00",
+    "finished_at": "2026-09-16T21:52:26.027434+00:00",
+    "wall_seconds": 931.407,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 95280,
+    "cached_input_tokens": 3032192,
+    "output_tokens": 18828,
+    "total_tokens": 3170309,
+    "cost_usd": 0.07613475600000001
+  }
+}

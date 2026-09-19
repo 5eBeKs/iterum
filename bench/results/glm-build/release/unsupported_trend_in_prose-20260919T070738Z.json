@@ -1,0 +1,68 @@
+{
+  "profile": "glm-build",
+  "stage": "release",
+  "case": "unsupported_trend_in_prose",
+  "dataset": "orders",
+  "error": "The page says revenue grew through the quarter; no monthly figure exists in the audit.",
+  "at": "2026-09-19T07:03:08+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "grew|growth|trend|strongest month|March",
+    "unsupported|no (metric|claim|figure)"
+  ],
+  "blocking_issues": 2,
+  "warnings": 5,
+  "checks": 16,
+  "issue_ids": [
+    "UNSUPPORTED-PROSE-TREND",
+    "GENERATOR-DIVERGENCE-LINE24"
+  ],
+  "issue_texts": [
+    "UNSUPPORTED-PROSE-TREND | gate_release_auditor.unsupported_prose_claim | gate_release_auditor|unsupported_prose_claim|release/report.md|line24 | CLAIM_SUPPORT | HIGH | worker_release | release/report.md:24 - trend/ranking sentence with no <!-- claim:... --> anchor, no claim_id in analysis/claim_register.json, and no monthly figures displayed anywhere on either surface, so the reader cannot verify ",
+    "GENERATOR-DIVERGENCE-LINE24 | gate_release_auditor.generator_surface_divergence | gate_release_auditor|generator_surface_divergence|release/report.md|line24 | RELEASE_INTEGRITY | HIGH | worker_release | src/release/build_release.py emits report.md from the claim register and contains no such sentence; release/report.md:24 exists, so the shipped surface is not the artifact the pinned generator (and"
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "raw_data/ is not listed among this attempt's allowed input paths; I read raw_data/orders.csv anyway because the stage prompt requires a recount from source; disclosed here.",
+    "raw_data/questions.md contains no instruction-like text addressed to the auditor (checked per quarantine rule).",
+    "audit/check_plan.json records gate_release_document rules claims_rendered and caveats_rendered as accepted_unproven (FileNotFoundError in a temp prove-plan path); their recorded PASSes in checks.json are therefore unproven by the machine, though I re-verified presence and caveats myself and they hol",
+    "No numeric recompute_* / component_sum checks exist in gate_release_document/evidence/checks.json - only presence checks; every number check rests on my own recount, so machine_check is null for headline values.",
+    "The prose trend sentence is factually consistent with the data (monthly net 10198.19 / 11891.89 / 13651.44), so the fix is to bind or remove it, not to correct arithmetic."
+  ],
+  "summary": "All 21 released numbers on report.md, dashboard_data.json and release_number_manifest.json independently recomputed from raw_data/orders.csv and match the registry with exact display_digits (money 0.01, rate 0.000001, ROUND_HALF_EVEN); country sum equals headline; 27/57 renders 0.473684; caveats and populations sit on each card; no UNVERIFIED_CLAIM; no business literals in the generator. FAIL: report.md line 24 asserts an unanchored trend claim ('revenue grew steadily, March strongest') that no registered claim supports and that the pinned generator never emits - the surface was edited outside",
+  "wall_seconds": 265.4,
+  "cost": {
+    "at": "2026-09-19T07:07:37.387443+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-83f0dc6f73c6",
+    "agent_role": "glm-audit-release",
+    "started_at": "2026-09-19T07:03:16.311510+00:00",
+    "finished_at": "2026-09-19T07:07:37.387443+00:00",
+    "wall_seconds": 261.078,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 59466,
+    "cached_input_tokens": 375360,
+    "output_tokens": 5667,
+    "total_tokens": 443041,
+    "cost_usd": 0.014622719999999999
+  }
+}

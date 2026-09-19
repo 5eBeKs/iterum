@@ -1,0 +1,60 @@
+{
+  "profile": "grok-build",
+  "stage": "release",
+  "case": "country_labels_swapped",
+  "error": "On the dashboard the PL and DE cards carry each other's labels; values and claim ids are untouched.",
+  "at": "2026-09-15T21:02:28+00:00",
+  "max_v2_revision": "06eb683",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "label",
+    "swap",
+    "\\bPL\\b.*\\bDE\\b|\\bDE\\b.*\\bPL\\b",
+    "dashboard"
+  ],
+  "blocking_issues": 1,
+  "warnings": 2,
+  "checks": 50,
+  "issue_ids": [
+    "REL-DASH-COUNTRY-LABELS-SWAPPED"
+  ],
+  "warning_texts": [
+    "audit/check_plan.json accepted_unproven names gate_release_document claims_rendered and caveats_rendered because the Gate 0 proof could not open claim_register.json; those rules ran live here and only test presence, not country labels.",
+    "Country label identity is not a checklib rule in the frozen plan, so the machine surface gate PASS (21 bound numbers) and the document caveats_rendered PASS are not approval of the swapped PL/DE dashboard titles."
+  ],
+  "summary": "21 displayed figures on report.md, dashboard_data.json and release_number_manifest.json bind to claim_id+role, match claim_register/calculated_metrics within money 0.01 and proportion 0.000001, keep display_digits, and the country components sum to 35741.52. Dashboard cards swap PL and DE labels: CLM-NET-PL value 11,181.67 is titled as DE and CLM-NET-DE value 11,032.61 is titled as PL. Machine and document gates PASSed because they bind numbers and caveats, not country labels.",
+  "wall_seconds": 516.4,
+  "cost": {
+    "at": "2026-09-15T21:11:08.822663+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-3903a1ee9a4a",
+    "agent_role": "grok-audit-release",
+    "started_at": "2026-09-15T21:02:36.178156+00:00",
+    "finished_at": "2026-09-15T21:11:08.822663+00:00",
+    "wall_seconds": 512.64,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 124954,
+    "cached_input_tokens": 1631104,
+    "output_tokens": 31060,
+    "total_tokens": 1787118,
+    "cost_usd": 0.4256188
+  }
+}

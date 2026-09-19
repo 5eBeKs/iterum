@@ -1,0 +1,76 @@
+{
+  "profile": "grok-build",
+  "stage": "final",
+  "case": "period_shifted_in_claim",
+  "dataset": "orders",
+  "error": "One country claim carries a two-month period while its value is the full quarter's.",
+  "at": "2026-09-19T08:48:38+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_grok_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "period",
+    "02-28",
+    "CLM-NET-CZ"
+  ],
+  "blocking_issues": 1,
+  "warnings": 9,
+  "checks": 22,
+  "issue_ids": [
+    "ISS-CLM-NET-CZ-PERIOD-SHIFT"
+  ],
+  "issue_texts": [
+    "ISS-CLM-NET-CZ-PERIOD-SHIFT | claim.period_matches_metric | final_grok_redteam|claim.period_matches_metric|analysis/claim_register.json|CLM-NET-CZ | CLAIM_SUPPORT | CRITICAL | worker_analysis | analysis/claim_register.json CLM-NET-CZ.period is 2025-01-01..2025-02-28 while source_value_ref metrics.net_revenue_cz.value and the claim value 13527.24 are the spec window 2025-01-01..2025-03-30. Independ"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "This run is one Grok family on every stage. Intermediate PASS from gate_claims_machine, gate_claims_auditor, gate_release_machine and gate_release_auditor is not independent confirmation of claim.period; those gates never compared it.",
+    "audit/check_plan.json has no rule that claim.period must equal audit_spec.yaml population.period or the period of the cited metric. claims_recomputed.CLM-NET-CZ hard-codes 2025-01-01..2025-03-30 for the value only. That gap is the only check on this field, and it failed.",
+    "gate_metrics_machine/evidence/unchecked.json lists excluded_order_rows and excluded_outside_period as not recomputed from source. Independent first-match exclusion from raw matched the registry (26 not delivered, 1 delivered outside period, 27 excluded, 174 kept). Not a value mismatch.",
+    "check_plan accepted_unproven names caveats_rendered and claims_rendered (FileNotFoundError during prove-plan). I still saw every claim and its caveats on release/report.md and release/dashboard_data.json; those two rules were not breaker-proven.",
+    "handoff has no drift_since_review. That absence does not prove cleaning or metric assumptions still fit a later extract.",
+    "audit/decisions/ does not exist. human_decisions.yaml is RESOLVED for refund_rate_basis=paying_customers, revenue_recognition=net_of_refunds, timezone_for_dates=Europe/Warsaw. On this extract those rulings are applied (27/57 customers, not 33/174 rows; headline is gross minus refunds; order_date com",
+    "worker_analysis.carry.json records only 2025-01-01..2025-03-30 and does not mention CLM-NET-CZ's Jan-Feb period, so a reused release stage that trusted carry would not see the shift. Carry context_id/attempt still match each worker result.json execution block.",
+    "Runner state, retry history and stale-input journal were not inspected (not in handoff). Visual rendering of the dashboard was not available and is not required.",
+    "Quarantine manifest declared=false; raw_data/orders.csv was read as exported. No instruction-like text in the CSV. analysis_plan.json hypotheses is empty; no claim has kind/test; release prose has no significance language."
+  ],
+  "summary": "FAIL. This profile is single-vendor Grok: architect, workers, auditors and this red-team are one model family, so an isolated context is not an independent vendor and a chain of PASS results is not proof. No GPT gate sits over this work. There is no permissions file; a write over raw sources would be caught by the control lock after the fact, not prevented. The deterministic layer held the values: independent raw recalc matched every check_plan comparison that recomputes a figure (net 35741.52, refund rate 27/57=0.473684 on paying_customers, PL 11181.67, DE 11032.61, CZ 13527.24 over 2025-01-0",
+  "wall_seconds": 537.0,
+  "cost": {
+    "at": "2026-09-19T08:57:53.521104+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "final_grok_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_grok_redteam-a1-cf989c44b824",
+    "agent_role": "grok-final-redteam",
+    "started_at": "2026-09-19T08:48:59.951593+00:00",
+    "finished_at": "2026-09-19T08:57:53.520497+00:00",
+    "wall_seconds": 533.563,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 117044,
+    "cached_input_tokens": 1297664,
+    "output_tokens": 31397,
+    "total_tokens": 1446105,
+    "cost_usd": 0.36424268
+  }
+}

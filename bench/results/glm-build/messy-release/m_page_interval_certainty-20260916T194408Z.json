@@ -1,0 +1,71 @@
+{
+  "profile": "glm-build",
+  "stage": "release",
+  "case": "m_page_interval_certainty",
+  "dataset": "messy",
+  "error": "The page says each interval is where the true value lies with near certainty.",
+  "at": "2026-09-16T19:40:08+00:00",
+  "max_v2_revision": "fa38876",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "certaint|true value",
+    "sampling interval|interval"
+  ],
+  "blocking_issues": 3,
+  "warnings": 6,
+  "checks": 11,
+  "issue_ids": [
+    "REL-INTERVAL-OVERSTATE",
+    "REL-PAGE-POPULATION-DELIVERED-ONLY",
+    "REL-DASHBOARD-ESTIMATE-MISSING-N"
+  ],
+  "issue_texts": [
+    "REL-INTERVAL-OVERSTATE | gate_release_auditor.interval_wording | release|interval_wording_overstatement|release/report.md|line23 | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 23: 'The interval beside it is where the true value of the channel lies, with near certainty.' analysis_plan.json level is 0.95. src/release/build_release.py lines 80-81 emit 'The interval beside it is ",
+    "REL-PAGE-POPULATION-DELIVERED-ONLY | gate_release_auditor.population_line | release|population_mismatch|release/report.md|population_line | METRIC_DEFINITION | MEDIUM | worker_release | release/report.md line 3: 'Population: orders placed inside the quarter, one row per order, delivered only.' is the population of CLM-NET-REVENUE (build_release.py line 62 renders revenue['population'] as the page ",
+    "REL-DASHBOARD-ESTIMATE-MISSING-N | gate_release_auditor.dashboard_estimate_fields | release|estimate_missing_n_and_level|release/dashboard_data.json|cards[2-5] | RELEASE_INTEGRITY | MEDIUM | worker_release | release_surface_contract.json / audit_spec release.estimate_rendering: 'point_and_both_bounds' — 'An estimate is rendered with its interval and its n beside it, always.' dashboard_data.json ca"
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "gate_release_document's wording_matches_claims.all is vacuous: its evidence says 'no word in the dictionary appears on any surface', i.e. the wording dictionary was empty, so the stronger-than-interval phrase on report.md line 23 passed the document gate unchallenged.",
+    "Completion-rate caveats on both surfaces say 'one quarter of orders in this channel' but never state that the denominator is the whole channel (delivered plus cancelled plus pending); a reader can take 0.724397 as a share among delivered orders.",
+    "AOV point estimates differ from numerator/denominator recomputation by 0.0043 (direct: 1971306.75/17818=110.6357 vs 110.64) and 0.0041 (partner: 1051989.86/12055=87.2658 vs 87.27) — within the 0.01 EUR tolerance, recorded for transparency.",
+    "release_surface_contract.json generator_literal_exclusions covers only '^8$' (utf-8) and '^1$' (Decimal scale factor); the literals 2 (parents[2], indent=2) in src/release/build_release.py are not excluded by pattern, though neither is a business figure.",
+    "The stage prompt names 'audit/results/gate_release_machine/evidence/checks.json' as the comparison index, but gate_release_machine wrote release_surface_gate.json instead; its 42 verdicts are 'bound' against the register, not recomputed from source, so every number check below uses machine_check nul",
+    "The bare 'n = 24597 / 19934 / 17818 / 12055' figures beside the report estimates equal the register's n values exactly (checked against claim_register.json)."
+  ],
+  "summary": "Every displayed number on all three release surfaces was enumerated and verified: 42 anchored figures plus bare labels (period, n, 0.95) all carry a claim_id+role, match the register's rendering exactly, and the headline figures recompute from raw_data/orders.csv (orders 44531 exact; net revenue 3023296.61 exact; completion rates to 1e-6; Wilson bounds reproduced exactly; AOVs within 0.005 of the EUR tolerance). Reconciliation identities hold (denominator sum 24597+19934=44531; AOV numerator sum 1971306.75+1051989.86=3023296.61=net_revenue). shipping_total is correctly absent, no UNVERIFIED_CL",
+  "wall_seconds": 235.7,
+  "cost": {
+    "at": "2026-09-16T19:44:06.873608+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-352da4c90eab",
+    "agent_role": "glm-audit-release",
+    "started_at": "2026-09-16T19:40:14.727184+00:00",
+    "finished_at": "2026-09-16T19:44:06.869938+00:00",
+    "wall_seconds": 232.156,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 49863,
+    "cached_input_tokens": 355968,
+    "output_tokens": 7203,
+    "total_tokens": 419127,
+    "cost_usd": 0.014883894
+  }
+}

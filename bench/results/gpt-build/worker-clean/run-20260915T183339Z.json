@@ -1,0 +1,44 @@
+{
+  "profile": "gpt-build",
+  "stage": "clean",
+  "worker": "worker_clean",
+  "kind": "worker",
+  "at": "2026-09-15T18:25:19+00:00",
+  "max_v2_revision": "1d34cf0",
+  "verdict": "PASS",
+  "stop_code": null,
+  "summary": "Built 174 clean delivered-order rows for the inclusive 2025-01-01 through 2025-03-30 period; all source values, exact derived fields, boundaries, uniqueness, and exclusion accounting were independently verified, and gate_clean_machine passed 9 checks.",
+  "wall_seconds": 496.5,
+  "cost": {
+    "at": "2026-09-15T18:33:35.377641+00:00",
+    "launcher": "codex_headless_launcher",
+    "step": "worker_clean",
+    "attempt": 1,
+    "context_id": "ctx-worker_clean-a1-500015207fd3",
+    "agent_role": "gpt-worker",
+    "started_at": "2026-09-15T18:25:22.400374+00:00",
+    "finished_at": "2026-09-15T18:33:35.376417+00:00",
+    "wall_seconds": 492.985,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "gpt-5.6-sol",
+    "model_used": null,
+    "input_tokens": 2172438,
+    "cached_input_tokens": null,
+    "output_tokens": 19968,
+    "total_tokens": 2192406,
+    "cost_usd": null
+  },
+  "machine": {
+    "gates": {
+      "gate_clean_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "outcome": "gate_pass",
+  "fingerprints": []
+}

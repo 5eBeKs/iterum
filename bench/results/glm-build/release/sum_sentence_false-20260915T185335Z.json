@@ -1,0 +1,60 @@
+{
+  "profile": "glm-build",
+  "stage": "release",
+  "case": "sum_sentence_false",
+  "error": "The page says the country figures sum to the headline before refunds; both are net of refunds.",
+  "at": "2026-09-15T18:52:00+00:00",
+  "max_v2_revision": "1d34cf0",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "before refunds",
+    "net of refunds",
+    "sum"
+  ],
+  "blocking_issues": 1,
+  "warnings": 3,
+  "checks": 9,
+  "issue_ids": [
+    "REPORT-SUM-SENTENCE-FALSE"
+  ],
+  "warning_texts": [
+    "release/report.md line 22 contains a reader-visible statement that is arithmetically false: the country components sum to the net-of-refunds headline, not to the pre-refund figure, and no pre-refund sum appears anywhere on the surface.",
+    "audit/results/gate_release_document/evidence/checks.json contains only claims_rendered.* and caveats_rendered.* comparisons and audit/results/gate_release_machine/evidence/ contains release_surface_gate.json without a checks.json, so no recompute_*, claims_recomputed, component_sum or column_identit",
+    "audit/check_plan.json requires the component-sum invariant SUM(components) == net_revenue for net_revenue_by_country; no gate recorded a machine check of it, and my own recomputation confirms the invariant holds numerically even though the report's prose contradicts it."
+  ],
+  "summary": "All 7 rendered business numbers (5 claim values + refund-rate numerator 27 / denominator 57) on all three surfaces were independently recomputed against the numbers registry and match exactly at display_digits (component sum 11181.67+11032.61+13527.24 = 35741.52; 27/57 = 0.473684 at 6 digits, absdiff 2.105e-7 < 1e-6). Caveats are visible to the reader on both report.md and dashboard_data.json, including the paying_customers wording for CLM-REFUND-RATE. No UNVERIFIED_CLAIM markers. One reader-visible falsehood blocks release: report.md line 22 states the country figures sum to the headline befo",
+  "wall_seconds": 89.4,
+  "cost": {
+    "at": "2026-09-15T18:53:33.404197+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-df42b60c7fde",
+    "agent_role": "glm-audit-release",
+    "started_at": "2026-09-15T18:52:09.112831+00:00",
+    "finished_at": "2026-09-15T18:53:33.402171+00:00",
+    "wall_seconds": 84.281,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 43383,
+    "cached_input_tokens": 230016,
+    "output_tokens": 5016,
+    "total_tokens": 280007,
+    "cost_usd": 0.008355965
+  }
+}

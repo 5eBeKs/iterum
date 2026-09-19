@@ -1,0 +1,63 @@
+{
+  "profile": "glm-build",
+  "stage": "release",
+  "case": "sum_sentence_false",
+  "dataset": "orders",
+  "error": "The page says the country figures sum to the headline before refunds; both are net of refunds.",
+  "at": "2026-09-19T07:03:49+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "before refunds",
+    "net of refunds",
+    "sum"
+  ],
+  "blocking_issues": 1,
+  "warnings": 1,
+  "checks": 10,
+  "issue_ids": [
+    "FALSE-SUM-SENTENCE"
+  ],
+  "issue_texts": [
+    "FALSE-SUM-SENTENCE | gate_release_auditor.component_sum_sentence | gate_release_auditor|component_sum_sentence|release/report.md|country-components | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md, section 'Net revenue by country', last line: 'Country figures sum to the headline before refunds are taken off.' Recount from raw_data/orders.csv (audit/results/gate_release_auditor/evide"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "audit/check_plan.json lists gate_release_document claims_rendered and caveats_rendered under accepted_unproven (sandbox FileNotFoundError), yet audit/results/gate_release_document/evidence/checks.json records them as PASS; the substance independently holds (all 5 claims rendered in report.md, all ca"
+  ],
+  "summary": "All 21 displayed numbers across report.md, dashboard_data.json and release_number_manifest.json were enumerated and independently recomputed from raw_data/orders.csv; every one binds to a claim_id+role, matches the registry and display_digits, sums of components equal the net headline (35,741.52), refund rate 27/57=0.473684, row accounting 201=174+26+1 holds, caveats present on every card on both surfaces, no UNVERIFIED_CLAIM, no business literals in the generator. One blocker: release/report.md states 'Country figures sum to the headline before refunds are taken off' while the displayed count",
+  "wall_seconds": 242.3,
+  "cost": {
+    "at": "2026-09-19T07:07:55.264492+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-f6d779607c82",
+    "agent_role": "glm-audit-release",
+    "started_at": "2026-09-19T07:03:57.372457+00:00",
+    "finished_at": "2026-09-19T07:07:55.262726+00:00",
+    "wall_seconds": 237.891,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 55965,
+    "cached_input_tokens": 253952,
+    "output_tokens": 4127,
+    "total_tokens": 317396,
+    "cost_usd": 0.011887986
+  }
+}

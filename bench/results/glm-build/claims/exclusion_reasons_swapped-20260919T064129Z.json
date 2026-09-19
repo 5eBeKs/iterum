@@ -1,0 +1,66 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "exclusion_reasons_swapped",
+  "dataset": "orders",
+  "error": "R04 attaches each exclusion count to the other rule: 26 rows 'outside period', 1 row 'not delivered'.",
+  "at": "2026-09-19T06:39:42+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R04",
+    "exclusion",
+    "swap|reason|rule",
+    "not_delivered|outside_period"
+  ],
+  "blocking_issues": 1,
+  "warnings": 3,
+  "checks": 11,
+  "issue_ids": [
+    "R04-EXCLUSION-LABELS-SWAPPED"
+  ],
+  "issue_texts": [
+    "R04-EXCLUSION-LABELS-SWAPPED | gate_claims_auditor.exclusion_reason_labels | gate_claims|exclusion_reason_labels_swapped|analysis/answers/R04.json|worker_analysis | METRIC_DEFINITION | HIGH | worker_analysis | analysis/answers/R04.json states excluded_not_delivered=26 with exclusion 'order_date outside period' and excluded_outside_period=1 with exclusion 'status != delivered'. Independent recalc ("
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The machine gate's questions_are_answered.R04 verifies the R04 counts against the registry but not the exclusion reason strings, so the swapped labels passed Gate 3 machine unchecked; the gate plan has no deterministic rule over those free-text labels.",
+    "Boundary proof held: O00008/O00082/O00198 (2025-01-01) and O00064 (2025-03-30) delivered are inside the population, and O00140 (2025-03-30, cancelled) is excluded by the not-delivered rule before the period rule is reached.",
+    "The machine gate's excusal text for refund_amount_total is substantive and defensible, but it is the gate's own prose, not a registry field; release surfaces should not print refund_amount_total beside the customer-count refund rate without this caveat."
+  ],
+  "summary": "All five numeric claims independently recalculated from raw_data/orders.csv (quarantine declared=false, read as-is): CLM-NET-REVENUE 35741.52, CLM-REFUND-RATE 0.473684 (27 refunded / 57 paying customers), CLM-NET-CZ 13527.24, CLM-NET-DE 11032.61, CLM-NET-PL 11181.67 — every value and population matches. Row accounting values match raw (201/174/27/26/1, invariant holds). One blocker: analysis/answers/R04.json swaps the exclusion reason labels — it tags the 26 not-delivered rows as 'order_date outside period' and the single row as 'status != delivered', when raw shows the 26 are cancelled/pendin",
+  "wall_seconds": 103.2,
+  "cost": {
+    "at": "2026-09-19T06:41:28.360445+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-982056832a2d",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-19T06:39:49.440843+00:00",
+    "finished_at": "2026-09-19T06:41:28.360445+00:00",
+    "wall_seconds": 98.922,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 31529,
+    "cached_input_tokens": 238080,
+    "output_tokens": 4561,
+    "total_tokens": 275431,
+    "cost_usd": 0.008869650000000001
+  }
+}

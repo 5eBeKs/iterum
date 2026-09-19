@@ -1,0 +1,62 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "question_restated_narrower",
+  "error": "R02 is restated without the half that asks on which basis the rate is taken.",
+  "at": "2026-09-15T17:44:00+00:00",
+  "max_v2_revision": "2a6f8dc",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R02",
+    "basis",
+    "restat|narrow|half|question"
+  ],
+  "blocking_issues": 2,
+  "warnings": 4,
+  "checks": 18,
+  "issue_ids": [
+    "CLAIMS-AUD-QUESTION-RESTATED-R02",
+    "CLAIMS-AUD-QUESTION-RESTATED-R01"
+  ],
+  "warning_texts": [
+    "No deterministic rule in audit/check_plan.json compares an answer's restated question with raw_data/questions.md: questions_are_answered only requires the question and facts fields, so a narrowed restatement passes the machine gate, and this auditor's judgment is the only check on answer faithfulnes",
+    "In metrics/calculated_metrics.json, the formula text of net_revenue_pl, net_revenue_de and net_revenue_cz reads as a tautology (country compared with itself) rather than naming the country; the values are correct, but the formula documents nothing.",
+    "analysis/answers/R03.json asserts that the country parts sum to the headline only by pointing at another gate and states no figure; the identity was recomputed here from raw and holds (35741.52).",
+    "The metrics period is named 2025-Q1-delivered but ends on 2025-03-30, as audit_spec.yaml sets it, not on the calendar quarter end; the raw export has no row dated 2025-03-31, so no figure changes, but a reader of the label may assume the full quarter."
+  ],
+  "summary": "All five claims recompute exactly from raw_data/orders.csv (net 35741.52; refund rate 27/57 = 0.473684 on paying customers; PL 11181.67, DE 11032.61, CZ 13527.24), populations, periods and caveats are correct, and the machine recalc is rooted only in raw. The stage fails on answer coverage: analysis/answers/R01.json and R02.json restate their questions narrower than raw_data/questions.md asks, so each answer record is bound to a question that was not the one asked, and R02 drops the refund-rate basis part entirely.",
+  "wall_seconds": 262.0,
+  "cost": {
+    "at": "2026-09-15T17:48:28.826422+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-f58036111c74",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-15T17:44:15.478688+00:00",
+    "finished_at": "2026-09-15T17:48:28.826422+00:00",
+    "wall_seconds": 253.344,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 290,
+    "cached_input_tokens": 790119,
+    "output_tokens": 19767,
+    "total_tokens": 810176,
+    "cost_usd": 1.6504944999999998
+  }
+}

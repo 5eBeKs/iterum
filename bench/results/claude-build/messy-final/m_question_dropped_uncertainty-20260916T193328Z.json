@@ -1,0 +1,88 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "m_question_dropped_uncertainty",
+  "dataset": "messy",
+  "error": "R03 is restated without the half of the brief that asks how precisely each rate is known.",
+  "at": "2026-09-16T19:18:54+00:00",
+  "max_v2_revision": "fa38876",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R03",
+    "uncertain|precis|interval",
+    "restat|narrow|question|brief"
+  ],
+  "blocking_issues": 7,
+  "warnings": 9,
+  "checks": 12,
+  "issue_ids": [
+    "FINAL-REPORT-PAGE-POPULATION",
+    "FINAL-CARRY-FACTS-WORKER-CLEAN",
+    "FINAL-CARRY-FACTS-WORKER-METRICS",
+    "FINAL-CARRY-FACTS-WORKER-ANALYSIS",
+    "FINAL-CARRY-FACTS-WORKER-RELEASE",
+    "FINAL-ANSWER-R03-QUESTION-NARROWED",
+    "FINAL-ANSWER-R01-QUESTION-NARROWED"
+  ],
+  "issue_texts": [
+    "FINAL-REPORT-PAGE-POPULATION | final_redteam.card_population_matches_claim | final_claude_redteam|card_population_matches_claim|release/report.md|page_population | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3 declares one population for the whole page, restricted to delivered orders. The page then shows CLM-ORDERS (line 9) and CLM-COMPLETION-DIRECT/-PARTNER (lines 14, 16). ",
+    "FINAL-CARRY-FACTS-WORKER-CLEAN | final_redteam.carry_facts_match_outputs | final_claude_redteam|carry_facts_match_outputs|audit/checkpoints/worker_clean.carry.json|facts | METRIC_DEFINITION | MEDIUM | worker_clean | audit/checkpoints/worker_clean.carry.json: context_id and attempt match the execution block of audit/results/worker_clean/result.json, but the facts contradict what the stage produced.",
+    "FINAL-CARRY-FACTS-WORKER-METRICS | final_redteam.carry_facts_match_outputs | final_claude_redteam|carry_facts_match_outputs|audit/checkpoints/worker_metrics.carry.json|facts | METRIC_DEFINITION | MEDIUM | worker_metrics | audit/checkpoints/worker_metrics.carry.json: context_id and attempt match audit/results/worker_metrics/result.json. The carry repeats the worker_clean facts word for word: a deli",
+    "FINAL-CARRY-FACTS-WORKER-ANALYSIS | final_redteam.carry_facts_match_outputs | final_claude_redteam|carry_facts_match_outputs|audit/checkpoints/worker_analysis.carry.json|facts | METRIC_DEFINITION | MEDIUM | worker_analysis | audit/checkpoints/worker_analysis.carry.json: context_id and attempt match audit/results/worker_analysis/result.json. The facts are identical to the other carries: a delivered",
+    "FINAL-CARRY-FACTS-WORKER-RELEASE | final_redteam.carry_facts_match_outputs | final_claude_redteam|carry_facts_match_outputs|audit/checkpoints/worker_release.carry.json|facts | METRIC_DEFINITION | MEDIUM | worker_release | audit/checkpoints/worker_release.carry.json: context_id and attempt match audit/results/worker_release/result.json. The carry records a delivered-only population and a 2025 perio",
+    "FINAL-ANSWER-R03-QUESTION-NARROWED | final_redteam.question_restated_faithfully | final_claude_redteam|question_restated_faithfully|analysis/answers/R03.json|R03 | CLAIM_SUPPORT | MEDIUM | worker_analysis | raw_data/questions.md, the questions file the frozen check plan binds through questions_are_answered with a required question field, asks R03 in two parts: the completion rate of each channel, ",
+    "FINAL-ANSWER-R01-QUESTION-NARROWED | final_redteam.question_restated_faithfully | final_claude_redteam|question_restated_faithfully|analysis/answers/R01.json|R01 | CLAIM_SUPPORT | LOW | worker_analysis | raw_data/questions.md asks R01 for net revenue over delivered orders, net of refunds. The question field of analysis/answers/R01.json drops the delivered-orders restriction, so the record describe"
+  ],
+  "other_blockers": 3,
+  "warning_texts": [
+    "Agent-stage results give no independent evidence. worker_clean, worker_metrics, worker_analysis, worker_release, gate0_semantic, gate_clean_auditor, gate_metrics_auditor, gate_claims_auditor and gate_release_auditor all have a placeholder summary and created_at 2026-01-01T00:00:00Z, before this run.",
+    "Completion-rate denominator (spec formula, no human decision): pending orders count as not completed. Over delivered plus cancelled orders only, the rates would be direct 0.842857 and partner 0.758176, against the published 0.724397 and 0.604746. The channel gap would be 0.084681 instead of 0.119651",
+    "refund_sign_policy (RESOLVED) looks doubtful against the data. All 11 negative refunds, 10 of them inside the quarter, are exactly minus round(gross_amount / 3, 2), which looks like a real refund with a flipped sign rather than garbage. Excluding them moves CLM-ORDERS by 10 (44541 if kept) and net r",
+    "R05 (shipping cost) appears on no release surface. Only analysis/answers/R05.json says the total is computed but not published because about 6% of cells (2648 of 44531 orders) are unreadable. A reader of release/report.md is never told that shipping cost was asked and deliberately left unanswered.",
+    "release/dashboard_data.json estimate cards (completion and AOV, 4 cards) show the point and both bounds but no n and no confidence level. The spec comment under estimate_rendering says an estimate is rendered with its n beside it, always. Adding either would put unbound numbers on the dashboard, bec",
+    "The average-order-value lines and cards (CLM-AOV-DIRECT/-PARTNER) do not say they are over delivered orders only or net of refunds; their caveat speaks of orders in the channel. The analysis plan registers both conditions and the check plan does not require them as caveats. In release/report.md, onl",
+    "The hypothesis test results in analysis/answers/R03.json and R04.json are not claims and reach no surface. No machine rule touches their statistics: hypotheses_registered saw no test claim. I checked the pooled z (26.718), and the Welch t (about 42.70) and Cohen's d (about 0.487) derived from the pu",
+    "In release_surface_contract.json, the report.md text exclusion for sample sizes is a pattern over the whole file, so any 'n = <digits>' string anywhere passes unbound. Today the four n values equal the claim n and recompute_estimate's recount, but the exclusion is wider than those four places.",
+    "What no deterministic rule covers, beyond the stage's capacity to carry: the fidelity of each answer's question to questions.md, the page-level wording of report.md, carry facts, the hypothesis statistics in the answers, and the shipping_total sum against raw (recomputed from the clean table only). "
+  ],
+  "summary": "FAIL. Every figure checked is right. Working from the quarantine projection, I recomputed the population (44531 orders: last revision per order_id, Q1 order_month, negative refunds excluded), the delivered counts, both completion rates and their Wilson bounds, the date and shipping-locale normalisation, and the clean table's identity with the source (matching MD5). Net revenue reconciles to its channel components, and the registered tests match the plan. What fails is what the reader and the next stage are told. (1) release/report.md opens with a page-level population restricted to delivered o",
+  "wall_seconds": 854.7,
+  "cost": {
+    "at": "2026-09-16T19:33:27.204150+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-62b781008144",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-16T19:19:15.158578+00:00",
+    "finished_at": "2026-09-16T19:33:27.204150+00:00",
+    "wall_seconds": 852.046,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 104,
+    "cached_input_tokens": 7812954,
+    "output_tokens": 80131,
+    "total_tokens": 7893189,
+    "cost_usd": 7.7740009999999975
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "sum_sentence_false",
+  "dataset": "orders",
+  "error": "The page says the country figures sum to the headline before refunds; both are net of refunds.",
+  "at": "2026-09-16T18:19:32+00:00",
+  "max_v2_revision": "fa38876",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "before refunds",
+    "net of refunds",
+    "sum"
+  ],
+  "blocking_issues": 1,
+  "warnings": 12,
+  "checks": 9,
+  "issue_ids": [
+    "FINAL-REPORT-SUM-SENTENCE-FALSE"
+  ],
+  "issue_texts": [
+    "FINAL-REPORT-SUM-SENTENCE-FALSE | final.release_surface_matches_generator | final|release_surface_diverges_from_generator|release/report.md|closing-sum-sentence | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 22 reads 'Country figures sum to the headline before refunds are taken off.' The declared generator src/release/build_release.py:68 appends 'Country figures sum to the he"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "No CLI output names a model, so whether each stage actually ran on openrouter/z-ai/glm-5.3-flash is unverifiable from inside the run; every execution.model field in audit/results is the stage's own report, and mine is equally a self-report.",
+    "The provenance of the report.md rewrite (which process, before or after which gate) is not reconstructable from my allowed inputs; the byte-level divergence from the declared generator is proven, the edit's timing is not.",
+    "worker result.json files for all four worker stages are driver e2e stubs (summary 'driver e2e ...', no checks, no warnings, null disclosures), so there is no stage-level self-report to corroborate anything; my verdict rests on the deterministic layer and independent recalculation only.",
+    "check_plan.json accepted two gate_release_document rules (claims_rendered, caveats_rendered) as accepted_unproven at plan-proving time because the proof harness hit a temp-dir FileNotFoundError; the actual gate_release_document run passed all 15 checks on the real files, so no residual gap remains f",
+    "gate_claims_machine's independent_claim_recalc.json agrees with my recalculation on all five claims (35741.52, 0.473684, 11181.67/11032.61/13527.24); recorded as corroboration, not as proof - shared code could share a mistake, so my own recalc is the reference.",
+    "refund_rate on the alternative order-row basis would be 33/174=0.189655 versus the ruled 27/57=0.473684 (roughly 2.5x, matching risk R-REFUND-BASIS); the ruled basis is applied consistently in the registry, the claim, the dashboard card and its caveat.",
+    "Ruling sensitivity, recomputed from raw: net_of_refunds moves the headline by 4493.50 EUR (gross 40235.02 vs net 35741.52); an end-exclusive period would drop O00064 and give 35473.34; a start-exclusive period would drop 3 rows and give 35550.75; the inclusive-boundary probe O00201 (2025-04-01, deli",
+    "The timezone_for_dates ruling (Europe/Warsaw, order_date is a local date) is applied by construction - no timezone conversion exists anywhere in the chain - but no surface states it; no rule requires a timezone caveat, so this is informational only.",
+    "refund_amount_total (4493.50) is excused from the release per metrics_are_claimed_or_excused, on the stated reason that a euro total beside a people-counting rate invites a wrong division; the excusal is declared and the number still sits recomputed in the metrics registry.",
+    "None of the three RESOLVED rulings in audit/human_decisions.yaml looks wrong on this data; each is declared in audit_spec.yaml, enforced by gate0 (resolved_decisions_are_declared.* PASS) and applied where it is claimed to be.",
+    "Pre-existing __pycache__ directories exist under audit/tools/ (runner machinery, newest mtime around this stage's start); I created or modified none - my evidence directory contains no runtime caches.",
+    "I could not verify checklib's own implementation (out of my inputs); frozen gate results are used as a map of what the deterministic layer covered, and their silence over the falsified sentence is the reason the blocker exists."
+  ],
+  "summary": "Every business number in the chain reproduces from raw_data/orders.csv with my own code (net_revenue 35741.52, refund_rate 27/57=0.473684 on the ruled paying_customers basis, country components 11181.67+11032.61+13527.24=35741.52, row accounting 201=174+26+1, inclusive boundaries enforced on O00201 dated 2025-04-01): the deterministic layer held. One material blocker: the released release/report.md is not the output of its declared generator src/release/build_release.py (release_surface_contract.json generator_sources) - run unmodified in a sandbox it produces 'Country figures sum to the headl",
+  "wall_seconds": 778.4,
+  "cost": {
+    "at": "2026-09-16T18:32:37.578126+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-3f0335123d63",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-16T18:19:42.556931+00:00",
+    "finished_at": "2026-09-16T18:32:37.574417+00:00",
+    "wall_seconds": 775.015,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 101882,
+    "cached_input_tokens": 1772160,
+    "output_tokens": 10949,
+    "total_tokens": 1902945,
+    "cost_usd": 0.049887060000000004
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "population_line_wrong",
+  "dataset": "orders",
+  "error": "The page's population line says all orders; every figure is over delivered orders.",
+  "at": "2026-09-19T07:34:13+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "all orders"
+  ],
+  "blocking_issues": 1,
+  "warnings": 17,
+  "checks": 16,
+  "issue_ids": [
+    "FINAL-RELEASE-POPULATION-LINE"
+  ],
+  "issue_texts": [
+    "FINAL-RELEASE-POPULATION-LINE | final_claude_redteam.release_population_statement | final_claude_redteam|population_statement_matches_spec|release/report.md|population | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3, read as text without HTML comments, says 'Population: all orders inside the period.' It sets no status filter. audit/audit_spec.yaml population is 'delivered or"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "This is a single-vendor profile: every context in this run, including this red team, is the same model family. An isolated context is not an independent vendor, so a mistake the model tends to make can appear on both sides of every check. The five intermediate PASS results are not independent confir",
+    "Write protection over raw_data and the frozen machinery came from permissions.deny in .claude/settings.json, which binds the edit tools and not the shell. A raw file changed through the shell would be caught after the fact by the control lock on the next runner command, not prevented.",
+    "The results and evidence of all five auditors (gate0_semantic, gate_clean_auditor, gate_metrics_auditor, gate_claims_auditor, gate_release_auditor) have the summary 'driver e2e ...', created_at 2026-01-01T00:00:00Z and evidence files that hold only a note, with no recalculation, command or output. T",
+    "The four worker results (worker_clean, worker_metrics, worker_analysis, worker_release) and their carries have the same placeholder shape: summary 'driver e2e ...', created_at and updated_at 2026-01-01T00:00:00Z, which is before this run was dispatched, and one boilerplate check each claiming refund",
+    "gate_release_document's two rules (claims_rendered, caveats_rendered) are listed under accepted_unproven in audit/check_plan.json: the plan proof crashed with FileNotFoundError and never showed them failing on a broken release. Their 15 PASS checks are unproven, and neither rule checks prose that co",
+    "No deterministic rule checks the report's prose: the title, the population line and the sentence saying country figures sum to the headline. My recalculation confirms the sum (11181.67 + 11032.61 + 13527.24 = 35741.52). The population line is the blocker above.",
+    "The period in audit_spec.yaml ends 2025-03-30, one day before the end of calendar Q1, yet questions.md and the allowed-exclusion reason call it 'the reported quarter'. No row in this export is dated 2025-03-31, so no published number moves. But a future export with 31 March orders would silently dro",
+    "The refund rate counts a customer as refunded if any of their delivered orders has a refund above 0, partial refunds included. 15 of the 27 refunded customers had only partial refunds. Counting only customers with a fully refunded order would move the published 0.473684 to 0.210526 (12/57). The spec",
+    "The refund_rate_basis ruling (paying customers) does what it says: 0.473684 on 27/57 customers against 0.189655 on 33/174 order rows, a factor of 2.50, which matches R-REFUND-BASIS. All 57 denominator customers paid something net, so fully refunded customers do not inflate the denominator.",
+    "Under the revenue_recognition ruling, net revenue deducts refunds from the date of the original order. The export has no refund date, so refund_amount is a snapshot as of the extract. Net revenue 35,741.52 and the refund rate can move on a later extract for the same quarter, and the release does not",
+    "The timezone_for_dates ruling (Europe/Warsaw) moves no number on this data: order_date is a plain local date with no time, so it is not visible in any result.",
+    "In metrics/calculated_metrics.json, net_revenue carries a field named 'numerator' that holds 40235.02, which is actually the gross amount (verified from raw). No gate checks this field, and anything that reads it as a ratio part would misread it. Likewise, the country metrics' formula text 'WHERE co",
+    "Every carry defines its population as 'status=delivered' with no period condition. The period appears only in the separate periods list, so a stage reading the definition alone would lose the date boundary.",
+    "The report line 'Numerator: 27 of 57.' does not say its unit. The unit is customers and appears only in the preceding caveat, so a reader could take 27 and 57 as order counts.",
+    "R05 (customer lifetime value) is excused in check_plan and answered nowhere, and the release does not tell its reader that one of the five questions went unanswered.",
+    "Some data the machine gates do not recompute directly: excluded_outside_period is pinned only by a sum, refund_amount_total is recomputed from clean and not from raw, the clean order_date column is outside values_preserved, and the gross total is not checked. I recomputed each from raw and they matc",
+    "Some things I could not establish from my inputs: the gate0_machine result and its evidence, the evidence files of the clean and metrics machine gates, retry history and runner state (the human reads those via audit_runner.py report), and whether the release generator writes the population line as a"
+  ],
+  "summary": "FAIL on one blocker. Line 3 of release/report.md gives the population as every order inside the period, but every published figure covers only the 174 delivered orders in 2025-01-01..2025-03-30. Read literally, that line describes 200 rows, including 16 cancelled and 10 pending orders, with net revenue of 41,881.34 EUR rather than the 35,741.52 EUR shown. The line also contradicts the report's own title and caveats, the claim register and worker_release's carry. Apart from that line, all 7 displayed figures on all 3 release surfaces match my own recalculation from raw_data/orders.csv. That cov",
+  "wall_seconds": 341.0,
+  "cost": {
+    "at": "2026-09-19T07:40:02.252602+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-0cdb94b85940",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-19T07:34:24.417286+00:00",
+    "finished_at": "2026-09-19T07:40:02.252602+00:00",
+    "wall_seconds": 337.828,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 54,
+    "cached_input_tokens": 2804725,
+    "output_tokens": 36817,
+    "total_tokens": 2841596,
+    "cost_usd": 3.569581
+  }
+}

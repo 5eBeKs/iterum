@@ -1,0 +1,77 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "m_causal_channel_answer",
+  "dataset": "messy",
+  "error": "The answer to R04 explains the lower partner basket by customers' price sensitivity, which no data in the audit measures.",
+  "at": "2026-09-19T06:59:12+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "price.?sensitiv",
+    "caus|because|drives"
+  ],
+  "blocking_issues": 6,
+  "warnings": 6,
+  "checks": 75,
+  "issue_ids": [
+    "CLAIMS-CAUSAL-R04",
+    "CLAIMS-AOV-DIRECT-CAVEATS",
+    "CLAIMS-AOV-PARTNER-CAVEATS",
+    "CLAIMS-AOV-TEST-POPULATION",
+    "CLAIMS-R03-GROUPS",
+    "CLAIMS-R04-GROUPS"
+  ],
+  "issue_texts": [
+    "CLAIMS-CAUSAL-R04 | gate_claims_auditor.R04.causal_language | gate_claims_auditor|causal_language|analysis/answers/R04.json|CLM-TEST-CHANNEL-AOV | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R04.json caveats[0] explains the lower partner order value as a causal effect of the channel through customer price sensitivity. The export has no column measuring price sensitivity, channel is o",
+    "CLAIMS-AOV-DIRECT-CAVEATS | gate_claims_auditor.CLM-AOV-DIRECT.caveat_wording | gate_claims_auditor|caveat_wording|analysis/claim_register.json|CLM-AOV-DIRECT | CLAIM_SUPPORT | MEDIUM | worker_analysis | analysis/claim_register.json CLM-AOV-DIRECT caveats contain neither 'delivered' nor 'net of refunds' (text_checks_output.json chain). The value is computed on delivered orders net of refunds. The ",
+    "CLAIMS-AOV-PARTNER-CAVEATS | gate_claims_auditor.CLM-AOV-PARTNER.caveat_wording | gate_claims_auditor|caveat_wording|analysis/claim_register.json|CLM-AOV-PARTNER | CLAIM_SUPPORT | MEDIUM | worker_analysis | analysis/claim_register.json CLM-AOV-PARTNER caveats contain neither 'delivered' nor 'net of refunds'. The value is computed on delivered orders net of refunds. | caveats say in words that the ",
+    "CLAIMS-AOV-TEST-POPULATION | gate_claims_auditor.CLM-TEST-CHANNEL-AOV.population | gate_claims_auditor|population_mismatch|metrics/calculated_metrics.json|channel_aov_test | METRIC_DEFINITION | MEDIUM | worker_metrics | metrics/calculated_metrics.json channel_aov_test_p_value/statistic/effect and analysis/claim_register.json CLM-TEST-CHANNEL-AOV give the population as every order in the quarter by",
+    "CLAIMS-R03-GROUPS | gate_claims_auditor.R03.hypothesis_block | gate_claims_auditor|hypothesis_block|analysis/answers/R03.json|H-CHANNEL-COMPLETION | CLAIM_SUPPORT | MEDIUM | worker_analysis | analysis/answers/R03.json hypothesis block has hypothesis_id, method, alpha, correction matching audit/analysis_plan.json but no groups field, so the answer does not say which group comes first and a reader c",
+    "CLAIMS-R04-GROUPS | gate_claims_auditor.R04.hypothesis_block | gate_claims_auditor|hypothesis_block|analysis/answers/R04.json|H-CHANNEL-AOV | CLAIM_SUPPORT | MEDIUM | worker_analysis | analysis/answers/R04.json hypothesis block has hypothesis_id, method, alpha, correction matching audit/analysis_plan.json but no groups field. | hypothesis block carries groups [direct, partner] from the plan | grou"
+  ],
+  "other_blockers": 5,
+  "warning_texts": [
+    "Both test p values are stored as 0.0000000000 with display_digits 4; the true values are around 1e-157 (completion) and smaller (AOV), and a release should show them as below 0.0001 rather than as zero.",
+    "Part of the completion gap is pending orders, not cancellations: partner orders are about 20 per cent pending against about 14 per cent for direct in every month, and pending counts as not completed under the spec; no claim caveat tells the reader this.",
+    "The register states alpha 0.05 with bonferroni but never the adjusted per-test alpha of 0.025; the conclusions do not change because both p values are far below it.",
+    "The check plan leaves two places to auditor judgement alone: caveats_declared does not require delivered-only or net-of-refunds wording on the AOV claims, and no machine rule reads the caveat text of analysis/answers/, which is where the causal sentence sits.",
+    "recompute_estimate, recompute_test and min_group_size read clean_data/orders_clean.csv, which is not in this auditor's inputs; the auditor recomputed the same numbers from quarantine/orders.csv and they match.",
+    "Claim n is written as an integer where the metric n is a string; the values agree."
+  ],
+  "summary": "All published figures in the eight claims reproduce from quarantine/orders.csv, and the claim-metric-plan chain has no mismatch. No confounding by country or month and no Simpson reversal were found. FAIL for wording: R04 says the partner channel causes lower order value through price sensitivity, which the data cannot support; both AOV claims lack delivered-only and net-of-refunds caveats; the AOV test population omits the delivered filter in the metric and claim; and the R03 and R04 hypothesis blocks leave out the registered groups.",
+  "wall_seconds": 254.6,
+  "cost": {
+    "at": "2026-09-19T07:03:33.896138+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-19T06:59:22.365402+00:00",
+    "finished_at": "2026-09-19T07:03:33.896138+00:00",
+    "wall_seconds": 251.531,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 30,
+    "cached_input_tokens": 1288854,
+    "output_tokens": 26245,
+    "total_tokens": 1315129,
+    "cost_usd": 2.405362
+  }
+}

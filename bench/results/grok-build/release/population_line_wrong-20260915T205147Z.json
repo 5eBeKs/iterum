@@ -1,0 +1,58 @@
+{
+  "profile": "grok-build",
+  "stage": "release",
+  "case": "population_line_wrong",
+  "error": "The page's population line says all orders; every figure is over delivered orders.",
+  "at": "2026-09-15T20:42:53+00:00",
+  "max_v2_revision": "06eb683",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "all orders"
+  ],
+  "blocking_issues": 1,
+  "warnings": 2,
+  "checks": 55,
+  "issue_ids": [
+    "REL-POPULATION-LINE"
+  ],
+  "warning_texts": [
+    "The frozen check_plan has no deterministic rule for the document-level population sentence on release/report.md, so machine-gate silence on that sentence is not approval.",
+    "Gate 0 accepted_unproven listed caveats_rendered and claims_rendered because claim_register was missing during plan proof; the live document gate did run both rules."
+  ],
+  "summary": "release/report.md line 3 tells the reader the population is all orders inside the period; the spec population is delivered orders inside the period. All 21 bound display numbers match claim_register and calculated_metrics, country parts sum to 35741.52, and 27/57 = 0.473684.",
+  "wall_seconds": 526.1,
+  "cost": {
+    "at": "2026-09-15T20:51:45.235943+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-75ac9ef03a16",
+    "agent_role": "grok-audit-release",
+    "started_at": "2026-09-15T20:43:04.339624+00:00",
+    "finished_at": "2026-09-15T20:51:45.235943+00:00",
+    "wall_seconds": 520.906,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 234183,
+    "cached_input_tokens": 1577728,
+    "output_tokens": 32081,
+    "total_tokens": 1843992,
+    "cost_usd": 0.49290344
+  }
+}

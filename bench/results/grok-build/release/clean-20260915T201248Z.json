@@ -1,0 +1,55 @@
+{
+  "profile": "grok-build",
+  "stage": "release",
+  "case": "clean",
+  "error": "no defect planted (false-positive control)",
+  "at": "2026-09-15T20:02:43+00:00",
+  "max_v2_revision": "bc6f71b",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "PASS",
+  "stop_code": null,
+  "outcome": "clean_pass",
+  "matched_signals": [],
+  "blocking_issues": 0,
+  "warnings": 4,
+  "checks": 48,
+  "issue_ids": [],
+  "warning_texts": [
+    "The frozen check_plan for this stage lists only claims_rendered and caveats_rendered, both accepted_unproven at Gate 0 because claim_register.json was absent during prove-plan, so those two rules were not breaker-proven.",
+    "This stage's audit/results/gate_release_document/evidence/checks.json holds no recompute_*, claims_recomputed, component_sum, or column_identity comparison, and gate_release_machine wrote release_surface_gate.json rather than checks.json.",
+    "claims_rendered in the plan covers only release/report.md; dashboard_data.json and release_number_manifest.json were bound by the surface gate and recast here from the claim register.",
+    "release/dashboard_data.json has no explicit country-sum sentence; the three country cards and the headline are on the same cards list, and release/report.md tells the reader they sum."
+  ],
+  "summary": "Opened all three release surfaces; recast 21 bound figures from calculated_metrics.json + claim_register.json; country parts 11181.67 + 11032.61 + 13527.24 = 35741.52; refund rate 27/57 = 0.473684 on paying_customers; caveats visible on report and on each dashboard card; machine gate skipped no surface; this stage checks.json has no recompute_* figures to cite.",
+  "wall_seconds": 601.8,
+  "cost": {
+    "at": "2026-09-15T20:12:47.149409+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-465f5bcf7626",
+    "agent_role": "grok-audit-release",
+    "started_at": "2026-09-15T20:02:47.902451+00:00",
+    "finished_at": "2026-09-15T20:12:47.149409+00:00",
+    "wall_seconds": 599.25,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 219349,
+    "cached_input_tokens": 2034176,
+    "output_tokens": 34321,
+    "total_tokens": 2287846,
+    "cost_usd": 0.56498208
+  }
+}

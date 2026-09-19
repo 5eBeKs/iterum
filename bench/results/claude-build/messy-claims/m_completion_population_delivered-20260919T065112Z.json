@@ -1,0 +1,73 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "m_completion_population_delivered",
+  "dataset": "messy",
+  "error": "The direct completion rate says its population is delivered orders, over which a completion rate is always 1.",
+  "at": "2026-09-19T06:46:02+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "CLM-COMPLETION-DIRECT",
+    "population",
+    "delivered",
+    "denominator|cancel|always|trivial|1\\.0|100 ?%"
+  ],
+  "blocking_issues": 3,
+  "warnings": 6,
+  "checks": 45,
+  "issue_ids": [
+    "CLAIMS-AUD-POP-COMPLETION-DIRECT",
+    "CLAIMS-AUD-CAVEAT-AOV-DIRECT",
+    "CLAIMS-AUD-CAVEAT-AOV-PARTNER"
+  ],
+  "issue_texts": [
+    "CLAIMS-AUD-POP-COMPLETION-DIRECT | gate_claims_auditor.population_matches_calculation.CLM-COMPLETION-DIRECT | gate_claims_auditor|population_matches_calculation|analysis/claim_register.json|CLM-COMPLETION-DIRECT | CLAIM_SUPPORT | HIGH | worker_analysis | In analysis/claim_register.json, CLM-COMPLETION-DIRECT has a population field that restricts it to delivered orders with channel = direct. Its va",
+    "CLAIMS-AUD-CAVEAT-AOV-DIRECT | gate_claims_auditor.caveats_delivered_net.CLM-AOV-DIRECT | gate_claims_auditor|caveats_delivered_net|analysis/claim_register.json|CLM-AOV-DIRECT | CLAIM_SUPPORT | MEDIUM | worker_analysis | In analysis/claim_register.json, the caveats of CLM-AOV-DIRECT are only the channel-quarter caveat and the sampling-interval caveat. Neither the caveats nor the derivation say tha",
+    "CLAIMS-AUD-CAVEAT-AOV-PARTNER | gate_claims_auditor.caveats_delivered_net.CLM-AOV-PARTNER | gate_claims_auditor|caveats_delivered_net|analysis/claim_register.json|CLM-AOV-PARTNER | CLAIM_SUPPORT | MEDIUM | worker_analysis | In analysis/claim_register.json, the caveats of CLM-AOV-PARTNER are only the channel-quarter caveat and the sampling-interval caveat. Neither the caveats nor the derivation say"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "No machine rule in audit/check_plan.json compares a claim's population or period text with its metric or with the spec, and none checks the AOV caveats for delivered-only or net-of-refunds, so those parts of the register were verified only by this audit.",
+    "The completion rates count pending orders as not completed. Partner has about 20% pending against about 14% for direct, and those shares are flat across January, February and March, so the gap is not an end-of-quarter censoring effect. Even so, no caveat on either CLM-COMPLETION-* claim tells the re",
+    "Both test p-values are stored as 0.0000000000 with display_digits 4. Rendered literally they read as a p of exactly zero, but they are only below the display precision, so the release should show them as below 0.0001.",
+    "Both registered tests declare bonferroni with alpha 0.05, but the register does not write down the per-test threshold of 0.025. Both p-values are far below it, so the conclusions stand, but the correction is stated rather than shown.",
+    "The hypothesis blocks in analysis/answers/R03.json and R04.json name the method, alpha, correction and n per group but not the groups or their order. A reader of the answer file alone cannot tell that a positive effect means direct is higher; the direction is stated only in the claim register's cave",
+    "In gate_claims_machine, only claims_recomputed is rooted in raw_data (source raw_latest). recompute_estimate, recompute_test and min_group_size read clean_data/orders_clean.csv, so the intervals, tests and group sizes have no raw-rooted machine recompute. My own recompute from quarantine/orders.csv "
+  ],
+  "summary": "Every number in the eight claims matches my independent recount from quarantine/orders.csv (deduplicated by last revision, cut to 2026-01..2026-03 by order_month, negative refunds excluded; 44531 orders), and the claim-to-metric-to-plan chain has no gaps. No confounding by country or month and no Simpson reversal was found. The analysis still fails on wording: CLM-COMPLETION-DIRECT declares its population as delivered orders of the direct channel, but the rate is computed over the whole channel (24597 orders, including 3322 cancelled and 3457 pending). A delivered-only denominator would make t",
+  "wall_seconds": 301.0,
+  "cost": {
+    "at": "2026-09-19T06:51:10.794372+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-19T06:46:12.953300+00:00",
+    "finished_at": "2026-09-19T06:51:10.794372+00:00",
+    "wall_seconds": 297.844,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 42,
+    "cached_input_tokens": 2515612,
+    "output_tokens": 30435,
+    "total_tokens": 2546089,
+    "cost_usd": 3.3834139999999993
+  }
+}

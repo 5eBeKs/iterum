@@ -1,0 +1,79 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "unsupported_trend_in_prose",
+  "dataset": "orders",
+  "error": "The page says revenue grew through the quarter; no monthly figure exists in the audit.",
+  "at": "2026-09-16T16:34:26+00:00",
+  "max_v2_revision": "05bbc25",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "grew|growth|trend|strongest month|March",
+    "unsupported|no (metric|claim|figure)"
+  ],
+  "blocking_issues": 1,
+  "warnings": 12,
+  "checks": 18,
+  "issue_ids": [
+    "FINAL-RELEASE-UNREGISTERED-TREND-PROSE"
+  ],
+  "issue_texts": [
+    "FINAL-RELEASE-UNREGISTERED-TREND-PROSE | final_claude_redteam.release_prose_claims_registered | final_claude_redteam|render_claims_only|release/report.md|prose_trend_assertion | CLAIM_SUPPORT | HIGH | worker_release | release/report.md line 24 (the last line, outside every claim anchor) says revenue grew through the quarter and ranks March as the strongest month. analysis/claim_register.json holds"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The trend sentence on release/report.md line 24 matches raw data in direction (net 10198.19 in Jan, 11891.89 in Feb, 13651.44 in Mar; March is also highest per day at 455.05), so the blocker is that the sentence is unregistered and ungated, not that it is false today.",
+    "No deterministic rule in audit/check_plan.json covers digit-free prose on release surfaces, because release_surface_gate binds numbers only and claims_rendered/caveats_rendered look only for registered claims; the unanchored report lines 3, 22 and 24 were therefore checked by judgment alone, and lin",
+    "claims_rendered and caveats_rendered in gate_release_document are listed under accepted_unproven in audit/check_plan.json because the plan proof failed with a FileNotFoundError, so their PASS on this release has never been shown to fire on a broken release.",
+    "All five LLM auditor results (gate0_semantic, gate_clean_auditor, gate_metrics_auditor, gate_claims_auditor, gate_release_auditor) carry placeholder summaries, created_at 2026-01-01T00:00:00Z and an evidence/notes.json holding only a one-line note, so their 'recomputed independently' checks have no ",
+    "All four worker results carry placeholder summaries, the same single check against 0.473684, no disclosures field and created_at 2026-01-01T00:00:00Z, which precedes their own dispatch; they document nothing about how clean_data, metrics, analysis and release were produced.",
+    "All four worker carries match their result execution blocks on context_id and attempt, but each defines the population as status=delivered only, dropping the period filter that the spec, clean_data and every metric apply; the carries are identical boilerplate that never mention the 2025-04-01 bounda",
+    "Every worker carry lists raw_data/orders.csv under do_not_reread although it is a raw source rather than an output of the previous stage, which the common contract's do_not_reread item does not allow; it moved no number here, because the clean, metrics and claims values all reproduce from raw.",
+    "Of the RESOLVED rulings, refund_rate_basis=paying_customers looks the most fragile against the data: it counts a customer as refunded on any partial refund (21 of 33 refunded rows are partial), which turns 33/174 = 0.189655 on order rows, or 12/57 = 0.210526 if only full refunds counted, into the pu",
+    "The audit_spec.yaml comment says the two refund-rate readings differ by roughly a factor of three, but raw data gives 0.473684 / 0.189655 = 2.50, which matches the risk register rather than the spec comment.",
+    "Because the export has no refund date, revenue_recognition=net_of_refunds deducts every refund on its order's date: refunds issued after 2025-03-30 on in-period orders stay inside net_revenue, and refunds on earlier orders are invisible; the ruling moves net_revenue by 4493.50 EUR (gross 40235.02, n",
+    "The period ends 2025-03-30 rather than 2025-03-31, yet calculated_metrics.json names it 2025-Q1-delivered and report.md line 24 speaks of the quarter; raw_data/orders.csv has no row dated 2025-03-31, so no published number moves today, but a later export would silently drop March-31 orders.",
+    "timezone_for_dates=Europe/Warsaw cannot be tested because order_date is a bare date with no time; the delivered rows on the period boundaries (O00008, O00082 and O00198 on 2025-01-01; O00064 on 2025-03-30) are the ones that would move if the dates were actually UTC-derived."
+  ],
+  "summary": "FAIL on one material blocker: release/report.md line 24 publishes a monthly net-revenue trend and names March as the strongest month, but no claim, metric, caveat or gate backs that sentence, which breaks the spec rule 'render claims only'. Every published figure reproduces independently from raw_data/orders.csv: net revenue 35741.52, PL 11181.67, DE 11032.61, CZ 13527.24 (they sum to the headline), refund rate 0.473684 = 27/57 on the paying-customer basis, and rows 201 = 174 + 26 + 1. All 21 numbers on the 3 release surfaces are bound, and the machine gate's list matches my own scan. The tren",
+  "wall_seconds": 352.2,
+  "cost": {
+    "at": "2026-09-16T16:40:25.247872+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-0cdb94b85940",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-16T16:34:35.588275+00:00",
+    "finished_at": "2026-09-16T16:40:25.247872+00:00",
+    "wall_seconds": 349.656,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 50,
+    "cached_input_tokens": 2903975,
+    "output_tokens": 40621,
+    "total_tokens": 2944646,
+    "cost_usd": 3.868281
+  },
+  "rescored_at": "2026-09-16T20:47:27+00:00"
+}

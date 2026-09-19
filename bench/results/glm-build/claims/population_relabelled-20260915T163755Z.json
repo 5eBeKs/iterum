@@ -1,0 +1,61 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "population_relabelled",
+  "error": "The headline claim says its population is all orders, while the spec and its own caveats say delivered orders.",
+  "at": "2026-09-15T16:34:54+00:00",
+  "max_v2_revision": "0703cb4",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "all orders",
+    "CLM-NET-REVENUE"
+  ],
+  "blocking_issues": 1,
+  "warnings": 4,
+  "checks": 15,
+  "issue_ids": [
+    "CLAIMS-POPULATION-RELABELLED-CLM-NET-REVENUE"
+  ],
+  "warning_texts": [
+    "CLM-NET-REVENUE in analysis/claim_register.json declares the population 'all orders inside the period' but the number is computed on delivered orders only; the label, not the value, is wrong.",
+    "The machine caveats_declared rule passed because it matches caveat topic phrases, and the claim's caveats do say 'delivered orders only', so the relabelled population field passes every machine rule and was caught only by comparing the declared population to the recomputed one.",
+    "CLM-REFUND-RATE correctly states its basis in words: its caveats and population field both name paying customers, and the 27/57 numerator and denominator recount from raw as distinct customer_id values.",
+    "No check_id in this stage's machine gate recomputes the row-accounting counts; the claims machine gate covers only the five claims, so raw_order_rows 201, population_order_rows 174 and the 26/1 exclusion split rest on my own recount in evidence/recount_output.json."
+  ],
+  "summary": "All five claim values, numerator/denominator and the full row accounting match an independent recount from raw_data/orders.csv (201 = 174 + 26 + 1, boundary 2025-04-01 enforced). One blocker: CLM-NET-REVENUE's declared population 'all orders inside the period' is not the population it is computed on (delivered orders only) and contradicts its own caveats.",
+  "wall_seconds": 170.9,
+  "cost": {
+    "at": "2026-09-15T16:37:54.042452+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-761a813203d4",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-15T16:35:13.535287+00:00",
+    "finished_at": "2026-09-15T16:37:54.041331+00:00",
+    "wall_seconds": 160.5,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 44604,
+    "cached_input_tokens": 235520,
+    "output_tokens": 4676,
+    "total_tokens": 286768,
+    "cost_usd": 0.00855535
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "m_effect_misnamed",
+  "dataset": "messy",
+  "error": "The R04 test calls its effect size a proportion difference; a Welch test on order values reports Cohen's d.",
+  "at": "2026-09-19T06:50:00+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "effect",
+    "cohen|proportion_difference|effect_name|effect size"
+  ],
+  "blocking_issues": 4,
+  "warnings": 5,
+  "checks": 42,
+  "issue_ids": [
+    "CLAIMS-R04-EFFECT-MISNAMED",
+    "CLAIMS-AOV-CAVEATS-POPULATION",
+    "CLAIMS-TEST-AOV-POPULATION",
+    "CLAIMS-ANSWER-HYPOTHESIS-GROUPS"
+  ],
+  "issue_texts": [
+    "CLAIMS-R04-EFFECT-MISNAMED | gate_claims_auditor.answer_effect_name.R04 | gate_claims_auditor|answer_effect_name_matches_metric|analysis/answers/R04.json|H-CHANNEL-AOV | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R04.json hypothesis.effect_name is proportion_difference, while metrics/calculated_metrics.json channel_aov_test_effect.unit and the claim's render_values.effect.unit are c",
+    "CLAIMS-AOV-CAVEATS-POPULATION | gate_claims_auditor.caveats_state_population.CLM-AOV | gate_claims_auditor|caveats_state_population|analysis/claim_register.json|CLM-AOV-DIRECT,CLM-AOV-PARTNER | CLAIM_SUPPORT | MEDIUM | worker_analysis | analysis/claim_register.json CLM-AOV-DIRECT and CLM-AOV-PARTNER have two caveats each (channel population, sampling interval only). Neither says the average is tak",
+    "CLAIMS-TEST-AOV-POPULATION | gate_claims_auditor.population_matches_computation.CLM-TEST-CHANNEL-AOV | gate_claims_auditor|population_matches_computation|analysis/claim_register.json|CLM-TEST-CHANNEL-AOV | CLAIM_SUPPORT | MEDIUM | worker_analysis | analysis/claim_register.json CLM-TEST-CHANNEL-AOV population is 'orders placed inside the quarter, one row per order, direct against partner by channel",
+    "CLAIMS-ANSWER-HYPOTHESIS-GROUPS | gate_claims_auditor.answer_hypothesis_fields.groups | gate_claims_auditor|answer_hypothesis_fields|analysis/answers|R03,R04 | CLAIM_SUPPORT | LOW | worker_analysis | analysis/answers/R03.json and R04.json hypothesis blocks carry hypothesis_id, method, alpha, correction, statistic, p_value, effect_size and unlabelled n_per_group, but no groups. The stage prompt req"
+  ],
+  "other_blockers": 2,
+  "warning_texts": [
+    "Part of the completion-rate gap between channels is orders still pending, not orders cancelled: pending is about 14 percent of direct and 20 percent of partner orders in the quarter, and a pending order may still be delivered, so the gap describes status at export time rather than final completion.",
+    "Both test p-values are stored as 0.0000000000 with display_digits 4, so they would render as 0.0000; the release should say p < 0.0001 instead of a literal zero.",
+    "Bonferroni over the two registered tests means a per-test alpha of 0.025; the claims record alpha 0.05 and the correction name but not the adjusted alpha. The conclusion is unaffected (z about 26.7, t about 42.7), but the adjusted threshold is written nowhere.",
+    "recompute_estimate, recompute_test and min_group_size in gate_claims_machine read clean_data/orders_clean.csv; only claims_recomputed goes back to the raw export (raw_latest). This audit's recalculation from the quarantine projection closes that gap for this run, but the machine gate alone would not",
+    "The effect name in the answer files and the population wording of test claims are not read by any rule in audit/check_plan.json; three of this audit's four findings sit in places no machine rule checks."
+  ],
+  "summary": "All eight claims recompute from quarantine/orders.csv to the published value, interval, statistic and effect (dedup last-row-wins, Q1 by order_month, negative refunds excluded: 45917 rows -> 45000 orders -> 44531 in population), and the claim->metric->source chain is byte-equal for every value, bound, n, level, method, hypothesis, alpha and correction. The claims FAIL on interpretation: R04 names the Welch test's Cohen's d effect a proportion_difference; both AOV claims' caveats never say delivered-only or net of refunds; CLM-TEST-CHANNEL-AOV declares an all-orders population although it is co",
+  "wall_seconds": 257.0,
+  "cost": {
+    "at": "2026-09-19T06:54:24.433262+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-19T06:50:10.524421+00:00",
+    "finished_at": "2026-09-19T06:54:24.433262+00:00",
+    "wall_seconds": 253.906,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 30,
+    "cached_input_tokens": 1638247,
+    "output_tokens": 26420,
+    "total_tokens": 1664697,
+    "cost_usd": 2.8187225
+  }
+}

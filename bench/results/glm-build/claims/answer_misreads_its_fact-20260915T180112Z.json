@@ -1,0 +1,60 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "answer_misreads_its_fact",
+  "error": "The answer to R02 calls a 47% refund rate low, fewer than one order in ten.",
+  "at": "2026-09-15T17:59:25+00:00",
+  "max_v2_revision": "d6a41ff",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R02",
+    "one order in ten",
+    "\\blow\\b",
+    "0\\.47|47 ?%"
+  ],
+  "blocking_issues": 1,
+  "warnings": 2,
+  "checks": 10,
+  "issue_ids": [
+    "R02-CAVEAT-MISREADS-REFUND-RATE"
+  ],
+  "warning_texts": [
+    "analysis/answers/R02.json caveat misreads the refund rate it cites: 0.473684 is roughly one refunded customer in two, not fewer than one in ten, and calls a 47% rate 'low'.",
+    "Refund amount total (4493.50 EUR) is excused from the register; the excuse wording is defensible but a reader dividing it by 57 customers would get a wrong figure, so its absence from release surfaces is load-bearing."
+  ],
+  "summary": "All five claims recomputed independently from raw_data/orders.csv and match the register and the machine gate (net_revenue 35741.52; refund_rate 0.473684 = 27/57 paying customers; PL/DE/CZ 11181.67/11032.61/13527.24; row accounting 201=174+26+1). One blocker: the R02 answer caveat misreads the refund-rate fact it cites (0.47 described as 'fewer than one in ten').",
+  "wall_seconds": 102.8,
+  "cost": {
+    "at": "2026-09-15T18:01:09.797888+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-9c9ee28c91f1",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-15T17:59:31.215681+00:00",
+    "finished_at": "2026-09-15T18:01:09.795878+00:00",
+    "wall_seconds": 98.578,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 36130,
+    "cached_input_tokens": 267008,
+    "output_tokens": 3601,
+    "total_tokens": 307820,
+    "cost_usd": 0.00788537
+  }
+}

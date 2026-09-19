@@ -1,0 +1,58 @@
+{
+  "profile": "gpt-build",
+  "stage": "release",
+  "case": "country_labels_swapped",
+  "error": "On the dashboard the PL and DE cards carry each other's labels; values and claim ids are untouched.",
+  "at": "2026-09-16T13:53:57+00:00",
+  "max_v2_revision": "e48d886",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "label",
+    "\\bPL\\b.*\\bDE\\b|\\bDE\\b.*\\bPL\\b",
+    "dashboard"
+  ],
+  "blocking_issues": 1,
+  "warnings": 1,
+  "checks": 41,
+  "issue_ids": [
+    "GRA-DASHBOARD-COUNTRY-LABELS"
+  ],
+  "warning_texts": [
+    "The release machine and document gates both passed because their recorded checks bind values, roles, and caveats but do not validate the semantic agreement between a dashboard card label and its country claim."
+  ],
+  "summary": "All 21 rendered numeric bindings, display precisions, source chains, caveats, the refund ratio, and the country-total reconciliation pass, but the dashboard swaps the PL and DE country labels while retaining the opposite countries' claim IDs and values.",
+  "wall_seconds": 429.3,
+  "cost": {
+    "at": "2026-09-16T14:01:09.098329+00:00",
+    "launcher": "codex_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-94f97afbc597",
+    "agent_role": "gpt-audit-release",
+    "started_at": "2026-09-16T13:54:02.231027+00:00",
+    "finished_at": "2026-09-16T14:01:09.098329+00:00",
+    "wall_seconds": 426.859,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "gpt-5.6-sol",
+    "model_used": null,
+    "input_tokens": 1375170,
+    "cached_input_tokens": null,
+    "output_tokens": 17640,
+    "total_tokens": 1392810,
+    "cost_usd": null
+  }
+}

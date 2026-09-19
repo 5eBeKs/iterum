@@ -1,0 +1,64 @@
+{
+  "profile": "glm-build",
+  "stage": "release",
+  "case": "country_labels_swapped",
+  "error": "On the dashboard the PL and DE cards carry each other's labels; values and claim ids are untouched.",
+  "at": "2026-09-15T18:37:08+00:00",
+  "max_v2_revision": "1d34cf0",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "label",
+    "swap",
+    "\\bPL\\b.*\\bDE\\b|\\bDE\\b.*\\bPL\\b",
+    "dashboard"
+  ],
+  "blocking_issues": 1,
+  "warnings": 6,
+  "checks": 39,
+  "issue_ids": [
+    "RELEASE-DASHBOARD-LABEL-SWAP"
+  ],
+  "warning_texts": [
+    "The two machine gates of this stage both passed while the dashboard showed every PL figure under the label of DE and vice versa: release_surface_gate verifies number-to-claim_id binding and gate_release_document verifies claim and caveat presence, and neither reads the label a reader sees, so this f",
+    "release/report.md line 11 ends with '57.'; the period is sentence punctuation and the displayed denominator is 57, matching the registry — flagged here only because a naive number extraction reads the token as '57.'.",
+    "audit/check_plan.json records two gate_release_document rules as accepted_unproven because the prove-plan sandbox could not read analysis/claim_register.json; the checks were not weakened, but their breakers were never demonstrated, so their PASS rests on this auditor's independent reproduction.",
+    "metrics/calculated_metrics.json states the per-country formulas as 'SUM(net_amount) WHERE country = country' — a tautology in prose; the values agree with the claim register, but the formula field is not a readable definition.",
+    "The report shows no caveat that country components must sum to the headline beyond the sentence 'Country figures sum to the headline'; the sum was verified numerically and the sentence is visible, so no blocker, but a chart built from dashboard_data.json carries no such reconciliation text.",
+    "The check plan leaves the card labels, the number formatting and the reader-facing bullet country prefixes with no deterministic rule; judgment on those places is the only check they received, and the label check caught the one live defect."
+  ],
+  "summary": "All 21 displayed numbers bind exactly to the claim registry (money to 0.01, proportion to 1e-6, exact display_digits); component sum 11181.67+11032.61+13527.24=35741.52 exact; refund rate 27/57=0.473684 exact; all caveats shown next to every number on both surfaces; no UNVERIFIED_CLAIM markers. Two blocking findings: (1) release/dashboard_data.json swaps the country labels of the PL and DE cards — card CLM-NET-PL is labeled 'Net revenue DE (EUR)' and card CLM-NET-DE is labeled 'Net revenue PL (EUR)', so a dashboard reader sees each country's revenue under the wrong country; neither machine gat",
+  "wall_seconds": 203.9,
+  "cost": {
+    "at": "2026-09-15T18:40:35.386835+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-ef1666d29995",
+    "agent_role": "glm-audit-release",
+    "started_at": "2026-09-15T18:37:15.177381+00:00",
+    "finished_at": "2026-09-15T18:40:35.383310+00:00",
+    "wall_seconds": 200.203,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 49384,
+    "cached_input_tokens": 625536,
+    "output_tokens": 9156,
+    "total_tokens": 687243,
+    "cost_usd": 0.01617934
+  }
+}

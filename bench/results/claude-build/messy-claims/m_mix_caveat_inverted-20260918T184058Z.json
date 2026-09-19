@@ -1,0 +1,72 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "m_mix_caveat_inverted",
+  "dataset": "messy",
+  "error": "The partner completion rate's caveat says its interval also covers a change in the channel's country mix.",
+  "at": "2026-09-18T18:36:28+00:00",
+  "max_v2_revision": "b7adc4a",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "mix of countries|country mix",
+    "also covers|covers a channel",
+    "CLM-COMPLETION-PARTNER"
+  ],
+  "blocking_issues": 3,
+  "warnings": 6,
+  "checks": 51,
+  "issue_ids": [
+    "CLAIMS-AUD-CAVEAT-INVERTED-PARTNER",
+    "CLAIMS-AUD-AOV-DIRECT-POPULATION-CAVEAT",
+    "CLAIMS-AUD-AOV-PARTNER-POPULATION-CAVEAT"
+  ],
+  "issue_texts": [
+    "CLAIMS-AUD-CAVEAT-INVERTED-PARTNER | gate_claims_auditor.caveat_meaning | gate_claims_auditor|caveat_meaning|analysis/claim_register.json|CLM-COMPLETION-PARTNER | CLAIM_SUPPORT | HIGH | worker_analysis | In analysis/claim_register.json, the second caveat of CLM-COMPLETION-PARTNER opens with the required sampling-interval phrase and then says the interval also covers a channel whose mix of countrie",
+    "CLAIMS-AUD-AOV-DIRECT-POPULATION-CAVEAT | gate_claims_auditor.caveat_population_words | gate_claims_auditor|caveat_population_words|analysis/claim_register.json|CLM-AOV-DIRECT | CLAIM_SUPPORT | MEDIUM | worker_analysis | CLM-AOV-DIRECT has two caveats in analysis/claim_register.json: the channel-population one and the sampling-interval one. Neither says delivered orders only or net of refunds. The",
+    "CLAIMS-AUD-AOV-PARTNER-POPULATION-CAVEAT | gate_claims_auditor.caveat_population_words | gate_claims_auditor|caveat_population_words|analysis/claim_register.json|CLM-AOV-PARTNER | CLAIM_SUPPORT | MEDIUM | worker_analysis | CLM-AOV-PARTNER has two caveats in analysis/claim_register.json: the channel-population one and the sampling-interval one. Neither says delivered orders only or net of refunds. "
+  ],
+  "other_blockers": 2,
+  "warning_texts": [
+    "The only machine check on caveats, caveats_declared, tests whether a phrase is present and not what the sentence means, so a caveat that opens with the required phrase and then contradicts it passes; the partner completion claim did exactly that.",
+    "check_plan caveats_declared does not require the delivered-only or net-of-refunds topics for either AOV claim, even though the stage contract requires both in words, so the machine gate cannot catch that omission.",
+    "The caveat wording 'one quarter of orders in this channel' can be read as 25 per cent of the channel rather than the channel's orders in the reported quarter; a reader of the release could misread the population.",
+    "Neither completion-rate claim states in its caveats that cancelled and pending orders are in the denominator; the recount confirms they are (n equals every deduplicated in-quarter order of the channel), but only the population field implies it.",
+    "Both test p-values are stored as 0.0000000000 and rendered at four digits; the recomputed values are about 2.9e-157 (completion) and below double precision (AOV), so the release should show them as below 0.0001 rather than as a literal zero.",
+    "recompute_estimate, recompute_test and min_group_size read clean_data/orders_clean.csv rather than raw; only claims_recomputed is rooted in raw_latest. My recount from the quarantine projection of raw agrees with all of them, so the clean table introduced no divergence here."
+  ],
+  "summary": "All eight claims recompute from quarantine/orders.csv to the published figures: 44531 orders, net revenue 3023296.61, both Wilson and Student intervals, and both registered tests. The claim, metric and plan chain matches on all 84 compared fields, and every figure in R01-R05 matches the register. The step fails on caveat text. CLM-COMPLETION-PARTNER's sampling-interval caveat says the opposite of the spec: that the interval does cover a changing country mix. Neither CLM-AOV-DIRECT nor CLM-AOV-PARTNER says in its caveats that it counts delivered orders only, net of refunds. The machine gate pas",
+  "wall_seconds": 262.0,
+  "cost": {
+    "at": "2026-09-18T18:40:57.016448+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-18T18:36:37.891190+00:00",
+    "finished_at": "2026-09-18T18:40:57.016448+00:00",
+    "wall_seconds": 259.125,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 32,
+    "cached_input_tokens": 1792692,
+    "output_tokens": 27862,
+    "total_tokens": 1820586,
+    "cost_usd": 2.9127295000000006
+  }
+}

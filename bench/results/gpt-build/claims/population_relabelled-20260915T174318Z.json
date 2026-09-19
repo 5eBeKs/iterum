@@ -1,0 +1,56 @@
+{
+  "profile": "gpt-build",
+  "stage": "claims",
+  "case": "population_relabelled",
+  "error": "The headline claim says its population is all orders, while the spec and its own caveats say delivered orders.",
+  "at": "2026-09-15T17:35:57+00:00",
+  "max_v2_revision": "2a6f8dc",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "all orders",
+    "CLM-NET-REVENUE"
+  ],
+  "blocking_issues": 1,
+  "warnings": 0,
+  "checks": 9,
+  "issue_ids": [
+    "CLAIMS-POPULATION-001"
+  ],
+  "warning_texts": [],
+  "summary": "All five claim values independently recompute from raw_data/orders.csv and match the machine gate, but CLM-NET-REVENUE falsely registers its population as all in-period orders although the value was calculated only from delivered in-period orders.",
+  "wall_seconds": 436.3,
+  "cost": {
+    "at": "2026-09-15T17:43:15.522525+00:00",
+    "launcher": "codex_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-118165942806",
+    "agent_role": "gpt-audit-claims",
+    "started_at": "2026-09-15T17:36:02.496784+00:00",
+    "finished_at": "2026-09-15T17:43:15.518797+00:00",
+    "wall_seconds": 433.031,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "gpt-5.6-sol",
+    "model_used": null,
+    "input_tokens": 1946834,
+    "cached_input_tokens": null,
+    "output_tokens": 13811,
+    "total_tokens": 1960645,
+    "cost_usd": null
+  }
+}

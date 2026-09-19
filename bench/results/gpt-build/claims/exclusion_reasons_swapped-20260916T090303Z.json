@@ -1,0 +1,57 @@
+{
+  "profile": "gpt-build",
+  "stage": "claims",
+  "case": "exclusion_reasons_swapped",
+  "error": "R04 attaches each exclusion count to the other rule: 26 rows 'outside period', 1 row 'not delivered'.",
+  "at": "2026-09-16T08:57:52+00:00",
+  "max_v2_revision": "7e1d71f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R04",
+    "exclusion",
+    "swap|reason|rule",
+    "not_delivered|outside_period"
+  ],
+  "blocking_issues": 1,
+  "warnings": 0,
+  "checks": 10,
+  "issue_ids": [
+    "CLAIMS-R04-EXCLUSION-REASONS-SWAPPED"
+  ],
+  "warning_texts": [],
+  "summary": "All five registered claim values independently reproduce from raw_data/orders.csv, but analysis/answers/R04.json reverses the exclusion reasons attached to the 26 not-delivered rows and the 1 delivered row outside the period.",
+  "wall_seconds": 308.3,
+  "cost": {
+    "at": "2026-09-16T09:03:02.904071+00:00",
+    "launcher": "codex_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-c109468f4af4",
+    "agent_role": "gpt-audit-claims",
+    "started_at": "2026-09-16T08:57:56.910408+00:00",
+    "finished_at": "2026-09-16T09:03:02.904071+00:00",
+    "wall_seconds": 306.0,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "gpt-5.6-sol",
+    "model_used": null,
+    "input_tokens": 1558693,
+    "cached_input_tokens": null,
+    "output_tokens": 12462,
+    "total_tokens": 1571155,
+    "cost_usd": null
+  }
+}

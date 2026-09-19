@@ -1,0 +1,44 @@
+{
+  "profile": "glm-build",
+  "stage": "release",
+  "worker": "worker_release",
+  "kind": "worker",
+  "at": "2026-09-15T18:37:11+00:00",
+  "max_v2_revision": "1d34cf0",
+  "verdict": "PASS",
+  "stop_code": null,
+  "summary": "Release surfaces rendered by src/release/build_release.py from analysis/claim_register.json: release/report.md, release/dashboard_data.json, release/release_number_manifest.json. Local release_surface_gate run: PASS with 21 of 21 rendered numbers bound to claims (5 claims, 7 render roles), 0 issues, 0 unverified. gate_release_document run locally via run_gate.py: PASS (15 checks). Release stage test and audit/tests/test_negative_release.py both pass.",
+  "wall_seconds": 137.5,
+  "cost": {
+    "at": "2026-09-15T18:39:28.570769+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "worker_release",
+    "attempt": 1,
+    "context_id": "ctx-worker_release-a1-bbbefc6067eb",
+    "agent_role": "glm-worker",
+    "started_at": "2026-09-15T18:37:14.885771+00:00",
+    "finished_at": "2026-09-15T18:39:28.566258+00:00",
+    "wall_seconds": 133.687,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 70911,
+    "cached_input_tokens": 1422272,
+    "output_tokens": 4368,
+    "total_tokens": 1499585,
+    "cost_usd": 0.028252905000000002
+  },
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "outcome": "gate_pass",
+  "fingerprints": []
+}

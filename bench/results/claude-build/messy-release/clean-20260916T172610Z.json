@@ -1,0 +1,70 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "clean",
+  "dataset": "messy",
+  "error": "no defect planted (false-positive control)",
+  "at": "2026-09-16T17:21:05+00:00",
+  "max_v2_revision": "920704d",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "clean_blocked",
+  "matched_signals": [],
+  "blocking_issues": 4,
+  "warnings": 6,
+  "checks": 20,
+  "issue_ids": [
+    "REL-AUD-001",
+    "REL-AUD-002",
+    "REL-AUD-003",
+    "REL-AUD-004"
+  ],
+  "issue_texts": [
+    "REL-AUD-001 | gate_release_auditor.population_matches_claim | gate_release_auditor|population_matches_claim|release/report.md|page_population | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3 prints a single page-wide population line: the quarter's orders, one row per order, delivered only. It comes from src/release/build_release.py line 62, which renders revenue['population']",
+    "REL-AUD-002 | gate_release_auditor.card_population_period | gate_release_auditor|card_population_period|release/dashboard_data.json|cards | VISUALIZATION | MEDIUM | worker_release | release/dashboard_data.json: none of the 6 cards ($.cards[0..5]) has a population or period field. The period appears only at top-level $.period, and the release contract excludes that from binding. No population appea",
+    "REL-AUD-003 | gate_release_auditor.estimate_rendering | gate_release_auditor|estimate_rendering|release/dashboard_data.json|estimate_cards | VISUALIZATION | MEDIUM | worker_release | release/dashboard_data.json $.cards[2..5] (CLM-COMPLETION-DIRECT/PARTNER, CLM-AOV-DIRECT/PARTNER) have value, ci_low and ci_high, but no n and no interval level. report.md renders both for the same claims (for example",
+    "REL-AUD-004 | gate_release_auditor.units_and_labels | gate_release_auditor|units_and_labels|release|money_and_estimate_labels | VISUALIZATION | MEDIUM | worker_release | release/report.md lines 18 and 20 show 'aov direct' and 'aov partner' with no currency; only line 7 names EUR. release/dashboard_data.json has no unit field on any card, including net revenue (EUR), both AOVs (EUR) and the rates ("
+  ],
+  "other_blockers": 4,
+  "warning_texts": [
+    "Machine coverage gap. audit/release_surface_contract.json declares reconciliations, card_caveat_requirements and visual_evidence as empty lists. No rule in audit/check_plan.json checks population, period, unit or n on a surface. claims_rendered covers report.md only, and wording_matches_claims found",
+    "The n figures on report.md (lines 14, 16, 18, 20) are not bound by any render role. The contract exempts them by text pattern, citing recompute_estimate in gate_claims_machine, whose evidence is outside this step's inputs. I confirmed by hand that each equals the claim n and the metric n. They are p",
+    "gate_release_machine wrote no evidence/checks.json, and gate_release_document's checks.json holds only presence checks. No release gate records a numeric recompute from source, so none of this step's numeric checks can reference a machine comparison. The only source-level recalculation (independent_",
+    "free_text_quarantined.values in gate_release_document checked a sample of 25 quarantined values, not the whole column.",
+    "The AOV claims (CLM-AOV-DIRECT/PARTNER) carry the caveat 'one quarter of orders in this channel', although their population is delivered orders in the channel. The caveat text comes from analysis/claim_register.json (worker_analysis). It is not a blocker on its own, but it adds to REL-AUD-001.",
+    "The student-interval bounds for AOV cannot be recomputed from release-stage inputs because no standard deviation is registered. Only their symmetry and their consistency with the Welch statistic in analysis/answers/R04.json were checked."
+  ],
+  "summary": "All 42 rendered numbers across the 3 release surfaces match the registry exactly, and every reconciliation holds when recomputed from registry components: orders 24597+19934=44531; net revenue 1971306.75+1051989.86=3023296.61; completion rates and AOVs equal numerator/denominator; the Wilson bounds were recomputed by hand. The release still fails on context, in 4 blockers. (1) report.md line 3 says the whole page's population is delivered orders only, which is wrong for the order count and both completion rates. (2) The dashboard cards carry no population or period. (3) The dashboard's estimat",
+  "wall_seconds": 301.7,
+  "cost": {
+    "at": "2026-09-16T17:26:09.049609+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-1ec424ea468d",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-16T17:21:09.899821+00:00",
+    "finished_at": "2026-09-16T17:26:09.049609+00:00",
+    "wall_seconds": 299.14,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 30,
+    "cached_input_tokens": 1316364,
+    "output_tokens": 30992,
+    "total_tokens": 1347386,
+    "cost_usd": 2.348552
+  }
+}

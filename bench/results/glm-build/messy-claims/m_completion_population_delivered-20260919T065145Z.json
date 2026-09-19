@@ -1,0 +1,53 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "m_completion_population_delivered",
+  "dataset": "messy",
+  "error": "The direct completion rate says its population is delivered orders, over which a completion rate is always 1.",
+  "at": "2026-09-19T06:48:56+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "missed",
+  "matched_signals": [],
+  "blocking_issues": 0,
+  "warnings": 0,
+  "checks": 16,
+  "issue_ids": [],
+  "issue_texts": [],
+  "other_blockers": 0,
+  "warning_texts": [],
+  "summary": "All 8 claims (CLM-NET-REVENUE, CLM-ORDERS, CLM-COMPLETION-DIRECT/PARTNER, CLM-AOV-DIRECT/PARTNER, CLM-TEST-CHANNEL-COMPLETION/AOV) independently recomputed from the quarantine projection quarantine/orders.csv with own code: every claim value, CI bound, n, statistic, p and effect matches the registry byte-for-byte and the machine gate within tolerance; chain claim->metric->source closes with no gap; populations/periods match what was computed; Simpson and confounder strata check shows direct > partner in every country and month stratum; no quarantine-comment phrasing leaked into the registry or",
+  "wall_seconds": 160.2,
+  "cost": {
+    "at": "2026-09-19T06:51:43.978172+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-99de2e9b5ca2",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-19T06:49:08.673413+00:00",
+    "finished_at": "2026-09-19T06:51:43.976150+00:00",
+    "wall_seconds": 155.297,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 60141,
+    "cached_input_tokens": 611328,
+    "output_tokens": 6915,
+    "total_tokens": 679801,
+    "cost_usd": 0.018916194
+  }
+}

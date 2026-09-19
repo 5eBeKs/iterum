@@ -1,0 +1,63 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "answer_misreads_its_fact",
+  "error": "The answer to R02 calls a 47% refund rate low, fewer than one order in ten.",
+  "at": "2026-09-15T18:09:20+00:00",
+  "max_v2_revision": "d6a41ff",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R02",
+    "one order in ten",
+    "\\blow\\b",
+    "0\\.47|47 ?%"
+  ],
+  "blocking_issues": 2,
+  "warnings": 4,
+  "checks": 13,
+  "issue_ids": [
+    "CLAIMS-AUD-R02-ANSWER-MISREADS-FACT",
+    "CLAIMS-AUD-R02-UNBOUND-ROUNDED-FIGURE"
+  ],
+  "warning_texts": [
+    "analysis/answers/R02.json caveats[1] would, if carried into release/report.md, tell readers that refunds are rare when 27 of 57 paying customers in the quarter had at least one refunded order.",
+    "Nothing in the frozen check plan reads the prose of analysis/answers/*.json: questions_are_answered checks only that required fields exist and that R04's three counts match the registry, so the caveat text of R01-R03 is covered by auditor judgment alone.",
+    "The refund-rate numerator and denominator in CLM-REFUND-RATE render_values (27 and 57) are checked by the plan only for resolving to metrics refs, not against raw; they reproduce from raw here, but no deterministic rule would catch them drifting from the ratio.",
+    "metrics/calculated_metrics.json gives net_revenue a numerator field holding the gross sum 40235.02; no claim binds it today, but a surface that resolved metrics.net_revenue.numerator would show gross revenue under a net-revenue claim."
+  ],
+  "summary": "All five claims reproduce from raw_data/orders.csv (net revenue 35741.52, refund rate 0.473684 = 27/57 paying customers, PL 11181.67, DE 11032.61, CZ 13527.24), their populations and periods are the ones they were computed on, and the machine recalc is rooted only in raw. The answer to R02 misreads its own fact: its caveat treats the customer-basis rate as an order share, calls it low, and states a share of refunded orders the data contradicts (33 of 174 rows, 0.189655, not under one in ten), rounding the figure to 0.47 against display_digits 6.",
+  "wall_seconds": 264.8,
+  "cost": {
+    "at": "2026-09-15T18:13:52.567671+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-f58036111c74",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-15T18:09:35.234517+00:00",
+    "finished_at": "2026-09-15T18:13:52.567671+00:00",
+    "wall_seconds": 257.328,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 482,
+    "cached_input_tokens": 1415851,
+    "output_tokens": 17922,
+    "total_tokens": 1434255,
+    "cost_usd": 1.916533
+  }
+}

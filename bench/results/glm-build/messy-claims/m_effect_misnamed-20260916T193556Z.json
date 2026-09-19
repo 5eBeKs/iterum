@@ -1,0 +1,65 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "m_effect_misnamed",
+  "dataset": "messy",
+  "error": "The R04 test calls its effect size a proportion difference; a Welch test on order values reports Cohen's d.",
+  "at": "2026-09-16T19:31:30+00:00",
+  "max_v2_revision": "fa38876",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "effect",
+    "cohen|proportion_difference|effect_name|effect size"
+  ],
+  "blocking_issues": 1,
+  "warnings": 4,
+  "checks": 28,
+  "issue_ids": [
+    "R04-AOV-EFFECT-MISNAMED"
+  ],
+  "issue_texts": [
+    "R04-AOV-EFFECT-MISNAMED | gate_claims_auditor.effect_identity.CLM-AOV | gate_claims_auditor|effect_identity|analysis/answers/R04.json|H-CHANNEL-AOV | METRIC_DEFINITION | HIGH | worker_analysis | analysis/answers/R04.json hypothesis block: method welch_t, effect_name 'proportion_difference', effect_size '0.486900'. My recalc from quarantine/orders.csv (audit/results/gate_claims_auditor/evidence/rec"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "audit/results/gate_claims_machine/evidence/independent_claim_recalc.json lists source_paths raw_data/orders.csv while audit/check_plan.json says claims_recomputed reads raw_latest and the raw file carries the quarantined comment column; the machine gate's own claims_recomputed evidence quotes the sa",
+    "The claim register publishes no test claim, so the machine gate's hypotheses_registered/multiplicity/effect_floor/power_declared checks passed vacuously ('the register publishes no test claim'); the only published test results live in analysis/answers/R03.json and R04.json, and their method, groups,",
+    "R03 and R04 both report p_value '0.0000000000' with correction bonferroni named; the correction is declared and immaterial at this p, but the bonferroni-adjusted alpha is not restated in the answers.",
+    "Both R03 and R04 caveat lists omit the sampling-interval caveat that the estimate claims carry; the interval statements live only in the claim register caveats."
+  ],
+  "summary": "All six registered claims, their intervals and both registered test statistics reproduce independently from the quarantine projection (dedup last-revision-wins, order_month in 2026-01..2026-03, refund>=0): net_revenue 3023296.61, orders 44531, completion 0.724397/0.604746, AOV 110.64/87.27, z=26.718455, Welch t=42.699880, sign of the channel effect holds in every country and month stratum. One blocker: analysis/answers/R04.json names the H-CHANNEL-AOV effect 'proportion_difference' with effect_size 0.486900, but the method is Welch on a EUR mean; the quantity is a standardized mean difference ",
+  "wall_seconds": 259.1,
+  "cost": {
+    "at": "2026-09-16T19:35:55.548339+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-69bb1ea672df",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-16T19:31:40.095640+00:00",
+    "finished_at": "2026-09-16T19:35:55.545224+00:00",
+    "wall_seconds": 255.453,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 77674,
+    "cached_input_tokens": 418048,
+    "output_tokens": 8257,
+    "total_tokens": 506129,
+    "cost_usd": 0.017637624
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "unsupported_trend_in_prose",
+  "error": "The page says revenue grew through the quarter; no monthly figure exists in the audit.",
+  "at": "2026-09-15T18:09:53+00:00",
+  "max_v2_revision": "d6a41ff",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "grew|growth|trend|strongest month|March",
+    "unsupported|no (metric|claim|figure)"
+  ],
+  "blocking_issues": 1,
+  "warnings": 6,
+  "checks": 66,
+  "issue_ids": [
+    "REL-PROSE-UNBACKED-TREND"
+  ],
+  "warning_texts": [
+    "Both gate_release_document rules (claims_rendered, caveats_rendered) are listed in audit/check_plan.json accepted_unproven because plan proof crashed on a missing claim_register.json, so their PASS rows were never shown able to fail.",
+    "No deterministic rule in audit/check_plan.json covers reader-visible release prose that contains no digit: a trend, ranking or comparison without numbers passes both release gates, and only this auditor checks it.",
+    "gate_release_machine writes no evidence/checks.json, so its 21 number bindings in release_surface_gate.json are not indexable comparisons and cannot be cross-referenced by machine_check.",
+    "The population period ends 2025-03-30 per audit_spec, so 31 March is outside every figure while analysis/answers/R01.json and report prose call the period a quarter; the report heading shows the dates but no caveat says the last day of March is excluded.",
+    "metrics/calculated_metrics.json gives net_revenue a numerator field holding gross 40235.02 on a metric that is not a ratio; it is not rendered, but the role name misdescribes the value.",
+    "The refund-rate caveat in release/report.md line 10 and the dashboard names its basis with the identifier paying_customers rather than plain words, which is legible but reads as a code token to a business reader."
+  ],
+  "summary": "All 7 rendered number roles on report.md, dashboard_data.json and the manifest trace exactly through claim_register to calculated_metrics at registry formatting; country totals sum to net_revenue 35741.52 and 27/57 rounds to 0.473684 on the paying_customers basis; caveats are visible, the refund rate names paying customers, and there are no UNVERIFIED_CLAIM markers. FAIL: report.md line 24 publishes a within-period revenue trend and month ranking that no claim or metric backs, and neither release gate checks such prose.",
+  "wall_seconds": 300.3,
+  "cost": {
+    "at": "2026-09-15T18:15:02.556616+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-b0dc8f415661",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-15T18:10:10.886355+00:00",
+    "finished_at": "2026-09-15T18:15:02.548486+00:00",
+    "wall_seconds": 291.672,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 290,
+    "cached_input_tokens": 762720,
+    "output_tokens": 21309,
+    "total_tokens": 784319,
+    "cost_usd": 1.6159415
+  }
+}

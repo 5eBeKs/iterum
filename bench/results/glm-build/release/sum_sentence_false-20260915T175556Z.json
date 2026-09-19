@@ -1,0 +1,59 @@
+{
+  "profile": "glm-build",
+  "stage": "release",
+  "case": "sum_sentence_false",
+  "error": "The page says the country figures sum to the headline before refunds; both are net of refunds.",
+  "at": "2026-09-15T17:51:28+00:00",
+  "max_v2_revision": "2a6f8dc",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "before refunds",
+    "net of refunds",
+    "sum"
+  ],
+  "blocking_issues": 1,
+  "warnings": 2,
+  "checks": 14,
+  "issue_ids": [
+    "REL-FALSE-SUM-SENTENCE"
+  ],
+  "warning_texts": [
+    "Every release-stage numeric comparison (recompute_*, claims_recomputed, component_sum, column_identity) was executed by gates of earlier stages, not by gate_release_machine or gate_release_document, so the per-number recomputations in this result have no machine_check of this stage's gates and carry",
+    "Two gate_release_document checks are accepted_unproven in audit/check_plan.json (claims_rendered, caveats_rendered, reason FileNotFoundError during plan proving); I re-verified all 15 of their comparisons directly against both surfaces and all hold."
+  ],
+  "summary": "All 21 displayed numbers on 3 surfaces are bound, exact and correctly formatted against the registry and an independent recount from raw_data/orders.csv (net revenue 35741.52; refund rate 27/57 = 0.473684; PL 11181.67 + DE 11032.61 + CZ 13527.24 = 35741.52); all caveats including the paying-customers wording are visible to the reader and no UNVERIFIED_CLAIM marker exists. FAIL on one release-integrity blocker: report.md line 22 states 'Country figures sum to the headline before refunds are taken off.', which is false — the country figures are net of refunds and sum exactly to the headline net ",
+  "wall_seconds": 255.3,
+  "cost": {
+    "at": "2026-09-15T17:55:54.500994+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-7b3c104f8f66",
+    "agent_role": "glm-audit-release",
+    "started_at": "2026-09-15T17:51:51.698799+00:00",
+    "finished_at": "2026-09-15T17:55:54.496946+00:00",
+    "wall_seconds": 242.797,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 84024,
+    "cached_input_tokens": 400384,
+    "output_tokens": 6420,
+    "total_tokens": 493557,
+    "cost_usd": 0.01463256
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "profile": "glm-build",
+  "stage": "release",
+  "case": "unsupported_trend_in_prose",
+  "error": "The page says revenue grew through the quarter; no monthly figure exists in the audit.",
+  "at": "2026-09-15T17:48:37+00:00",
+  "max_v2_revision": "2a6f8dc",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "PASS",
+  "stop_code": null,
+  "outcome": "warned",
+  "matched_signals": [
+    "grew|growth|trend|strongest month|March",
+    "unsupported|no (metric|claim|figure)"
+  ],
+  "blocking_issues": 0,
+  "warnings": 2,
+  "checks": 16,
+  "issue_ids": [],
+  "warning_texts": [
+    "The closing sentence of release/report.md (line 24) asserts a monthly revenue trend with no claim_id and no monthly metric in metrics/calculated_metrics.json, so no machine gate ever checked it; this audit recomputed net revenue by month from raw_data/orders.csv (2025-01 = 10198.19, 2025-02 = 11891.",
+    "The machine comparisons for the five claim values were recorded by gate_claims_machine, which is outside this step's allowed inputs; my numeric verdicts rest on my own recomputation from raw_data/orders.csv (evidence/recount.py), and the surface-binding evidence I could cite directly (gate_release_m"
+  ],
+  "summary": "All 21 displayed numbers on all three release surfaces independently recomputed from raw_data/orders.csv and exact to display_digits (EUR to 0.00 diff, proportion to 0.000000); country components sum exactly to headline net_revenue 35741.52; every caveat present on both surfaces beside its number, including the paying-customers wording on CLM-REFUND-RATE; no UNVERIFIED_CLAIM; the one unregistered prose assertion (monthly trend) was recomputed by this audit and is factually true; all 15 gate_release_document comparisons reproduced with the same verdicts.",
+  "wall_seconds": 139.9,
+  "cost": {
+    "at": "2026-09-15T17:51:05.096807+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-55f8471a64b3",
+    "agent_role": "glm-audit-release",
+    "started_at": "2026-09-15T17:48:57.678361+00:00",
+    "finished_at": "2026-09-15T17:51:05.045039+00:00",
+    "wall_seconds": 127.359,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 57784,
+    "cached_input_tokens": 227840,
+    "output_tokens": 5162,
+    "total_tokens": 293053,
+    "cost_usd": 0.009617399999999998
+  }
+}

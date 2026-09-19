@@ -1,0 +1,64 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "m_dedup_rule_misstated",
+  "dataset": "messy",
+  "error": "The answer to R02 says the first revision of an order is kept; the spec and the clean stage keep the last.",
+  "at": "2026-09-16T19:14:29+00:00",
+  "max_v2_revision": "fa38876",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "first revision",
+    "last revision|latest|latest_revision_wins|dedup_rule"
+  ],
+  "blocking_issues": 1,
+  "warnings": 3,
+  "checks": 22,
+  "issue_ids": [
+    "R02-DEDUP-RULE-MISSTATED"
+  ],
+  "issue_texts": [
+    "R02-DEDUP-RULE-MISSTATED | gate_claims_auditor.dedup_rule_direction | gate_claims_auditor|caveat_declared|analysis/answers/R02.json|dedup_rule_direction | CLAIM_SUPPORT | HIGH | worker_analysis | audit/results/gate_claims_auditor/evidence/recalc.py: audit_spec.yaml declares dedup_rule: latest_revision_wins and check_plan.json's raw_latest source sets distinct_by.keep=last; my recalc keeping the LA"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The check_plan's questions_are_answered rule only verifies presence of question and facts fields, so no deterministic rule checks answer wording: this dedup misstatement was caught only by auditor recalc and reading, and similar wording faults elsewhere would be unguarded.",
+    "The machine gate's independent_claim_recalc.json lists source_paths raw_data/orders.csv even though the manifest (declared: true) means the comment column lives only in the raw file; my own recalc was run on the quarantine projection and agrees with the gate's numbers, so the discrepancy is one of d",
+    "R02's misstated caveat does not appear in analysis/claim_register.json; the register's CLM-ORDERS caveat is direction-neutral ('the export repeats an order when it is revised') and the gate's caveats_declared rule passed it, so the fault is confined to the answer file - but the answer files are what"
+  ],
+  "summary": "All six claim values, both CIs and both hypothesis statistics reproduce exactly from an independent recalc of quarantine/orders.csv under the spec rule (latest revision wins), with no Simpson reversal and no quarantined phrases in the register or answers. One blocker: analysis/answers/R02.json's caveat misstates the dedup rule as 'the first revision is kept', contradicting audit_spec.yaml's latest_revision_wins, and the first-vs-last recalc differs materially (net revenue 3010704.83 vs 3023296.61), so the misstatement changes what the reader believes the figures are.",
+  "wall_seconds": 207.8,
+  "cost": {
+    "at": "2026-09-16T19:18:02.718275+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-b5bb23d65875",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-16T19:14:38.392200+00:00",
+    "finished_at": "2026-09-16T19:18:02.714238+00:00",
+    "wall_seconds": 204.328,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 92312,
+    "cached_input_tokens": 492032,
+    "output_tokens": 7620,
+    "total_tokens": 593966,
+    "cost_usd": 0.020051256
+  }
+}

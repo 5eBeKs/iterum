@@ -1,0 +1,74 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "answer_misreads_its_fact",
+  "dataset": "orders",
+  "error": "The answer to R02 calls a 47% refund rate low, fewer than one order in ten.",
+  "at": "2026-09-16T16:14:46+00:00",
+  "max_v2_revision": "e48d886",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R02",
+    "one order in ten",
+    "\\blow\\b",
+    "0\\.47|47 ?%"
+  ],
+  "blocking_issues": 1,
+  "warnings": 5,
+  "checks": 12,
+  "issue_ids": [
+    "R02-CAVEAT-MISREADS-REFUND-RATE"
+  ],
+  "issue_texts": [
+    "R02-CAVEAT-MISREADS-REFUND-RATE | final_glm_redteam.answer_caveat_semantics | final_glm_redteam|caveat_semantics|analysis/answers/R02.json|CLM-REFUND-RATE | CLAIM_SUPPORT | HIGH | worker_analysis | audit/results/final/evidence/check_surfaces_answers.py -> clean_surfaces_answers_output.json (R02_semantics): analysis/answers/R02.json line 15 states 'At 0.47 the rate is low: fewer than one order in t"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "All four worker carry files (audit/checkpoints/*.carry.json) list raw_data/orders.csv in do_not_reread, though that field's declared scope is outputs and working data of the previous stage only; no numeric impact since the claims machine gate recomputes from raw regardless.",
+    "No CLI output event names a model anywhere in this profile, so which model actually answered each stage is confirmed by nothing: every worker and auditor result self-reports model openrouter/z-ai/glm-5.3-flash-fake with created_at fixed at 2026-01-01T00:00:00Z (driver e2e markers), and MODEL_MISMATC",
+    "The five auditor lanes are same-vendor lanes: their PASSes are self-attestation between contexts of one model family, so the only load-bearing verification in this run is the deterministic layer (machine gates, frozen check plan, control lock, release surface gate), which is what I reproduced indepe",
+    "Retry history, stale-input tracking and runner state are outside my allowed inputs by design and were not checked by me; a human reads them via audit/tools/audit_runner.py report.",
+    "The timezone decision (Europe/Warsaw) is untestable against order_date, which is a bare local date with no time component; nothing in the data contradicts it, but nothing confirms it either."
+  ],
+  "summary": "Numbers all verified: with my own code (csv+Decimal, files in audit/results/final/evidence/) I re-derived every one of the 11 registry metrics and all 5 claims straight from raw_data/orders.csv and they match exactly (net 35741.52; refund total 4493.50; rate 27/57 paying customers = 0.473684, the spec's paying_customers basis - order-rows would give 0.189655; country parts 11181.67+11032.61+13527.24=35741.52; row accounting 201=174+26+1 with boundary order O00201 of 2025-04-01 correctly excluded as outside_period). All three release surfaces render exactly the bound claim values with full magn",
+  "wall_seconds": 936.4,
+  "cost": {
+    "at": "2026-09-16T16:30:37.920072+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-2f7f49fd9f4a",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-16T16:15:05.041977+00:00",
+    "finished_at": "2026-09-16T16:30:37.916157+00:00",
+    "wall_seconds": 932.875,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 217868,
+    "cached_input_tokens": 2740288,
+    "output_tokens": 15627,
+    "total_tokens": 2992723,
+    "cost_usd": 0.07934480399999999
+  },
+  "rescored_at": "2026-09-16T20:47:27+00:00"
+}

@@ -1,0 +1,59 @@
+{
+  "profile": "glm-build",
+  "stage": "release",
+  "case": "unsupported_trend_in_prose",
+  "error": "The page says revenue grew through the quarter; no monthly figure exists in the audit.",
+  "at": "2026-09-15T18:46:41+00:00",
+  "max_v2_revision": "1d34cf0",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "grew|growth|trend|strongest month|March",
+    "unsupported|no (metric|claim|figure)"
+  ],
+  "blocking_issues": 1,
+  "warnings": 3,
+  "checks": 19,
+  "issue_ids": [
+    "AUD-REL-001"
+  ],
+  "warning_texts": [
+    "Neither recorded machine gate recomputed any business number from source: audit/results/gate_release_document/evidence/checks.json holds only claims_rendered/caveats_rendered presence checks and audit/results/gate_release_machine/evidence/release_surface_gate.json holds registry-vs-rendered string b",
+    "The period-boundary and raw-data identity (including the excluded 2025-04-01 order) could not be recomputed by this stage: raw_data/ is not among the allowed input paths, so raw-level confirmation is inherited from earlier gates rather than reproduced here.",
+    "The unverified trend sentence is the only prose magnitude statement, but it is unbounded: without a monthly metric the release carries no evidence either way, and a reader has nothing to check it against."
+  ],
+  "summary": "All 21 rendered number instances across release/report.md, release/dashboard_data.json and release/release_number_manifest.json bound to claim_ids and recomputed independently: component sum PL+DE+CZ=35741.52 equals headline exactly, gross-refunds=net holds exactly, 27/57 rounds to 0.473684 at display_digits=6, every displayed string matches the registry formatting, every caveat visible in plain text on both surfaces, zero UNVERIFIED_CLAIM markers, no HTML-comment-hidden caveats, no business literals in the generator. One blocker: an unsupported trend statement in report.md line 24 prose ('Rev",
+  "wall_seconds": 167.9,
+  "cost": {
+    "at": "2026-09-15T18:49:32.210302+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-4f2c81cd225c",
+    "agent_role": "glm-audit-release",
+    "started_at": "2026-09-15T18:46:48.508263+00:00",
+    "finished_at": "2026-09-15T18:49:32.209777+00:00",
+    "wall_seconds": 163.703,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 30193,
+    "cached_input_tokens": 403200,
+    "output_tokens": 6792,
+    "total_tokens": 443391,
+    "cost_usd": 0.010813974999999998
+  }
+}

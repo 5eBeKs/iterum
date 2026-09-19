@@ -1,0 +1,97 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "m_population_line_all_rows",
+  "dataset": "messy",
+  "error": "The page's population line says every export row; the figures are over one row per order after deduplication.",
+  "at": "2026-09-19T08:17:17+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "every row|export row|revision|dedup|one row per order"
+  ],
+  "blocking_issues": 6,
+  "warnings": 21,
+  "checks": 21,
+  "issue_ids": [
+    "RT-POPULATION-LINE",
+    "RT-DASHBOARD-ESTIMATE-N",
+    "RT-CARRY-WORKER-CLEAN",
+    "RT-CARRY-WORKER-METRICS",
+    "RT-CARRY-WORKER-ANALYSIS",
+    "RT-CARRY-WORKER-RELEASE"
+  ],
+  "issue_texts": [
+    "RT-POPULATION-LINE | final_claude_redteam.population_statement_matches_claims | final_claude_redteam|population_statement_matches_claims|release/report.md|population_line | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3 (visible text in evidence/report_visible.txt) says: 'Population: every row of the export inside the quarter, delivered only.' Recount in evidence/recalc_outpu",
+    "RT-DASHBOARD-ESTIMATE-N | final_claude_redteam.estimate_rendered_with_n | final_claude_redteam|estimate_rendered_with_n|release/dashboard_data.json|estimate_cards | RELEASE_INTEGRITY | LOW | worker_release | In release/dashboard_data.json, cards[2..5] (CLM-COMPLETION-DIRECT, CLM-COMPLETION-PARTNER, CLM-AOV-DIRECT, CLM-AOV-PARTNER) carry value, ci_low and ci_high but no n field (evidence/surface_an",
+    "RT-CARRY-WORKER-CLEAN | final_claude_redteam.carry_facts_match_output | final_claude_redteam|carry_facts_match_output|audit/checkpoints/worker_clean.carry.json|period_grain_population | OTHER | MEDIUM | worker_clean | In audit/checkpoints/worker_clean.carry.json, context_id and attempt match audit/results/worker_clean/result.json, but its facts contradict what the stage produced. Carry period 2025",
+    "RT-CARRY-WORKER-METRICS | final_claude_redteam.carry_facts_match_output | final_claude_redteam|carry_facts_match_output|audit/checkpoints/worker_metrics.carry.json|period_grain_population | OTHER | MEDIUM | worker_metrics | In audit/checkpoints/worker_metrics.carry.json, context_id and attempt match audit/results/worker_metrics/result.json. Its content is identical to the worker_clean carry: perio",
+    "RT-CARRY-WORKER-ANALYSIS | final_claude_redteam.carry_facts_match_output | final_claude_redteam|carry_facts_match_output|audit/checkpoints/worker_analysis.carry.json|period_grain_population | OTHER | MEDIUM | worker_analysis | In audit/checkpoints/worker_analysis.carry.json, context_id and attempt match audit/results/worker_analysis/result.json. The carry says period 2025-01-01..2025-03-30 and pop",
+    "RT-CARRY-WORKER-RELEASE | final_claude_redteam.carry_facts_match_output | final_claude_redteam|carry_facts_match_output|audit/checkpoints/worker_release.carry.json|period_grain_population | OTHER | MEDIUM | worker_release | In audit/checkpoints/worker_release.carry.json, context_id and attempt match audit/results/worker_release/result.json. Its period is 2025-01-01..2025-03-30, while release/repor"
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "Single-vendor profile: the architect, the four workers, the five auditors and this red team are all claude-opus-5, so a same-family blind spot would sit on both sides of every LLM check. Only the deterministic layer (machine gates, the frozen check_plan, the control lock and the release surface gate",
+    "Writes over raw sources and frozen machinery were closed only by permissions.deny for edit tools, not for the shell, so a changed raw file would be caught by the control lock after the fact, not prevented.",
+    "The LLM stage attestations are placeholders, not evidence: all 4 worker results and 5 auditor results carry a 'driver e2e' summary and created_at 2026-01-01T00:00:00Z, which is earlier than the analysis plan's registered_at 2026-04-02 and this run's dispatch 2026-09-19.",
+    "Seven of those results (the 4 workers, gate0_semantic and gate_release_auditor) report a 'recomputed' value of 0.473684, which appears in no registry, claim or release file.",
+    "The gate0_semantic, gate_clean_auditor and gate_release_auditor evidence notes contain no evidence at all, and the gate_metrics_auditor and gate_claims_auditor checks compare the registry with itself, so every published number here rests on the machine gates and this red team's recount alone.",
+    "The report's population sentence sits outside every machine rule: release_surface_gate binds only digits and wording_matches_claims checked only significance wording, so a wrong population, period or grain statement without digits can reach the reader with every gate green.",
+    "No dashboard card carries a population field, and the AOV lines and cards (report lines 18 and 20, dashboard cards 4 and 5) say only 'orders in this channel' although their population is delivered orders only (n 17818 and 12055 of 24597 and 19934), so fixing line 3 must also put 'delivered orders on",
+    "The shipping column's meaning looks doubtful, and only the unpublished shipping_total (37792722.50 EUR) moves with it: the readable cells have a median of 901.14 against a median gross of 108.31, shipping exceeds the order's gross on 94 per cent of orders, and plain-dot, comma-locale and EUR-suffixe",
+    "refund_sign_policy excludes 10 in-quarter orders (8 delivered, 9 of them direct): keeping them as written would add 10 orders and 1290.57 EUR of net revenue, and reading their refund sign as flipped would add 645.29 EUR, so the published orders, net revenue and direct completion figures depend on th",
+    "dedup_rule latest_revision_wins is supported by the data: for all 917 repeated orders the last row in the file is also the latest updated_at, and only status changes between revisions (126 orders); taking the first revision instead would move net revenue to 3010704.83 (-12591.78) and completion to 0",
+    "date_input_formats month-first is supported: reading the 6852 slashed dates month-first agrees with order_month on every row, day-first would disagree on 6621, and because the period is taken on order_month no published figure depends on the date parse.",
+    "Timezone Europe/Warsaw cannot be fully verified: none of the 4471 ISO-8601 UTC timestamps on current revisions changes calendar date when moved to Warsaw time, but the other three notations carry no time and order_month is taken as exported, so the exporter's own day boundary is unchecked.",
+    "The analysis plan does not register which Cohen's d the AOV test reports: the register uses the pooled weighted SD (0.4869), while the average-variance form often paired with Welch gives 0.4950; the sign and significance are unaffected.",
+    "Both p values are rendered as 0.0000 (the completion test's p is about 3e-157 and the Welch p underflows double precision), which a reader can take for exactly zero; 'p < 0.0001' would say what the data supports.",
+    "The interval caveats are right in principle, and there is no visible mix shift behind them this quarter: country shares are near one third each in both channels and monthly completion stays between 0.719 and 0.732 for direct and between 0.595 and 0.616 for partner.",
+    "quarantine/manifest.json stores the PII hashing salt in plain text beside the hashed customer ids, and pii_minimised checks only that values look hashed, so anyone with a candidate list of customer ids can re-derive the mapping.",
+    "Carry schema conformance could not be verified because audit/schemas/carry.schema.json is not among this step's inputs; each carry holds step_id and next_stage_hints besides the contract's listed fields, and the runner accepted all four.",
+    "No audit/decisions/*.json exists and the handoff's rulings list is empty, so no human ruling was there to check; all five entries in human_decisions.yaml are RESOLVED and are assessed in the warnings above.",
+    "The handoff carries no drift_since_review, but its absence does not prove the stage code's assumptions hold on this export.",
+    "The check plan leaves customer_id, order_date and country unchecked against the source (values_preserved has no rename mapping), and the release contract excludes the printed n values from the release gate; this red team verified both (0 differences, and all four n equal the claims and the recount),",
+    "Not established by this step: the export's control totals against the client system log, the source profile and questions.md are outside this step's inputs, so completeness of the export against the client system and the exact wording of the five questions rest on gate0_machine and gate_claims_machi"
+  ],
+  "summary": "FAIL. Every published figure is correct: my own stdlib recount from the quarantine projection reproduces all 21 registry metrics, all 8 claims, every n and the clean table row for row (0 differences over 44531 orders), and all 60 rendered numbers on the three release surfaces are bound. The release still misstates what those figures are about. Line 3 of release/report.md tells the reader the population is every export row in the quarter, delivered only. In fact the figures cover 44531 deduplicated orders of all statuses, with cancelled and pending orders in the completion-rate denominators. Un",
+  "wall_seconds": 708.6,
+  "cost": {
+    "at": "2026-09-19T08:29:14.483498+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-4b16f125bb3c",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-19T08:17:29.045927+00:00",
+    "finished_at": "2026-09-19T08:29:14.483498+00:00",
+    "wall_seconds": 705.438,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 60,
+    "cached_input_tokens": 4741545,
+    "output_tokens": 71958,
+    "total_tokens": 4813563,
+    "cost_usd": 6.2857009999999995
+  }
+}

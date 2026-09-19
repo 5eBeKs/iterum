@@ -1,0 +1,59 @@
+{
+  "profile": "grok-build",
+  "stage": "claims",
+  "case": "question_restated_narrower",
+  "error": "R02 is restated without the half that asks on which basis the rate is taken.",
+  "at": "2026-09-15T19:25:22+00:00",
+  "max_v2_revision": "1d34cf0",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R02",
+    "basis",
+    "restat|narrow|half|question"
+  ],
+  "blocking_issues": 1,
+  "warnings": 2,
+  "checks": 16,
+  "issue_ids": [
+    "R02-QUESTION-RESTATED-NARROWER"
+  ],
+  "warning_texts": [
+    "check_plan questions_are_answered does not compare an answer's restated question text to raw_data/questions.md, which is how a narrower restatement of R02 passed the machine gate.",
+    "analysis/answers/R01.json restates the brief without the delivered-inside-period clause; the bound claim CLM-NET-REVENUE still carries that population."
+  ],
+  "summary": "Independent raw recalc matches all five claims (net 35741.52 EUR, refund rate 0.473684 on 27/57 paying customers, PL/DE/CZ 11181.67/11032.61/13527.24). FAIL because analysis/answers/R02.json restates brief R02 more narrowly and drops the basis the question asked.",
+  "wall_seconds": 430.1,
+  "cost": {
+    "at": "2026-09-15T19:32:37.289698+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-d44388b3d816",
+    "agent_role": "grok-audit-claims",
+    "started_at": "2026-09-15T19:25:32.461658+00:00",
+    "finished_at": "2026-09-15T19:32:37.289698+00:00",
+    "wall_seconds": 424.828,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 174834,
+    "cached_input_tokens": 1926144,
+    "output_tokens": 27534,
+    "total_tokens": 2128512,
+    "cost_usd": 0.50250096
+  }
+}

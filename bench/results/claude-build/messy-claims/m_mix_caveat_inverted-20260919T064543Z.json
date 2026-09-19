@@ -1,0 +1,70 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "m_mix_caveat_inverted",
+  "dataset": "messy",
+  "error": "The partner completion rate's caveat says its interval also covers a change in the channel's country mix.",
+  "at": "2026-09-19T06:41:04+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "mix of countries|country mix",
+    "also covers|covers a channel",
+    "CLM-COMPLETION-PARTNER"
+  ],
+  "blocking_issues": 2,
+  "warnings": 6,
+  "checks": 42,
+  "issue_ids": [
+    "CLAIMS-CAVEAT-INVERTED-COMPLETION-PARTNER",
+    "CLAIMS-AOV-CAVEATS-MISSING-POPULATION"
+  ],
+  "issue_texts": [
+    "CLAIMS-CAVEAT-INVERTED-COMPLETION-PARTNER | gate_claims_auditor.caveat_semantics.CLM-COMPLETION-PARTNER | gate_claims_auditor|caveat_semantics|analysis/claim_register.json|CLM-COMPLETION-PARTNER | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/claim_register.json, claim CLM-COMPLETION-PARTNER, caveats[1]: the caveat keeps the required phrase 'the interval is the sampling interval only' but then",
+    "CLAIMS-AOV-CAVEATS-MISSING-POPULATION | gate_claims_auditor.caveat_population.CLM-AOV | gate_claims_auditor|caveat_population|analysis/claim_register.json|CLM-AOV-* | CLAIM_SUPPORT | MEDIUM | worker_analysis | analysis/claim_register.json, claims CLM-AOV-DIRECT and CLM-AOV-PARTNER: the caveats are only 'one quarter of orders in this channel' plus the sampling-interval sentence. The stage prompt ad"
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "CLM-COMPLETION-DIRECT and CLM-COMPLETION-PARTNER are computed with cancelled and pending orders in the denominator (direct 3322 cancelled + 3457 pending of 24597; partner 3845 + 4034 of 19934), but no caveat tells the reader so; the release surface would benefit from saying it.",
+    "Both test claims record alpha 0.05 with correction bonferroni but never show the per-test alpha of 0.025 that the correction implies; with p below 1e-10 the conclusion does not change, but the correction is named rather than shown as applied.",
+    "The hypothesis blocks in analysis/answers/R03.json and R04.json carry method, alpha, correction and n_per_group but not the group names from the plan; the direct-first order is recoverable only from the claim caveat and n_per_group.",
+    "The machine gate's caveats_declared rule matches fixed phrases, not meaning, so a caveat that keeps the phrase and inverts the sentence passes; the partner completion caveat is exactly that case, and the rule cannot catch it on a retry either.",
+    "recompute_estimate, recompute_test and min_group_size read clean_data/orders_clean.csv, not raw; only claims_recomputed (six point values, source raw_data/orders.csv via raw_latest) goes back to the export. My recomputation from quarantine/orders.csv agrees with all of them, so the clean table intro",
+    "The plan assumption that neither channel changed how it books orders during the quarter cannot be checked from the data; month-by-month completion and AOV keep the same direction and similar size in January, February and March."
+  ],
+  "summary": "All 8 claims recompute exactly from quarantine/orders.csv (last revision per order_id, Q1 by order_month, negative refunds excluded; 44531 orders, net revenue 3023296.61 EUR), and every claim value, bound, n, statistic and effect matches its metric and the gate's recomputation. Plan, method, alpha and correction match audit/analysis_plan.json. The country and month breakdowns keep the sign of both effects, so there is no Simpson reversal. The stage still fails on the wording of the claims. CLM-COMPLETION-PARTNER has an inverted caveat: it says the sampling interval also covers a channel whose ",
+  "wall_seconds": 270.1,
+  "cost": {
+    "at": "2026-09-19T06:45:42.007684+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-19T06:41:15.442733+00:00",
+    "finished_at": "2026-09-19T06:45:42.007684+00:00",
+    "wall_seconds": 266.562,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 46,
+    "cached_input_tokens": 2705936,
+    "output_tokens": 26938,
+    "total_tokens": 2732920,
+    "cost_usd": 3.3030110000000006
+  }
+}

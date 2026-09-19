@@ -1,0 +1,59 @@
+{
+  "profile": "grok-build",
+  "stage": "claims",
+  "case": "answer_misreads_its_fact",
+  "error": "The answer to R02 calls a 47% refund rate low, fewer than one order in ten.",
+  "at": "2026-09-15T18:52:51+00:00",
+  "max_v2_revision": "1d34cf0",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R02",
+    "\\blow\\b",
+    "0\\.47|47 ?%"
+  ],
+  "blocking_issues": 1,
+  "warnings": 2,
+  "checks": 18,
+  "issue_ids": [
+    "R02-ANSWER-MISREADS-FACT"
+  ],
+  "warning_texts": [
+    "The frozen check plan's questions_are_answered rule only requires that R01-R04 files exist with question and facts, and it numerically compares only metric_id facts on R04, so answer caveats and claim_id facts are unchecked by the machine gate.",
+    "R01, R02 and R03 facts cite claim_id rather than metric_id, so figure_problems never compared those stated values with the metrics registry; they happen to match the independent raw recalc."
+  ],
+  "summary": "Five claims recompute from raw_data/orders.csv (net 35741.52 EUR; refund rate 27/57 paying customers = 0.473684; PL 11181.67, DE 11032.61, CZ 13527.24, sum 35741.52). analysis/answers/R02.json caveats[1] misreads 0.473684 as a low order-row rate below one in ten.",
+  "wall_seconds": 520.4,
+  "cost": {
+    "at": "2026-09-15T19:01:35.198390+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-0eb61f7aeb91",
+    "agent_role": "grok-audit-claims",
+    "started_at": "2026-09-15T18:52:57.878101+00:00",
+    "finished_at": "2026-09-15T19:01:35.198390+00:00",
+    "wall_seconds": 517.312,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 227047,
+    "cached_input_tokens": 1977472,
+    "output_tokens": 28180,
+    "total_tokens": 2232699,
+    "cost_usd": 0.5480494
+  }
+}

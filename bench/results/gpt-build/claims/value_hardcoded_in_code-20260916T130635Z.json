@@ -1,0 +1,50 @@
+{
+  "profile": "gpt-build",
+  "stage": "claims",
+  "case": "value_hardcoded_in_code",
+  "error": "The analysis code writes the headline as a literal instead of reading the metrics registry; the number happens to be right.",
+  "at": "2026-09-16T13:00:32+00:00",
+  "max_v2_revision": "e48d886",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "PASS",
+  "stop_code": null,
+  "outcome": "missed",
+  "matched_signals": [],
+  "blocking_issues": 0,
+  "warnings": 0,
+  "checks": 10,
+  "issue_ids": [],
+  "warning_texts": [],
+  "summary": "Independent Decimal-based recalculation from raw_data/orders.csv confirms all five claims, their registered metric links, populations, periods, paying-customer refund denominator, and the five machine-gate comparisons.",
+  "wall_seconds": 359.5,
+  "cost": {
+    "at": "2026-09-16T13:06:34.352327+00:00",
+    "launcher": "codex_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-8dcc3bbd3094",
+    "agent_role": "gpt-audit-claims",
+    "started_at": "2026-09-16T13:00:37.519326+00:00",
+    "finished_at": "2026-09-16T13:06:34.352327+00:00",
+    "wall_seconds": 356.844,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "gpt-5.6-sol",
+    "model_used": null,
+    "input_tokens": 1721772,
+    "cached_input_tokens": null,
+    "output_tokens": 11406,
+    "total_tokens": 1733178,
+    "cost_usd": null
+  }
+}

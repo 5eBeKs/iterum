@@ -1,0 +1,66 @@
+{
+  "profile": "grok-build",
+  "stage": "claims",
+  "case": "m_effect_misnamed",
+  "dataset": "messy",
+  "error": "The R04 test calls its effect size a proportion difference; a Welch test on order values reports Cohen's d.",
+  "at": "2026-09-19T07:16:19+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "effect",
+    "cohen|proportion_difference|effect_name|effect size"
+  ],
+  "blocking_issues": 1,
+  "warnings": 5,
+  "checks": 43,
+  "issue_ids": [
+    "EFFECT-NAME-AOV"
+  ],
+  "issue_texts": [
+    "EFFECT-NAME-AOV | gate_claims_auditor.effect_name.CLM-TEST-CHANNEL-AOV | gate_claims_auditor|effect_name|analysis/answers/R04.json|CLM-TEST-CHANNEL-AOV | CLAIM_SUPPORT | CRITICAL | worker_analysis | analysis/answers/R04.json hypothesis.effect_name is proportion_difference for claim CLM-TEST-CHANNEL-AOV / H-CHANNEL-AOV. metrics/calculated_metrics.json channel_aov_test_effect.unit and analysis/claim"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "CLM-AOV-DIRECT and CLM-AOV-PARTNER caveats do not use the words net of refunds or delivered orders only; their population fields name delivered, and the frozen check_plan required topics for those claims are channel-population and sampling-interval-only.",
+    "CLM-COMPLETION-DIRECT and CLM-COMPLETION-PARTNER caveats do not name cancelled and pending as remaining in the denominator; the independent recount found 7167 cancelled and 7491 pending inside the 44531-order quarter, and both channel rates use the full channel as denominator.",
+    "CLM-TEST-CHANNEL-AOV population text omits the delivered-only filter that the Welch test, n_per_group 17818 and 12055, and audit/analysis_plan.json assumptions actually used.",
+    "analysis/answers/R05.json carries a percentage in a caveat string; a panel scanner treats a bare figure in a caveat as unbound.",
+    "gate_claims_machine does not inspect analysis/answers hypothesis.effect_name, so the R04 misname sat beside a PASS claims machine gate."
+  ],
+  "summary": "Eight registered claims recompute from quarantine/orders.csv and bind byte-for-byte to metrics, but analysis/answers/R04.json names the H-CHANNEL-AOV effect proportion_difference while the Welch statistic is Cohen d 0.4869 (mean gap 23.37 EUR).",
+  "wall_seconds": 630.6,
+  "cost": {
+    "at": "2026-09-19T07:26:57.723043+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-ad463d39b9a2",
+    "agent_role": "grok-audit-claims",
+    "started_at": "2026-09-19T07:16:30.216116+00:00",
+    "finished_at": "2026-09-19T07:26:57.723043+00:00",
+    "wall_seconds": 627.5,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 166045,
+    "cached_input_tokens": 2710400,
+    "output_tokens": 39376,
+    "total_tokens": 2915821,
+    "cost_usd": 0.65400564
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "profile": "glm-build",
+  "stage": "release",
+  "case": "clean",
+  "error": "no defect planted (false-positive control)",
+  "at": "2026-09-15T18:23:50+00:00",
+  "max_v2_revision": "1d34cf0",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "PASS",
+  "stop_code": null,
+  "outcome": "clean_pass",
+  "matched_signals": [],
+  "blocking_issues": 0,
+  "warnings": 1,
+  "checks": 14,
+  "issue_ids": [],
+  "warning_texts": [
+    "The gate_release_machine stage left no evidence/checks.json, only release_surface_gate.json whose summary counters (21 numbers bound, 5 claims) are not recorded comparisons, so no release-stage machine comparison exists for the numeric bindings themselves; I recomputed all 21 bindings independently "
+  ],
+  "summary": "All 13 displayed business numbers (7 report.md, 5 dashboard cards + num/denom, 7 manifest) independently recomputed from analysis/claim_register.json and metrics/calculated_metrics.json: every rendered string matches its claim's value, unit, tolerance and display_digits (EUR 2 digits with thousands separator, proportion 6 digits, counts 0); refund rate recomputed from 27/57 = 0.4736842105 within 1e-6; PL+DE+CZ = 35,741.52 equals the headline exactly and the sum is visible to the reader in report.md:22; row accounting 201 = 174 + 26 + 1 holds; every claim's population, period and caveats are vi",
+  "wall_seconds": 106.6,
+  "cost": {
+    "at": "2026-09-15T18:25:38.970857+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-785bf6fcb18a",
+    "agent_role": "glm-audit-release",
+    "started_at": "2026-09-15T18:23:56.481631+00:00",
+    "finished_at": "2026-09-15T18:25:38.968860+00:00",
+    "wall_seconds": 102.5,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 41110,
+    "cached_input_tokens": 278784,
+    "output_tokens": 5608,
+    "total_tokens": 326917,
+    "cost_usd": 0.00902076
+  }
+}

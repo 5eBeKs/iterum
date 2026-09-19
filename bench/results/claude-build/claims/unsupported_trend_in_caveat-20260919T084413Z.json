@@ -1,0 +1,65 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "unsupported_trend_in_caveat",
+  "dataset": "orders",
+  "error": "A caveat asserts growth against a previous quarter no metric computes.",
+  "at": "2026-09-19T08:42:12+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "previous quarter",
+    "12 ?%",
+    "trend|growth|grew|unsupported|no metric"
+  ],
+  "blocking_issues": 1,
+  "warnings": 3,
+  "checks": 14,
+  "issue_ids": [
+    "CLAIMS-AUD-UNSUPPORTED-TREND-NET-REVENUE"
+  ],
+  "issue_texts": [
+    "CLAIMS-AUD-UNSUPPORTED-TREND-NET-REVENUE | gate_claims_auditor.unsupported_trend_caveat | gate_claims_auditor|unsupported_trend_caveat|analysis/claim_register.json|CLM-NET-REVENUE | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/claim_register.json, CLM-NET-REVENUE caveats[3] states a 12% change against the previous quarter. evidence/recalc.py over raw_data/orders.csv finds min order_date 2025-"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The reported period ends on 2025-03-30 as the spec states, yet metrics/calculated_metrics.json labels it 2025-Q1-delivered; no raw row is dated 2025-03-31, so no figure changes, but a reader may take the label as the full calendar quarter.",
+    "No rule in audit/check_plan.json inspects caveat text for claims beyond the required topics, so an unsupported comparison written into a caveat passes every machine gate; auditor judgment is the only check there.",
+    "The refund rate on the paying-customer basis (0.473684) is about 2.5 times the order-row reading (0.189655 = 33/174); the claim states its basis in words, and any surface that prints it without that caveat would mislead."
+  ],
+  "summary": "All five registered claim values match an independent recalculation from raw_data/orders.csv (net revenue 35741.52 EUR, refund rate 0.473684 on 27 of 57 paying customers, PL/DE/CZ 11181.67/11032.61/13527.24 summing to the headline), and the populations, periods and refund basis are stated correctly. One blocker: CLM-NET-REVENUE carries a quarter-over-quarter growth figure in its caveats that has no metric, no claim binding and no data behind it, because the export holds no order dated before 2025-01-01.",
+  "wall_seconds": 117.1,
+  "cost": {
+    "at": "2026-09-19T08:44:12.389605+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-f58036111c74",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-19T08:42:18.644633+00:00",
+    "finished_at": "2026-09-19T08:44:12.385588+00:00",
+    "wall_seconds": 113.75,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 30,
+    "cached_input_tokens": 1061513,
+    "output_tokens": 12717,
+    "total_tokens": 1074260,
+    "cost_usd": 1.535482
+  }
+}

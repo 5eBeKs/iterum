@@ -1,0 +1,79 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "sum_sentence_false",
+  "dataset": "orders",
+  "error": "The page says the country figures sum to the headline before refunds; both are net of refunds.",
+  "at": "2026-09-16T16:40:27+00:00",
+  "max_v2_revision": "05bbc25",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "before refunds",
+    "net of refunds",
+    "sum"
+  ],
+  "blocking_issues": 1,
+  "warnings": 11,
+  "checks": 21,
+  "issue_ids": [
+    "FINAL-REPORT-COUNTRY-SUM-SENTENCE-FALSE"
+  ],
+  "issue_texts": [
+    "FINAL-REPORT-COUNTRY-SUM-SENTENCE-FALSE | final_claude_redteam.reconciliation_prose_matches_registry | final_claude_redteam|reconciliation_prose_matches_registry|release/report.md|REC-COUNTRY-SUM | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 22, read as rendered text, says the country figures sum to the headline before refunds are taken off. Recomputed from raw (audit/result"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "Every intermediate auditor result (gate0_semantic, gate_clean_auditor, gate_metrics_auditor, gate_claims_auditor, gate_release_auditor) has a placeholder summary and a notes.json containing no evidence, so the release was verified in substance only by the machine gates and this red team, and gate_re",
+    "All four worker results and their carries are identical boilerplate dated 2026-01-01T00:00:00Z, each with one check reporting the refund rate 0.473684 as independently recomputed, even worker_clean, which produces no rate; these checks are not evidence that any stage did its work.",
+    "Every carry's populations.definition says only status=delivered and drops the period filter that worker_clean actually applied: O00201 (delivered, 2025-04-01, 999.99 EUR) is excluded, and no carry records that the country figures are net and sum to the net headline, which is the caveat lost at relea",
+    "check_plan.json lists gate_release_document's claims_rendered and caveats_rendered as accepted_unproven because the proof run failed with FileNotFoundError, yet gate0_machine plan_proven reports 0 accepted unproven: the only two release-document rules were never shown to fire, and the two records di",
+    "No deterministic rule reads release prose that carries no number, so every sentence of report.md beyond its bound figures and caveat strings is checked only by auditor judgment, and with placeholder auditors that unchecked surface is larger than one final stage can safely cover; this run's defect si",
+    "release_surface_gate.json lists the 21 bound numbers but has no section recording REC-COUNTRY-SUM, REC-REFUND-RATE or the generator-literal scan of src/release/build_release.py, so the evidence does not show those parts ran; my recomputation confirms both reconciliations hold numerically.",
+    "metrics/calculated_metrics.json stores the gross sum 40235.02 as net_revenue.numerator on a metric that is not a ratio: it is never rendered, but it is a gross figure filed under the net headline's id, and it is the very pre-refund total the false sentence gestures at.",
+    "Of the RESOLVED rulings, refund_rate_basis=paying_customers is the one the data makes most doubtful: 47 of 57 customers placed several orders and 25 of the 27 refunded customers had a refund on only one of them, so the published refund rate 0.473684 would read 0.189655 (33 of 174 order rows) on an o",
+    "revenue_recognition=net_of_refunds cannot be tested against this export, which has no refund date: all 4,493.50 EUR of refunds are netted against the order's own period, including 1,366.04 EUR on March orders that may have been refunded after the quarter closed, and that would move net revenue 35,74",
+    "timezone_for_dates=Europe/Warsaw moves no number on this data because order_date carries no time component, so the ruling is unverifiable here rather than confirmed.",
+    "The spec period ends 2025-03-30, but the population is described as the reported quarter and the registry names it 2025-Q1-delivered; no raw row is dated 2025-03-31, so no number moves on this export, but the label and the boundary disagree by one day."
+  ],
+  "summary": "FAIL on one material blocker. Every published number checks out: all 11 registry metrics, 5 claims and the 14 figures shown in report.md and dashboard_data.json match an independent recount from raw_data/orders.csv (net revenue 35,741.52; PL 11,181.67 + DE 11,032.61 + CZ 13,527.24; refund rate 27/57 = 0.473684; 201 = 174 + 26 + 1 rows). The problem is one sentence. release/report.md line 22 tells the reader the country figures sum to the headline before refunds are taken off. That is false: they sum to the net headline, and the gross total before refunds is 40,235.02. No machine gate reads num",
+  "wall_seconds": 313.5,
+  "cost": {
+    "at": "2026-09-16T16:45:47.828092+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-0cdb94b85940",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-16T16:40:36.893304+00:00",
+    "finished_at": "2026-09-16T16:45:47.822653+00:00",
+    "wall_seconds": 310.937,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 48,
+    "cached_input_tokens": 2685484,
+    "output_tokens": 36017,
+    "total_tokens": 2721549,
+    "cost_usd": 3.5033160000000003
+  },
+  "rescored_at": "2026-09-16T20:47:27+00:00"
+}

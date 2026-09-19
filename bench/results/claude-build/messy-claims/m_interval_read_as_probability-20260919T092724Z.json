@@ -1,0 +1,67 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "m_interval_read_as_probability",
+  "dataset": "messy",
+  "error": "The answer to R03 reads each 0.95 interval as a 95% probability that the true rate lies inside it.",
+  "at": "2026-09-19T09:24:06+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "probab",
+    "95 ?%",
+    "confidence|frequentist|coverage|credible|bayes"
+  ],
+  "blocking_issues": 2,
+  "warnings": 3,
+  "checks": 36,
+  "issue_ids": [
+    "CLAIMS-AUD-R03-CI-AS-PROBABILITY",
+    "CLAIMS-AUD-R03-UNBOUND-NUMBER"
+  ],
+  "issue_texts": [
+    "CLAIMS-AUD-R03-CI-AS-PROBABILITY | gate_claims_auditor.answers_interval_interpretation | gate_claims_auditor|interval_interpretation|analysis/answers/R03.json|caveats | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R03.json caveats[0] says there is a 95% probability that each channel's true completion rate lies inside its interval. CLM-COMPLETION-DIRECT and CLM-COMPLETION-PARTNER are W",
+    "CLAIMS-AUD-R03-UNBOUND-NUMBER | gate_claims_auditor.answers_caveat_unbound_number | gate_claims_auditor|caveat_unbound_number|analysis/answers/R03.json|caveats | CLAIM_SUPPORT | MEDIUM | worker_analysis | analysis/answers/R03.json caveats[0] writes the confidence level as a bare percentage figure. No claim_id, source_ref or display_digits binds it, and the claims auditor addition says a bare numbe"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "No machine rule reads the caveat text in analysis/answers/*.json: caveats_declared scans only claim_register.json, and questions_are_answered checks only that question and facts exist. Wording in the answer files is therefore checked by this auditor alone and by the release-stage wording_matches_cla",
+    "Under alpha 0.05 the register lists correction bonferroni but not the corrected per-test threshold of 0.025. Both p values are far below it, so the conclusion stands, but a reader cannot see from the claim that the correction was applied rather than only named.",
+    "The p values are published as 0.0000000000 at display_digits 4. They are p < 0.0001 (my recalculation gives about 3e-157 for the completion z test), and a surface should say 'less than' rather than show a literal zero."
+  ],
+  "summary": "I recalculated all eight claims from quarantine/orders.csv, and every value, interval bound, n, test statistic, p and effect matches the register, the metrics and the machine gate within tolerance. Plan, period, population, denominators, Simpson strata (country, month) and multiplicity also pass. One problem blocks the stage: analysis/answers/R03.json has a caveat that reads the 95% Wilson confidence interval as a 95% probability that the true rate is inside it. That contradicts the register's sampling-interval caveat, and the same caveat carries a bare, unbound figure. No machine rule reads a",
+  "wall_seconds": 189.3,
+  "cost": {
+    "at": "2026-09-19T09:27:22.789518+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-19T09:24:16.525758+00:00",
+    "finished_at": "2026-09-19T09:27:22.789518+00:00",
+    "wall_seconds": 186.25,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 34,
+    "cached_input_tokens": 1803139,
+    "output_tokens": 18692,
+    "total_tokens": 1821865,
+    "cost_usd": 2.6026050000000005
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "m_interval_read_as_probability",
+  "dataset": "messy",
+  "error": "The answer to R03 reads each 0.95 interval as a 95% probability that the true rate lies inside it.",
+  "at": "2026-09-19T08:50:47+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "probab",
+    "95 ?%",
+    "confidence|frequentist|coverage|credible|bayes"
+  ],
+  "blocking_issues": 4,
+  "warnings": 8,
+  "checks": 45,
+  "issue_ids": [
+    "CLAIMS-R03-INTERVAL-AS-PROBABILITY",
+    "CLAIMS-R03-CAVEAT-BARE-NUMBER",
+    "CLAIMS-AOV-DIRECT-CAVEAT-POPULATION",
+    "CLAIMS-AOV-PARTNER-CAVEAT-POPULATION"
+  ],
+  "issue_texts": [
+    "CLAIMS-R03-INTERVAL-AS-PROBABILITY | gate_claims_auditor.R03.interval_interpretation | gate_claims_auditor|interval_read_as_probability|analysis/answers/R03.json|completion_by_channel | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R03.json line 43 (the only caveat) treats each channel's Wilson interval as a probability statement about where the true completion rate lies. The claims it",
+    "CLAIMS-R03-CAVEAT-BARE-NUMBER | gate_claims_auditor.R03.caveat_unbound_number | gate_claims_auditor|caveat_bare_number|analysis/answers/R03.json|caveats | CLAIM_SUPPORT | MEDIUM | worker_analysis | chain_check.py flags a digit in the R03 caveat (caveat_digits: [true]). No other answer or claim caveat contains one. The number is the confidence level written as a percent, with no claim_id, role or s",
+    "CLAIMS-AOV-DIRECT-CAVEAT-POPULATION | gate_claims_auditor.CLM-AOV-DIRECT.caveat_population_wording | gate_claims_auditor|caveat_population_wording|analysis/claim_register.json|CLM-AOV-DIRECT | CLAIM_SUPPORT | MEDIUM | worker_analysis | The CLM-AOV-DIRECT caveats in analysis/claim_register.json cover only the channel population and the sampling interval. chain_check.py reports says_delivered=false ",
+    "CLAIMS-AOV-PARTNER-CAVEAT-POPULATION | gate_claims_auditor.CLM-AOV-PARTNER.caveat_population_wording | gate_claims_auditor|caveat_population_wording|analysis/claim_register.json|CLM-AOV-PARTNER | CLAIM_SUPPORT | MEDIUM | worker_analysis | The CLM-AOV-PARTNER caveats in analysis/claim_register.json cover only the channel population and the sampling interval. chain_check.py reports says_delivered=fa"
+  ],
+  "other_blockers": 2,
+  "warning_texts": [
+    "Both test claims store p as 0.0000000000 while their display_digits is 4. At either precision the page would show p as exactly zero. The true p values are far below any displayable bound (z = 26.72, t = 42.70) but they are not zero, so the release should say 'below 0.0001' rather than print a zero.",
+    "The n field of each estimate claim is an integer while metrics carries n as a string. The values are equal (24597, 19934, 17818, 12055) but not byte-equal, which matters if a later rule compares them as text.",
+    "The CLM-COMPLETION-* claims compute their denominators correctly over the whole channel, cancelled and pending included: 24597 direct and 19934 partner orders, recounted. No caveat says this in words, and a reader of the release cannot tell the rate was not filtered to completed orders.",
+    "All four estimate claims use the caveat wording 'one quarter of orders in this channel'. A reader can take 'one quarter' as a fraction of 25% rather than the calendar quarter; 'orders placed in 2026-Q1 in this channel' says the same without the ambiguity.",
+    "R04 carries no caveats. The sampling-interval caveat for the AOV intervals exists only in the claim register, so an answer file rendered on its own would show intervals with no statement of what they mean.",
+    "The machine gate's gaps line up with the blockers above. No rule reads the wording of analysis/answers/*.json, and caveats_declared requires neither delivered-only nor net-of-refunds for the AOV claims. On both points this audit's judgment is the only check.",
+    "claims_are_single_assertions reports 'all roles in p' for both test claims, yet their render_values give the statistic and effect in units statistic, proportion_difference and cohens_d. The rule's description of these claims is not accurate, even though the claims are fine as single assertions.",
+    "The effect size of H-CHANNEL-AOV is Cohen's d with the pooled standard deviation: my recount gives 0.4868998682, matching the claim. The averaged-variance variant gives 0.4950. Neither the claim nor the plan names which variant is meant, so the release should label it."
+  ],
+  "summary": "Every number in the eight claims matches an independent recalculation from quarantine/orders.csv (one row per order after keeping the last revision, 2026-01..2026-03, negative refunds excluded): 44531 orders, 3023296.61 EUR net revenue, both Wilson and both Student intervals, and both registered tests. Each claim also agrees field by field with metrics and analysis_plan.json. Country and month strata show no Simpson reversal. The text around the numbers fails in four places. First, analysis/answers/R03.json reads the frequentist 95% interval as a probability that the true rate lies inside it; ",
+  "wall_seconds": 267.3,
+  "cost": {
+    "at": "2026-09-19T08:55:21.338473+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-19T08:50:57.185519+00:00",
+    "finished_at": "2026-09-19T08:55:21.338473+00:00",
+    "wall_seconds": 264.156,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 42,
+    "cached_input_tokens": 2538720,
+    "output_tokens": 28948,
+    "total_tokens": 2567710,
+    "cost_usd": 3.3526914999999993
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "caveat_dropped_where_repeated",
+  "dataset": "orders",
+  "error": "The headline's caveat line no longer says net of refunds; only a sentence about the country table still does.",
+  "at": "2026-09-18T18:21:35+00:00",
+  "max_v2_revision": "b7adc4a",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "net of refunds.{0,160}(headline|CLM-NET-REVENUE|net revenue)",
+    "(headline|CLM-NET-REVENUE|net revenue).{0,160}net of refunds",
+    "caveat.{0,80}(missing|dropped|lost|absent|omitted|removed)",
+    "(missing|dropped|lost|absent|omitted|removed).{0,80}caveat"
+  ],
+  "blocking_issues": 1,
+  "warnings": 16,
+  "checks": 17,
+  "issue_ids": [
+    "RT-CAVEAT-LOCAL-CLM-NET-REVENUE"
+  ],
+  "issue_texts": [
+    "RT-CAVEAT-LOCAL-CLM-NET-REVENUE | final_claude_redteam.caveats_rendered_local | final_claude_redteam|caveats_rendered_local|release/report.md|CLM-NET-REVENUE | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md lines 7-8: the CLM-NET-REVENUE bullet shows 35,741.52 with 'Caveats: delivered orders only; period boundaries are inclusive on both ends.' analysis/claim_register.json declares t"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "This profile has one vendor. Every context, this red team included, ran on claude-opus-5, so a mistake the model family tends to make can appear on both sides of every check. Only the deterministic layer (machine gates, the frozen check_plan, the control lock, the release surface gate) holds indepen",
+    "Write protection over raw_data and the frozen machinery was permissions.deny for edit tools only, not for the shell. A modified raw file would have been caught afterwards by the control lock, not prevented.",
+    "The headline caveat gap got through because gate_release_document caveats_rendered checks for a caveat anywhere on the surface rather than next to its figure. check_plan.json lists both caveats_rendered and claims_rendered under accepted_unproven (the plan proof failed with FileNotFoundError), so ne",
+    "gate0_machine plan_proven reports '0 accepted unproven', while check_plan.json lists two accepted_unproven entries for gate_release_document. I could not reconcile the two from my inputs; the likely explanation is the '4 gate(s) not provable before the lock' clause.",
+    "The auditor layer contributed no verifiable evidence in this run. The gate0_semantic, gate_clean_auditor, gate_metrics_auditor, gate_claims_auditor and gate_release_auditor results are marked 'driver e2e', each evidence directory holds only a notes.json with no computation, and their 'recomputed ind",
+    "Every worker and auditor result and every carry has created_at/updated_at set to 2026-01-01T00:00:00Z, which is a placeholder rather than a clock reading, so the order and timing of stages cannot be established from these files.",
+    "All four worker carries are identical apart from their ids, and each defines the population as 'status=delivered' with the period only in a separate periods entry. A stage relying on the population definition alone would lose the date filter that excludes O00201. The carries do not contradict the ou",
+    "The spec period ends on 2025-03-30, yet the metrics period is named 2025-Q1 and questions.md asks about 'the reported quarter', which ends on 2025-03-31. No raw row is dated 2025-03-31, so nothing moves on this export; on a later export a delivered 31 March order would be excluded as 'outside the re",
+    "The weakest assumption is revenue_recognition net_of_refunds. The export has no refund date, so refunds are deducted in the quarter of the order. Refunds processed after 2025-03-30 on Q1 orders therefore reduce Q1 net revenue 35,741.52 EUR (and the country figures), and up to the full 4,493.50 EUR r",
+    "The paying-customers refund basis is applied consistently and shown on both surfaces. Its numerator counts a customer as refunded after any partial refund: 15 of the 27 refunded customers had only partial refunds. On the order-row basis the rate would be 33/174 = 0.189655, 2.50x smaller, which match",
+    "Neither release surface tells the reader that R05 (customer lifetime value) was asked and excused, or shows the R04 row accounting (201 raw rows, 174 kept, 26 not delivered, 1 outside the period). Those facts live only in check_plan.json and analysis/answers/R04.json.",
+    "No machine check recomputes excluded_outside_period or excluded_order_rows from source (gate_metrics_machine unchecked.json); only the component_sum invariant pins them. I recomputed both from raw (1 row, O00201 dated 2025-04-01; 27 rows in total) and they match, but on this point my check is the on",
+    "src/release/build_release.py and the rest of src/ are not among my allowed inputs, so I did not check the generator for number literals or find where the headline caveat is dropped. The no-literal rule rests on the release machine gate alone.",
+    "The handoff has no drift_since_review. Its absence does not prove the code's assumptions hold; I checked the ones these figures rely on directly on this export: all dates are valid, no refund exceeds its gross, no refund sits on a non-delivered row, and exactly one delivered row falls outside the pe",
+    "audit/decisions/ is empty and the handoff lists no rulings, so no post-lock human ruling needed checking. The three RESOLVED entries in human_decisions.yaml are applied in the numbers; net_of_refunds is the one the report's headline caveat list fails to show.",
+    "Runner state, retry history and stale inputs are not in my inputs, and I did not check them; they are for the human in audit_runner.py report. The worker results carry no disclosures field and empty warnings, which fits stub results and is not evidence that nothing deviated."
+  ],
+  "summary": "FAIL on one release blocker. All five published figures and the row accounting reproduce exactly from raw_data/orders.csv with this stage's own code: net revenue 35741.52 EUR, refund rate 27/57 = 0.473684 on the paying-customers basis, PL 11181.67 / DE 11032.61 / CZ 13527.24 (they sum to the headline), rows 201 = 174 + 26 + 1. All 21 numbers on the three surfaces match the registry formatting. The blocker: in release/report.md the caveat list under the headline net revenue (lines 7-8) omits 'net of refunds', which the claim register declares for CLM-NET-REVENUE. The machine caveats_rendered ch",
+  "wall_seconds": 347.3,
+  "cost": {
+    "at": "2026-09-18T18:27:30.989877+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-0cdb94b85940",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-18T18:21:46.759236+00:00",
+    "finished_at": "2026-09-18T18:27:30.989877+00:00",
+    "wall_seconds": 344.235,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 58,
+    "cached_input_tokens": 3169343,
+    "output_tokens": 38364,
+    "total_tokens": 3207765,
+    "cost_usd": 3.8577405
+  }
+}

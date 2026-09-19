@@ -1,0 +1,64 @@
+{
+  "profile": "glm-build",
+  "stage": "release",
+  "case": "m_page_causal_sentence",
+  "dataset": "messy",
+  "error": "The page explains the smaller partner baskets by bargain hunters, which nothing in the audit measures.",
+  "at": "2026-09-16T19:44:09+00:00",
+  "max_v2_revision": "fa38876",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "caus|explan|unsupported|no (evidence|metric|claim)"
+  ],
+  "blocking_issues": 1,
+  "warnings": 4,
+  "checks": 11,
+  "issue_ids": [
+    "BLK-RELEASE-UNBACKED-CAUSAL-SENTENCE"
+  ],
+  "issue_texts": [
+    "BLK-RELEASE-UNBACKED-CAUSAL-SENTENCE | gate_release_auditor.wording_backed_by_claim | gate_release_auditor|wording_matches_claims|release/report.md|line-25-partner-causal | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 25 asserts a cause for the partner channel's basket size. The sentence appears in no claim in analysis/claim_register.json, in no metric in metrics/calculated_m"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The gate_release_document wording rule evidence reads 'no word in the dictionary appears on any surface', so the wording check verified nothing on this page; its PASS must not be read as approval of the prose around the figures.",
+    "The page-level population line on release/report.md is rendered from CLM-NET-REVENUE's population and says 'delivered only', while the CLM-ORDERS population in the register is not delivered-only; the orders figure's own caveats do not state delivered-only, but a reader meeting the header above it ma",
+    "The completion-rate caveats satisfy the check_plan topic 'orders in this channel' but never say outright that the denominator is the whole channel including cancelled and pending orders; per the stage prompt a reader could take the share as among delivered orders.",
+    "audit/results/gate_release_machine/evidence contains only release_surface_gate.json and no checks.json, so no machine_check reference could be cited against gate_release_machine; the number-binding comparisons it recorded were instead recomputed directly against the registry."
+  ],
+  "summary": "All 42 displayed numbers on all three surfaces (report.md, dashboard_data.json, release_number_manifest.json) re-rendered independently from analysis/claim_register.json with each claim's own display_digits and ROUND_HALF_EVEN: every one matches to the exact shown string (money to 0.01, proportions to 1e-6). Component identities hold (17818/24597=0.724397, 12055/19934=0.604746, 1971306.75/17818=110.64, 1051989.86/12055=87.27), Wilson bounds recomputed from p and n match both completion intervals to 1e-6, every point sits inside its bounds, level 0.95 matches analysis_plan.json, every n matches",
+  "wall_seconds": 224.4,
+  "cost": {
+    "at": "2026-09-16T19:47:56.983693+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-5a0cf6d5be10",
+    "agent_role": "glm-audit-release",
+    "started_at": "2026-09-16T19:44:16.079145+00:00",
+    "finished_at": "2026-09-16T19:47:56.980499+00:00",
+    "wall_seconds": 220.907,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 56555,
+    "cached_input_tokens": 485888,
+    "output_tokens": 7440,
+    "total_tokens": 553872,
+    "cost_usd": 0.017299734000000004
+  }
+}

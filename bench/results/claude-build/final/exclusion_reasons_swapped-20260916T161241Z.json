@@ -1,0 +1,81 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "exclusion_reasons_swapped",
+  "dataset": "orders",
+  "error": "R04 attaches each exclusion count to the other rule: 26 rows 'outside period', 1 row 'not delivered'.",
+  "at": "2026-09-16T16:06:36+00:00",
+  "max_v2_revision": "e48d886",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R04",
+    "exclusion",
+    "swap|reason|rule",
+    "not_delivered|outside_period"
+  ],
+  "blocking_issues": 1,
+  "warnings": 12,
+  "checks": 23,
+  "issue_ids": [
+    "FINAL-R04-EXCLUSION-LABELS-SWAPPED"
+  ],
+  "issue_texts": [
+    "FINAL-R04-EXCLUSION-LABELS-SWAPPED | final_claude_redteam.r04_exclusion_attribution | final_claude_redteam|r04_exclusion_attribution|analysis/answers/R04.json|R04 | CLAIM_SUPPORT | HIGH | worker_analysis | In analysis/answers/R04.json, the fact for excluded_not_delivered (value 26) has exclusion 'order_date outside period', and the fact for excluded_outside_period (value 1) has exclusion 'status !"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "Every auditor result reads as a placeholder: gate0_semantic, gate_clean_auditor, gate_metrics_auditor, gate_claims_auditor and gate_release_auditor all have the summary 'driver e2e', the same fixed created_at 2026-01-01T00:00:00Z and an evidence/notes.json with no calculation in it, and the metrics ",
+    "All four worker_* result.json files are placeholders too: each reports the same single check (0.473684, the refund rate) whatever the stage produced, lists only a source file as its artifact, has no disclosures field and has an empty warnings list, so no stage reported any deviation whose effect on ",
+    "The four worker carries (audit/checkpoints/worker_*.carry.json) are identical apart from their ids: populations.definition says 'status=delivered' without the period bounds, grain lists only 'one row per delivered order' although refund_rate is counted per paying customer and the row accounting per ",
+    "Parts of the work had no deterministic rule over them in audit/check_plan.json: the rule label on each R04 count, the answer values in R01–R03, a direct recount of excluded_outside_period (the plan only pins it through component_sum), and the 'numerator' field on the net_revenue registry row (40235.",
+    "check_plan.json lists gate_release_document claims_rendered and caveats_rendered as accepted_unproven because the plan proof failed with FileNotFoundError, so their PASS was never shown to catch a broken release, and gate0_machine plan_proven reports 0 accepted unproven next to those two entries; th",
+    "audit/results/gate_release_machine/evidence/release_surface_gate.json has no result for a generator-literal scan of src/release/build_release.py, and src/ is outside this stage's inputs, so nothing visible here confirms the spec rule that the release generator contains no business-number literal.",
+    "The refund-rate ruling looks the weakest (refund_rate_basis=paying_customers, RESOLVED): its numerator counts a customer as refunded after any refund above zero, so 15 of the 27 refunded customers had only partial refunds; the published 0.473684 would be 0.210526 (12/57) if only customers with a ful",
+    "The revenue ruling (revenue_recognition=net_of_refunds, RESOLVED) nets refunds by order_date, because the export carries no refund date, so a Q1 order refunded later is deducted from Q1 and refunds on earlier orders paid out in Q1 are not; this timing choice moves the headline 35,741.52 EUR (4,493.5",
+    "The spec period ends 2025-03-30, while questions.md, exclusions.json ('outside the reported quarter') and the metrics period name '2025-Q1-delivered' treat it as the quarter, which ends 2025-03-31; no raw row is dated 2025-03-31, so no figure changes on this export, but the Q1 label is wrong and a f",
+    "The ruling timezone_for_dates=Europe/Warsaw can be neither applied nor verified, because order_date has no time part; if the export's dates were derived from UTC, the 3 delivered orders dated 2025-01-01 (O00008, O00082, O00198) and the 1 dated 2025-03-30 (O00064) are the ones whose place in the quar",
+    "A reader of report.md or the dashboard never sees the row accounting (27 of 201 raw rows excluded) or that R05, customer lifetime value, was declined as unanswerable; the check plan allows both, but the release is silent about them.",
+    "A comment in audit_spec.yaml says the two refund-rate readings differ by roughly a factor of three, but on this data they differ by 2.498 (0.473684 against 0.189655), which matches the 2.5x in risk_register.yaml."
+  ],
+  "summary": "FAIL on one material blocker: analysis/answers/R04.json, the only place R04 is answered, puts the two exclusion rules on the wrong counts. It says 26 rows were dropped for 'order_date outside period' and 1 row for 'status != delivered'. Recounting raw_data/orders.csv with the spec's allowed_exclusions, in the order the spec lists them, gives the reverse: 26 rows fail 'status != delivered' (16 cancelled, 10 pending) and 1 row falls outside the period (O00201, delivered, dated 2025-04-01). clean_data/exclusions.json and the metric formulas agree with the recount. The machine check questions_are_",
+  "wall_seconds": 348.3,
+  "cost": {
+    "at": "2026-09-16T16:12:39.975403+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-d423fa05b27b",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-16T16:06:54.505932+00:00",
+    "finished_at": "2026-09-16T16:12:39.975403+00:00",
+    "wall_seconds": 345.469,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 44,
+    "cached_input_tokens": 2418034,
+    "output_tokens": 40965,
+    "total_tokens": 2459043,
+    "cost_usd": 3.558707
+  },
+  "rescored_at": "2026-09-16T20:47:27+00:00"
+}

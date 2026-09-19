@@ -1,0 +1,65 @@
+{
+  "profile": "grok-build",
+  "stage": "release",
+  "case": "population_line_wrong",
+  "dataset": "orders",
+  "error": "The page's population line says all orders; every figure is over delivered orders.",
+  "at": "2026-09-19T07:29:27+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "all orders"
+  ],
+  "blocking_issues": 1,
+  "warnings": 4,
+  "checks": 19,
+  "issue_ids": [
+    "POPULATION-LINE-ALL-ORDERS"
+  ],
+  "issue_texts": [
+    "POPULATION-LINE-ALL-ORDERS | gate_release_auditor.reader_population | gate_release_auditor|reader_population|release/report.md|headline | VISUALIZATION | HIGH | worker_release | release/report.md line 3 visible text is Population: all orders inside the period. (HTML comments stripped; evidence/reader_view.txt). audit_spec.yaml population.name and analysis/claim_register.json CLM-NET-REVENUE.popula"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "No check_plan rule reads the document-level Population sentence; caveats_rendered only searches claim.caveats phrases, which are present under each figure, so gate_release_document and the surface gate PASSed while the report still names the wrong population.",
+    "claims_rendered and caveats_rendered are accepted_unproven in audit/check_plan.json, so those two document rules were not breaker-proven.",
+    "gate_release_machine wrote no evidence/checks.json with recompute_*, claims_recomputed, component_sum, or column_identity; this stage bound rendered numbers in release_surface_gate.json instead of recomputing them from source, so figure checks here set machine_check to null.",
+    "Dashboard cards state the delivered-order caveats correctly and do not repeat the report Population line, so the misstatement is on release/report.md only."
+  ],
+  "summary": "Release numbers match the claim register and an independent raw recast (net revenue 35741.52 EUR; PL+DE+CZ = 35741.52; refund rate 27/57 = 0.473684 on paying customers). The reader-facing Population line on release/report.md says all orders inside the period, which contradicts audit_spec.yaml, the claim register, the title, and the per-card delivered caveats. Machine gates PASSed because they bind numbers and search claim.caveats strings, not the document-level population sentence.",
+  "wall_seconds": 605.2,
+  "cost": {
+    "at": "2026-09-19T07:39:36.086884+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-0bcc78f80769",
+    "agent_role": "grok-audit-release",
+    "started_at": "2026-09-19T07:29:34.217082+00:00",
+    "finished_at": "2026-09-19T07:39:36.086884+00:00",
+    "wall_seconds": 601.875,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 225783,
+    "cached_input_tokens": 1601920,
+    "output_tokens": 31756,
+    "total_tokens": 1859459,
+    "cost_usd": 0.49064108
+  }
+}

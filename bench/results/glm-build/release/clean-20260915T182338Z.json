@@ -1,0 +1,53 @@
+{
+  "profile": "glm-build",
+  "stage": "release",
+  "case": "clean",
+  "error": "no defect planted (false-positive control)",
+  "at": "2026-09-15T18:21:14+00:00",
+  "max_v2_revision": "1d34cf0",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "PASS",
+  "stop_code": null,
+  "outcome": "clean_pass",
+  "matched_signals": [],
+  "blocking_issues": 0,
+  "warnings": 2,
+  "checks": 19,
+  "issue_ids": [],
+  "warning_texts": [
+    "Neither release gate recorded a recompute comparison with a check_id (gate_release_machine/evidence holds only release_surface_gate.json bindings without ids), so every numeric check below rests on the auditor's own raw recompute with machine_check null; the registry-to-raw recompute lives in gate_c",
+    "check_plan.json marks both gate_release_document rules accepted_unproven because plan-proving could not copy analysis/claim_register.json into its sandbox; their PASS status in checks.json is therefore machine-recorded but the proof of break-detection is missing, and my own presence/caveat checks be"
+  ],
+  "summary": "All 21 displayed numbers across the three release surfaces (7 distinct: net revenue 35,741.52; PL 11,181.67; DE 11,032.61; CZ 13,527.24; refund rate 0.473684 with numerator 27, denominator 57) independently recomputed from raw_data/orders.csv and matched registry and screen values exactly; component sum 11181.67+11032.61+13527.24=35741.52 exact; row accounting 201=174+26+1 holds; caveats including paying-customers basis rendered visibly on both surfaces; no UNVERIFIED_CLAIM and no hidden-comment caveats; generator carries no business-number literal.",
+  "wall_seconds": 140.3,
+  "cost": {
+    "at": "2026-09-15T18:23:36.842332+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-e8072cc5abcd",
+    "agent_role": "glm-audit-release",
+    "started_at": "2026-09-15T18:21:20.272168+00:00",
+    "finished_at": "2026-09-15T18:23:36.839322+00:00",
+    "wall_seconds": 136.563,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 44000,
+    "cached_input_tokens": 269312,
+    "output_tokens": 6693,
+    "total_tokens": 322413,
+    "cost_usd": 0.00962543
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "m_completion_population_delivered",
+  "dataset": "messy",
+  "error": "The direct completion rate says its population is delivered orders, over which a completion rate is always 1.",
+  "at": "2026-09-16T17:06:42+00:00",
+  "max_v2_revision": "05bbc25",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "CLM-COMPLETION-DIRECT",
+    "population",
+    "delivered",
+    "denominator|cancel|always|trivial|1\\.0|100 ?%"
+  ],
+  "blocking_issues": 2,
+  "warnings": 8,
+  "checks": 28,
+  "issue_ids": [
+    "CLAIMS-AUDITOR-COMPLETION-DIRECT-POPULATION",
+    "CLAIMS-AUDITOR-AOV-CAVEATS-DELIVERED-NET"
+  ],
+  "issue_texts": [
+    "CLAIMS-AUDITOR-COMPLETION-DIRECT-POPULATION | gate_claims_auditor.claim_population.CLM-COMPLETION-DIRECT | gate_claims_auditor|claim_population|analysis/claim_register.json|CLM-COMPLETION-DIRECT | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/claim_register.json claim CLM-COMPLETION-DIRECT field population names delivered orders in the direct channel, but metrics/calculated_metrics.json comple",
+    "CLAIMS-AUDITOR-AOV-CAVEATS-DELIVERED-NET | gate_claims_auditor.caveats_in_words.CLM-AOV | gate_claims_auditor|caveats_in_words|analysis/claim_register.json|CLM-AOV-* | CLAIM_SUPPORT | MEDIUM | worker_analysis | analysis/claim_register.json claims CLM-AOV-DIRECT and CLM-AOV-PARTNER each carry only the channel-population and sampling-interval caveats; neither caveat list says delivered orders only o"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The stage prompt says quarantine/ is not in this step's input globs, but the handoff lists quarantine/**/* and the independent recompute here reads quarantine/orders.csv (comment column already removed by the quarantine tool); nothing from raw_data/ or clean_data/ was opened.",
+    "audit/human_decisions.yaml was read because the common contract and stage prompt require it, although it is not among the handoff's allowed input paths; it only marks the five policy keys as resolved.",
+    "The stage prompt says independent_claim_recalc.json is rooted in clean_data/, but in this run it lists raw_data/orders.csv as its source, which agrees with check_plan claims_recomputed reading raw_latest; this is a stale statement in the prompt, not a finding, and the recalc is not rooted in analysi",
+    "The population text of claims and the presence of delivered-only and net-of-refunds wording in the AOV caveats are covered by no deterministic rule in check_plan gate_claims_machine; both blocking findings sit in that unchecked area.",
+    "The Student t quantile in evidence/recompute_claims.py uses a Cornish-Fisher expansion because scipy was not importable; the resulting AOV bounds agree with the gate's recompute to better than 1e-6 EUR.",
+    "Besides the python recompute, Bash was used for read-only commands not named by the stage prompt: listing directories, wc -c over input files, and date -u for created_at; nothing was written outside audit/results/gate_claims_auditor/.",
+    "The handoff's instructions field describes orchestrator spawn and registration commands; they were not executed by this auditor.",
+    "No text resembling an instruction from the quarantined comment column appears anywhere in analysis/claim_register.json or analysis/answers/ (case-insensitive search for ignore, set revenue, the Russian verb for ignore, skip and PASS found zero matches)."
+  ],
+  "summary": "All six claims recompute exactly from quarantine/orders.csv (dedup last revision, Q1 by order_month, negative refunds excluded), including both Wilson and both Student intervals, n, level and method, and every value equals its metric byte for byte. Two findings block: CLM-COMPLETION-DIRECT declares its population as delivered orders only while its rate is computed over the whole direct channel (cancelled and pending in the denominator), and the two CLM-AOV-* claims do not say in their caveats that they cover delivered orders only and are net of refunds.",
+  "wall_seconds": 197.8,
+  "cost": {
+    "at": "2026-09-16T17:10:05.777208+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-16T17:06:50.604883+00:00",
+    "finished_at": "2026-09-16T17:10:05.777208+00:00",
+    "wall_seconds": 195.172,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 36,
+    "cached_input_tokens": 1470406,
+    "output_tokens": 20535,
+    "total_tokens": 1490977,
+    "cost_usd": 2.018391
+  }
+}

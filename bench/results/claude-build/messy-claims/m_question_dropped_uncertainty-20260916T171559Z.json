@@ -1,0 +1,71 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "m_question_dropped_uncertainty",
+  "dataset": "messy",
+  "error": "R03 is restated without the half of the brief that asks how precisely each rate is known.",
+  "at": "2026-09-16T17:10:43+00:00",
+  "max_v2_revision": "920704d",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R03",
+    "uncertain|precis|interval",
+    "restat|narrow|question|brief"
+  ],
+  "blocking_issues": 3,
+  "warnings": 5,
+  "checks": 29,
+  "issue_ids": [
+    "CLAIMS-AUD-R03-QUESTION-PRECISION-DROPPED",
+    "CLAIMS-AUD-TESTS-UNREGISTERED-IN-CLAIMS",
+    "CLAIMS-AUD-BONFERRONI-NOT-APPLIED"
+  ],
+  "issue_texts": [
+    "CLAIMS-AUD-R03-QUESTION-PRECISION-DROPPED | gate_claims_auditor.question_fidelity | gate_claims_auditor|question_fidelity|analysis/answers/R03.json|R03 | CLAIM_SUPPORT | MEDIUM | worker_analysis | raw_data/questions.md R03 asks for the completion rate of each channel and how precisely it is known. analysis/answers/R03.json field `question` keeps only the rate part. R04, the parallel question, kept",
+    "CLAIMS-AUD-TESTS-UNREGISTERED-IN-CLAIMS | gate_claims_auditor.test_claims_registered | gate_claims_auditor|test_claims_registered|analysis/answers|H-CHANNEL-COMPLETION,H-CHANNEL-AOV | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R03.json and R04.json each carry a `hypothesis` block with statistic, p_value, effect_size, alpha, correction and n_per_group. analysis/claim_register.json ha",
+    "CLAIMS-AUD-BONFERRONI-NOT-APPLIED | gate_claims_auditor.multiplicity_applied | gate_claims_auditor|multiplicity_applied|analysis/answers|bonferroni | CLAIM_SUPPORT | MEDIUM | worker_analysis | audit/analysis_plan.json registers two confirmatory tests (exploratory: false), each with alpha 0.05 and correction bonferroni. analysis/answers/R03.json and R04.json both report alpha 0.05 next to correctio"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "Pending orders explain part of the channel completion gap, and none of the claims says so. Partner has 20.2% pending against 14.1% for direct. Leaving pending out, the rates are 0.842857 (direct) and 0.758176 (partner), a gap of 0.084681 against the published 0.119652. The pending share holds steady",
+    "analysis/answers/R01.json restates R01 without 'over delivered orders'. The claim's population and caveats do say delivered only, so no requested output is lost, but the answer record differs from the question.",
+    "analysis/answers/R05.json gives 'about six per cent' as prose with no claim binding. I recompute 2648 unreadable shipping cells out of 44531 orders (0.059464), which agrees. shipping_total itself (37792722.50) reproduces under the declared locale and is correctly left unpublished.",
+    "Nothing in the check plan covers the answer layer (analysis/answers/*) beyond the existence of a file with `question` and `facts`. Question wording, unbound numbers in answers and multiplicity as actually applied are checked only by this auditor. The test rules become meaningful only once tests are ",
+    "recompute_estimate and min_group_size in the machine gate read clean_data/orders_clean.csv, while claims_recomputed reads raw. I recomputed all of them from the quarantine projection of raw, and they agree, so the clean table and raw are consistent for these populations."
+  ],
+  "summary": "All six registered claims (net revenue, orders, completion rate and AOV per channel with Wilson/Student intervals) reproduce exactly from quarantine/orders.csv, and the two registered tests reproduce as reported (z 26.718455, t 42.699880, effect 0.119652 / d 0.486900); no Simpson reversal by country or month, country mix balanced across channels. FAIL on the answer layer, owner worker_analysis: (1) analysis/answers/R03.json restates question R03 without its precision half ('how precisely is it known'); (2) the R03/R04 answers publish hypothesis-test figures (statistic, p_value, effect_size, al",
+  "wall_seconds": 308.2,
+  "cost": {
+    "at": "2026-09-16T17:15:58.082016+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-16T17:10:52.672165+00:00",
+    "finished_at": "2026-09-16T17:15:58.082016+00:00",
+    "wall_seconds": 305.406,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 50,
+    "cached_input_tokens": 2452524,
+    "output_tokens": 30402,
+    "total_tokens": 2482976,
+    "cost_usd": 2.9558184999999995
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "exclusion_reasons_swapped",
+  "dataset": "orders",
+  "error": "R04 attaches each exclusion count to the other rule: 26 rows 'outside period', 1 row 'not delivered'.",
+  "at": "2026-09-19T07:55:56+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R04",
+    "exclusion",
+    "swap|reason|rule",
+    "not_delivered|outside_period"
+  ],
+  "blocking_issues": 1,
+  "warnings": 8,
+  "checks": 10,
+  "issue_ids": [
+    "R04-EXCLUSION-LABELS-SWAPPED"
+  ],
+  "issue_texts": [
+    "R04-EXCLUSION-LABELS-SWAPPED | final_glm_redteam.r04_exclusion_attribution | final_glm_redteam|r04_exclusion_reasons_match_allowed_exclusions|analysis/answers/R04.json|r04_exclusion_attribution | CLAIM_SUPPORT | HIGH | worker_analysis | audit/results/final/evidence/recount.py (r04_labels_swapped: true, values match registry) and audit/results/final/evidence/r04_swap_evidence.txt: analysis/answers/"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The R04 label swap is invisible to the whole machine layer: questions_are_answered.R04 in audit/check_plan.json pins only metric_id+value pairs, so the 'exclusion' text that actually answers 'under which of the spec's allowed exclusions' is checked by no deterministic rule, and both gate_claims_audi",
+    "audit/check_plan.json accepted_unproven records that gate_release_document's claims_rendered and caveats_rendered have no breaker proof (prove-plan FileNotFoundError); they ran PASS on the delivered release, but their ability to fire on broken data was never demonstrated.",
+    "audit/results/gate_metrics_machine/evidence/unchecked.json shows excluded_outside_period and excluded_order_rows are not directly recomputed by any machine check (pinned only by component sums); my recount from raw independently confirms 1 and 27 for this run, closing the gap here but not in the pla",
+    "Every worker and auditor result.json self-reports model 'openrouter/z-ai/glm-5.3-flash-fake' rather than the tier path 'openrouter/z-ai/glm-5.3-flash'; nothing in any CLI output names a model, so every stage's model attestation is unverifiable self-report and the -fake suffix suggests driver-stubbed",
+    "Worker result files carry fixture timestamps (created_at 2026-01-01T00:00:00Z) and contain no disclosures arrays, so the stage-prompt duty to evaluate worker disclosures found nothing to evaluate.",
+    "drift_since_review is absent from the handoff, so no drift index was checked; the assumptions of the stage code (delivered-only, inclusive bounds, paying-customer basis) were instead retested directly against the current raw data in this recount.",
+    "None of the three human rulings looks wrong on this data: refund_rate_basis=paying_customers, revenue_recognition=net_of_refunds and timezone_for_dates=Europe/Warsaw (order_date is a date with no conversion) each move no number, and the R05 excuse (no acquisition-date column, so no lifetime value) i",
+    "The carry files state the population definition as 'status=delivered' without the date window (the periods array carries it); all other carry facts are consistent with what the stages produced, and every carry's context_id and attempt match the execution block of its own result.json."
+  ],
+  "summary": "Independent recount from raw_data/orders.csv confirms every published number (201 raw rows = 174 population + 26 not-delivered + 1 outside-period; net revenue 35741.52 EUR; refund rate 0.473684 = 27/57 unique paying customers; country parts sum to headline) and every release surface figure is bound to the registry. One material blocker: analysis/answers/R04.json swaps the exclusion attributions - excluded_not_delivered (26) is labeled 'order_date outside period' and excluded_outside_period (1) is labeled 'status != delivered', the reverse of audit_spec.yaml, of the registry's own formula/popul",
+  "wall_seconds": 1166.0,
+  "cost": {
+    "at": "2026-09-19T08:15:41.470348+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-a07e3dc40ac0",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-19T07:56:20.208233+00:00",
+    "finished_at": "2026-09-19T08:15:41.466801+00:00",
+    "wall_seconds": 1161.266,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 128173,
+    "cached_input_tokens": 2259776,
+    "output_tokens": 11240,
+    "total_tokens": 2422984,
+    "cost_usd": 0.062860638
+  }
+}

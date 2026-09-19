@@ -1,0 +1,76 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "m_dedup_rule_misstated",
+  "dataset": "messy",
+  "error": "The answer to R02 says the first revision of an order is kept; the spec and the clean stage keep the last.",
+  "at": "2026-09-16T21:14:22+00:00",
+  "max_v2_revision": "fa38876",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "first revision",
+    "last revision|latest|latest_revision_wins|dedup_rule"
+  ],
+  "blocking_issues": 1,
+  "warnings": 10,
+  "checks": 23,
+  "issue_ids": [
+    "FINAL-DEDUP-RULE-MISSTATED-R02"
+  ],
+  "issue_texts": [
+    "FINAL-DEDUP-RULE-MISSTATED-R02 | final_glm_redteam.dedup_rule_misstated | final_glm_redteam|dedup_rule_misstated|analysis/answers/R02.json|caveat.dedup_rule | SPEC_CONFLICT | HIGH | worker_analysis | analysis/answers/R02.json line 14, caveats[0], states the export's repeats are resolved by keeping the FIRST revision 'which is declared in audit_spec.yaml as dedup_rule'. audit/audit_spec.yaml line 4"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "All four worker stage results are driver-stub records, not descriptions of real stage work: summaries say 'driver e2e', created_at is 2026-01-01T00:00:00Z, and execution.model reads openrouter/z-ai/glm-5.3-flash-fake, so the recorded stage trail offers no corroboration of who or what actually ran th",
+    "All four checkpoint carry files repeat identical facts foreign to this dataset (grain 'one row per delivered order', period '2025-Q1-delivered', a refund-rate pitfall this audit never computes) that contradict audit_spec.yaml and the actual artifacts; nothing downstream appears to have acted on them",
+    "In this profile no CLI output event names the model, so the claim that each stage ran on the assigned glm model rests on each stage's self-report alone; MODEL_MISMATCH is unverifiable here by design, and the stub worker results make that self-report worthless for the four worker stages.",
+    "The four estimate cards in release/dashboard_data.json show the point and both bounds but no n, while audit_spec.yaml's release comment says an estimate is rendered 'with its interval and its n beside it, always'; report.md carries n for all four estimates, the frozen plan's estimate rules bind only",
+    "docs/history/NOTES_LANE_C.md, cited by src/clean/build_clean.py and src/analysis/build_claims.py as the record of two known limitations (renamed columns checked by nothing; a kind: test claim cannot survive the claims gate), does not exist in the tree.",
+    "Single-vendor profile: architect, workers, all five auditors and this red team are one model family through one CLI, so a shared predisposition reproduces on both sides of every review; the independent recomputation here is the compensating control, and it held on every number.",
+    "raw_data was never opened by this stage as required by the free-text policy; my no-free-text check rests on the quarantine manifest (11 distinct comments reduced to a token dictionary), the machine gate's sampled scan of 25 values, and my own scan of every surface and registry for planted instructio",
+    "The shipping column carries figures larger than typical order values in this synthetic export (shipping_total 37792722.50 over 44531 orders averages far above the gross range 5.00-312.16); my recomputation only confirms the declared-locale parse matches the registry, not the realism of the column, a",
+    "R05's answer says the shipping total was 'computed ... and deliberately not published' without naming the figure, which is the right shape for an excused metric; nothing to fix, recorded so the human sees the choice was deliberate.",
+    "What I could not verify: nothing material beyond the items above; every number, interval, test, population, date mapping, exclusion and rendered string on all three release surfaces reproduced under independent code, and the only falsehood found is the R02.json dedup statement raised as the blocker."
+  ],
+  "summary": "All published numbers reproduce independently: I rebuilt the pipeline from quarantine/orders.csv with my own code (dedup last-row-wins, the two declared exclusions, the declared shipping locale) and every one of the 15 registry metrics, all 4 intervals, both registered hypothesis tests (z=26.718455, t=42.699880) and all 42 bound numbers on the three release surfaces match exactly; population re-derived as 45000 distinct - 459 outside quarter - 10 negative-refund inside = 44531; the clean table provably kept the LAST revision on all 126 status-divergent orders, and a first-revision counterfactu",
+  "wall_seconds": 1310.3,
+  "cost": {
+    "at": "2026-09-16T21:36:30.808103+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-76e7ad2c4971",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-16T21:14:43.854523+00:00",
+    "finished_at": "2026-09-16T21:36:30.799067+00:00",
+    "wall_seconds": 1306.937,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 423301,
+    "cached_input_tokens": 3959232,
+    "output_tokens": 20253,
+    "total_tokens": 4426445,
+    "cost_usd": 0.122639766
+  }
+}

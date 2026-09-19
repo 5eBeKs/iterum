@@ -1,0 +1,87 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "m_page_interval_certainty",
+  "dataset": "messy",
+  "error": "The page says each interval is where the true value lies with near certainty.",
+  "at": "2026-09-16T19:48:57+00:00",
+  "max_v2_revision": "fa38876",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "certaint|true value",
+    "sampling interval|interval"
+  ],
+  "blocking_issues": 7,
+  "warnings": 9,
+  "checks": 11,
+  "issue_ids": [
+    "FINAL-REPORT-INTERVAL-CERTAINTY",
+    "FINAL-REPORT-PAGE-POPULATION",
+    "FINAL-DASHBOARD-ESTIMATE-N",
+    "FINAL-CARRY-WORKER-CLEAN",
+    "FINAL-CARRY-WORKER-METRICS",
+    "FINAL-CARRY-WORKER-ANALYSIS",
+    "FINAL-CARRY-WORKER-RELEASE"
+  ],
+  "issue_texts": [
+    "FINAL-REPORT-INTERVAL-CERTAINTY | final_redteam.interval_interpretation | final_redteam|interval_interpretation|release/report.md|channel_estimates | CLAIM_SUPPORT | HIGH | worker_release | release/report.md line 23, the visible closing sentence of the 'By channel' section, tells the reader that the interval beside each channel figure is where the channel's true value lies, and that it lies there ",
+    "FINAL-REPORT-PAGE-POPULATION | final_redteam.surface_population | final_redteam|surface_population|release/report.md|page_population_line | METRIC_DEFINITION | HIGH | worker_release | release/report.md line 3 gives one population for the whole page: orders placed inside the quarter, one row per order, delivered only. In analysis/claim_register.json only CLM-NET-REVENUE and the two AOV claims are d",
+    "FINAL-DASHBOARD-ESTIMATE-N | final_redteam.estimate_rendering_n | final_redteam|estimate_rendering_n|release/dashboard_data.json|estimate_cards | RELEASE_INTEGRITY | MEDIUM | worker_release | release/dashboard_data.json cards[2]..cards[5] (CLM-COMPLETION-DIRECT, CLM-COMPLETION-PARTNER, CLM-AOV-DIRECT, CLM-AOV-PARTNER) carry value, ci_low, ci_high and caveats but no n. The claim register carries n ",
+    "FINAL-CARRY-WORKER-CLEAN | final_redteam.carry_continuity | final_redteam|carry_continuity|audit/checkpoints/worker_clean.carry.json|grain_period_population | OTHER | MEDIUM | worker_clean | audit/checkpoints/worker_clean.carry.json passes carry.schema.json, has no BOM, and its context_id cc-worker_clean-a1-e64600cbe903 and attempt 1 match audit/results/worker_clean/result.json execution. Its fact",
+    "FINAL-CARRY-WORKER-METRICS | final_redteam.carry_continuity | final_redteam|carry_continuity|audit/checkpoints/worker_metrics.carry.json|grain_period_population | OTHER | MEDIUM | worker_metrics | audit/checkpoints/worker_metrics.carry.json is schema-valid and its context_id cc-worker_metrics-a1-db62891f86f0 and attempt 1 match audit/results/worker_metrics/result.json, but it contradicts metrics/c",
+    "FINAL-CARRY-WORKER-ANALYSIS | final_redteam.carry_continuity | final_redteam|carry_continuity|audit/checkpoints/worker_analysis.carry.json|grain_period_population | OTHER | MEDIUM | worker_analysis | audit/checkpoints/worker_analysis.carry.json is schema-valid and its context_id cc-worker_analysis-a1-69d833e46efd and attempt 1 match audit/results/worker_analysis/result.json, but it contradicts ana",
+    "FINAL-CARRY-WORKER-RELEASE | final_redteam.carry_continuity | final_redteam|carry_continuity|audit/checkpoints/worker_release.carry.json|grain_period_population | OTHER | MEDIUM | worker_release | audit/checkpoints/worker_release.carry.json is schema-valid and its context_id cc-worker_release-a1-f3eee6b73c2f and attempt 1 match audit/results/worker_release/result.json, but it contradicts the relea"
+  ],
+  "other_blockers": 5,
+  "warning_texts": [
+    "Placeholder stage results. gate0_semantic, gate_clean_auditor, gate_metrics_auditor, gate_claims_auditor, gate_release_auditor and all four worker results have the summary 'driver e2e <step>' and created_at 2026-01-01T00:00:00Z. That timestamp is earlier than analysis_plan.json registered_at 2026-04",
+    "Machine-gate blind spots, which is where every blocker in this result sits. wording_matches_claims found no dictionary word on report.md, so its dictionary has no terms for how an interval is interpreted or how certain it is. No rule compares a population or period statement on a surface with the cl",
+    "The registered tests are outside every gate. H-CHANNEL-COMPLETION and H-CHANNEL-AOV were executed and are reported only in analysis/answers/R03.json and R04.json. hypotheses_registered, multiplicity, effect_floor and power_declared all passed on 'the register publishes no test claim' or '0 of 2'. I ",
+    "Assumption the data supports least: dedup_rule latest_revision_wins (RESOLVED). File order never contradicts updated_at, but in 549 of the 917 repeated order_ids both rows carry the same updated_at, and in 6 of those the status differs, so which revision counts is decided by row position alone. If t",
+    "Assumption sensitivity: refund_sign_policy exclude_negative_refunds (RESOLVED). It removes 10 in-quarter orders. Keeping them would give orders 44,541, net revenue 3,024,587.18, completion direct 0.724417, completion partner 0.604765, AOV direct 110.66. The export cannot show whether a negative refu",
+    "The timezone rule is never exercised. values_preserved does not cover customer_id, order_date or country; I compared them, and every other clean column, for all 44,531 rows and found 0 mismatches. But 0 of the 4,419 ISO-8601 order dates fall on a different date in Europe/Warsaw than in UTC. A cleani",
+    "The shipping magnitudes are implausible, although the parsing is right. The recomputed shipping_total of 37,792,722.50 (2,648 of 44,531 cells unreadable, 5.95%) averages about 902 EUR per order with a readable cost, against about 101 EUR net per delivered order. Shipping would be roughly nine times ",
+    "The AOV population is not visible on the dashboard. Its caveat says 'orders in this channel', but AOV covers delivered orders only (17,818 of 24,597 direct; 12,055 of 19,934 partner). dashboard_data.json has no population field, so a dashboard reader cannot tell that cancelled and pending orders are",
+    "The generator scan is not visible in the evidence. release_surface_gate.json lists 42 bound numbers across the three declared surfaces (release/ holds exactly those three files, and there are no slices, magnitude filters or UNVERIFIED_CLAIM markers), but it has no section for the generator_sources l"
+  ],
+  "summary": "FAIL on 7 blockers, none of them a wrong number. Recomputed independently from quarantine/orders.csv (last revision per order_id, order_month in 2026-01..03, refund >= 0): all 44,531 clean rows match with 0 column mismatches, and every registry value, claim, interval, n, both registered tests and all 42 bound release numbers match. The release fails as the reader sees it: report.md line 23 says the 0.95 sampling interval is where each channel's true value lies with near certainty; report.md line 3 says the whole page is delivered-only, above an order count and completion rates that include can",
+  "wall_seconds": 595.2,
+  "cost": {
+    "at": "2026-09-16T19:58:59.940449+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-4b16f125bb3c",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-16T19:49:07.589170+00:00",
+    "finished_at": "2026-09-16T19:58:59.940449+00:00",
+    "wall_seconds": 592.344,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 76,
+    "cached_input_tokens": 4767713,
+    "output_tokens": 59832,
+    "total_tokens": 4827621,
+    "cost_usd": 5.3709475
+  }
+}

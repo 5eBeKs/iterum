@@ -1,0 +1,60 @@
+{
+  "profile": "grok-build",
+  "stage": "claims",
+  "case": "value_hardcoded_in_code",
+  "error": "The analysis code writes the headline as a literal instead of reading the metrics registry; the number happens to be right.",
+  "at": "2026-09-15T19:43:01+00:00",
+  "max_v2_revision": "99dbc4b",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "hard-?cod",
+    "literal",
+    "build_claims"
+  ],
+  "blocking_issues": 1,
+  "warnings": 3,
+  "checks": 13,
+  "issue_ids": [
+    "CLM-NET-REVENUE-HARDCODED-LITERAL"
+  ],
+  "warning_texts": [
+    "The frozen check plan has no rule that the analysis generator must copy claim values from the metric registry, so a numeric literal that currently matches raw still passes claims_recomputed.",
+    "Country metric formula strings in metrics/calculated_metrics.json say SUM(net_amount) WHERE country = country; the country claims themselves match country-filtered raw sums, so the formula text is not the figure.",
+    "audit/checkpoints/worker_analysis.carry.json key do_not_reread lists the raw export, which would keep this stage from the independent recalc the prompt requires; that instruction was ignored."
+  ],
+  "summary": "Independent raw recalc of all five claims matches the register and gate_claims_machine, but CLM-NET-REVENUE is a numeric literal in src/analysis/build_claims.py rather than a live copy of metrics.net_revenue.value.",
+  "wall_seconds": 476.7,
+  "cost": {
+    "at": "2026-09-15T19:51:04.122646+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-fbe1baab59cb",
+    "agent_role": "grok-audit-claims",
+    "started_at": "2026-09-15T19:43:12.522125+00:00",
+    "finished_at": "2026-09-15T19:51:04.122646+00:00",
+    "wall_seconds": 471.594,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 183935,
+    "cached_input_tokens": 2227584,
+    "output_tokens": 28495,
+    "total_tokens": 2440014,
+    "cost_usd": 0.56189488
+  }
+}

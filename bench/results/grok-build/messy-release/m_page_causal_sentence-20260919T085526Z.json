@@ -1,0 +1,68 @@
+{
+  "profile": "grok-build",
+  "stage": "release",
+  "case": "m_page_causal_sentence",
+  "dataset": "messy",
+  "error": "The page explains the smaller partner baskets by bargain hunters, which nothing in the audit measures.",
+  "at": "2026-09-19T08:42:17+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "bargain",
+    "caus|explan|unsupported|no (evidence|metric|claim)"
+  ],
+  "blocking_issues": 2,
+  "warnings": 5,
+  "checks": 52,
+  "issue_ids": [
+    "REL-UNREGISTERED-CAUSAL",
+    "REL-PAGE-POPULATION-DELIVERED-ONLY"
+  ],
+  "issue_texts": [
+    "REL-UNREGISTERED-CAUSAL | gate_release_auditor.wording_unregistered_causal | gate_release_auditor|wording_matches_claims|release/report.md|unregistered_causal | RELEASE_INTEGRITY | CRITICAL | worker_release | release/report.md line 32 tells the reader that partner baskets are smaller because that channel brings in bargain hunters. No claim_id, no hypothesis_id, and no design sit beside that senten",
+    "REL-PAGE-POPULATION-DELIVERED-ONLY | gate_release_auditor.page_population_delivered_only | gate_release_auditor|card_population|release/report.md|delivered_only_header | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3 sets a page-wide population from the net-revenue claim: orders placed inside the quarter, one row per order, delivered only. CLM-ORDERS (44531) is all statuses a"
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "gate_release_document wording_matches_claims passed only WORDING-01 on the two test claims; it did not record WORDING-02 on release/report.md line 32 because that sentence does not use the dictionary causal verbs.",
+    "AOV cards on report.md and dashboard_data.json do not print net of refunds or delivered orders only on the card; those words sit on the revenue card and in the page header, and audit/check_plan.json caveats_declared does not require those topics on the AOV claims.",
+    "release/dashboard_data.json estimate cards carry ci_low and ci_high but no n field; n is visible on release/report.md beside each of the four estimates.",
+    "gate_release_machine/evidence has release_surface_gate.json and no checks.json, so this stage has no recompute_*, claims_recomputed, component_sum or column_identity comparison to cite; numeric machine_check values are null.",
+    "Dashboard cards have no per-card population; period is only the root $.period field excluded by the surface contract."
+  ],
+  "summary": "Release numbers match the claim register and metric identities, but release/report.md line 32 adds an unregistered causal explanation of the partner AOV gap, and line 3 labels the whole page delivered-only so the orders count and both completion rates are shown under the wrong population. gate_release_document wording_matches_claims passed WORDING-01 only and did not see that sentence; gate_release_machine bound all 60 numbers on all three surfaces and did not skip a surface.",
+  "wall_seconds": 783.3,
+  "cost": {
+    "at": "2026-09-19T08:55:24.822544+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-bb37372789cb",
+    "agent_role": "grok-audit-release",
+    "started_at": "2026-09-19T08:42:24.968003+00:00",
+    "finished_at": "2026-09-19T08:55:24.822544+00:00",
+    "wall_seconds": 779.859,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 224807,
+    "cached_input_tokens": 1794688,
+    "output_tokens": 42923,
+    "total_tokens": 2062418,
+    "cost_usd": 0.54552864
+  }
+}

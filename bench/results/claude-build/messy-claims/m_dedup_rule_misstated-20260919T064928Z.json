@@ -1,0 +1,69 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "m_dedup_rule_misstated",
+  "dataset": "messy",
+  "error": "The answer to R02 says the first revision of an order is kept; the spec and the clean stage keep the last.",
+  "at": "2026-09-19T06:45:10+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "first revision",
+    "last revision|latest|latest_revision_wins|dedup_rule"
+  ],
+  "blocking_issues": 2,
+  "warnings": 6,
+  "checks": 41,
+  "issue_ids": [
+    "CLAIMS-AUD-R02-DEDUP-RULE-MISSTATED",
+    "CLAIMS-AUD-AOV-CAVEATS-POPULATION"
+  ],
+  "issue_texts": [
+    "CLAIMS-AUD-R02-DEDUP-RULE-MISSTATED | gate_claims_auditor.dedup_rule_stated.R02 | gate_claims_auditor|dedup_rule_stated|analysis/answers/R02.json|CLM-ORDERS | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R02.json caveats[0] says the first revision of a repeated order is kept and that this is what audit_spec.yaml declares as dedup_rule. audit/audit_spec.yaml declares dedup_rule: latest",
+    "CLAIMS-AUD-AOV-CAVEATS-POPULATION | gate_claims_auditor.caveats_population_in_words.CLM-AOV | gate_claims_auditor|caveats_population_in_words|analysis/claim_register.json|CLM-AOV | CLAIM_SUPPORT | MEDIUM | worker_analysis | analysis/claim_register.json CLM-AOV-DIRECT and CLM-AOV-PARTNER caveats carry only the channel-population and sampling-interval topics; neither says the average is over deliver"
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "Both test claims store p as 0.0000000000 with display_digits 4, which renders as a p of exactly zero; the recomputed p values are around 1e-157 for completion and below double precision for AOV, so the release should show them as below a bound rather than as zero.",
+    "Both test claims name the bonferroni correction with alpha 0.05 but record no adjusted per-test alpha; with p far below any adjusted threshold the conclusion is unaffected, but the correction is named rather than shown applied.",
+    "The completion-rate caveats say 'orders in this channel' but do not state in words that cancelled and pending orders are in the denominator; the recount confirms they are (denominators 24597 and 19934 are every direct and partner order in the population).",
+    "Only claims_recomputed goes back to the raw export; recompute_estimate, recompute_test and min_group_size read clean_data/orders_clean.csv, and independent_claim_recalc.json covers the six non-test claims only. This auditor's recount from the quarantine projection agrees with all of them in this run",
+    "The check plan leaves the answers' caveat text and the AOV caveat topics unchecked by any machine rule, which is where both blockers of this stage sit; caveats_declared for CLM-AOV-* could require the delivered-only and net-of-refunds topics.",
+    "The two-channel differences are observational: country and month strata keep the same sign and similar size (completion gap 0.108 to 0.130, AOV gap 21.91 to 24.93 EUR), so neither country mix nor month explains them, but nothing in the data supports a causal reading of channel."
+  ],
+  "summary": "All eight claims trace byte-for-byte to calculated_metrics.json and reproduce from quarantine/orders.csv under the spec's latest_revision_wins rule (points, Wilson/Student intervals, n, z/t statistics, effects), and plan fields (hypothesis_id, method, alpha, correction, level) match audit/analysis_plan.json; the effect sign holds in every country and month stratum. Two text blockers on worker_analysis: analysis/answers/R02.json states that the first revision of an order is kept and attributes that to audit_spec.yaml, while the spec declares latest_revision_wins and the published figures are bu",
+  "wall_seconds": 249.4,
+  "cost": {
+    "at": "2026-09-19T06:49:26.856510+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-19T06:45:20.516601+00:00",
+    "finished_at": "2026-09-19T06:49:26.856510+00:00",
+    "wall_seconds": 246.344,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 36,
+    "cached_input_tokens": 1645852,
+    "output_tokens": 24760,
+    "total_tokens": 1670648,
+    "cost_usd": 2.492901
+  }
+}

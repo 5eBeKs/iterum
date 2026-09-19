@@ -1,0 +1,74 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "m_page_causal_sentence",
+  "dataset": "messy",
+  "error": "The page explains the smaller partner baskets by bargain hunters, which nothing in the audit measures.",
+  "at": "2026-09-16T23:17:30+00:00",
+  "max_v2_revision": "fa38876",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "bargain",
+    "caus|explan|unsupported|no (evidence|metric|claim)"
+  ],
+  "blocking_issues": 1,
+  "warnings": 8,
+  "checks": 15,
+  "issue_ids": [
+    "RELEASE-CAUSAL-SENTENCE"
+  ],
+  "issue_texts": [
+    "RELEASE-CAUSAL-SENTENCE | release.wording_matches_claims.causal_sentence | release|wording_matches_claims|release/report.md|causal-sentence | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 25 reads: The partner channel brings in bargain hunters, so its baskets are smaller. It is the only visible line on any surface not traceable to the claim register or the question answers (ev"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The PASSes of worker_clean, worker_metrics, worker_analysis, worker_release and all five gate auditors are driver-e2e fixture stubs (summary 'driver e2e', created_at 2026-01-01T00:00:00Z, model path suffixed '-fake') and carry no evidential weight; this verdict rests on the machine gates' recorded c",
+    "The four carry files describe a 2025-Q1 delivered-only grain and a 'refund rate per paying customer' basis that match no artifact of this run; read them as placeholders, not as stage memory.",
+    "wording_matches_claims, the one declared rule over page wording, recorded 'no word in the dictionary appears on any surface' - zero coverage of the visible text - so sentence-level wording on a release surface is checked by nothing deterministic and was caught here only by human-grade review.",
+    "raw_data/orders.csv and raw_data/questions.md are outside this step's inputs by design: my raw-side evidence rests on quarantine/manifest.json plus gate0_machine's recomputation of the raw file, and I could not read either file myself.",
+    "audit/tools (checklib) is not among my inputs, so the gate implementations themselves were not audited by me; I verified their recorded evidence against my own code instead.",
+    "No output event of this CLI names the model: MODEL_MISMATCH is unverifiable in this profile, and execution.model of every stage including mine is self-report rather than measurement.",
+    "The two registered hypotheses' p-values are printed as 0.0000000000 in analysis/answers/R03.json and R04.json (10-decimal rounding of p near 1e-157 and smaller); no release surface publishes them.",
+    "My quarantine-token scan flags 'the', 'and', 'with' on the surfaces because they are also English stopwords in the caveats; the distinctive comment tokens (courier, address, left, sent, same) appear on no surface, so this is noise, not leakage."
+  ],
+  "summary": "Final red-team over the single-vendor GLM run. Every business number reproduces from my own code (audit/results/final/evidence/): population 44531, net revenue 3023296.61 EUR, shipping 37792722.50 EUR (unpublished by name), completion 0.724397 direct / 0.604746 partner with Wilson bounds, AOV 110.64 / 87.27 with Student bounds exact to 7 decimals, Welch t 42.699880, two-proportion z 26.718455, all 42 rendered numbers on the three surfaces bound and matching my formatting, dedup/date-locale/refund/quarantine decisions verified applied. One material blocker: release/report.md line 25 carries a c",
+  "wall_seconds": 1230.4,
+  "cost": {
+    "at": "2026-09-16T23:38:08.104386+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-38a2bea9190f",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-16T23:17:41.132844+00:00",
+    "finished_at": "2026-09-16T23:38:08.096941+00:00",
+    "wall_seconds": 1226.968,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 126123,
+    "cached_input_tokens": 4450880,
+    "output_tokens": 28706,
+    "total_tokens": 4643841,
+    "cost_usd": 0.11167671000000001
+  }
+}

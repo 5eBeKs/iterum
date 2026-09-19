@@ -1,0 +1,66 @@
+{
+  "profile": "glm-build",
+  "stage": "release",
+  "case": "m_page_no_uncertainty",
+  "dataset": "messy",
+  "error": "The page says the channel figures are measured over every order and carry no uncertainty, beside their intervals.",
+  "at": "2026-09-19T07:26:33+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "no uncertainty|every order",
+    "interval|estimate|sampl"
+  ],
+  "blocking_issues": 1,
+  "warnings": 5,
+  "checks": 14,
+  "issue_ids": [
+    "GA-001-NO-UNCERTAINTY-SENTENCE"
+  ],
+  "issue_texts": [
+    "GA-001-NO-UNCERTAINTY-SENTENCE | gate_release_auditor.page_matches_generator | gate_release_auditor|page_matches_generator|release/report.md|line-23-channel-figures | RELEASE_INTEGRITY | CRITICAL | worker_release | release/report.md:23 'Each channel figure is measured over every order of the quarter, so it carries no uncertainty.' vs src/release/build_release.py:104-106 'Each channel figure is an "
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "report.md line 3 states the page-wide population as 'delivered only', which is correct for net revenue and AOV but wrong for the 44,531 orders count (cancelled and pending stay in the population by design) and for the completion rates; the generator uses CLM-NET-REVENUE's population for the whole pa",
+    "The completion-rate caveats on all surfaces say 'one quarter of orders in this channel' but never state that the denominator is the whole channel including cancelled and pending orders; the stage prompt requires that word, and the gap originates in analysis/claim_register.json (owner worker_analysis",
+    "dashboard_data.json carries the period only at the document level ($.period, excluded by the contract) and not per card; cards do carry their caveats, so this is an acceptable presentation, but a renderer consuming only the cards array would print figures without a period.",
+    "gate_release_document/evidence/checks.json contains only presence and wording checks (claims_rendered, caveats_rendered, wording_matches_claims, free_text_quarantined); no recompute_*/component_sum/column_identity comparison of business numbers exists at the release gates, so every numeric check bel",
+    "The Student-t AOV interval bounds could not be recomputed from the metrics table alone (no per-group dispersion is published); they were checked only for ordering (ci_low < value < ci_high), correct display_digits and equality with the register. The Wilson bounds and the z statistic were fully recom"
+  ],
+  "summary": "Recomputed every number on both surfaces against the claim register and calculated_metrics.json: all 20 rendered claim roles match display_digits formatting on report.md, dashboard_data.json and the manifest; component sums (aov numerators 1,971,306.75 + 1,051,989.86 = 3,023,296.61), segment sums (24,597 + 19,934 = 44,531), both completion rates, both AOVs, all four Wilson bounds and the two-proportion z statistic (26.72) reproduce within tolerance; all n values, the 0.95 level label, the period and every registered caveat are on the page; shipping_total and quarantined comment text are absent",
+  "wall_seconds": 372.3,
+  "cost": {
+    "at": "2026-09-19T07:32:49.708291+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-6c6404d3ed3c",
+    "agent_role": "glm-audit-release",
+    "started_at": "2026-09-19T07:26:41.673381+00:00",
+    "finished_at": "2026-09-19T07:32:49.708291+00:00",
+    "wall_seconds": 368.031,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 55416,
+    "cached_input_tokens": 910336,
+    "output_tokens": 8047,
+    "total_tokens": 979589,
+    "cost_usd": 0.025625988000000002
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "profile": "grok-build",
+  "stage": "clean",
+  "worker": "worker_clean",
+  "kind": "worker",
+  "at": "2026-09-15T17:35:19+00:00",
+  "max_v2_revision": "2a6f8dc",
+  "verdict": "PASS",
+  "stop_code": null,
+  "summary": "Built clean_data/orders_clean.csv as delivered orders in the inclusive 2025-01-01 to 2025-03-30 period: 174 population rows from 201 raw, 26 excluded as not delivered, 1 excluded as outside the period. Source values preserved; net_amount and is_refunded derived without early rounding. Period bounds and exclusions were read from audit_spec.yaml.",
+  "wall_seconds": 659.5,
+  "cost": {
+    "at": "2026-09-15T17:46:17.141754+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "worker_clean",
+    "attempt": 1,
+    "context_id": "ctx-worker_clean-a1-499db629c0c1",
+    "agent_role": "grok-worker",
+    "started_at": "2026-09-15T17:35:21.426467+00:00",
+    "finished_at": "2026-09-15T17:46:17.141754+00:00",
+    "wall_seconds": 655.718,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 135626,
+    "cached_input_tokens": 2141952,
+    "output_tokens": 36056,
+    "total_tokens": 2313634,
+    "cost_usd": 0.52991176
+  },
+  "machine": {
+    "gates": {
+      "gate_clean_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "outcome": "gate_pass",
+  "fingerprints": []
+}

@@ -1,0 +1,79 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "m_effect_misnamed",
+  "dataset": "messy",
+  "error": "The R04 test calls its effect size a proportion difference; a Welch test on order values reports Cohen's d.",
+  "at": "2026-09-19T09:50:56+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "effect",
+    "cohen|proportion_difference|effect_name|effect size"
+  ],
+  "blocking_issues": 3,
+  "warnings": 9,
+  "checks": 17,
+  "issue_ids": [
+    "FINAL-REPORT-POPULATION-LINE",
+    "FINAL-EFFECT-MISNAMED",
+    "FINAL-CARRY-FACTS"
+  ],
+  "issue_texts": [
+    "FINAL-REPORT-POPULATION-LINE | final_glm_redteam.report_population_line | final_glm_redteam|population_line_contradicts_claim_register|release/report.md|document_level_population_line | CLAIM_SUPPORT | HIGH | worker_release | release/report.md line 3: 'Population: orders placed inside the quarter, one row per order, delivered only.' Directly below it the headline renders 'Orders in the quarter: 44",
+    "FINAL-EFFECT-MISNAMED | final_glm_redteam.answer_effect_labels | final_glm_redteam|effect_unit_misnamed|analysis/answers/R04.json|hypothesis.effect_name | CLAIM_SUPPORT | MEDIUM | worker_analysis | analysis/answers/R04.json line 40 sets the H-CHANNEL-AOV hypothesis block's effect_name to 'proportion_difference'; the same effect is typed cohens_d in metrics/calculated_metrics.json (channel_aov_test",
+    "FINAL-CARRY-FACTS | final_glm_redteam.carry_continuity | final_glm_redteam|carry_facts_contradict_stage_outputs|audit/checkpoints/worker_clean.carry.json|period+grain+population+pitfall | SPEC_CONFLICT | MEDIUM | worker_clean | All four audit/checkpoints/worker_*.carry.json files (worker_clean 11-13, worker_metrics, worker_analysis, worker_release) state period 2025-01-01..2025-03-30 named '2025-Q"
+  ],
+  "other_blockers": 2,
+  "warning_texts": [
+    "release/dashboard_data.json estimate cards carry the point and both bounds but no n, while audit/audit_spec.yaml says an estimate is rendered with its n beside it always; n is present and verified against my recalculation on release/report.md, so no number is affected, but a dashboard built only fro",
+    "No output event of this CLI names the model that produced any stage, so every execution.model line in every result file is the stage's own report of itself; here the worker and gate reports name 'openrouter/z-ai/glm-5.3-flash-fake', so the claim that any stage ran on the registered model is backed b",
+    "The worker, gate0_semantic and gate_*_auditor result files are placeholder quality ('driver e2e' summaries, a 0.473684 placeholder recompute, created_at 2026-01-01T00:00:00Z, empty warnings and disclosures), so the chain of stage PASSes carries no evidential weight; this verdict rests on the five ma",
+    "This profile is single-vendor by design - architect, workers, gate auditors and this red team are one model family - so the PASS chain is not independent review; the deterministic layer (machine gates, frozen check plan, control lock, release surface gate) is what actually constrains the result, and",
+    "The handoff has no drift_since_review field, so no drift index was checked, and its absence does not prove the registered assumptions hold; my own month-split shows both channels stable this quarter (direct completion 0.719-0.732, partner 0.595-0.616), so nothing in the data contradicts them today.",
+    "The carry files' do_not_reread names raw_data/orders.csv, which is that stage's input rather than a previous-stage output as the contract describes the field; the value points at the quarantined file, so it cannot leak free text, but it is not the output-listing the field is for.",
+    "audit/decisions/ contains no files and the handoff's rulings list is empty, so there was no decision journal to read; the five RESOLVED decisions in audit/human_decisions.yaml were each verified as applied in the data, though the release surfaces make none of them explicit to the reader beyond the C",
+    "The quarantined comment column itself stayed unread by me under the declared policy, so the free-text sweep is the manifest's 12-token summary plus a fragment sweep over the planted-phrase shapes across all surfaces, the register, the answers, the stage results and the carries - all clean - not a re",
+    "What I could not establish: the actual model behind any stage (unverifiable by design in this CLI), whether a dashboard frontend would add the missing n to estimates, and the intent behind the false carry facts - their contradiction with the produced artifacts is established, their origin is not."
+  ],
+  "summary": "Independent recalculation from the quarantine projection reproduces every published number exactly: population 44531 (last-revision dedup, 2026-01..2026-03 by order_month, negative-refund exclusion), net revenue 3023296.61, completion 0.724397/0.604746 with whole-channel denominators, Wilson and Student bounds, both registered tests (z 26.718455, welch 42.699880, effects 0.119652 positive=direct-higher and cohens_d 0.486900), shipping parsed by the declared locale (separator-stripping would give x100) and correctly left unpublished; the clean table matches the projection row-for-row including ",
+  "wall_seconds": 1702.1,
+  "cost": {
+    "at": "2026-09-19T10:19:40.911302+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-1e9ccab761bd",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-19T09:51:22.959151+00:00",
+    "finished_at": "2026-09-19T10:19:40.911302+00:00",
+    "wall_seconds": 1697.954,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 172871,
+    "cached_input_tokens": 5048000,
+    "output_tokens": 23487,
+    "total_tokens": 5280463,
+    "cost_usd": 0.12458019000000001
+  }
+}

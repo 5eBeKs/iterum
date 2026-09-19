@@ -1,0 +1,78 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "population_relabelled",
+  "dataset": "orders",
+  "error": "The headline claim says its population is all orders, while the spec and its own caveats say delivered orders.",
+  "at": "2026-09-16T15:54:36+00:00",
+  "max_v2_revision": "e48d886",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "all orders",
+    "CLM-NET-REVENUE"
+  ],
+  "blocking_issues": 1,
+  "warnings": 10,
+  "checks": 17,
+  "issue_ids": [
+    "FINAL-GLM-RT-001"
+  ],
+  "issue_texts": [
+    "FINAL-GLM-RT-001 | final_glm_redteam.population_label_matches_spec | final_glm_redteam|population_label_misstates_population|release/report.md|CLM-NET-REVENUE | RELEASE_INTEGRITY | HIGH | worker_analysis | release/report.md line 3 renders 'Population: all orders inside the period.' from analysis/claim_register.json CLM-NET-REVENUE.population = 'all orders inside the period' (build_release.py write"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The model behind this verdict is unverifiable: no output event of this CLI names a model, so 'executed on openrouter/z-ai/glm-5.3-flash' rests on self-reports, including mine.",
+    "Every modeled stage's recorded execution.model is 'openrouter/z-ai/glm-5.3-flash-fake' with parent 'max-driver-bb18e9826ca0' and 'driver e2e' summaries, and the machine-gate results carry no execution block at all; these are the artifacts' own claims, which this profile itself says cannot be verifie",
+    "The frozen plan's proof accepted gate_release_document's claims_rendered and caveats_rendered unproven (temp-dir FileNotFoundError), but the live gate did execute both rules over the real surfaces and passed 15 checks.",
+    "gate_metrics_machine never recomputes excluded_order_rows or excluded_outside_period from source, as its own unchecked.json records; I recomputed both from raw (27 = 26 not delivered + 1 outside period) and the identity 201 = 174 + 26 + 1 holds.",
+    "No deterministic rule anywhere in the frozen check plan or release surface contract reads a claim's population field, which is how the relabel survived every gate; the only check of that wording was this stage.",
+    "All four worker carries list raw_data/orders.csv in do_not_reread although a raw source is not a previous stage's output; no number depended on it because the claims machine gate recomputed from raw independently.",
+    "None of the three RESOLVED rulings looks contradicted by the data; refund_rate_basis is the only one that moves a number materially (0.473684 on paying customers vs 0.189655 on order rows) and its caveat is rendered on every surface, so the reader can see the choice.",
+    "The internal code of checklib, run_gate.py and release_surface_gate.py sits outside my allowed inputs, so the machine gates are taken as their recorded outputs, each of which I reproduced independently and found no discrepancy with.",
+    "Retry history and stale inputs were not checked by this stage - the human reads them in audit_runner.py report - and the worker stage results carry a single check each with empty disclosures, so stage-level self-reporting is thin.",
+    "Headless run renders nothing visual: report.md was read as text with anchors and comments stripped, dashboard_data.json as the values a dashboard would show, and no image rendering was attempted."
+  ],
+  "summary": "Independent recalculation from raw_data/orders.csv (audit/results/final/evidence/recompute_final.py, 40 checks, run in one line) reproduces every published number exactly: 201 raw rows = 174 delivered-in-period + 26 not delivered + 1 outside period; net_revenue 35741.52 EUR (= gross 40235.02 - refunds 4493.50); refund_rate 0.473684 = 27/57 paying customers; PL/DE/CZ 11181.67/11032.61/13527.24 sum to the headline; clean table matches raw row by row with correct net_amount and is_refunded; all 21 rendered surface numbers are claim-bound with correct formatting, card-local caveats, PL/DE/CZ label",
+  "wall_seconds": 621.6,
+  "cost": {
+    "at": "2026-09-16T16:05:13.507245+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-2e49978f195b",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-16T15:54:56.043638+00:00",
+    "finished_at": "2026-09-16T16:05:13.502245+00:00",
+    "wall_seconds": 617.453,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 60114,
+    "cached_input_tokens": 1620800,
+    "output_tokens": 11347,
+    "total_tokens": 1713482,
+    "cost_usd": 0.04443396
+  },
+  "rescored_at": "2026-09-16T20:47:29+00:00"
+}

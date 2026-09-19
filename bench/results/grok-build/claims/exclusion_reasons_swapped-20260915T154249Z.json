@@ -1,0 +1,59 @@
+{
+  "profile": "grok-build",
+  "stage": "claims",
+  "case": "exclusion_reasons_swapped",
+  "error": "R04 attaches each exclusion count to the other rule: 26 rows 'outside period', 1 row 'not delivered'.",
+  "at": "2026-09-15T15:33:19+00:00",
+  "max_v2_revision": "0703cb4",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R04",
+    "exclusion",
+    "swap|reason|rule",
+    "not_delivered|outside_period"
+  ],
+  "blocking_issues": 1,
+  "warnings": 1,
+  "checks": 12,
+  "issue_ids": [
+    "R04-EXCLUSION-REASONS-SWAPPED"
+  ],
+  "warning_texts": [
+    "The frozen check plan's questions_are_answered rule for R04 compared metric_id values to metrics/calculated_metrics.json and did not inspect the exclusion labels on those facts, so the machine PASS is not approval of the rule-to-count mapping."
+  ],
+  "summary": "Five published claims recompute from raw_data/orders.csv to 35741.52 EUR net, refund rate 0.473684 on 27/57 paying customers, and country parts 11181.67 / 11032.61 / 13527.24 that sum to the headline. analysis/answers/R04.json keeps those row counts (201/174/27/26/1) but swaps the allowed-exclusion labels: excluded_not_delivered is labelled order_date outside period and excluded_outside_period is labelled status != delivered.",
+  "wall_seconds": 565.9,
+  "cost": {
+    "at": "2026-09-15T15:42:48.314210+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-b2eef1efdc44",
+    "agent_role": "grok-audit-claims",
+    "started_at": "2026-09-15T15:33:25.266091+00:00",
+    "finished_at": "2026-09-15T15:42:48.314210+00:00",
+    "wall_seconds": 563.047,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 220626,
+    "cached_input_tokens": 1370496,
+    "output_tokens": 22951,
+    "total_tokens": 1614073,
+    "cost_usd": 0.42983004
+  }
+}

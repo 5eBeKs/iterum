@@ -1,0 +1,60 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "period_shifted_in_claim",
+  "error": "One country claim carries a two-month period while its value is the full quarter's.",
+  "at": "2026-09-15T17:49:53+00:00",
+  "max_v2_revision": "2a6f8dc",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "period",
+    "02-28",
+    "CLM-NET-CZ"
+  ],
+  "blocking_issues": 1,
+  "warnings": 3,
+  "checks": 10,
+  "issue_ids": [
+    "CLM-NET-CZ-PERIOD-DECLARED-DOES-NOT-MATCH-COMPUTATION"
+  ],
+  "warning_texts": [
+    "CLM-NET-CZ in analysis/claim_register.json declares period 2025-01-01..2025-02-28 but its value 13527.24 is computed over the spec period 2025-01-01..2025-03-30; under the declared period the CZ figure would be 9248.36, so the declared period is a misdeclaration, not a different computation.",
+    "audit/check_plan.json contains no deterministic rule over the period field of a claim, so this misdeclaration was invisible to the machine gate; it was caught only by this auditor's judgment check comparing declared periods to the audit_spec population period.",
+    "All values and populations otherwise check out: CLM-REFUND-RATE caveats name the paying_customers basis in words, and independent_claim_recalc.json roots every claim in raw_data/orders.csv only."
+  ],
+  "summary": "Independent recalc from raw_data/orders.csv confirms all five claim values (net_revenue 35741.52, refund_rate 27/57=0.473684, PL 11181.67, DE 11032.61, CZ 13527.24) and the machine gate's independent_claim_recalc is rooted only in raw_data/orders.csv. One blocker: CLM-NET-CZ declares period 2025-01-01..2025-02-28, but its value is computed over the audit_spec period 2025-01-01..2025-03-30; under the declared period CZ net would be 9248.36. Period declared in the claim does not match the period the number was computed on.",
+  "wall_seconds": 195.2,
+  "cost": {
+    "at": "2026-09-15T17:53:16.184358+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-dcae3a611b01",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-15T17:50:15.865205+00:00",
+    "finished_at": "2026-09-15T17:53:16.161963+00:00",
+    "wall_seconds": 180.297,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 65259,
+    "cached_input_tokens": 147456,
+    "output_tokens": 4179,
+    "total_tokens": 217646,
+    "cost_usd": 0.008339015
+  }
+}

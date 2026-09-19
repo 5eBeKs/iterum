@@ -1,0 +1,63 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "exclusion_reasons_swapped",
+  "error": "R04 attaches each exclusion count to the other rule: 26 rows 'outside period', 1 row 'not delivered'.",
+  "at": "2026-09-15T18:17:42+00:00",
+  "max_v2_revision": "d6a41ff",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R04",
+    "exclusion",
+    "swap|reason|rule",
+    "not_delivered|outside_period"
+  ],
+  "blocking_issues": 1,
+  "warnings": 5,
+  "checks": 12,
+  "issue_ids": [
+    "CLAIMS-R04-EXCLUSION-LABELS-SWAPPED"
+  ],
+  "warning_texts": [
+    "analysis/answers/R04.json attributes the 26 non-delivered rows to the period exclusion and the single out-of-period delivered row (O00201) to the status exclusion, so a reader of R04 learns the wrong reason for every excluded row even though both counts are right.",
+    "No rule in audit/check_plan.json reads the exclusion attribution in answer files: questions_are_answered compares only the figures, so this swap passed the machine gate and would pass again after any retry unless an auditor reads the labels.",
+    "Claim population and period strings in analysis/claim_register.json are also covered by no deterministic rule; they are correct here (2025-01-01..2025-03-30, delivered only, basis paying_customers for the refund rate) but rest on auditor reading alone.",
+    "metrics/calculated_metrics.json gives net_revenue a numerator of 40235.02, which is the gross sum of the population rather than a numerator of a ratio; no claim renders it, but a release that binds it as a role would show gross beside a net headline.",
+    "The reported period ends 2025-03-30 as audit_spec.yaml pins it, while R01 and the questions call it the quarter; the claim periods say 2025-03-30 explicitly, and a release that says 'Q1' without the end date would overstate the coverage."
+  ],
+  "summary": "All five claim values recompute exactly from raw_data/orders.csv (net revenue 35741.52, refund rate 27/57 = 0.473684 on paying customers, PL 11181.67, DE 11032.61, CZ 13527.24), populations, periods and caveats match what was computed, and the machine recalc is rooted only in raw. The stage fails on analysis/answers/R04.json: its two exclusion counts are correct but each is attributed to the other allowed exclusion, so R04 answers 'under which exclusion' wrongly; the machine gate compares only the values and passed it.",
+  "wall_seconds": 167.3,
+  "cost": {
+    "at": "2026-09-15T18:20:32.571045+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-f58036111c74",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-15T18:17:47.754206+00:00",
+    "finished_at": "2026-09-15T18:20:32.571045+00:00",
+    "wall_seconds": 164.812,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 354,
+    "cached_input_tokens": 945805,
+    "output_tokens": 13909,
+    "total_tokens": 960068,
+    "cost_usd": 1.564433
+  }
+}

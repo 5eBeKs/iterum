@@ -1,0 +1,65 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "population_relabelled",
+  "dataset": "orders",
+  "error": "The headline claim says its population is all orders, while the spec and its own caveats say delivered orders.",
+  "at": "2026-09-19T06:36:20+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "all orders",
+    "CLM-NET-REVENUE"
+  ],
+  "blocking_issues": 1,
+  "warnings": 3,
+  "checks": 10,
+  "issue_ids": [
+    "CLM-NET-REVENUE-POPULATION-MISLABELLED"
+  ],
+  "issue_texts": [
+    "CLM-NET-REVENUE-POPULATION-MISLABELLED | gate_claims_auditor.population_label.CLM-NET-REVENUE | gate_claims_auditor|population_mislabelled|analysis/claim_register.json|CLM-NET-REVENUE | CLAIM_SUPPORT | MEDIUM | worker_analysis | audit/results/gate_claims_auditor/evidence/population_check.json and recalc.py: claim_register CLM-NET-REVENUE field population='all orders inside the period'; the registe"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "analysis_plan.json registers zero hypotheses and the pipeline published no estimate/test claims, so the inferential checklist reduces to: no tests published, no multiplicity question arises; recorded as NOT_APPLICABLE with reason.",
+    "CLM-NET-REVENUE's period, caveats and value are internally consistent except for the population field; the number itself is correct for the spec population.",
+    "R05 (customer lifetime value) is excused by gate_claims_machine with a stated reason (no acquisition date column), which the raw schema confirms."
+  ],
+  "summary": "All five claim values and the row accounting recalculate exactly from raw_data/orders.csv (201/174/26/1; net 35741.52; rate 27/57=0.473684; PL/DE/CZ 11181.67/11032.61/13527.24 summing to the headline), matching gate_claims_machine. One blocker: CLM-NET-REVENUE carries a mislabelled population ('all orders inside the period') while the number is computed on delivered orders only (all-order net over the same period is 41881.34, a 6139.82 EUR difference), and the claim's own caveats contradict its population field.",
+  "wall_seconds": 193.2,
+  "cost": {
+    "at": "2026-09-19T06:39:38.135789+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-0fb00fae4ca1",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-19T06:36:32.253135+00:00",
+    "finished_at": "2026-09-19T06:39:38.133773+00:00",
+    "wall_seconds": 185.891,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 48369,
+    "cached_input_tokens": 272960,
+    "output_tokens": 4182,
+    "total_tokens": 327072,
+    "cost_usd": 0.01098939
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "m_dedup_rule_misstated",
+  "dataset": "messy",
+  "error": "The answer to R02 says the first revision of an order is kept; the spec and the clean stage keep the last.",
+  "at": "2026-09-16T17:00:07+00:00",
+  "max_v2_revision": "05bbc25",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "first revision",
+    "last revision|latest|latest_revision_wins|dedup_rule"
+  ],
+  "blocking_issues": 1,
+  "warnings": 9,
+  "checks": 26,
+  "issue_ids": [
+    "GCA-DEDUP-RULE-MISSTATED-R02"
+  ],
+  "issue_texts": [
+    "GCA-DEDUP-RULE-MISSTATED-R02 | gate_claims_auditor.dedup_rule_stated | gate_claims_auditor|dedup_rule_stated|analysis/answers/R02.json|CLM-ORDERS | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R02.json caveats[0] says the first revision of a repeated order is kept and cites audit_spec.yaml dedup_rule for it; audit/audit_spec.yaml dedup_rule is latest_revision_wins and audit/check_plan"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The stage prompt says independent_claim_recalc.json is rooted in clean_data/, but audit/check_plan.json binds claims_recomputed to raw_latest and the file lists raw_data/orders.csv as source; this is stronger rooting than the prompt describes and is not a finding, while recompute_estimate and min_gr",
+    "No deterministic rule reads the text of analysis/answers/*.json beyond the question and facts fields, so caveat wording and the hypothesis blocks in R03 and R04 are checked only by this auditor; the dedup misstatement above is exactly such a gap.",
+    "R03 and R04 carry test statistics, p-values and effect sizes that are not in claim_register.json; they recompute from quarantine (z 26.718455, Welch t 42.699880, difference 0.119652, Cohen d 0.486900) but have no claim_id, so hypotheses_registered, multiplicity, effect_floor and power_declared passe",
+    "R03 and R04 hypothesis blocks give n_per_group but no explicit groups field; the order direct-then-partner matches the plan's first-group assumption and the counts match the recomputation.",
+    "The CLM-COMPLETION-* caveats do not say in words that cancelled and pending orders are in the denominator; the recomputed denominator (24597 and 19934, the whole channel population) confirms they are, so this is a wording weakness, not a number error.",
+    "Student t quantiles in evidence/recompute_claims.py came from a Cornish-Fisher expansion because scipy was not used; at 12054 and more degrees of freedom this agrees with the gate's bounds to better than 1e-6.",
+    "audit/human_decisions.yaml and audit/prompts/COMMON_CONTRACT.md are not in this step's allowed input paths and were not opened; the common contract was read as inlined in the stage prompt.",
+    "Two directory-listing shell commands (ls and find over the workspace) were attempted and denied before running; file discovery was done with Glob instead. The only commands run were the two evidence scripts in the prescribed python form and a date -u clock read.",
+    "No sentence from the quarantined free-text column appears in analysis/ (searched for injection-style wording in claim_register.json and all five answers, no matches)."
+  ],
+  "summary": "All six claims recompute exactly from quarantine/orders.csv under last-revision-wins, and every claim role matches its metric byte for byte, but analysis/answers/R02.json caveat states the deduplication keeps the first revision and attributes that to audit_spec.yaml dedup_rule, which declares latest_revision_wins; keep-first would give different figures (net revenue 3010704.83, completion direct 0.722161), so the published answer misdescribes how its own number was produced.",
+  "wall_seconds": 201.4,
+  "cost": {
+    "at": "2026-09-16T17:03:34.442010+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-16T17:00:15.736087+00:00",
+    "finished_at": "2026-09-16T17:03:34.442010+00:00",
+    "wall_seconds": 198.703,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 36,
+    "cached_input_tokens": 1816621,
+    "output_tokens": 20397,
+    "total_tokens": 1837054,
+    "cost_usd": 2.4439024999999996
+  }
+}

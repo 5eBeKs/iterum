@@ -1,0 +1,58 @@
+{
+  "profile": "gpt-build",
+  "stage": "claims",
+  "case": "question_restated_narrower",
+  "error": "R02 is restated without the half that asks on which basis the rate is taken.",
+  "at": "2026-09-16T09:03:15+00:00",
+  "max_v2_revision": "7e1d71f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R02",
+    "basis",
+    "restat|narrow|half|question"
+  ],
+  "blocking_issues": 1,
+  "warnings": 1,
+  "checks": 9,
+  "issue_ids": [
+    "CLAIMS-R02-QUESTION-SCOPE"
+  ],
+  "warning_texts": [
+    "audit/check_plan.json has no deterministic comparison between each answer's stored question scope and raw_data/questions.md, so questions_are_answered.R02 passes a presence check despite the narrowed R02 restatement."
+  ],
+  "summary": "All five claim values, populations, periods, and the paying-customer refund denominator independently reconcile to raw_data/orders.csv, but the R02 answer artifact narrows the source question and therefore does not preserve its full requested scope.",
+  "wall_seconds": 13638.7,
+  "cost": {
+    "at": "2026-09-16T12:50:35.879757+00:00",
+    "launcher": "codex_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-5a4283e13bce",
+    "agent_role": "gpt-audit-claims",
+    "started_at": "2026-09-16T12:48:05.009617+00:00",
+    "finished_at": "2026-09-16T12:50:35.879757+00:00",
+    "wall_seconds": 150.859,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "gpt-5.6-sol",
+    "model_used": null,
+    "input_tokens": 1475820,
+    "cached_input_tokens": null,
+    "output_tokens": 15121,
+    "total_tokens": 1490941,
+    "cost_usd": null
+  }
+}

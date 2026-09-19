@@ -1,0 +1,57 @@
+{
+  "profile": "gpt-build",
+  "stage": "release",
+  "case": "sum_sentence_false",
+  "error": "The page says the country figures sum to the headline before refunds; both are net of refunds.",
+  "at": "2026-09-15T22:40:08+00:00",
+  "max_v2_revision": "7e1d71f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "before refunds",
+    "sum"
+  ],
+  "blocking_issues": 1,
+  "warnings": 1,
+  "checks": 20,
+  "issue_ids": [
+    "GATE-RELEASE-AUDITOR-COUNTRY-SUM-SEMANTICS"
+  ],
+  "warning_texts": [
+    "The release machine and document gates both passed because the check plan verifies number binding, claim presence, and caveat presence but has no deterministic rule for the accuracy of the explanatory sentence at release/report.md:22."
+  ],
+  "summary": "All 21 displayed business numbers, claim roles, precision rules, caveats, the refund ratio, and the country-to-headline reconciliation pass, but release/report.md falsely says the net country figures sum before refunds are deducted.",
+  "wall_seconds": 337.1,
+  "cost": {
+    "at": "2026-09-15T22:45:48.461848+00:00",
+    "launcher": "codex_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-2d6c7df936d1",
+    "agent_role": "gpt-audit-release",
+    "started_at": "2026-09-15T22:40:13.745038+00:00",
+    "finished_at": "2026-09-15T22:45:48.461848+00:00",
+    "wall_seconds": 334.719,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "gpt-5.6-sol",
+    "model_used": null,
+    "input_tokens": 1509561,
+    "cached_input_tokens": null,
+    "output_tokens": 14760,
+    "total_tokens": 1524321,
+    "cost_usd": null
+  }
+}

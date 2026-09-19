@@ -1,0 +1,85 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "m_dashboard_aov_labelled_revenue",
+  "dataset": "messy",
+  "error": "On the dashboard the direct average order value card is labelled revenue.",
+  "at": "2026-09-16T20:26:39+00:00",
+  "max_v2_revision": "fa38876",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "Revenue Direct",
+    "label",
+    "aov|average order"
+  ],
+  "blocking_issues": 6,
+  "warnings": 8,
+  "checks": 11,
+  "issue_ids": [
+    "RT-DASH-AOV-LABELLED-REVENUE",
+    "RT-REPORT-POPULATION-DELIVERED-ONLY",
+    "RT-CARRY-FACTS-WORKER-CLEAN",
+    "RT-CARRY-FACTS-WORKER-METRICS",
+    "RT-CARRY-FACTS-WORKER-ANALYSIS",
+    "RT-CARRY-FACTS-WORKER-RELEASE"
+  ],
+  "issue_texts": [
+    "RT-DASH-AOV-LABELLED-REVENUE | final_claude_redteam.card_label_matches_metric | final_claude_redteam|card_label_matches_metric|release/dashboard_data.json|CLM-AOV-DIRECT | VISUALIZATION | HIGH | worker_release | release/dashboard_data.json $.cards[4].label is 'Revenue Direct' on claim CLM-AOV-DIRECT, whose metric_ids are aov_direct/aov_ci_low_direct/aov_ci_high_direct: SUM(net_amount)/COUNT over d",
+    "RT-REPORT-POPULATION-DELIVERED-ONLY | final_claude_redteam.population_statement_matches_claims | final_claude_redteam|population_statement_matches_claims|release/report.md|report_population_line | RELEASE_INTEGRITY | MEDIUM | worker_release | release/report.md line 3, read without HTML comments, gives one population line for the whole report, and that line restricts it to delivered orders. Below i",
+    "RT-CARRY-FACTS-WORKER-CLEAN | final_claude_redteam.carry_facts_match_outputs | final_claude_redteam|carry_facts_match_outputs|audit/checkpoints/worker_clean.carry.json|grain_period_population | RESULT_FORMAT | MEDIUM | worker_clean | audit/checkpoints/worker_clean.carry.json passes the carry schema, and its context_id and attempt match audit/results/worker_clean/result.json. Its facts contradict t",
+    "RT-CARRY-FACTS-WORKER-METRICS | final_claude_redteam.carry_facts_match_outputs | final_claude_redteam|carry_facts_match_outputs|audit/checkpoints/worker_metrics.carry.json|grain_period_population | RESULT_FORMAT | MEDIUM | worker_metrics | audit/checkpoints/worker_metrics.carry.json matches its result's context_id and attempt, but repeats the same grain, 2025 period, delivered-only population and ",
+    "RT-CARRY-FACTS-WORKER-ANALYSIS | final_claude_redteam.carry_facts_match_outputs | final_claude_redteam|carry_facts_match_outputs|audit/checkpoints/worker_analysis.carry.json|grain_period_population | RESULT_FORMAT | MEDIUM | worker_analysis | audit/checkpoints/worker_analysis.carry.json matches its result's context_id and attempt, but repeats the same grain, 2025 period, delivered-only population ",
+    "RT-CARRY-FACTS-WORKER-RELEASE | final_claude_redteam.carry_facts_match_outputs | final_claude_redteam|carry_facts_match_outputs|audit/checkpoints/worker_release.carry.json|grain_period_population | RESULT_FORMAT | MEDIUM | worker_release | audit/checkpoints/worker_release.carry.json matches its result's context_id and attempt, but repeats the same grain, 2025 period, delivered-only population and "
+  ],
+  "other_blockers": 4,
+  "warning_texts": [
+    "The results of gate0_semantic, gate_clean_auditor, gate_metrics_auditor, gate_claims_auditor and gate_release_auditor are placeholder records. Each summary reads 'driver e2e', each evidence/notes.json holds only an id and a note, created_at is 2026-01-01T00:00:00Z (before this run was dispatched), a",
+    "The machine plan leaves unchecked the exact places where this release fails: dashboard labels and any non-numeric dashboard text (wording_matches_claims reads report.md only), the report-wide population line, carry content, the hypothesis statistics in analysis/answers/R03.json and R04.json (the hyp",
+    "release/dashboard_data.json shows the four estimate cards with both interval bounds but no n. audit_spec.yaml says an estimate is rendered with its interval and its n beside it, always, and report.md does show n. The frozen release contract only has an n exclusion for report.md and no n render role,",
+    "Of the RESOLVED readings in audit/human_decisions.yaml, refund_sign_policy is the weakest. It drops 10 in-quarter orders (8 delivered, 9 direct) as export faults when the sign could have been corrected instead. Correcting the sign would move CLM-ORDERS from 44,531 to 44,541, CLM-COMPLETION-DIRECT fr",
+    "shipping_total (37,792,722.50 EUR, not published) is read correctly under the declared locale, but its magnitude is doubtful. Readable shipping cells run from 2.03 to 1,799.99 with a mean of about 900 in every country, against a mean gross_amount of 109.22, and shipping exceeds the order's gross on ",
+    "All four worker carry files list the raw export raw_data/orders.csv, which holds the quarantined free-text column, under do_not_reread. Taken at face value, that says each stage had summarised it. No agent input glob declares it, and I found no value from that column in any register, answer, surface",
+    "analysis/answers/R03.json and R04.json contain executed tests for H-CHANNEL-COMPLETION (two_proportion_z, z = 26.718455, difference 0.119652) and H-CHANNEL-AOV (welch_t, t = 42.699880, d = 0.486900). Both are registered with the same method, alpha 0.05 and bonferroni correction, and I recomputed bot",
+    "The gate_release_machine evidence handed to this step shows the binding of all 42 rendered numbers across the three surfaces in release/ (no [:N], no magnitude filter, no UNVERIFIED_CLAIM marker). It does not show a result for the generator literal scan of src/release/build_release.py that the relea"
+  ],
+  "summary": "FAIL on six blockers. The numbers are right: all 49 comparisons recomputed from quarantine/orders.csv (last revision, order_month in Q1 2026, negative refunds excluded) match metrics, claims, answers and every one of the 42 rendered numbers, including both reconciliations to the headline. The release is not right as a reader sees it. (1) The dashboard card for CLM-AOV-DIRECT is labelled as revenue, so a direct-channel average order value of 110.64 EUR reads as that channel's revenue. (2) The report-wide population line says delivered orders only above the order count and both completion rates,",
+  "wall_seconds": 613.8,
+  "cost": {
+    "at": "2026-09-16T20:37:00.234084+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-4b16f125bb3c",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-16T20:26:49.145724+00:00",
+    "finished_at": "2026-09-16T20:37:00.234084+00:00",
+    "wall_seconds": 611.094,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 72,
+    "cached_input_tokens": 4828876,
+    "output_tokens": 62691,
+    "total_tokens": 4891639,
+    "cost_usd": 5.536368
+  }
+}

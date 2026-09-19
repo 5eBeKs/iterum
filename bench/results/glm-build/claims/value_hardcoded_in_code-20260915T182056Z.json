@@ -1,0 +1,50 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "value_hardcoded_in_code",
+  "error": "The analysis code writes the headline as a literal instead of reading the metrics registry; the number happens to be right.",
+  "at": "2026-09-15T18:18:57+00:00",
+  "max_v2_revision": "1d34cf0",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "PASS",
+  "stop_code": null,
+  "outcome": "missed",
+  "matched_signals": [],
+  "blocking_issues": 0,
+  "warnings": 0,
+  "checks": 12,
+  "issue_ids": [],
+  "warning_texts": [],
+  "summary": "All five claims independently recomputed from raw_data/orders.csv match the claim register and the machine gate within tolerance; refund_rate basis is paying_customers as ruled; machine recalc rooted only in raw sources.",
+  "wall_seconds": 115.5,
+  "cost": {
+    "at": "2026-09-15T18:20:55.252564+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-6396da082574",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-15T18:19:03.052661+00:00",
+    "finished_at": "2026-09-15T18:20:55.250442+00:00",
+    "wall_seconds": 112.203,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 42992,
+    "cached_input_tokens": 218944,
+    "output_tokens": 4439,
+    "total_tokens": 267171,
+    "cost_usd": 0.007817310000000001
+  }
+}

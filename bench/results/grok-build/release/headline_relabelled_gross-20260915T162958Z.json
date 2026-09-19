@@ -1,0 +1,61 @@
+{
+  "profile": "grok-build",
+  "stage": "release",
+  "case": "headline_relabelled_gross",
+  "error": "The page calls net revenue 'Gross revenue'; the number is net of refunds.",
+  "at": "2026-09-15T16:20:16+00:00",
+  "max_v2_revision": "0703cb4",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "gross",
+    "label",
+    "net revenue"
+  ],
+  "blocking_issues": 1,
+  "warnings": 4,
+  "checks": 30,
+  "issue_ids": [
+    "HEADLINE-LABEL-GROSS-NOT-NET"
+  ],
+  "warning_texts": [
+    "The frozen check plan for this stage has no rule that compares a KPI label to the claim or metric name, so the machine gates could not have caught Gross versus net; that silence is not approval.",
+    "The same CLM-NET-REVENUE figure is labelled Gross revenue on release/report.md line 7 and Net revenue (EUR) on release/dashboard_data.json cards[0].",
+    "claims_rendered in the plan covers only release/report.md; dashboard cards were outside that rule, while caveats_rendered covered both surfaces.",
+    "check_plan.json accepted_unproven lists caveats_rendered and claims_rendered because plan proof could not open claim_register.json in a temporary directory; those rules still ran at this gate and reported present."
+  ],
+  "summary": "release/report.md line 7 labels CLM-NET-REVENUE as Gross revenue while the bound 35,741.52 is independent raw net 35741.52 (gross 40235.02); dashboard and generator say Net; 21 displayed numbers match the register; machine gates did not skip surfaces and did not check the label.",
+  "wall_seconds": 578.1,
+  "cost": {
+    "at": "2026-09-15T16:29:57.394330+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-d10a40800117",
+    "agent_role": "grok-audit-release",
+    "started_at": "2026-09-15T16:20:22.148070+00:00",
+    "finished_at": "2026-09-15T16:29:57.394330+00:00",
+    "wall_seconds": 575.25,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 115690,
+    "cached_input_tokens": 2007936,
+    "output_tokens": 33713,
+    "total_tokens": 2157339,
+    "cost_usd": 0.48879284
+  }
+}

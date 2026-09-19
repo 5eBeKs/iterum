@@ -1,0 +1,69 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "m_interval_read_as_probability",
+  "dataset": "messy",
+  "error": "The answer to R03 reads each 0.95 interval as a 95% probability that the true rate lies inside it.",
+  "at": "2026-09-19T06:51:14+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "probab",
+    "95 ?%",
+    "confidence|frequentist|coverage|credible|bayes"
+  ],
+  "blocking_issues": 2,
+  "warnings": 5,
+  "checks": 41,
+  "issue_ids": [
+    "CLAIMS-R03-CI-READ-AS-PROBABILITY",
+    "CLAIMS-R03-BARE-NUMBER-IN-CAVEAT"
+  ],
+  "issue_texts": [
+    "CLAIMS-R03-CI-READ-AS-PROBABILITY | gate_claims_auditor.interval_interpretation.R03 | gate_claims_auditor|interval_interpretation|analysis/answers/R03.json|caveats | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R03.json caveats[0] states a 95 per cent probability that each channel's true completion rate lies inside its interval. The intervals for CLM-COMPLETION-DIRECT and CLM-COMPLETI",
+    "CLAIMS-R03-BARE-NUMBER-IN-CAVEAT | gate_claims_auditor.caveat_bare_number.R03 | gate_claims_auditor|caveat_bare_number|analysis/answers/R03.json|caveats | CLAIM_SUPPORT | MEDIUM | worker_analysis | analysis/answers/R03.json caveats[0] contains the digits 95 followed by a percent sign, bound to no claim_id and no metric; the stage-prompt addition states a bare number in a caveat is a finding becaus"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "No rule in audit/check_plan.json reads the free wording of analysis/answers/*.json; interval and test interpretation in the answers is checked only by this auditor, and the one misreading found here passed the machine gate with 114 green checks.",
+    "Both tests carry alpha 0.05 with correction bonferroni, but neither the register nor R03/R04 states the per-test threshold (0.025 over the two registered tests); with p below 1e-10 the conclusions are unaffected, but the correction is named rather than shown applied.",
+    "The p values of both tests are stored as 0.0000000000 with display_digits 4; rendered literally that reads as p = 0 and should appear as below 0.0001 on the release surfaces.",
+    "shipping_total in metrics/calculated_metrics.json is about 850 EUR per in-period order against a gross_amount maximum of 312.16 in the plan's profile, which suggests the locale parsing inflated values; the metric is excused from publication, but R05's statement that the total understates itself may ",
+    "Country mix is nearly identical across channels (each country 33-34 per cent in both), so the completion and AOV gaps are not a country-mix artefact; they keep their sign in all three countries and all three months."
+  ],
+  "summary": "All eight claims reproduce from quarantine/orders.csv (orders 44531, net revenue 3023296.61, completion direct 0.724397 [0.718779, 0.729946] and partner 0.604746 [0.597939, 0.611512], AOV 110.64 / 87.27 with their Student bounds, both registered tests) and the claim -> metric -> plan chain is byte-equal. Channel differences keep their sign in every country and month stratum; denominators include cancelled and pending. FAIL on interpretation: analysis/answers/R03.json caveat reads the 95% Wilson confidence interval as a 95% probability that the true rate lies inside it, contradicting the regist",
+  "wall_seconds": 216.0,
+  "cost": {
+    "at": "2026-09-19T06:54:57.125282+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-19T06:51:24.216372+00:00",
+    "finished_at": "2026-09-19T06:54:57.125282+00:00",
+    "wall_seconds": 212.906,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 34,
+    "cached_input_tokens": 1579303,
+    "output_tokens": 21790,
+    "total_tokens": 1601127,
+    "cost_usd": 2.3580254999999997
+  }
+}

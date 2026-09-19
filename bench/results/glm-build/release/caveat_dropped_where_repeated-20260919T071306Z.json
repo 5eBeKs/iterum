@@ -1,0 +1,68 @@
+{
+  "profile": "glm-build",
+  "stage": "release",
+  "case": "caveat_dropped_where_repeated",
+  "dataset": "orders",
+  "error": "The headline's caveat line no longer says net of refunds; only a sentence about the country table still does.",
+  "at": "2026-09-19T07:07:41+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "(headline|CLM-NET-REVENUE|net revenue).{0,160}net of refunds",
+    "caveat.{0,80}(missing|dropped|lost|absent|omitted|removed)",
+    "(missing|dropped|lost|absent|omitted|removed).{0,80}caveat"
+  ],
+  "blocking_issues": 2,
+  "warnings": 4,
+  "checks": 10,
+  "issue_ids": [
+    "CAVEAT-DROPPED-REPORT-HEADLINE",
+    "GATE-PASS-RECORDED-FOR-DROPPED-CAVEAT"
+  ],
+  "issue_texts": [
+    "CAVEAT-DROPPED-REPORT-HEADLINE | gate_release_auditor.caveat_rendered.CLM-NET-REVENUE.report | gate_release_auditor|caveats_rendered|release/report.md|CLM-NET-REVENUE | RELEASE_INTEGRITY | HIGH | worker_release | analysis/claim_register.json declares for CLM-NET-REVENUE the caveats ['net of refunds', 'delivered orders only', 'period boundaries are inclusive on both ends']. release/report.md line 8",
+    "GATE-PASS-RECORDED-FOR-DROPPED-CAVEAT | gate_release_auditor.caveats_rendered.CLM-NET-REVENUE.report | gate_release_document|caveats_rendered|release/report.md|CLM-NET-REVENUE | RELEASE_INTEGRITY | HIGH | gate_release_document | audit/results/gate_release_document/evidence/checks.json (and result.json) record caveats_rendered.CLM-NET-REVENUE|release/report.md status PASS, 'every caveat shown on th"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "audit/check_plan.json 'accepted_unproven' records that both gate_release_document rules (claims_rendered and caveats_rendered) were accepted during plan proof only because analysis/claim_register.json raised FileNotFoundError in the proof environment, so these two rules have never been demonstrated ",
+    "The release generator literal check could not be performed: src/release/build_release.py (declared in audit/release_surface_contract.json generator_sources) is not in this stage's allowed input paths, and gate_release_machine's evidence contains no checks.json covering generator literals.",
+    "raw_data/orders.csv is not in this stage's allowed input paths, so my recomputation of the headline and refund rate ran on cross-identities within the release-bound registries (component sum, gross-minus-refunds, 27/57 ratio) rather than from raw; the raw-based recount belongs to gate_claims_machine",
+    "The period labels '2025-01-01..2025-03-30' and dashboard $.period are date strings, excluded from number binding per audit/release_surface_contract.json text_exclusions/json_exclusions."
+  ],
+  "summary": "All 21 displayed numbers across the three release surfaces bind to their claim_id/role and match the registry rendering exactly (money 2 digits, proportion 6 digits, comma formatting consistent); component sum 11181.67+11032.61+13527.24 = 35741.52 holds and 27/57 = 0.473684 holds; no UNVERIFIED_CLAIM markers. FAIL on one finding: release/report.md drops the registry-declared caveat 'net of refunds' from the headline card CLM-NET-REVENUE (line 8 shows only 'delivered orders only; period boundaries are inclusive on both ends'), while the same claim on release/dashboard_data.json carries all thre",
+  "wall_seconds": 319.9,
+  "cost": {
+    "at": "2026-09-19T07:13:04.842906+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-30282491a1f4",
+    "agent_role": "glm-audit-release",
+    "started_at": "2026-09-19T07:07:49.427753+00:00",
+    "finished_at": "2026-09-19T07:13:04.839387+00:00",
+    "wall_seconds": 315.422,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 68561,
+    "cached_input_tokens": 899840,
+    "output_tokens": 9149,
+    "total_tokens": 981240,
+    "cost_usd": 0.02623971
+  }
+}

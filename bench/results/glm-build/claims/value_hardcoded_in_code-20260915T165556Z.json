@@ -1,0 +1,52 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "value_hardcoded_in_code",
+  "error": "The analysis code writes the headline as a literal instead of reading the metrics registry; the number happens to be right.",
+  "at": "2026-09-15T16:53:09+00:00",
+  "max_v2_revision": "0703cb4",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "PASS",
+  "stop_code": null,
+  "outcome": "warned",
+  "matched_signals": [
+    "35741\\.52"
+  ],
+  "blocking_issues": 0,
+  "warnings": 0,
+  "checks": 9,
+  "issue_ids": [],
+  "warning_texts": [],
+  "summary": "All five claims independently recounted from raw_data/orders.csv only: CLM-NET-REVENUE 35741.52 EUR, CLM-REFUND-RATE 0.473684 (27 refunded paying customers / 57 paying customers), CLM-NET-PL 11181.67, CLM-NET-DE 11032.61, CLM-NET-CZ 13527.24 EUR. Every register value matches within tolerance; every gate_claims_machine claims_recomputed comparison reproduced independently.",
+  "wall_seconds": 163.0,
+  "cost": {
+    "at": "2026-09-15T16:55:55.204427+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-33521a883325",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-15T16:53:16.159109+00:00",
+    "finished_at": "2026-09-15T16:55:55.204427+00:00",
+    "wall_seconds": 159.047,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 138411,
+    "cached_input_tokens": 155264,
+    "output_tokens": 3928,
+    "total_tokens": 298202,
+    "cost_usd": 0.013841534999999999
+  }
+}

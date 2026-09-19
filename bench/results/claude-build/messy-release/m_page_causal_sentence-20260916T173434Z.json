@@ -1,0 +1,70 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "m_page_causal_sentence",
+  "dataset": "messy",
+  "error": "The page explains the smaller partner baskets by bargain hunters, which nothing in the audit measures.",
+  "at": "2026-09-16T17:31:16+00:00",
+  "max_v2_revision": "920704d",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "caus|explan|unsupported|no (evidence|metric|claim)"
+  ],
+  "blocking_issues": 3,
+  "warnings": 6,
+  "checks": 13,
+  "issue_ids": [
+    "RA-UNSUPPORTED-CAUSAL-ATTRIBUTION",
+    "RA-REPORT-POPULATION-MISLABELLED",
+    "RA-DASHBOARD-CARD-CONTEXT-MISSING"
+  ],
+  "issue_texts": [
+    "RA-UNSUPPORTED-CAUSAL-ATTRIBUTION | gate_release_auditor.no_unsupported_claims | gate_release_auditor|no_unsupported_claims|release/report.md|partner_aov_causal_attribution | CLAIM_SUPPORT | HIGH | worker_release | release/report.md line 25 is a free-standing sentence with no claim anchor. It says why the partner channel's average order is smaller, putting it down to the kind of customer the chann",
+    "RA-REPORT-POPULATION-MISLABELLED | gate_release_auditor.population_on_surface | gate_release_auditor|population_on_surface|release/report.md|report_population_delivered_only | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3 gives the population for the whole report and ends by limiting it to delivered orders. It is the report's only population statement; no list item states it",
+    "RA-DASHBOARD-CARD-CONTEXT-MISSING | gate_release_auditor.card_context | gate_release_auditor|card_context|release/dashboard_data.json|cards_population_period_unit_n | VISUALIZATION | HIGH | worker_release | In release/dashboard_data.json, $.cards[0] to $.cards[5] each carry only claim_id, label, value, caveats and, on estimates, ci_low and ci_high. No card has a population, a period, a unit or, on"
+  ],
+  "other_blockers": 2,
+  "warning_texts": [
+    "audit/check_plan.json gate_release_document.wording_matches_claims is the only deterministic rule that reads prose on a surface. Here it passed with 'no word in the dictionary appears on any surface', while release/report.md line 25 makes a causal attribution. Its dictionary does not cover causal co",
+    "audit/release_surface_contract.json declares reconciliations: [] and card_caveat_requirements: []. No machine gate checked the reconciliation identities (net revenue against the sum of the channel AOV numerators, orders against the sum of the completion denominators, delivered counts against the AOV",
+    "I could not check where the sentence on release/report.md line 25 came from. gate_release_document free_text_quarantined.values compared only a sample of 25 quarantined values against the surfaces. Someone who can read quarantine/manifest.json and the quarantined column should confirm the sentence i",
+    "gate_release_machine evidence reports 42 numbers across 3 surfaces (report.md, dashboard_data.json, release_number_manifest.json). That set covers every file under release/, so surface enumeration is complete. Its result says nothing about scanning the generator src/release/build_release.py for nume",
+    "The Student intervals of CLM-AOV-DIRECT and CLM-AOV-PARTNER need per-order net_amount from the clean table. In this step's inputs only their shape was checkable: both bounds are on the correct side and roughly symmetric (0.76/0.75 and 0.77/0.76 EUR). Their values rest on gate_claims_machine.recomput",
+    "Presentation: in release/report.md lines 18 and 20 the AOV figures and bounds have no EUR unit, and the list labels ('completion direct', 'aov partner') are raw identifiers. In release/dashboard_data.json the labels are title-cased identifiers ('Aov Direct', 'Aov Partner'). The prose on report.md li"
+  ],
+  "summary": "Every one of the 42 bound numbers on the three release surfaces matches the registry, and I re-derived the numbers behind them myself: reconciliation identities, segment ratios, Wilson bounds, n and display formatting. I also found no unbound business number on either page. The release still fails on three text and layout blockers, all owned by worker_release. (1) release/report.md line 25 gives a cause for the partner channel's smaller baskets: the kind of customer it attracts. No claim, hypothesis or column supports that. (2) release/report.md line 3 describes the whole report as covering de",
+  "wall_seconds": 193.3,
+  "cost": {
+    "at": "2026-09-16T17:34:32.941273+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-1ec424ea468d",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-16T17:31:22.179984+00:00",
+    "finished_at": "2026-09-16T17:34:32.941273+00:00",
+    "wall_seconds": 190.766,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 24,
+    "cached_input_tokens": 994209,
+    "output_tokens": 19629,
+    "total_tokens": 1013862,
+    "cost_usd": 1.8020520000000002
+  }
+}

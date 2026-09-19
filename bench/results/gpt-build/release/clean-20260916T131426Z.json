@@ -1,0 +1,53 @@
+{
+  "profile": "gpt-build",
+  "stage": "release",
+  "case": "clean",
+  "error": "no defect planted (false-positive control)",
+  "at": "2026-09-16T13:06:46+00:00",
+  "max_v2_revision": "e48d886",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "PASS",
+  "stop_code": null,
+  "outcome": "clean_pass",
+  "matched_signals": [],
+  "blocking_issues": 0,
+  "warnings": 2,
+  "checks": 50,
+  "issue_ids": [],
+  "warning_texts": [
+    "audit/check_plan.json records claims_rendered and caveats_rendered as accepted_unproven because their plan-proof fixtures lacked analysis/claim_register.json; this audit directly rechecked both rules on the current report and dashboard and found no discrepancy.",
+    "audit/results/gate_release_machine/evidence/release_surface_gate.json contains 21 per-number observations but no check_id fields or evidence/checks.json index, so those independently reproduced observations use machine_check null; their exact set equality is recorded in recompute_release_output.json"
+  ],
+  "summary": "All 21 rendered business-number instances are claim-bound, source-consistent, and exactly formatted; country and refund-rate reconciliations pass, visible reader context is complete, and all 15 document-gate comparisons were independently reproduced.",
+  "wall_seconds": 457.1,
+  "cost": {
+    "at": "2026-09-16T13:14:25.179033+00:00",
+    "launcher": "codex_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-483256b84a02",
+    "agent_role": "gpt-audit-release",
+    "started_at": "2026-09-16T13:06:50.641335+00:00",
+    "finished_at": "2026-09-16T13:14:25.176987+00:00",
+    "wall_seconds": 454.531,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "gpt-5.6-sol",
+    "model_used": null,
+    "input_tokens": 763566,
+    "cached_input_tokens": null,
+    "output_tokens": 18885,
+    "total_tokens": 782451,
+    "cost_usd": null
+  }
+}

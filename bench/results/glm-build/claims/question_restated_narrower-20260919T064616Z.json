@@ -1,0 +1,67 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "question_restated_narrower",
+  "dataset": "orders",
+  "error": "R02 is restated without the half that asks on which basis the rate is taken.",
+  "at": "2026-09-19T06:41:12+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R02",
+    "basis",
+    "restat|narrow|half|question"
+  ],
+  "blocking_issues": 2,
+  "warnings": 3,
+  "checks": 16,
+  "issue_ids": [
+    "ANSWER-QUESTION-NARROWED-R01",
+    "ANSWER-QUESTION-NARROWED-R02"
+  ],
+  "issue_texts": [
+    "ANSWER-QUESTION-NARROWED-R01 | gate_claims_auditor.question_restated_narrower | gate_claims_auditor|question_restated_narrower|analysis/answers/R01.json|question_field | CLAIM_SUPPORT | MEDIUM | worker_analysis | audit/results/gate_claims_auditor/evidence/question_alignment.py/json: raw_data/questions.md asks 'What is net revenue for the reported quarter, over delivered orders inside the period?' ",
+    "ANSWER-QUESTION-NARROWED-R02 | gate_claims_auditor.question_restated_narrower | gate_claims_auditor|question_restated_narrower|analysis/answers/R02.json|question_field | CLAIM_SUPPORT | MEDIUM | worker_analysis | audit/results/gate_claims_auditor/evidence/question_alignment.py/json: raw_data/questions.md R02 asks 'What is the refund rate, and on which basis -- order rows or paying customers?' but "
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "R03 and R04 answer files paraphrase the questions without narrowing them; R04 says 'under which rule' instead of 'under which of the spec's allowed exclusions' but the answer states both spec exclusions, so only R01 and R02 were scored.",
+    "R02's basis statement survives only in a caveat ('The basis is paying customers, ruled in audit_spec.yaml as refund_rate_basis'), so the substantive answer is correct even though the question record is narrowed.",
+    "check_plan coverage vs gaps: caveats_declared and questions_are_answered do not require the answer's question field to match raw_data/questions.md, which is why the narrowing passed Gate 3 machine; nothing else material is uncovered by deterministic rules in the claims stage."
+  ],
+  "summary": "All five registered claims and every row-accounting figure reproduce exactly from raw_data/orders.csv (net 35741.52 EUR; refund rate 27/57 = 0.473684 paying customers; PL/DE/CZ sum to headline; 201 = 174+26+1); machine-gate comparisons cited per check. One blocker: analysis/answers/R01.json and R02.json restate the questions narrower than asked -- R01 drops the population clause, R02 drops the basis sub-question (order rows vs paying customers), the dataset's central ruling.",
+  "wall_seconds": 299.5,
+  "cost": {
+    "at": "2026-09-19T06:46:15.045597+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-c6d828c92270",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-19T06:41:19.913756+00:00",
+    "finished_at": "2026-09-19T06:46:15.045597+00:00",
+    "wall_seconds": 295.14,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 133621,
+    "cached_input_tokens": 330496,
+    "output_tokens": 5759,
+    "total_tokens": 473449,
+    "cost_usd": 0.020774418
+  }
+}

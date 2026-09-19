@@ -1,0 +1,66 @@
+{
+  "profile": "grok-build",
+  "stage": "release",
+  "case": "m_population_line_all_rows",
+  "dataset": "messy",
+  "error": "The page's population line says every export row; the figures are over one row per order after deduplication.",
+  "at": "2026-09-19T08:55:27+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "every row|export row|revision|dedup|one row per order"
+  ],
+  "blocking_issues": 1,
+  "warnings": 5,
+  "checks": 61,
+  "issue_ids": [
+    "POPULATION-LINE-ALL-ROWS"
+  ],
+  "issue_texts": [
+    "POPULATION-LINE-ALL-ROWS | gate_release_auditor.population_line | gate_release_auditor|population_line|release/report.md|headline | VISUALIZATION | CRITICAL | worker_release | release/report.md line 3 reads Population: every row of the export inside the quarter, delivered only. analysis/claim_register.json CLM-ORDERS.population is orders placed inside the quarter, one row per order; CLM-NET-REVENU"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "audit/results/gate_release_machine/evidence/checks.json is absent; this stage's number evidence is release_surface_gate.json, which bound 60 numbers on all three contract surfaces and skipped none.",
+    "Both the surface-number gate and gate_release_document passed; they check bound digits and registered caveat strings, not the page-level Population sentence, so their PASS is not a disagreement on a recomputed figure.",
+    "Dashboard JSON cards for the four estimates carry ci_low and ci_high but no n; report.md does print n matching each claim.",
+    "AOV bullets on report.md do not repeat net of refunds or delivered orders only on the same card; those phrases sit on the revenue card and in the unrendered AOV claim.population, and caveats_declared does not require them for AOV.",
+    "The page-level delivered-only wording would make a completion rate read as among delivered orders; the channel bullets do say orders in this channel, which is the registered caveat, but it fights the headline Population sentence."
+  ],
+  "summary": "Displayed figures recompute from raw_data/orders.csv to the registry (net revenue 3023296.61, orders 44531, channel rates and AOV and both registered tests). release/report.md line 3 tells the reader the population is every row of the export inside the quarter, delivered only; the spec and CLM-ORDERS population are one row per order after deduplication, and 44531 is not the delivered count (29873). Machine and document gates passed because they bind numbers and registered caveat strings, not that Population sentence.",
+  "wall_seconds": 633.8,
+  "cost": {
+    "at": "2026-09-19T09:06:05.283490+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-203b417a7572",
+    "agent_role": "grok-audit-release",
+    "started_at": "2026-09-19T08:55:34.985198+00:00",
+    "finished_at": "2026-09-19T09:06:05.283490+00:00",
+    "wall_seconds": 630.297,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 146868,
+    "cached_input_tokens": 2208256,
+    "output_tokens": 36432,
+    "total_tokens": 2391556,
+    "cost_usd": 0.54959504
+  }
+}

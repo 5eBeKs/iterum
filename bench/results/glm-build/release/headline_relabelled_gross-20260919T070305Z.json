@@ -1,0 +1,65 @@
+{
+  "profile": "glm-build",
+  "stage": "release",
+  "case": "headline_relabelled_gross",
+  "dataset": "orders",
+  "error": "The page calls net revenue 'Gross revenue'; the number is net of refunds.",
+  "at": "2026-09-19T06:56:33+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "gross",
+    "label",
+    "net revenue"
+  ],
+  "blocking_issues": 1,
+  "warnings": 3,
+  "checks": 10,
+  "issue_ids": [
+    "REL-HEADLINE-LABEL-GROSS"
+  ],
+  "issue_texts": [
+    "REL-HEADLINE-LABEL-GROSS | gate_release_auditor.headline_label_matches_claim | release|headline_label_mismatch|release/report.md|CLM-NET-REVENUE | VISUALIZATION | CRITICAL | worker_release | release/report.md line 7: '- Gross revenue, EUR: <!-- claim:CLM-NET-REVENUE:value --> 35,741.52'. The anchored claim is metric net_revenue (SUM(gross)-SUM(refund), 'net of refunds' caveat on the same card). sr"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The machine surface gate (audit/results/gate_release_machine/evidence/release_surface_gate.json) recorded the mislabelled line-7 number as bound with zero issues: it verified the rendered text against the registry value but no rule covers headline label wording, since release_surface_contract.json l",
+    "Recount artifact: recount.py prints one false 'MISMATCH' for token '57.' caused by the sentence period captured by the numeric token regex; the displayed integer 57 itself matches the registry.",
+    "The only unanchored numeric tokens on any surface are ISO date labels of the period 2025-01-01..2025-03-30, which release_surface_contract.json explicitly excludes (text_exclusions, json_exclusions)."
+  ],
+  "summary": "All 7 rendered numbers (21 surface instances) were extracted without limit from report.md, dashboard_data.json and release_number_manifest.json, rebound independently to claim_register.json with the claims' own display_digits, and all match exactly; both reconciliation identities hold (country sum 35,741.52 == headline; 27/57 = 0.473684; 40,235.02 - 4,493.50 = 35,741.52); caveats sit on the same card; no UNVERIFIED_CLAIM; generator has no business literals. One blocker: the report headline label reads 'Gross revenue, EUR' over the net_revenue claim CLM-NET-REVENUE (35,741.52) while the generat",
+  "wall_seconds": 388.3,
+  "cost": {
+    "at": "2026-09-19T07:03:04.620445+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-c3729c2756cf",
+    "agent_role": "glm-audit-release",
+    "started_at": "2026-09-19T06:56:40.413684+00:00",
+    "finished_at": "2026-09-19T07:03:04.619445+00:00",
+    "wall_seconds": 384.218,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 49843,
+    "cached_input_tokens": 346176,
+    "output_tokens": 6157,
+    "total_tokens": 405520,
+    "cost_usd": 0.013586837999999999
+  }
+}

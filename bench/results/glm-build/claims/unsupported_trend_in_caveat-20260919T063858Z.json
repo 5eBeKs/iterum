@@ -1,0 +1,66 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "unsupported_trend_in_caveat",
+  "dataset": "orders",
+  "error": "A caveat asserts growth against a previous quarter no metric computes.",
+  "at": "2026-09-19T06:36:24+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "previous quarter",
+    "12 ?%",
+    "trend|growth|grew|unsupported|no metric"
+  ],
+  "blocking_issues": 1,
+  "warnings": 4,
+  "checks": 10,
+  "issue_ids": [
+    "UNSUPPORTED-TREND-CAVEAT"
+  ],
+  "issue_texts": [
+    "UNSUPPORTED-TREND-CAVEAT | gate_claims_auditor.unsupported_caveat_trend | claims|unsupported_caveat_trend|analysis/claim_register.json|CLM-NET-REVENUE | CLAIM_SUPPORT | HIGH | analysis | analysis/claim_register.json CLM-NET-REVENUE caveats[3] states 'up 12% on the previous quarter'. metric_ids = [net_revenue] only; metrics/calculated_metrics.json contains no previous-quarter metric; my recount (au"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "refund_amount_total and the row-accounting metrics are excused from claiming rather than published; the excusal for refund_amount_total is a reasoned one and the R04 figures match my recount exactly.",
+    "Independent recalc evidence independent_claim_recalc.json is rooted only in raw_data/orders.csv, not in analysis/ or release/ - the root-requirement of the stage prompt holds.",
+    "No causal language, cherry-picking, partial-period framing, Simpson's paradox exposure or survivorship filtering was found in the five claims or the R01-R04 answers.",
+    "R05 (customer lifetime value) is excused rather than answered; the excuse is valid because the export carries no acquisition-date column."
+  ],
+  "summary": "All five published claim values reproduce exactly from raw_data/orders.csv (my own recount in evidence/recount.py: net_revenue 35741.52, refund_rate 0.473684 = 27/57 paying customers, PL/DE/CZ 11181.67/11032.61/13527.24 summing to the headline, row accounting 201=174+26+1). One blocker: CLM-NET-REVENUE carries the caveat 'up 12% on the previous quarter' - a trend claim with no metric binding and no support in any allowed source: the export holds zero rows before 2025-01-01, so no previous-quarter net revenue exists to compute. A caveat hides a decision-driving comparison from every recomputati",
+  "wall_seconds": 147.2,
+  "cost": {
+    "at": "2026-09-19T06:38:57.391334+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-4d03d601e29b",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-19T06:36:37.382516+00:00",
+    "finished_at": "2026-09-19T06:38:57.391334+00:00",
+    "wall_seconds": 140.016,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 78363,
+    "cached_input_tokens": 268288,
+    "output_tokens": 5090,
+    "total_tokens": 352420,
+    "cost_usd": 0.013612553999999999
+  }
+}

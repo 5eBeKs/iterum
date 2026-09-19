@@ -1,0 +1,64 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "m_mix_caveat_inverted",
+  "dataset": "messy",
+  "error": "The partner completion rate's caveat says its interval also covers a change in the channel's country mix.",
+  "at": "2026-09-19T06:43:40+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "mix of countries|country mix",
+    "also covers|covers a channel",
+    "CLM-COMPLETION-PARTNER"
+  ],
+  "blocking_issues": 1,
+  "warnings": 2,
+  "checks": 30,
+  "issue_ids": [
+    "CAVEAT-INVERTED-COMPLETION-PARTNER"
+  ],
+  "issue_texts": [
+    "CAVEAT-INVERTED-COMPLETION-PARTNER | gate_claims_auditor.caveat_semantics.CLM-COMPLETION-PARTNER | gate_claims_auditor|caveat_semantically_inverted|analysis/claim_register.json|CLM-COMPLETION-PARTNER | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/claim_register.json, claim CLM-COMPLETION-PARTNER, caveat 2: 'the interval is the sampling interval only, and it also covers a channel whose mix of "
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "metrics/calculated_metrics.json shipping_total is 37792722.50 over roughly 44 thousand orders, about 850 EUR per order, while the analysis plan records gross_amount running 5.00 to 312.16; the value looks implausible, but the metric is excused from publication by name in audit/check_plan.json and no",
+    "audit/results/gate_claims_machine/evidence/independent_claim_recalc.json roots and covers only the six point claims; the two test claims are covered by recompute_test entries in checks.json instead, so the coverage is complete across the two files but not in one."
+  ],
+  "summary": "Independent recount from quarantine/orders.csv reproduced all 8 claims byte-for-byte (net revenue 3023296.61, orders 44531, completion 0.724397/0.604746 with wilson CIs, AOV 110.64/87.27 with student CIs, z=26.718455 and welch t=42.699880, effects 0.119652/0.486900, bonferroni alpha 0.025); populations, periods, dedup and exclusion rules all match the spec. One blocker: the CLM-COMPLETION-PARTNER caveat's second sentence inverts the sampling-interval statement, asserting the interval covers a changing country mix, which contradicts the semantic trap in audit_spec.yaml; the machine rule caveats",
+  "wall_seconds": 298.9,
+  "cost": {
+    "at": "2026-09-19T06:48:45.794203+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-c52a36a2b744",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-19T06:43:51.234169+00:00",
+    "finished_at": "2026-09-19T06:48:45.794203+00:00",
+    "wall_seconds": 294.562,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 75225,
+    "cached_input_tokens": 627904,
+    "output_tokens": 8556,
+    "total_tokens": 714230,
+    "cost_usd": 0.021402822000000002
+  }
+}

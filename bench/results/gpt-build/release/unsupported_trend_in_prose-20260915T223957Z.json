@@ -1,0 +1,58 @@
+{
+  "profile": "gpt-build",
+  "stage": "release",
+  "case": "unsupported_trend_in_prose",
+  "error": "The page says revenue grew through the quarter; no monthly figure exists in the audit.",
+  "at": "2026-09-15T22:33:50+00:00",
+  "max_v2_revision": "7e1d71f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "grew|growth|trend|strongest month|March",
+    "unsupported|no (metric|claim|figure)"
+  ],
+  "blocking_issues": 1,
+  "warnings": 2,
+  "checks": 42,
+  "issue_ids": [
+    "GRA-UNSUPPORTED-TREND"
+  ],
+  "warning_texts": [
+    "The release machine and document gates both report PASS because their configured checks cover numeric bindings and declared caveats, not unsupported qualitative trend prose; the discrepancy is release/report.md:24.",
+    "audit/check_plan.json records both release-document rules as accepted_unproven after proof-time FileNotFoundError failures, although this audit independently reproduced all 15 live document comparisons."
+  ],
+  "summary": "All 21 displayed business numbers, both reconciliations, and all 15 document-gate comparisons reproduce exactly, but release/report.md contains an unsupported monthly revenue trend assertion.",
+  "wall_seconds": 363.6,
+  "cost": {
+    "at": "2026-09-15T22:39:56.494652+00:00",
+    "launcher": "codex_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-92cf90ccc47f",
+    "agent_role": "gpt-audit-release",
+    "started_at": "2026-09-15T22:33:55.281613+00:00",
+    "finished_at": "2026-09-15T22:39:56.494652+00:00",
+    "wall_seconds": 361.203,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "gpt-5.6-sol",
+    "model_used": null,
+    "input_tokens": 1515370,
+    "cached_input_tokens": null,
+    "output_tokens": 15890,
+    "total_tokens": 1531260,
+    "cost_usd": null
+  }
+}

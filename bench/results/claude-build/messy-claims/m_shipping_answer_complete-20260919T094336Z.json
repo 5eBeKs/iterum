@@ -1,0 +1,66 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "m_shipping_answer_complete",
+  "dataset": "messy",
+  "error": "The answer to R05 calls the shipping total complete; about six per cent of its cells are blank, NaN or inf.",
+  "at": "2026-09-19T09:40:05+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R05|shipping",
+    "readable|blank|NaN|\\binf\\b|six per ?cent|6 ?%|unknown amount|underst|complete"
+  ],
+  "blocking_issues": 1,
+  "warnings": 5,
+  "checks": 37,
+  "issue_ids": [
+    "CLAIMS-R05-SHIPPING-CAVEAT-FALSE"
+  ],
+  "issue_texts": [
+    "CLAIMS-R05-SHIPPING-CAVEAT-FALSE | gate_claims_auditor.r05_shipping_exemption | gate_claims_auditor|r05_shipping_exemption|analysis/answers/R05.json|R05 | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R05.json caveats[0] asserts that every shipping cell of the export was readable, that the shipping total is complete, and that it is withheld only for brevity. Recount in audit/results/ga"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "analysis/answers/R03.json and R04.json record hypothesis_id, method, alpha, correction and n_per_group under hypothesis but no explicit groups field; the direct-first order is only implied by n_per_group and by the claim caveat.",
+    "The check plan puts no deterministic rule over the content of answer caveats (questions_are_answered checks only that question and facts exist), so a false sentence in an answer file passes the machine gate; R05 is a live example.",
+    "metrics.shipping_total (37792722.50 EUR, far above the 3023296.61 EUR net revenue) is withheld by name, but it treats 2648 unreadable cells as zero and no stage in this gate re-derives it; it must stay off every release surface.",
+    "Both test p values are recorded as 0.0000000000 against a Bonferroni-adjusted alpha of 0.025 (0.05 over two registered tests); the recomputed p for the completion test is about 2.9e-157, so significance does not depend on whether the correction was applied.",
+    "Completion and AOV differences between the channels are purely associational: the claims and test caveats use no causal language, and nothing in the data identifies why direct orders complete more often or are worth more."
+  ],
+  "summary": "All eight claims recompute exactly from quarantine/orders.csv (44531 orders, net revenue 3023296.61, both completion rates and Wilson bounds, both AOVs and Student bounds, both registered tests), and the claim -> metric -> plan chain is byte-exact on 76 comparisons. The stage fails on one blocker: analysis/answers/R05.json states that every shipping cell was readable and the total is complete and withheld only for brevity, which contradicts the data (2648 of 44531 in-population shipping cells are blank, NaN or inf) and the named shipping_total exemption.",
+  "wall_seconds": 202.5,
+  "cost": {
+    "at": "2026-09-19T09:43:34.812474+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-19T09:40:15.258006+00:00",
+    "finished_at": "2026-09-19T09:43:34.812474+00:00",
+    "wall_seconds": 199.563,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 34,
+    "cached_input_tokens": 1656783,
+    "output_tokens": 21094,
+    "total_tokens": 1677911,
+    "cost_usd": 2.3669965000000004
+  }
+}

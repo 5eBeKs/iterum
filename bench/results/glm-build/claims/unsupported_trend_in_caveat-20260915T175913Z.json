@@ -1,0 +1,59 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "unsupported_trend_in_caveat",
+  "error": "A caveat asserts growth against a previous quarter no metric computes.",
+  "at": "2026-09-15T17:57:28+00:00",
+  "max_v2_revision": "2a6f8dc",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "previous quarter",
+    "12 ?%",
+    "trend|growth|grew|unsupported|no metric"
+  ],
+  "blocking_issues": 1,
+  "warnings": 2,
+  "checks": 9,
+  "issue_ids": [
+    "UNSUPPORTED-TREND-CAVEAT"
+  ],
+  "warning_texts": [
+    "CLM-NET-REVENUE carries the caveat 'up 12% on the previous quarter' although the raw export holds no rows before 2025-01-01, so the 12% figure has no source in any permitted input and no source_ref binds it.",
+    "The machine rule caveats_declared only proves required caveat topics are present in each claim; it does not check that caveat content is supported, so its PASS over this caveat is silence, not approval, and the unsupported number would reach release/report.md and release/dashboard_data.json through "
+  ],
+  "summary": "All five claim values independently recomputed from raw_data/orders.csv match the register (net_revenue 35741.52 EUR; refund_rate 0.473684 = 27/57 paying customers; PL 11181.67 / DE 11032.61 / CZ 13527.24 EUR; population 174 of 201 rows). But CLM-NET-REVENUE carries the caveat 'up 12% on the previous quarter': the raw export contains no rows before 2025-01-01 (prior_quarter_rows = 0), so no previous-quarter baseline exists, and the 12% figure has no metric, no source_ref and no claim behind it. The machine gate's caveats_declared verifies only that required topics are present, not that caveats",
+  "wall_seconds": 101.6,
+  "cost": {
+    "at": "2026-09-15T17:59:12.025488+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-ea14e4276a91",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-15T17:57:34.122172+00:00",
+    "finished_at": "2026-09-15T17:59:12.024478+00:00",
+    "wall_seconds": 97.906,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 74448,
+    "cached_input_tokens": 256000,
+    "output_tokens": 5132,
+    "total_tokens": 336522,
+    "cost_usd": 0.0109421
+  }
+}

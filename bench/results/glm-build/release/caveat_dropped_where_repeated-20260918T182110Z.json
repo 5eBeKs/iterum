@@ -1,0 +1,67 @@
+{
+  "profile": "glm-build",
+  "stage": "release",
+  "case": "caveat_dropped_where_repeated",
+  "dataset": "orders",
+  "error": "The headline's caveat line no longer says net of refunds; only a sentence about the country table still does.",
+  "at": "2026-09-18T18:16:35+00:00",
+  "max_v2_revision": "b7adc4a",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "net of refunds.{0,160}(headline|CLM-NET-REVENUE|net revenue)",
+    "(headline|CLM-NET-REVENUE|net revenue).{0,160}net of refunds",
+    "caveat.{0,80}(missing|dropped|lost|absent|omitted|removed)",
+    "(missing|dropped|lost|absent|omitted|removed).{0,80}caveat"
+  ],
+  "blocking_issues": 1,
+  "warnings": 4,
+  "checks": 9,
+  "issue_ids": [
+    "CAVEAT-DROPPED-HEADLINE-CARD"
+  ],
+  "issue_texts": [
+    "CAVEAT-DROPPED-HEADLINE-CARD | release.caveat_per_card.CLM-NET-REVENUE | gate_release_document|caveats_rendered|release/report.md|CLM-NET-REVENUE | RELEASE_INTEGRITY | HIGH | worker_release | analysis/claim_register.json declares CLM-NET-REVENUE caveats ['net of refunds','delivered orders only','period boundaries are inclusive on both ends']. release/report.md lines 7-8 show the headline with only"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "audit/check_plan.json records caveats_rendered and claims_rendered of gate_release_document as accepted_unproven (the prover hit a FileNotFoundError on the claim register), so no deterministic rule was ever shown to fire when a caveat goes missing; the per-card caveat check in this result is the onl",
+    "gate_release_document's caveats_rendered matches caveats against the whole surface text, so a caveat dropped from one card passes whenever the same string appears anywhere else on the surface; a per-card scope would have failed this release.",
+    "release/report.md hides nothing in HTML comments - the claim markers are comments but every caveat is visible text; no UNVERIFIED_CLAIM marker appears on any surface.",
+    "No numeric placeholder or stale text was found on any surface; the report's period label 2025-01-01..2025-03-30 is covered by the release contract's text exclusion."
+  ],
+  "summary": "All 21 shown numbers across report.md, dashboard_data.json and release_number_manifest.json are bound to claim_id+role, format-match the registry at their display_digits, and the reconciliation identities hold (PL+DE+CZ = 35741.52 = headline; 27/57 = 0.473684). One blocker: on release/report.md the headline card CLM-NET-REVENUE drops the register caveat 'net of refunds' - the caveat is present on the same claim's dashboard card and elsewhere on the report surface, which is exactly how gate_release_document's surface-level caveats_rendered passed it.",
+  "wall_seconds": 270.6,
+  "cost": {
+    "at": "2026-09-18T18:21:09.057098+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-d37485bd4a7b",
+    "agent_role": "glm-audit-release",
+    "started_at": "2026-09-18T18:16:42.350189+00:00",
+    "finished_at": "2026-09-18T18:21:09.053662+00:00",
+    "wall_seconds": 266.703,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 52996,
+    "cached_input_tokens": 489472,
+    "output_tokens": 6273,
+    "total_tokens": 552285,
+    "cost_usd": 0.016577736
+  }
+}

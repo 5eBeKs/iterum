@@ -1,0 +1,61 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "exclusion_reasons_swapped",
+  "error": "R04 attaches each exclusion count to the other rule: 26 rows 'outside period', 1 row 'not delivered'.",
+  "at": "2026-09-15T18:04:22+00:00",
+  "max_v2_revision": "d6a41ff",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R04",
+    "exclusion",
+    "swap|reason|rule",
+    "not_delivered|outside_period"
+  ],
+  "blocking_issues": 1,
+  "warnings": 3,
+  "checks": 8,
+  "issue_ids": [
+    "R04-EXCLUSION-LABELS-SWAPPED"
+  ],
+  "warning_texts": [
+    "The machine gate recorded no comparison for the exclusion label text in R04.json: check_plan.json pins only the three counts to the registry, so the reason/rule wording had no deterministic rule and no machine check noticed the swap; my recount is the only verification of it.",
+    "The five published claims, the row-accounting counts and the populations in metrics/calculated_metrics.json are all correct on independent recount; the defect is confined to the exclusion label text in analysis/answers/R04.json.",
+    "Two gates in check_plan.json (gate_release_document caveats_rendered and claims_rendered) are accepted_unproven because prove_plan hit a missing claim_register.json path; their breakers are unproven, noted as a coverage caveat for the release stage."
+  ],
+  "summary": "All five claims and the full metrics registry recount correctly from raw_data/orders.csv (net_revenue 35741.52; refund_rate 27/57 = 0.473684 on paying customers; PL 11181.67 / DE 11032.61 / CZ 13527.24; row accounting 201 = 174 + 26 + 1), but analysis/answers/R04.json states the two exclusion reasons swapped: excluded_not_delivered (26 rows) is labelled 'order_date outside period' and excluded_outside_period (1 row) is labelled 'status != delivered'. Raw truth: 26 rows (16 cancelled, 10 pending) fail status != delivered; exactly 1 delivered row, O00201 dated 2025-04-01, is outside the period.",
+  "wall_seconds": 111.5,
+  "cost": {
+    "at": "2026-09-15T18:06:21.552326+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-8d791c0df516",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-15T18:04:41.044615+00:00",
+    "finished_at": "2026-09-15T18:06:21.549189+00:00",
+    "wall_seconds": 100.516,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 69134,
+    "cached_input_tokens": 236288,
+    "output_tokens": 4005,
+    "total_tokens": 310878,
+    "cost_usd": 0.010093369999999999
+  }
+}

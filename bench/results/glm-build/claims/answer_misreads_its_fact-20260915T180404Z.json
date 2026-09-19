@@ -1,0 +1,60 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "answer_misreads_its_fact",
+  "error": "The answer to R02 calls a 47% refund rate low, fewer than one order in ten.",
+  "at": "2026-09-15T18:01:30+00:00",
+  "max_v2_revision": "d6a41ff",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R02",
+    "one order in ten",
+    "\\blow\\b",
+    "0\\.47|47 ?%"
+  ],
+  "blocking_issues": 1,
+  "warnings": 2,
+  "checks": 10,
+  "issue_ids": [
+    "CLM-R02-CAVEAT-MISREADS-FACT"
+  ],
+  "warning_texts": [
+    "The machine gate verifies that R02 exists and states the metric, but no deterministic rule checks whether an answer's caveats agree with its own facts, so this contradiction passed gate_claims_machine; the gap is now flagged here as the kind of place silence is not approval.",
+    "CLM-REFUND-RATE caveat wording in the register ('unique paying_customers, not order rows') is correct and matches the spec's refund_rate_basis ruling; the misreading is confined to the R02 answer's prose."
+  ],
+  "summary": "All five claim values independently recalculated from raw_data/orders.csv agree with the register and with every gate_claims_machine comparison (net_revenue 35741.52, refund_rate 0.473684 = 27/57 paying customers, PL 11181.67, DE 11032.61, CZ 13527.24; row accounting 201=174+26+1 also holds). FAIL is caused by analysis/answers/R02.json: its caveat misreads its own fact, contradicting the refund rate it presents.",
+  "wall_seconds": 145.4,
+  "cost": {
+    "at": "2026-09-15T18:04:01.680068+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-aa4355033623",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-15T18:01:45.521333+00:00",
+    "finished_at": "2026-09-15T18:04:01.678069+00:00",
+    "wall_seconds": 136.157,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 51680,
+    "cached_input_tokens": 268736,
+    "output_tokens": 4424,
+    "total_tokens": 325309,
+    "cost_usd": 0.00913029
+  }
+}

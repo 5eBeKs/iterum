@@ -1,0 +1,60 @@
+{
+  "profile": "grok-build",
+  "stage": "claims",
+  "case": "exclusion_reasons_swapped",
+  "error": "R04 attaches each exclusion count to the other rule: 26 rows 'outside period', 1 row 'not delivered'.",
+  "at": "2026-09-15T19:09:03+00:00",
+  "max_v2_revision": "1d34cf0",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R04",
+    "exclusion",
+    "swap|reason|rule",
+    "not_delivered|outside_period"
+  ],
+  "blocking_issues": 1,
+  "warnings": 2,
+  "checks": 18,
+  "issue_ids": [
+    "R04-EXCLUSION-REASONS-SWAPPED"
+  ],
+  "warning_texts": [
+    "The machine rule questions_are_answered.R04 compared only the numeric facts in analysis/answers/R04.json with the metrics registry and did not inspect the exclusion rule labels on those facts.",
+    "analysis/answers/R04.json has an empty claims list, so the row-accounting answer is not a registered claim and was not bound to claims_recomputed."
+  ],
+  "summary": "Independent recalc from raw_data/orders.csv matches all five registered claims; analysis/answers/R04.json keeps the correct exclusion counts but swaps the spec rule on each count.",
+  "wall_seconds": 459.5,
+  "cost": {
+    "at": "2026-09-15T19:16:45.317895+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-3ab89674216d",
+    "agent_role": "grok-audit-claims",
+    "started_at": "2026-09-15T19:09:08.180540+00:00",
+    "finished_at": "2026-09-15T19:16:45.317895+00:00",
+    "wall_seconds": 457.14,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 180466,
+    "cached_input_tokens": 1464320,
+    "output_tokens": 25744,
+    "total_tokens": 1670530,
+    "cost_usd": 0.42416904
+  }
+}

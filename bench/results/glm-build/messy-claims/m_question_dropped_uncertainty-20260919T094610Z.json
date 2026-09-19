@@ -1,0 +1,58 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "m_question_dropped_uncertainty",
+  "dataset": "messy",
+  "error": "R03 is restated without the half of the brief that asks how precisely each rate is known.",
+  "at": "2026-09-19T09:41:35+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "warned",
+  "matched_signals": [
+    "restat|narrow|question|brief"
+  ],
+  "blocking_issues": 0,
+  "warnings": 2,
+  "checks": 15,
+  "issue_ids": [],
+  "issue_texts": [],
+  "other_blockers": 0,
+  "warning_texts": [
+    "raw_data/questions.md is not in this stage's allowed input paths, so the completeness of the question list behind R01..R05 was verified only through the machine gate's questions_are_answered results, not by reading the file itself.",
+    "Bonferroni is named and registered, but the corrected effective alpha (0.025 over 2 tests) is not written as a number anywhere in the register; with p values of order 1e-10 the conclusion is identical either way, so this is a wording note, not a finding."
+  ],
+  "summary": "All 8 headline claims independently recomputed from quarantine/orders.csv (manifest declared=true, comment column removed): every value, bound, n, statistic, effect and p reproduces exactly; claim->metric->source chain closes; both registered hypotheses match audit/analysis_plan.json; no Simpson reversal in any country or month stratum; no quarantined comment text in the register or answers.",
+  "wall_seconds": 266.5,
+  "cost": {
+    "at": "2026-09-19T09:46:09.045228+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-1fdf2e717570",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-19T09:41:46.994723+00:00",
+    "finished_at": "2026-09-19T09:46:09.043210+00:00",
+    "wall_seconds": 262.047,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 103894,
+    "cached_input_tokens": 667648,
+    "output_tokens": 6678,
+    "total_tokens": 780547,
+    "cost_usd": 0.024069624
+  }
+}

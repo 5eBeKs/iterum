@@ -1,0 +1,67 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "m_completion_population_delivered",
+  "dataset": "messy",
+  "error": "The direct completion rate says its population is delivered orders, over which a completion rate is always 1.",
+  "at": "2026-09-18T19:11:40+00:00",
+  "max_v2_revision": "b7adc4a",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "CLM-COMPLETION-DIRECT",
+    "population",
+    "delivered",
+    "denominator|cancel|always|trivial|1\\.0|100 ?%"
+  ],
+  "blocking_issues": 1,
+  "warnings": 4,
+  "checks": 43,
+  "issue_ids": [
+    "CLAIMS-AUD-POP-COMPLETION-DIRECT"
+  ],
+  "issue_texts": [
+    "CLAIMS-AUD-POP-COMPLETION-DIRECT | gate_claims_auditor.population.CLM-COMPLETION-DIRECT | gate_claims_auditor|claim_population_matches_metric|analysis/claim_register.json|CLM-COMPLETION-DIRECT | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/claim_register.json, claim CLM-COMPLETION-DIRECT, field population. evidence/chain.py compares it with metrics completion_rate_direct, completion_ci_low_di"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "CLM-AOV-DIRECT and CLM-AOV-PARTNER have caveats that do not say in words that the average covers delivered orders only and is net of refunds. The population field says delivered, but net of refunds appears nowhere in either claim. The stage addition requires both statements in the caveats; the froze",
+    "The CLM-COMPLETION-DIRECT and CLM-COMPLETION-PARTNER caveats do not say that cancelled and pending orders are in the denominator. The population field is the only place a reader learns this, and for the direct claim that field is the one that is wrong.",
+    "gate_claims_machine never compares a claim's population or period text with its bound metrics. caveats_declared checks fixed topic phrases, and claims_recomputed checks the number against its own filter definition. A mislabelled population therefore passes every deterministic rule, and this auditor'",
+    "Channel mix is not a confounder here. The direct-minus-partner sign holds in every country stratum (completion +0.130/+0.120/+0.108 in CZ/DE/PL) and every month (2026-01..03), and so does the AOV difference, so the pooled test results show no Simpson reversal. The tests remain associational, and non"
+  ],
+  "summary": "All 8 claims' numbers reproduce from quarantine/orders.csv (44531 orders; net revenue 3023296.61; completion direct 0.724397 [0.718779, 0.729946] n=24597, partner 0.604746 [0.597939, 0.611512] n=19934; AOV direct 110.64 [109.88, 111.39], partner 87.27 [86.50, 88.03]; z=26.718455, effect 0.119652; Welch t=42.699880, d=0.486900) and match every gate_claims_machine comparison. One blocker: CLM-COMPLETION-DIRECT states its population as delivered orders of the direct channel, while its three bound metrics and the actual computation use every direct order, cancelled and pending included. Read liter",
+  "wall_seconds": 239.3,
+  "cost": {
+    "at": "2026-09-18T19:15:46.532109+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-18T19:11:50.243960+00:00",
+    "finished_at": "2026-09-18T19:15:46.532109+00:00",
+    "wall_seconds": 236.296,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 40,
+    "cached_input_tokens": 1815057,
+    "output_tokens": 24543,
+    "total_tokens": 1839640,
+    "cost_usd": 2.5167040000000003
+  }
+}

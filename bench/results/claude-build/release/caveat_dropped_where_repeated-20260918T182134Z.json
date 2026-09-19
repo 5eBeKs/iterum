@@ -1,0 +1,70 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "caveat_dropped_where_repeated",
+  "dataset": "orders",
+  "error": "The headline's caveat line no longer says net of refunds; only a sentence about the country table still does.",
+  "at": "2026-09-18T18:18:39+00:00",
+  "max_v2_revision": "b7adc4a",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "(headline|CLM-NET-REVENUE|net revenue).{0,160}net of refunds",
+    "caveat.{0,80}(missing|dropped|lost|absent|omitted|removed)",
+    "(missing|dropped|lost|absent|omitted|removed).{0,80}caveat"
+  ],
+  "blocking_issues": 2,
+  "warnings": 6,
+  "checks": 16,
+  "issue_ids": [
+    "REL-AUD-CAVEAT-HEADLINE-NET",
+    "REL-AUD-REPORT-NOT-GENERATED"
+  ],
+  "issue_texts": [
+    "REL-AUD-CAVEAT-HEADLINE-NET | gate_release_auditor.card_caveats | gate_release_auditor|card_caveats|release/report.md|CLM-NET-REVENUE | VISUALIZATION | HIGH | worker_release | In release/report.md, the headline card for CLM-NET-REVENUE is lines 7-8. Its caveat line lists only 'delivered orders only' and 'period boundaries are inclusive on both ends'. analysis/claim_register.json declares three cav",
+    "REL-AUD-REPORT-NOT-GENERATED | gate_release_auditor.surface_reproducible_from_generator | gate_release_auditor|surface_reproducible_from_generator|release/report.md|report | RELEASE_INTEGRITY | HIGH | worker_release | evidence/release_audit.py loads src/release/build_release.py, points its three output paths at evidence/regen/ and runs main() on the current analysis/claim_register.json. The regene"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "gate_release_document marked caveats_rendered.CLM-NET-REVENUE on release/report.md as PASS, but the headline card does not show 'net of refunds'. The check seems to accept a caveat phrase anywhere on the surface, and the closing sentence on line 22 satisfied it. So the gate cannot catch a caveat tha",
+    "In audit/check_plan.json, both gate_release_document rules (claims_rendered and caveats_rendered) are listed under accepted_unproven. Their breaker proof failed with a FileNotFoundError, so neither rule was ever shown to fire on a broken release, and this run is consistent with that.",
+    "audit/release_surface_contract.json declares reconciliations REC-COUNTRY-SUM and REC-REFUND-RATE, label_requirements and generator literal scanning. gate_release_machine's evidence file records only per-number bindings and no output for any of those. I verified them independently: both reconciliatio",
+    "src/release/build_release.py contains the structural literals 2 (parents[2], indent=2) and 0 (digits == 0, return 0), which generator_literal_exclusions does not list. None is a business figure, so this is not a blocker. A strict literal scan would flag them.",
+    "release/dashboard_data.json states the period only once, at the top level ($.period), and not on each card. The cards' caveats say 'inside the period' without dates, so a renderer that shows a single card would lose the dates.",
+    "The refund rate on a paying-customer basis (27/57 = 0.473684) is well above the rate on an order-row basis (33/174 = 0.189655). The report's refund-rate card states the paying_customers basis in its caveat, as the spec requires, and that caveat must stay on the card in any rework."
+  ],
+  "summary": "All 21 rendered numbers across report.md, dashboard_data.json and release_number_manifest.json match my own recompute from raw_data/orders.csv, formatted to each claim's display_digits (net_revenue 35741.52 EUR, PL 11181.67, DE 11032.61, CZ 13527.24, refund_rate 27/57 = 0.473684 on paying customers). Both reconciliations hold: the countries sum to the headline, and the rate equals its numerator over its denominator. The release still fails on one defect with two faces. On the headline net-revenue card in release/report.md (lines 7-8), the registered caveat 'net of refunds' is missing. The phra",
+  "wall_seconds": 170.5,
+  "cost": {
+    "at": "2026-09-18T18:21:33.053450+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-b0dc8f415661",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-18T18:18:45.482495+00:00",
+    "finished_at": "2026-09-18T18:21:33.053450+00:00",
+    "wall_seconds": 167.578,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 28,
+    "cached_input_tokens": 963801,
+    "output_tokens": 18810,
+    "total_tokens": 982639,
+    "cost_usd": 1.7092600000000002
+  }
+}

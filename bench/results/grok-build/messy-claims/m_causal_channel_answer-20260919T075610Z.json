@@ -1,0 +1,65 @@
+{
+  "profile": "grok-build",
+  "stage": "claims",
+  "case": "m_causal_channel_answer",
+  "dataset": "messy",
+  "error": "The answer to R04 explains the lower partner basket by customers' price sensitivity, which no data in the audit measures.",
+  "at": "2026-09-19T07:45:24+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "price.?sensitiv",
+    "caus|because|drives",
+    "unsupported|no (evidence|data|metric)|observational"
+  ],
+  "blocking_issues": 1,
+  "warnings": 3,
+  "checks": 50,
+  "issue_ids": [
+    "CAUSAL-LANGUAGE-R04"
+  ],
+  "issue_texts": [
+    "CAUSAL-LANGUAGE-R04 | gate_claims_auditor.causal_language.R04 | gate_claims_auditor|causal_language|analysis/answers/R04.json|R04 | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R04.json caveats[0] (length 116) contains the verbs drives and because and attributes smaller partner baskets to price sensitivity. analysis/claim_register.json has an empty design on all eight claims, includin"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "CLM-AOV-DIRECT and CLM-AOV-PARTNER caveats do not use the words delivered or net of refunds; the population field and the net_amount formula do, and caveats_declared required only channel-population and sampling-interval-only on those two claims.",
+    "CLM-TEST-CHANNEL-AOV population text names the whole channel and omits the delivered filter the Welch test actually used; n_per_group 17818 and 12055 matches delivered counts, not 24597 and 19934.",
+    "gate_claims_machine does not run wording_matches_claims on analysis/answers, so answer prose is unchecked by the machine gate of this stage."
+  ],
+  "summary": "Independent recalc from quarantine/orders.csv matches all eight registered claims, their metrics, and the machine gate. FAIL because analysis/answers/R04.json writes a causal reading of the channel AOV difference (drives, because) while no claim declares a design and the registered test is observational.",
+  "wall_seconds": 636.6,
+  "cost": {
+    "at": "2026-09-19T07:56:08.855646+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-c373295c79f5",
+    "agent_role": "grok-audit-claims",
+    "started_at": "2026-09-19T07:45:35.570755+00:00",
+    "finished_at": "2026-09-19T07:56:08.855646+00:00",
+    "wall_seconds": 633.297,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 167340,
+    "cached_input_tokens": 3070336,
+    "output_tokens": 36884,
+    "total_tokens": 3274560,
+    "cost_usd": 0.71099168
+  }
+}

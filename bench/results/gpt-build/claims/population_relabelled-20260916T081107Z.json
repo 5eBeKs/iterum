@@ -1,0 +1,58 @@
+{
+  "profile": "gpt-build",
+  "stage": "claims",
+  "case": "population_relabelled",
+  "error": "The headline claim says its population is all orders, while the spec and its own caveats say delivered orders.",
+  "at": "2026-09-16T07:57:44+00:00",
+  "max_v2_revision": "7e1d71f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "all orders",
+    "CLM-NET-REVENUE"
+  ],
+  "blocking_issues": 1,
+  "warnings": 1,
+  "checks": 13,
+  "issue_ids": [
+    "CLAIMS-POPULATION-CLM-NET-REVENUE"
+  ],
+  "warning_texts": [
+    "The claims machine gate recomputed claim values but had no deterministic rule validating each claim's population label against the filters used, so the mislabeled headline population passed its numeric checks."
+  ],
+  "summary": "Independent raw-data recalculation reproduced all five claim values, but CLM-NET-REVENUE is mislabeled as covering all orders even though its value is calculated only from delivered orders in the period.",
+  "wall_seconds": 799.5,
+  "cost": {
+    "at": "2026-09-16T08:11:06.883483+00:00",
+    "launcher": "codex_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-3a2619850b0b",
+    "agent_role": "gpt-audit-claims",
+    "started_at": "2026-09-16T07:57:49.833573+00:00",
+    "finished_at": "2026-09-16T08:11:06.883483+00:00",
+    "wall_seconds": 797.047,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "gpt-5.6-sol",
+    "model_used": null,
+    "input_tokens": 1363360,
+    "cached_input_tokens": null,
+    "output_tokens": 14743,
+    "total_tokens": 1378103,
+    "cost_usd": null
+  }
+}

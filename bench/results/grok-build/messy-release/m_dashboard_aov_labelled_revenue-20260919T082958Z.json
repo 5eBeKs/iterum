@@ -1,0 +1,74 @@
+{
+  "profile": "grok-build",
+  "stage": "release",
+  "case": "m_dashboard_aov_labelled_revenue",
+  "dataset": "messy",
+  "error": "On the dashboard the direct average order value card is labelled revenue.",
+  "at": "2026-09-19T08:17:57+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "Revenue Direct",
+    "label",
+    "aov|average order"
+  ],
+  "blocking_issues": 4,
+  "warnings": 6,
+  "checks": 46,
+  "issue_ids": [
+    "REL-DASH-AOV-LABEL",
+    "REL-REPORT-POPULATION",
+    "REL-AOV-CAVEATS",
+    "REL-COMPLETION-DENOMINATOR"
+  ],
+  "issue_texts": [
+    "REL-DASH-AOV-LABEL | gate_release_auditor.dashboard_aov_direct_label | gate_release|dashboard_aov_label|release/dashboard_data.json|CLM-AOV-DIRECT | VISUALIZATION | HIGH | worker_release | release/dashboard_data.json cards[4]: claim_id CLM-AOV-DIRECT, value 110.64, ci_low 109.88, ci_high 111.39, label Revenue Direct. Expected label from claim_id is Aov Direct. Report.md line 18 correctly says aov ",
+    "REL-REPORT-POPULATION | gate_release_auditor.report_page_population | gate_release|page_population|release/report.md|delivered_only | RELEASE_INTEGRITY | HIGH | worker_release | report.md line 3: Population: orders placed inside the quarter, one row per order, delivered only. Spec and CLM-ORDERS population omit delivered only. Completion denominators are all channel orders (24597 direct, 19934 par",
+    "REL-AOV-CAVEATS | gate_release_auditor.aov_card_caveats | gate_release|aov_card_caveats|release/report.md|CLM-AOV | VISUALIZATION | HIGH | worker_release | AOV bullets and dashboard cards for CLM-AOV-DIRECT and CLM-AOV-PARTNER show only channel-population and sampling-interval caveats. net of refunds and delivered orders only appear on the revenue bullet, not beside 110.64 or 87.27. Document gate ",
+    "REL-COMPLETION-DENOMINATOR | gate_release_auditor.completion_denominator_wording | gate_release|completion_denominator|release/report.md|CLM-COMPLETION | VISUALIZATION | HIGH | worker_release | Completion bullets say one quarter of orders in this channel and the sampling-interval caveat. They never say the denominator is every order in the channel. The page header says delivered only, so 0.724397 "
+  ],
+  "other_blockers": 2,
+  "warning_texts": [
+    "gate_release_machine/evidence/checks.json is absent; the citable comparisons for this stage are only gate_release_document/evidence/checks.json, and none of those check_ids start with recompute_, claims_recomputed, component_sum, or column_identity.",
+    "Dashboard estimate cards carry ci_low and ci_high but no n field; n is printed on report.md, and tests/release only asserts n on the report.",
+    "check_plan.json claims_rendered lists only release/report.md, so dashboard labels are outside both machine gates; the surface gate bound $.cards[4].value 110.64 to CLM-AOV-DIRECT while the card title says Revenue Direct.",
+    "Every bound number in release_surface_gate.json has scale 1; sampled rows for CLM-NET-REVENUE, CLM-AOV-DIRECT and CLM-TEST-CHANNEL-COMPLETION match the page text and registry render.",
+    "Document gate caveats_rendered passed for AOV and completion because it only checks that each claim's own caveat strings appear; that is not a disagreement on the same comparison as the extra screen caveats this stage prompt requires.",
+    "shipping_total 37792722.50 is in metrics/calculated_metrics.json and is excused from publication; it is not on any release surface."
+  ],
+  "summary": "Release numbers match the claim register and metrics (net revenue 3023296.61, orders 44531, completion 0.724397/0.604746, AOV 110.64/87.27) and the four estimates on report.md carry both bounds, n, and a 0.95 interval. FAIL: dashboard card CLM-AOV-DIRECT is labelled Revenue Direct; the report header applies delivered only to every figure; AOV cards omit net of refunds and delivered orders only; completion rates do not state that the denominator is the whole channel.",
+  "wall_seconds": 715.8,
+  "cost": {
+    "at": "2026-09-19T08:29:56.802634+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-9825e57c2577",
+    "agent_role": "grok-audit-release",
+    "started_at": "2026-09-19T08:18:04.334679+00:00",
+    "finished_at": "2026-09-19T08:29:56.801629+00:00",
+    "wall_seconds": 712.469,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 145671,
+    "cached_input_tokens": 2271872,
+    "output_tokens": 40226,
+    "total_tokens": 2457769,
+    "cost_usd": 0.56733556
+  }
+}

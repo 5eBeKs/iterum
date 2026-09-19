@@ -1,0 +1,76 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "headline_relabelled_gross",
+  "dataset": "orders",
+  "error": "The page calls net revenue 'Gross revenue'; the number is net of refunds.",
+  "at": "2026-09-16T17:29:31+00:00",
+  "max_v2_revision": "920704d",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "gross",
+    "label",
+    "net revenue"
+  ],
+  "blocking_issues": 1,
+  "warnings": 9,
+  "checks": 12,
+  "issue_ids": [
+    "FINAL-HEADLINE-LABEL-GROSS"
+  ],
+  "issue_texts": [
+    "FINAL-HEADLINE-LABEL-GROSS | final_redteam.reader_surface.headline_label | final_glm_redteam|headline_label_names_wrong_quantity|release/report.md|CLM-NET-REVENUE | VISUALIZATION | CRITICAL | worker_release | audit/results/final/evidence/recompute.py checks label.report_headline_names_the_bound_claim_quantity (FAIL: got 'Gross revenue, EUR') and label.report_vs_dashboard_agree_on_CLM-NET-REVENUE ("
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "No output event of this CLI names a model, so MODEL_MISMATCH is unverifiable here and every stage's execution.model — including this report's — is a self-report, not a measurement; the reader of the final report should know the 'run on openrouter/z-ai/glm-5.3-flash' line rests on nothing but stage s",
+    "The declared frontier tier equals the standard tier (both openrouter/z-ai/glm-5.3-flash per orchestration.model_tiers), so a fresh isolated context here is not an independent vendor: architect, four workers, five auditors and this gate are one model family, and the PASS chain alone proves nothing.",
+    "What held in this run is the deterministic layer — 117 machine gate checks over the frozen check_plan.json, the control lock, the permission map closing raw sources to edit tools, and release_surface_gate binding all 21 shown numbers on all 3 required surfaces — plus this stage's own raw-level recom",
+    "check_plan.json accepted_unproven records that gate_release_document's claims_rendered and caveats_rendered were never proven to fire when broken (FileNotFoundError in the prove-plan sandbox); both rules did run in this audit (15 checks, all PASS) but their breaker property remains undemonstrated.",
+    "The metrics machine gate recomputes excluded_not_delivered from raw but only pins excluded_order_rows and excluded_outside_period via component_sum (per gate_metrics_machine evidence/unchecked.json); this stage recomputed both from raw and they hold: 27 = 26 + 1.",
+    "Worker and stage-auditor results are bare driver shells ('driver e2e ...', one-line evidence notes, no warnings or disclosures), so in this run they served as a map of gate evidence rather than as review.",
+    "The refund_rate ruling moves the headline rate: paying_customers basis gives 27/57 = 0.473684 while the order-row reading gives 33/174 = 0.189655 (about 2.5x smaller, as risk_register.yaml R-REFUND-BASIS says); the recorded ruling does not look wrong from the data, is pinned in audit_spec.yaml and i",
+    "Label coverage is a structural gap, not a one-off: release_surface_gate binds shown numbers to claims but reads no label text, and release_surface_contract.json label_requirements pins only the three country labels, so a relabelled headline is invisible to every machine gate — today's 'Gross revenue",
+    "The shipped report.md headline also contradicts itself: the same bullet's caveat line says 'net of refunds' while its label says 'Gross revenue' — see blocking issue FINAL-HEADLINE-LABEL-GROSS."
+  ],
+  "summary": "Independent recompute from raw_data/orders.csv (own code, audit/results/final/evidence/recompute.py, 109 checks): every released number is correct and bound end-to-end — raw 201 rows = population 174 + excluded 26 not-delivered + 1 outside-period (the 2025-04-01 boundary probe, enforced); net revenue 35741.52 = gross 40235.02 - refunds 4493.50; refund rate 27/57 = 0.473684 on the recorded paying_customers basis (order-row reading would be 33/174 = 0.189655); PL/DE/CZ 11181.67/11032.61/13527.24 sum to the headline; registry, claim register and all 21 rendered numbers on all 3 required surfaces ",
+  "wall_seconds": 1285.1,
+  "cost": {
+    "at": "2026-09-16T17:51:03.244239+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-4e37baebbddf",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-16T17:29:41.604688+00:00",
+    "finished_at": "2026-09-16T17:51:03.240230+00:00",
+    "wall_seconds": 1281.625,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 67382,
+    "cached_input_tokens": 1857536,
+    "output_tokens": 14473,
+    "total_tokens": 1962082,
+    "cost_usd": 0.050673228000000015
+  }
+}

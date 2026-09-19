@@ -1,0 +1,86 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "exclusion_reasons_swapped",
+  "dataset": "orders",
+  "error": "R04 attaches each exclusion count to the other rule: 26 rows 'outside period', 1 row 'not delivered'.",
+  "at": "2026-09-19T10:26:00+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R04",
+    "exclusion",
+    "swap|reason|rule",
+    "not_delivered|outside_period"
+  ],
+  "blocking_issues": 1,
+  "warnings": 18,
+  "checks": 23,
+  "issue_ids": [
+    "FINAL-R04-EXCLUSION-RULES-SWAPPED"
+  ],
+  "issue_texts": [
+    "FINAL-R04-EXCLUSION-RULES-SWAPPED | final_claude_redteam.r04_exclusion_attribution | final_claude_redteam|r04_exclusion_attribution|analysis/answers/R04.json|R04 | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R04.json facts: metric excluded_not_delivered (26) carries exclusion 'order_date outside period' and metric excluded_outside_period (1) carries exclusion 'status != delivered'. a"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "This profile is single-vendor: the architect, the four workers, the five auditors and this red team all ran on claude-opus-5, so an isolated context is not an independent reviewer, an error this model family is prone to is reproduced on both sides of every check, no GPT or other cross-vendor gate ex",
+    "Writes over raw_data and the frozen machinery were closed by permissions.deny for edit tools only, not for the shell, and permissions.allow is no barrier at all, so a modified raw file would have been caught after the fact by the control lock rather than prevented; I did not compare raw hashes with ",
+    "The deterministic layer has a blind spot that let the R04 defect through: questions_are_answered.R04 checks R04's counts against the registry but not the exclusion rule each count is attributed to, so it passed the swap and will pass any future one.",
+    "gate_claims_auditor also passed R04 unchanged, so no gate or auditor caught the swap before this stage.",
+    "All five LLM auditor results (gate0_semantic, gate_clean_auditor, gate_metrics_auditor, gate_claims_auditor, gate_release_auditor) have a placeholder summary, a fixed created_at of 2026-01-01T00:00:00Z and an evidence file holding only a one-line placeholder note, so none of their PASS verdicts rest",
+    "The four worker results are the same placeholder shape: each reports one check with the value 0.473684 (worker_clean too, though it computes no rate), has no disclosures field and has empty warnings, so no stage reported any deviation or tool refusal, and I cannot tell whether none happened.",
+    "All four carries define the population as 'status=delivered' with no period filter, although the stages applied 2025-01-01..2025-03-30; a stage that trusted that definition would admit O00201 (2025-04-01, 999.99 EUR) and publish net revenue 36741.51 instead of 35741.52, and only the separate periods",
+    "The four carries are identical word for word (same pitfalls, hints, fixed updated_at, and raw_data/orders.csv under do_not_reread, which is not an output of a previous stage), so they hold no stage-specific memory; worker_analysis's carry, for instance, says nothing about R04 or the row accounting.",
+    "The published refund rate 0.473684 (27/57) counts a customer as refunded after any refund above zero, and 15 of the 27 had only partial refunds; counting only customers with a full refund gives 0.210526 (12/57), and the order-row basis the spec rejected gives 0.189655 (33/174), because the spec pins",
+    "No customer in the population has zero or negative net revenue across their orders, so the open question of whether a fully refunded customer still counts as paying moves no number on this export.",
+    "revenue_recognition net_of_refunds deducts every refund from the quarter of its order because the export has no refund date, so refunds issued after 2025-03-30 on Q1 orders lower Q1 net revenue (35741.52 after 4493.50 of refunds); the data cannot show whether that matches the accounting practice.",
+    "The spec period ends 2025-03-30, not at the calendar quarter end 2025-03-31, while questions.md and the exclusion reason call it the reported quarter; no row is dated 2025-03-31, so nothing moves on this export, but a later export's 31 March orders would be dropped as outside the quarter, and no row",
+    "timezone_for_dates Europe/Warsaw moves no number because order_date is a plain date with no time of day, so this ruling cannot be tested on this export.",
+    "No deterministic rule covers the text of the answer files (R04's rule labels, R02's basis sentence), the rule-to-reason pairing in clean_data/exclusions.json, excluded_outside_period on its own (only the sum invariant pins it), carry contents or report prose; I checked each by hand and only R04 fail",
+    "gate_release_document's claims_rendered and caveats_rendered are listed under accepted_unproven because the plan proof could not find claim_register.json, so neither check has been shown to fail on a broken surface; my own comparison found every claim and its exact caveat list on report.md and dashb",
+    "The row accounting R04 asks for appears only in analysis/answers/R04.json and not on any release surface, so the release shows readers no exclusion counts, and the one file that answers R04 is the file that is wrong.",
+    "R05 (customer lifetime value) is excused in the frozen check plan because the data has no acquisition date and no horizon, and the export does lack both, but neither release surface tells the reader that R05 was left unanswered.",
+    "Things I could not establish: retry history, stale inputs and runner state (not in the handoff; see audit_runner.py report), raw hashes against the control lock, the generator-literal scan over src/release/build_release.py (src/ is outside my inputs and release_surface_gate.json lists only rendered "
+  ],
+  "summary": "FAIL on one blocker: analysis/answers/R04.json attaches the 26 not-delivered rows to 'order_date outside period' and the 1 out-of-period row to 'status != delivered', the reverse of the spec, the metrics registry, clean_data/exclusions.json and my raw recount, so R04's question of which exclusion removed which rows is answered wrongly (fault origin worker_analysis). Everything else I recomputed from raw_data/orders.csv with my own code agrees: population 174 of 201 rows, net revenue 35741.52 (gross 40235.02, refunds 4493.50), PL 11181.67 + DE 11032.61 + CZ 13527.24 = headline, refund rate 27/5",
+  "wall_seconds": 431.2,
+  "cost": {
+    "at": "2026-09-19T10:33:27.504353+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-d423fa05b27b",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-19T10:26:19.155069+00:00",
+    "finished_at": "2026-09-19T10:33:27.504353+00:00",
+    "wall_seconds": 428.343,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 62,
+    "cached_input_tokens": 3480092,
+    "output_tokens": 45504,
+    "total_tokens": 3525658,
+    "cost_usd": 4.2925154999999995
+  }
+}

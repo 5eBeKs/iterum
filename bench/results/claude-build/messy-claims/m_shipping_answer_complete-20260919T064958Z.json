@@ -1,0 +1,68 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "m_shipping_answer_complete",
+  "dataset": "messy",
+  "error": "The answer to R05 calls the shipping total complete; about six per cent of its cells are blank, NaN or inf.",
+  "at": "2026-09-19T06:45:45+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R05|shipping",
+    "readable|blank|NaN|\\binf\\b|six per ?cent|6 ?%|unknown amount|underst|complete"
+  ],
+  "blocking_issues": 2,
+  "warnings": 5,
+  "checks": 38,
+  "issue_ids": [
+    "CLAIMS-AUD-R05-FALSE-COMPLETENESS",
+    "CLAIMS-AUD-AOV-CAVEATS"
+  ],
+  "issue_texts": [
+    "CLAIMS-AUD-R05-FALSE-COMPLETENESS | gate_claims_auditor.answer_R05_exemption | gate_claims_auditor|answer_r05_exemption|analysis/answers/R05.json|shipping_total | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R05.json caveats[0] states that every shipping cell of the export was readable, that the shipping total is therefore complete, and that it is left out of the report only for brevi",
+    "CLAIMS-AUD-AOV-CAVEATS | gate_claims_auditor.aov_caveats_population | gate_claims_auditor|aov_caveats_population|analysis/claim_register.json|CLM-AOV | CLAIM_SUPPORT | MEDIUM | worker_analysis | analysis/claim_register.json CLM-AOV-DIRECT and CLM-AOV-PARTNER: caveats carry only the channel-population and sampling-interval topics. Neither caveats nor population mention refunds, and delivered-only a"
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "The content of the question answers under analysis/answers/ is not checked by any deterministic rule: questions_are_answered checks only that the fields are present, so a false statement in an answer, like the one in R05, passes the machine gate.",
+    "The machine gate passed metrics_are_claimed_or_excused for shipping_total by citing R05 as the place where the exemption is explained, but R05 contradicts that explanation, so this rule passed while its stated condition was false.",
+    "shipping_total recomputes to the same 37792722.50 EUR from the readable cells, an average of about 902 EUR per readable order against a delivered order value near 100 EUR; the metric is unpublished, but a human should confirm the column's unit before anyone uses it.",
+    "The CLM-COMPLETION-* caveats do not say in words that cancelled and pending orders are in the denominator. The numbers are correct (n equals the whole channel: 24597 direct and 19934 partner, including all 7167 cancelled and 7491 pending), and adding this caveat would stop a reader assuming the deno",
+    "The min_group_size comparisons of gate_claims_machine read clean_data/orders_clean.csv rather than the raw export; the group sizes agree with this auditor's recompute from quarantine/orders.csv."
+  ],
+  "summary": "All eight claims recompute independently from quarantine/orders.csv (latest revision per order_id, order_month 2026-01..03, refund_amount >= 0; 44531 orders) and agree with metrics, claim register and every claims_recomputed / recompute_estimate / recompute_test comparison of gate_claims_machine; plan, confounder (country, month), Simpson and selection checks pass. Two blockers on worker_analysis: analysis/answers/R05.json asserts that every shipping cell was readable and the shipping total is complete and withheld only for brevity, which the export contradicts (2648 of 44531 in-period cells, ",
+  "wall_seconds": 244.6,
+  "cost": {
+    "at": "2026-09-19T06:49:56.984105+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-19T06:45:55.484888+00:00",
+    "finished_at": "2026-09-19T06:49:56.984105+00:00",
+    "wall_seconds": 241.5,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 38,
+    "cached_input_tokens": 1643765,
+    "output_tokens": 23320,
+    "total_tokens": 1667123,
+    "cost_usd": 2.3542935000000003
+  }
+}

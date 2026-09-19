@@ -1,0 +1,67 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "caveat_dropped_where_repeated",
+  "dataset": "orders",
+  "error": "The headline's caveat line no longer says net of refunds; only a sentence about the country table still does.",
+  "at": "2026-09-18T18:13:22+00:00",
+  "max_v2_revision": "b7adc4a",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "net of refunds.{0,160}(headline|CLM-NET-REVENUE|net revenue)",
+    "(headline|CLM-NET-REVENUE|net revenue).{0,160}net of refunds",
+    "caveat.{0,80}(missing|dropped|lost|absent|omitted|removed)"
+  ],
+  "blocking_issues": 1,
+  "warnings": 5,
+  "checks": 22,
+  "issue_ids": [
+    "REL-CAVEAT-NET-REVENUE-REPORT-CARD"
+  ],
+  "issue_texts": [
+    "REL-CAVEAT-NET-REVENUE-REPORT-CARD | gate_release_auditor.caveat_on_card.CLM-NET-REVENUE.report | gate_release_auditor|caveat_on_card|release/report.md|CLM-NET-REVENUE | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md lines 7-8 (Headline, Net revenue item bound to CLM-NET-REVENUE:value) show caveats 'delivered orders only; period boundaries are inclusive on both ends' only. analysis/"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "gate_release_document passed caveats_rendered.CLM-NET-REVENUE on release/report.md even though the headline item lacks 'net of refunds'. The check matches the phrase anywhere in the file, and audit/check_plan.json lists caveats_rendered and claims_rendered under accepted_unproven, so neither rule wa",
+    "audit/release_surface_contract.json has an empty card_caveat_requirements list, so no machine gate checks per-card caveat placement. On this release, only this auditor checks that caveats sit on the same card.",
+    "The requirement that src/release/build_release.py holds no business-number literals was not verified at this stage. The generator is outside the allowed inputs, and neither release gate's evidence records a generator literal scan.",
+    "release/dashboard_data.json states the period once at the top level ($.period), not on each card. The cards carry 'delivered orders inside the period' and 'period boundaries are inclusive on both ends', but not the dates, so a consumer that renders one card on its own loses the period.",
+    "In release/report.md line 11, the refund-rate numerator and denominator (27 of 57) carry no unit word. The item's caveat line names paying_customers as the denominator, but '27' is not labelled as customers."
+  ],
+  "summary": "All 21 numbers across the 3 release surfaces match their claims and are formatted exactly. The country-sum, refund-rate ratio, net = gross - refunds and row-accounting identities hold. Blocker: the headline net revenue item in release/report.md (lines 7-8) drops the registered caveat 'net of refunds'. That phrase appears only on the country items (lines 16, 18, 20) and in the closing sentence (line 22), so gate_release_document's file-level caveats_rendered check passed a card that does not carry the caveat. The dashboard card carries all three. Not verified: the no-literals rule for src/relea",
+  "wall_seconds": 167.0,
+  "cost": {
+    "at": "2026-09-18T18:16:12.819725+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-b0dc8f415661",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-18T18:13:28.828957+00:00",
+    "finished_at": "2026-09-18T18:16:12.819214+00:00",
+    "wall_seconds": 163.985,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 24,
+    "cached_input_tokens": 776657,
+    "output_tokens": 19670,
+    "total_tokens": 796351,
+    "cost_usd": 1.7489639999999997
+  }
+}

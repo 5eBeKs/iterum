@@ -1,0 +1,62 @@
+{
+  "profile": "grok-build",
+  "stage": "release",
+  "case": "headline_relabelled_gross",
+  "error": "The page calls net revenue 'Gross revenue'; the number is net of refunds.",
+  "at": "2026-09-15T20:12:59+00:00",
+  "max_v2_revision": "bc6f71b",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "gross",
+    "label",
+    "net revenue"
+  ],
+  "blocking_issues": 1,
+  "warnings": 5,
+  "checks": 55,
+  "issue_ids": [
+    "HEADLINE-LABELLED-GROSS"
+  ],
+  "warning_texts": [
+    "The frozen check_plan for gate_release_document has no rule that a visible headline caption must name net revenue, so the Gross caption on CLM-NET-REVENUE was outside deterministic coverage.",
+    "claims_rendered and caveats_rendered are listed under accepted_unproven because plan proof hit a missing claim_register in a temp directory; they ran at this stage and only test presence of the claim and its caveat strings.",
+    "gate_release_machine wrote number comparisons into evidence/release_surface_gate.json and did not write evidence/checks.json, so those 21 bound figures have no citable machine_check in this stage.",
+    "release/report.md line 7 caption Gross revenue contradicts the visible caveats on the same card and the closing sentence that the headline is net of refunds.",
+    "release/dashboard_data.json cards[0] labels the same claim Net revenue, so the two required reader surfaces disagree on the headline name."
+  ],
+  "summary": "release/report.md line 7 labels CLM-NET-REVENUE Gross revenue while the bound figure 35741.52 is net_revenue from raw (gross is 40235.02); 21 displayed numbers match the register and display_digits; country components 11181.67+11032.61+13527.24=35741.52; refund rate 27/57=0.473684 on paying_customers.",
+  "wall_seconds": 583.7,
+  "cost": {
+    "at": "2026-09-15T20:22:45.778741+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-f6edc50a3f6c",
+    "agent_role": "grok-audit-release",
+    "started_at": "2026-09-15T20:13:04.579187+00:00",
+    "finished_at": "2026-09-15T20:22:45.778741+00:00",
+    "wall_seconds": 581.187,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 111538,
+    "cached_input_tokens": 1683200,
+    "output_tokens": 35079,
+    "total_tokens": 1829817,
+    "cost_usd": 0.433551
+  }
+}

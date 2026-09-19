@@ -1,0 +1,66 @@
+{
+  "profile": "grok-build",
+  "stage": "claims",
+  "case": "question_restated_narrower",
+  "dataset": "orders",
+  "error": "R02 is restated without the half that asks on which basis the rate is taken.",
+  "at": "2026-09-19T06:44:38+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R02",
+    "basis",
+    "restat|narrow|half|question"
+  ],
+  "blocking_issues": 1,
+  "warnings": 4,
+  "checks": 35,
+  "issue_ids": [
+    "R02-QUESTION-RESTATED-NARROWER"
+  ],
+  "issue_texts": [
+    "R02-QUESTION-RESTATED-NARROWER | gate_claims_auditor.question_restated.R02 | gate_claims_auditor|question_restated_narrower|analysis/answers/R02.json|R02 | CLAIM_SUPPORT | HIGH | worker_analysis | raw_data/questions.md R02 asks for the refund rate and on which basis, order rows or paying customers. analysis/answers/R02.json question field is only the refund rate. The basis remains in a caveat and "
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "questions_are_answered in the frozen check plan only tests that an answer file exists and has non-empty question and facts fields, so restating a brief question more narrowly is unchecked by the machine gate.",
+    "analysis/answers/R01.json restates the brief without the population qualifier over delivered orders inside the period; CLM-NET-REVENUE still carries that population and the net-revenue KPI is present.",
+    "No hypothesis is registered in audit/analysis_plan.json and no claim has kind estimate or test, so the inferential checklist has no published test to score.",
+    "refund_amount_total is excused from a published claim in the check plan; it is not a missing requested KPI of the brief."
+  ],
+  "summary": "Five registered claims recompute from raw_data/orders.csv on the spec population and period, and independent_claim_recalc.json is rooted only in that export. analysis/answers/R02.json restates the brief more narrowly than asked: raw_data/questions.md R02 asks for the refund rate and the basis (order rows or paying customers), while the answer question field is only the rate.",
+  "wall_seconds": 522.4,
+  "cost": {
+    "at": "2026-09-19T06:53:23.544019+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-b22bc25a8f8a",
+    "agent_role": "grok-audit-claims",
+    "started_at": "2026-09-19T06:44:44.307672+00:00",
+    "finished_at": "2026-09-19T06:53:23.544019+00:00",
+    "wall_seconds": 519.234,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 134607,
+    "cached_input_tokens": 1594112,
+    "output_tokens": 30232,
+    "total_tokens": 1758951,
+    "cost_usd": 0.42420508
+  }
+}

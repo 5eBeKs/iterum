@@ -1,0 +1,60 @@
+{
+  "profile": "grok-build",
+  "stage": "release",
+  "case": "population_line_wrong",
+  "error": "The page's population line says all orders; every figure is over delivered orders.",
+  "at": "2026-09-15T20:32:58+00:00",
+  "max_v2_revision": "06eb683",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "all orders"
+  ],
+  "blocking_issues": 1,
+  "warnings": 4,
+  "checks": 33,
+  "issue_ids": [
+    "REL-POPULATION-LINE"
+  ],
+  "warning_texts": [
+    "audit/check_plan.json lists gate_release_document claims_rendered and caveats_rendered under accepted_unproven, so Gate 0 never proved those rules on a broken fixture.",
+    "No check_plan rule compares the report Population sentence to spec.population.name, so a machine PASS is not approval of that line.",
+    "release/dashboard_data.json cards have no population field; delivered-only is stated only in each card caveats list.",
+    "release/dashboard_data.json has no reader-visible statement that the three country values sum to headline net revenue."
+  ],
+  "summary": "release/report.md line 3 tells the reader the population is all orders inside the period; spec and claim_register say delivered orders inside the period. All 21 displayed business numbers bind to claim_id plus role, match metrics, and the country parts sum to 35741.52.",
+  "wall_seconds": 574.3,
+  "cost": {
+    "at": "2026-09-15T20:42:38.333205+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-cabb9567d3ad",
+    "agent_role": "grok-audit-release",
+    "started_at": "2026-09-15T20:33:09.341070+00:00",
+    "finished_at": "2026-09-15T20:42:38.333205+00:00",
+    "wall_seconds": 569.0,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 107709,
+    "cached_input_tokens": 1404416,
+    "output_tokens": 37691,
+    "total_tokens": 1549816,
+    "cost_usd": 0.38888248
+  }
+}

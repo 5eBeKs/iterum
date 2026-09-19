@@ -1,0 +1,85 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "question_restated_narrower",
+  "dataset": "orders",
+  "error": "R02 is restated without the half that asks on which basis the rate is taken.",
+  "at": "2026-09-19T07:32:13+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R02",
+    "basis",
+    "restat|narrow|half|question"
+  ],
+  "blocking_issues": 2,
+  "warnings": 16,
+  "checks": 38,
+  "issue_ids": [
+    "FINAL-R02-QUESTION-RESTATED-NARROWER",
+    "FINAL-R01-QUESTION-RESTATED-NARROWER"
+  ],
+  "issue_texts": [
+    "FINAL-R02-QUESTION-RESTATED-NARROWER | final_claude_redteam.question_fidelity.R02 | final_claude_redteam|question_fidelity|analysis/answers/R02.json|R02 | CLAIM_SUPPORT | MEDIUM | worker_analysis | raw_data/questions.md R02 asks two things: the refund rate, and on which basis, order rows or paying customers. analysis/answers/R02.json records its question as the refund rate alone. Its facts carry o",
+    "FINAL-R01-QUESTION-RESTATED-NARROWER | final_claude_redteam.question_fidelity.R01 | final_claude_redteam|question_fidelity|analysis/answers/R01.json|R01 | CLAIM_SUPPORT | LOW | worker_analysis | raw_data/questions.md R01 asks for net revenue for the reported quarter, over delivered orders inside the period. analysis/answers/R01.json records its question without the population clause and has no cav"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "This profile is single-vendor by design. The architect, all four workers, all five auditors and this red team are one model family (claude-opus-5), so an isolated context is not an independent reviewer, and a bias the model shares would repeat on both sides of every check. Only the deterministic lay",
+    "Writes over raw_data and the frozen machinery were held only by permissions.deny in .claude/settings.json, which covers edit tools and not the shell. A raw file changed through the shell would have been caught by the control lock after the fact, not prevented. This review recomputed from the file as",
+    "The LLM auditor layer contributed no verifiable independent evidence in this run. gate0_semantic, gate_clean_auditor, gate_metrics_auditor, gate_claims_auditor and gate_release_auditor list no artifacts, and each evidence/notes.json holds only a placeholder note. The claims and metrics auditors 'rec",
+    "refund_rate_basis = paying_customers (RESOLVED) is a mandate choice the data cannot make, and it moves the refund rate from 0.189655 (33 of 174 order rows) to 0.473684 (27 of 57 customers). The gap is 2.50x because customers average 3.05 delivered orders, and 21 of the 33 refunded rows are only part",
+    "The spec period ends 2025-03-30, one day short of the calendar quarter that the questions call 'the reported quarter' and the registry names '2025-Q1-delivered'. No row in this export is dated 2025-03-31, so net revenue is 35741.52 either way. The assumption still looks wrong and would silently drop",
+    "'delivered' is a status snapshot taken at an unknown time, not the state at quarter end. Ten pending orders dated inside the period (nine in March), worth 2028.28 EUR gross, are excluded, and some may since have been delivered. Net revenue 35741.52 and the country figures could therefore change on a",
+    "revenue_recognition = net_of_refunds charges every refund to its order's date, because refund_amount carries no refund date. Refunds booked after the quarter therefore reduce this quarter's 35741.52 (gross 40235.02 minus refunds 4493.50), and the report never tells the reader that refunds are attrib",
+    "All four worker carries define the population as 'status=delivered' and keep the period in a separate field. That definition alone would admit order O00201, dated 2025-04-01, giving 175 rows and net revenue 36741.51 instead of 174 and 35741.52. The four carries are otherwise identical boilerplate an",
+    "Every carry lists raw_data/orders.csv under do_not_reread, although the common contract limits that field to the previous stage's outputs and working data. It changed no number here, because gate_claims_machine recomputes from raw regardless.",
+    "The release surfaces never tell the reader that R05 (customer lifetime value) was declined. The Gate 0 excuse holds on this data: the extract spans 2025-01-01 to 2025-04-01, has no acquisition date and no horizon beyond the quarter.",
+    "The release surfaces also never say that 27 of 201 raw rows were excluded: 26 not delivered and 1 dated 2025-04-01. That accounting exists only in analysis/answers/R04.json and the metrics registry.",
+    "The check plan lists gate_release_document's claims_rendered and caveats_rendered under accepted_unproven, because the plan proof could not show them firing. Their PASS is therefore no proof that they would catch a dropped claim or caveat. I read both surfaces myself, and every claim and every cavea",
+    "The report line 'Numerator: 27 of 57' never says that 27 and 57 count customers. The reader has to infer it from the caveat 'denominator is unique paying_customers, not order rows', and the numerator's unit is stated nowhere on either surface.",
+    "Places no deterministic rule covers, checked only by this review: whether each answer file's question matches questions.md (where both blockers sit); the R04 facts raw_order_rows = 201 and population_order_rows = 174 (correct); the report sentence that country figures sum to the headline (exact, 0.0",
+    "The handoff carries no drift_since_review, and its absence does not prove that the stage code's assumptions hold on this export. Recomputing from raw, I found none of them broken.",
+    "This review did not establish: whether raw_data/orders.csv is byte-identical to the file frozen at Gate 0 (the control lock's job); retry history and stale inputs, which only audit_runner.py report shows; the src/ generator and gate code, which are outside my handoff; and whether the release gate's "
+  ],
+  "summary": "FAIL on the answer records, not on the numbers. My own code in evidence/redteam_recalc.py recomputed every published figure from raw_data/orders.csv, and all of them match the clean table, the metrics registry, the claim register, the answer files and all 21 numbers on the three release surfaces: net revenue 35741.52 EUR; PL 11181.67, DE 11032.61 and CZ 13527.24, which sum exactly to the headline; refund rate 0.473684 = 27/57 paying customers; and rows 201 = 174 kept + 26 not delivered + 1 outside the period. The blocker is in analysis/answers. R02 in raw_data/questions.md asks for the refund ",
+  "wall_seconds": 558.9,
+  "cost": {
+    "at": "2026-09-19T07:41:50.728615+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-d423fa05b27b",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-19T07:32:35.067423+00:00",
+    "finished_at": "2026-09-19T07:41:50.728615+00:00",
+    "wall_seconds": 555.672,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 54,
+    "cached_input_tokens": 3008466,
+    "output_tokens": 62898,
+    "total_tokens": 3071418,
+    "cost_usd": 4.597399500000001
+  }
+}

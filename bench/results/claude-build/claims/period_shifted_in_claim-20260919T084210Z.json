@@ -1,0 +1,67 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "period_shifted_in_claim",
+  "dataset": "orders",
+  "error": "One country claim carries a two-month period while its value is the full quarter's.",
+  "at": "2026-09-19T08:40:04+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "period",
+    "02-28",
+    "CLM-NET-CZ"
+  ],
+  "blocking_issues": 1,
+  "warnings": 5,
+  "checks": 16,
+  "issue_ids": [
+    "CLAIMS-AUD-CZ-PERIOD-MISMATCH"
+  ],
+  "issue_texts": [
+    "CLAIMS-AUD-CZ-PERIOD-MISMATCH | gate_claims_auditor.claim_period_matches_computation.CLM-NET-CZ | gate_claims_auditor|claim_period_matches_computation|analysis/claim_register.json|CLM-NET-CZ | CLAIM_SUPPORT | HIGH | worker_analysis | In analysis/claim_register.json, claim CLM-NET-CZ has period '2025-01-01..2025-02-28', while the other four claims and metrics/calculated_metrics.json period use 2025"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "No deterministic rule compares a claim's declared period or population text with the filter used to compute it. claims_recomputed filters on the spec period hard-coded in check_plan.json, and caveats_declared only checks for the phrase 'period boundaries are inclusive on both ends'. So a wrong perio",
+    "metrics/calculated_metrics.json names the period '2025-Q1-delivered', and R01 says 'the reported quarter', but the spec period ends 2025-03-30, not 2025-03-31. The raw export has no rows dated 2025-03-31, so no figure changes, but calling it a full Q1 is looser than the spec.",
+    "The formula strings for net_revenue_cz, net_revenue_de and net_revenue_pl in metrics/calculated_metrics.json read 'WHERE country = country', a tautology that does not name the country. The values are right on recompute, but a reader cannot tell the definition from the registry text.",
+    "CLM-REFUND-RATE uses the ruled basis (paying customers, 27/57 = 0.473684), and its caveat says so in words. On the order-row basis it would be 33/174 = 0.189655. Release wording should keep the basis next to the number so the two cannot be confused.",
+    "Country differences (CZ 13527.24 vs DE 11032.61 vs PL 11181.67) are descriptive only. The register contains no causal or recommendation language, and the per-month split in evidence/recalc_output.json shows the ranking changes by month (February is CZ-heavy), so the release should not present the co"
+  ],
+  "summary": "All five claim values reproduce from raw_data/orders.csv on the spec population (delivered, 2025-01-01..2025-03-30 inclusive), and the country parts sum to the headline 35741.52. But CLM-NET-CZ says its period is 2025-01-01..2025-02-28 while its value 13527.24 covers the full spec period. On the period it declares, CZ net revenue is 9248.36. The claim states the wrong period for its own number, which is one blocker on worker_analysis. Everything else in the checklist passed or does not apply.",
+  "wall_seconds": 121.9,
+  "cost": {
+    "at": "2026-09-19T08:42:09.080353+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-f58036111c74",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-19T08:40:10.303737+00:00",
+    "finished_at": "2026-09-19T08:42:09.080353+00:00",
+    "wall_seconds": 118.781,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 26,
+    "cached_input_tokens": 980316,
+    "output_tokens": 12878,
+    "total_tokens": 993220,
+    "cost_usd": 1.5788404999999999
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "exclusion_reasons_swapped",
+  "error": "R04 attaches each exclusion count to the other rule: 26 rows 'outside period', 1 row 'not delivered'.",
+  "at": "2026-09-15T16:46:33+00:00",
+  "max_v2_revision": "0703cb4",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R04",
+    "exclusion",
+    "swap|reason|rule",
+    "not_delivered|outside_period"
+  ],
+  "blocking_issues": 1,
+  "warnings": 5,
+  "checks": 14,
+  "issue_ids": [
+    "CLM-R04-EXCLUSION-REASONS-SWAPPED"
+  ],
+  "warning_texts": [
+    "analysis/answers/R04.json swaps the exclusion-reason labels of the two allowed exclusions relative to what raw_data/orders.csv supports; a reader of the R04 answer would be told the quarter boundary removed 26 rows and non-delivery removed 1.",
+    "The machine gate check questions_are_answered.R04 verified only that the answer names the row-accounting metric ids and values, not the exclusion reason labels, so the swap was invisible to it; this assertion was judged only by the auditor.",
+    "The order-row basis for refund_rate would give 33/174 = 0.189655; the published 0.473684 on the paying-customer basis (27/57) matches the audit_spec ruling, and the CLM-REFUND-RATE caveats state the paying-customers denominator in words.",
+    "Independent recalc of the machine gate's recompute roots matched every value in audit/results/gate_claims_machine/evidence/checks.json: 5 claim values, 11 metric values, refund_rate numerator 27 and denominator 57.",
+    "independent_claim_recalc.json roots every claim in raw_data/orders.csv only; no claim recalculation depends on analysis/ or release/ sources."
+  ],
+  "summary": "All five claim values (net_revenue 35741.52, refund_rate 0.473684 = 27/57 paying customers, CZ 13527.24, DE 11032.61, PL 11181.67) independently recomputed from raw_data/orders.csv and match the registry. Row accounting counts (201/174/27/26/1) are correct. But analysis/answers/R04.json attaches the exclusion REASONS to the wrong metrics: it labels the 26 excluded_not_delivered rows as 'order_date outside period' and the single excluded_outside_period row as 'status != delivered' — the exact reverse of the raw data, where 26 rows are not delivered and one delivered row (O00201, 2025-04-01) is ",
+  "wall_seconds": 193.4,
+  "cost": {
+    "at": "2026-09-15T16:49:49.966679+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-877f12486be0",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-15T16:46:40.570834+00:00",
+    "finished_at": "2026-09-15T16:49:49.965163+00:00",
+    "wall_seconds": 189.391,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 122871,
+    "cached_input_tokens": 181312,
+    "output_tokens": 5361,
+    "total_tokens": 310437,
+    "cost_usd": 0.013498505000000001
+  }
+}

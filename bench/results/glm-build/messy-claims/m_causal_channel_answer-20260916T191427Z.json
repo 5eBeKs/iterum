@@ -1,0 +1,65 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "m_causal_channel_answer",
+  "dataset": "messy",
+  "error": "The answer to R04 explains the lower partner basket by customers' price sensitivity, which no data in the audit measures.",
+  "at": "2026-09-16T19:11:44+00:00",
+  "max_v2_revision": "fa38876",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "price.?sensitiv",
+    "caus|because|drives",
+    "unsupported|no (evidence|data|metric)|observational"
+  ],
+  "blocking_issues": 1,
+  "warnings": 3,
+  "checks": 16,
+  "issue_ids": [
+    "CAUSAL-CAVEAT-R04"
+  ],
+  "issue_texts": [
+    "CAUSAL-CAVEAT-R04 | gate_claims_auditor.causal_language.R04 | gate_claims_auditor|causal_language|R04|analysis/answers/R04.json | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R04.json caveats[0]: 'Partner baskets are smaller because partner customers are price-sensitive: the channel drives the lower order value.' The registered hypothesis H-CHANNEL-AOV (audit/analysis_plan.json) asks "
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The claim register carries a benign confounder caveat on each estimate (mix of countries) but the R04 caveat contradicts its spirit by asserting the confounder away as a mechanism.",
+    "Every number that gate_claims_machine recomputed (claims_recomputed.*, recompute_estimate.*, min_group_size.*) was independently reproduced here from quarantine/orders.csv and matched within its own tolerance; no unexplained discrepancy.",
+    "No phrase from the quarantined comment column appears in the claim register or any of R01-R05; the quarantine projection was used, not the raw file."
+  ],
+  "summary": "All six headline claims, all four published intervals and both answer-file hypothesis statistics reproduce exactly from the quarantine projection (manifest declared: true), populations and periods match the spec, no Simpson reversal in any country stratum, denominators keep cancelled and pending. One blocker: analysis/answers/R04.json adds a causal caveat (partner customers price-sensitive, the channel drives the lower order value) that no registered hypothesis or data supports.",
+  "wall_seconds": 156.4,
+  "cost": {
+    "at": "2026-09-16T19:14:26.727777+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-d4c513d2b394",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-16T19:11:53.843512+00:00",
+    "finished_at": "2026-09-16T19:14:26.727777+00:00",
+    "wall_seconds": 152.875,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 70632,
+    "cached_input_tokens": 264960,
+    "output_tokens": 6647,
+    "total_tokens": 342922,
+    "cost_usd": 0.013325159999999999
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "m_page_interval_certainty",
+  "dataset": "messy",
+  "error": "The page says each interval is where the true value lies with near certainty.",
+  "at": "2026-09-19T08:07:32+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "certaint|true value",
+    "sampling interval|interval"
+  ],
+  "blocking_issues": 4,
+  "warnings": 18,
+  "checks": 23,
+  "issue_ids": [
+    "FINAL-INTERVAL-CERTAINTY",
+    "FINAL-PAGE-POPULATION-DELIVERED-ONLY",
+    "FINAL-DASHBOARD-ESTIMATE-N",
+    "FINAL-CARRY-CONTRADICTS-OUTPUT"
+  ],
+  "issue_texts": [
+    "FINAL-INTERVAL-CERTAINTY | final_claude_redteam.interval_wording | final_claude_redteam|interval_wording|release/report.md|by-channel | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 23, the reader text under the four channel estimates, says each interval is where the channel's true value lies 'with near certainty'. Each interval is a 0.95 Wilson or Student sampling interval: l",
+    "FINAL-PAGE-POPULATION-DELIVERED-ONLY | final_claude_redteam.page_population | final_claude_redteam|page_population|release/report.md|report-header | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3 states the population of the whole report as orders placed inside the quarter, one row per order, 'delivered only'. The headline count and both completion rates sit under that line, ",
+    "FINAL-DASHBOARD-ESTIMATE-N | final_claude_redteam.estimate_n_rendered | final_claude_redteam|estimate_n_rendered|release/dashboard_data.json|estimate-cards | RELEASE_INTEGRITY | MEDIUM | worker_release | In release/dashboard_data.json, the cards for CLM-COMPLETION-DIRECT, CLM-COMPLETION-PARTNER, CLM-AOV-DIRECT and CLM-AOV-PARTNER carry value, ci_low and ci_high but no n. Their keys are only _claim",
+    "FINAL-CARRY-CONTRADICTS-OUTPUT | final_claude_redteam.carry_continuity | final_claude_redteam|carry_continuity|audit/checkpoints|worker-carries | OTHER | MEDIUM | worker_clean | The four carries (worker_clean, worker_metrics, worker_analysis and worker_release .carry.json) are identical apart from step_id and context_id. Each context_id and attempt matches its result's execution block. Their facts"
+  ],
+  "other_blockers": 2,
+  "warning_texts": [
+    "This profile is single-vendor: the architect, all four workers, all five auditors and this red team are one model family (claude-opus-5), so an isolated context is not an independent reviewer and an error this model tends to make can pass every check here unnoticed; no cross-vendor or GPT gate exist",
+    "Writing over the raw sources and the frozen machinery was closed only by permissions.deny in .claude/settings.json, which covers the edit tools and not the shell, so a changed raw file would have been caught by the control lock on the next runner command, after the fact, not prevented.",
+    "The LLM layer of this run shows no independent work: the four worker results, gate0_semantic and gate_release_auditor all report the same check value 0.473684, which matches no number in this dataset; every summary reads 'driver e2e'; each auditor evidence file is a one-line stub; the clean, metrics",
+    "gate_release_auditor passed release/report.md with the near-certainty interval sentence and the delivered-only header in it, and gate_release_document's wording rule tests only the word 'significant', so page prose and dashboard content other than bound numbers had no working check before this stage",
+    "The frozen check plan has no rule over page-level prose, the dashboard beyond bound numbers and caveats, or the content of the carries, which is exactly where all four blockers sit; it also has no rule over the renamed columns customer_id, order_date and country, because values_preserved has no colu",
+    "No worker result has a disclosures field and every worker warnings list is empty, so there was no self-reported deviation for me to weigh, which means nothing was reported, not that no stage deviated.",
+    "No file exists under audit/decisions/ and the handoff lists no rulings, so no released number rests on a recorded human ruling beyond the RESOLVED lines in audit/human_decisions.yaml.",
+    "Every RESOLVED assumption I could test agrees with the data: the last row in the file is the latest updated_at for all 917 repeated orders, and order_month agrees with the month-first reading of all 6,852 slashed dates, where a day-first reading would disagree on 6,621; the one resting purely on jud",
+    "dedup_rule is the assumption that moves the most: 126 of the 917 repeated orders change status between revisions, and taking the first revision instead of the last would lower net revenue to 3,010,704.83 EUR and partner completion to 0.601184, so the release depends on the export's row order and upd",
+    "The analysis plan assumes neither channel changed how it books orders during the quarter, but recomputed monthly completion moves 0.5947, 0.6163 and 0.6034 for partner and 0.7218, 0.7193 and 0.7321 for direct from January to March, several times the half-width of the published 0.95 intervals, while ",
+    "The quarter's orders are the whole export, not a sample of it, so the Q1 completion rates and AOVs are counted exactly, and the published intervals describe a hypothetical repetition of the same booking process rather than any uncertainty about what happened in Q1.",
+    "The dashboard test cards CLM-TEST-CHANNEL-COMPLETION and CLM-TEST-CHANNEL-AOV show a value of 0.0000 under the labels 'Test Channel Completion' and 'Test Channel Aov' without saying it is a p value, so a dashboard reader can take it as a completion rate or order value of zero.",
+    "Both p values render as 0.0000 at display_digits 4, while the recomputed two-proportion p is about 2.9e-157 and the Welch p underflows to zero, so 'p < 0.0001' would say the same thing without reading as an exact zero.",
+    "The caveat 'one quarter of orders in this channel' on every channel estimate can be read as 25 per cent of orders rather than a three-month period; that wording comes from the claim_register caveats written by worker_analysis.",
+    "CLM-TEST-CHANNEL-AOV declares its population as all orders by channel, but the test runs on delivered orders only (n 17,818 and 12,055), and neither the claim nor the report line says so.",
+    "shipping_total (37,792,722.50 EUR, correctly not published) recomputes exactly under the declared locale, but the readable shipping cost is above the order's gross amount on 94 per cent of orders (median 901.14 EUR against 108.31 EUR), so the column's unit or meaning is doubtful even beyond the six ",
+    "Things I could not establish: whether the carry files pass audit/schemas/carry.schema.json (outside my input globs); how faithfully the quarantine projection follows raw_data/orders.csv, which I may not read; the control totals, the source profile and raw_data/questions.md, which I know only through",
+    "The handoff carries no drift_since_review, but its absence does not show that the stage code's assumptions hold, and retry history and stale inputs are invisible to me, so a person must check them in audit_runner.py report."
+  ],
+  "summary": "FAIL. My own code recomputed every published number exactly from the quarantine projection: 44,531 orders, net revenue 3,023,296.61 EUR, completion 0.724397 and 0.604746 with their Wilson bounds, AOV 110.64 and 87.27 with their Student bounds, and both registered tests. The machine release gate bound all 60 rendered numbers on the three surfaces. The release still fails on four blockers. First, report.md tells the reader that each 0.95 interval holds the channel's true value with near certainty. Second, the report header calls the population delivered-only, above a count and completion rates w",
+  "wall_seconds": 604.6,
+  "cost": {
+    "at": "2026-09-19T08:17:45.389255+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-4b16f125bb3c",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-19T08:07:44.004328+00:00",
+    "finished_at": "2026-09-19T08:17:45.389255+00:00",
+    "wall_seconds": 601.391,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 58,
+    "cached_input_tokens": 3849697,
+    "output_tokens": 60789,
+    "total_tokens": 3910544,
+    "cost_usd": 5.345984500000001
+  }
+}

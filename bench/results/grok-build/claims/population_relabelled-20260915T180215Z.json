@@ -1,0 +1,58 @@
+{
+  "profile": "grok-build",
+  "stage": "claims",
+  "case": "population_relabelled",
+  "error": "The headline claim says its population is all orders, while the spec and its own caveats say delivered orders.",
+  "at": "2026-09-15T17:52:51+00:00",
+  "max_v2_revision": "2a6f8dc",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "all orders",
+    "CLM-NET-REVENUE"
+  ],
+  "blocking_issues": 1,
+  "warnings": 1,
+  "checks": 22,
+  "issue_ids": [
+    "CLM-NET-REVENUE-POPULATION-RELABEL"
+  ],
+  "warning_texts": [
+    "The frozen check_plan has no deterministic rule that a claim population field must match the spec population or the filters used to recompute the figure, so a relabelled headline population can pass gate_claims_machine while the number is computed on delivered orders only."
+  ],
+  "summary": "CLM-NET-REVENUE value 35741.52 matches delivered-only raw recalc, but analysis/claim_register.json labels its population as all orders inside the period; that labelled population sums to 41881.34. The other four claims match spec population, period 2025-01-01..2025-03-30, and raw recalc. independent_claim_recalc.json is rooted only in raw_data/orders.csv.",
+  "wall_seconds": 552.7,
+  "cost": {
+    "at": "2026-09-15T18:02:12.542552+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-593d40cbcb5f",
+    "agent_role": "grok-audit-claims",
+    "started_at": "2026-09-15T17:53:08.741513+00:00",
+    "finished_at": "2026-09-15T18:02:12.540542+00:00",
+    "wall_seconds": 543.797,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 167342,
+    "cached_input_tokens": 1936640,
+    "output_tokens": 29289,
+    "total_tokens": 2133271,
+    "cost_usd": 0.50277092
+  }
+}

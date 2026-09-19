@@ -1,0 +1,67 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "m_population_line_all_rows",
+  "dataset": "messy",
+  "error": "The page's population line says every export row; the figures are over one row per order after deduplication.",
+  "at": "2026-09-19T09:56:31+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "every row|export row|revision|dedup|one row per order"
+  ],
+  "blocking_issues": 1,
+  "warnings": 6,
+  "checks": 16,
+  "issue_ids": [
+    "REL-AUD-POPULATION-LINE"
+  ],
+  "issue_texts": [
+    "REL-AUD-POPULATION-LINE | gate_release_auditor.population_statement | gate_release_auditor|population_statement|release/report.md|page | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3 is the only population statement on the page. It says the population is every row of the export inside the quarter and that it is delivered only. analysis/claim_register.json gives CLM-ORDERS th"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "Neither release gate checks population wording: gate_release_document checks that caveats are present and gate_release_machine checks that numbers are bound, so both passed a report whose population line contradicts the claim register.",
+    "release/dashboard_data.json estimate cards (CLM-COMPLETION-*, CLM-AOV-*) carry the point and both bounds but no n, no interval level and no population, although audit_spec.yaml release.estimate_rendering says an estimate is always rendered with its n beside it.",
+    "The period 2026-01-01..2026-03-31 appears in the report only in the page title, and in the dashboard only at the top-level period key; no bullet or card repeats it, and the prompt asks for it beside each number.",
+    "The p values are displayed as 0.0000 at four digits on the report and dashboard, which reads as a p of exactly zero rather than a p below 0.0001.",
+    "Dashboard card labels are mechanical ('Aov Direct', 'Test Channel Completion'), and the test cards' value field is a p value with nothing in the card saying so.",
+    "No deterministic rule compares release wording about population or denominators with the claims, so this auditor's reading is the only check on that part of the page."
+  ],
+  "summary": "All 20 render roles on each of the three surfaces (60 numbers) match the claim register exactly. My own recomputation reproduces every Wilson bound, the z-test and all reconciliation identities. The report's page-level population statement (release/report.md line 3) is wrong, though: it describes the population as every row of the export and as delivered only. The claims' population is one row per order after deduplication, and only net revenue and AOV are restricted to delivered orders. So the line misstates the denominator of CLM-ORDERS and of both completion rates, and it contradicts the de",
+  "wall_seconds": 185.0,
+  "cost": {
+    "at": "2026-09-19T09:59:40.037535+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-1ec424ea468d",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-19T09:56:38.140756+00:00",
+    "finished_at": "2026-09-19T09:59:40.037535+00:00",
+    "wall_seconds": 181.891,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 32,
+    "cached_input_tokens": 1378857,
+    "output_tokens": 17343,
+    "total_tokens": 1396232,
+    "cost_usd": 2.031088
+  }
+}

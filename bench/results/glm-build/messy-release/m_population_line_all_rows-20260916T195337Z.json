@@ -1,0 +1,67 @@
+{
+  "profile": "glm-build",
+  "stage": "release",
+  "case": "m_population_line_all_rows",
+  "dataset": "messy",
+  "error": "The page's population line says every export row; the figures are over one row per order after deduplication.",
+  "at": "2026-09-16T19:47:59+00:00",
+  "max_v2_revision": "fa38876",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "every row|export row|revision|dedup|one row per order"
+  ],
+  "blocking_issues": 2,
+  "warnings": 4,
+  "checks": 13,
+  "issue_ids": [
+    "RELEASE-POPULATION-LINE",
+    "RELEASE-ESTIMATE-N-MISSING-DASHBOARD"
+  ],
+  "issue_texts": [
+    "RELEASE-POPULATION-LINE | gate_release_auditor.population_line | gate_release|population_line|release/report.md|line 3 | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3 reads a population of every row of the export inside the quarter, delivered only. The generator (src/release/build_release.py line 62) renders the CLM-NET-REVENUE claim population verbatim, which in analysis/cl",
+    "RELEASE-ESTIMATE-N-MISSING-DASHBOARD | gate_release_auditor.estimate_rendering | gate_release|estimate_rendering|release/dashboard_data.json|cards[2..5] | RELEASE_INTEGRITY | MEDIUM | worker_release | audit/audit_spec.yaml release section: 'An estimate is rendered with its interval and its n beside it, always.' The four estimate cards (CLM-COMPLETION-DIRECT, CLM-COMPLETION-PARTNER, CLM-AOV-DIRECT,"
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "The AOV student interval bounds (109.88/111.39, 86.50/88.03) could not be recomputed from source because raw_data and clean_data are outside this stage's allowed inputs, and neither machine gate evidence directory for this stage recorded a bounds recompute; they were verified only for internal consi",
+    "audit/results/gate_release_machine/evidence contains only release_surface_gate.json and no checks.json, so no machine_check reference into that gate was possible; its 42 bound numbers were instead fully recounted by my own code (not a sample).",
+    "The unanchored numbers on report.md are exactly the contract-excluded ISO period, the four n values and the four 0.95 level labels; all match their claims and audit/analysis_plan.json level 0.95.",
+    "Generator numeric literals are only structural (Stage 4 docstring, parents[2], indent=2, return 0, GENERATOR-02, utf-8, Decimal(1)); the last two are explicitly excluded by audit/release_surface_contract.json."
+  ],
+  "summary": "All 42 displayed numbers on the three release surfaces were extracted without limit and rebound independently to claim_id+role in analysis/claim_register.json with exact display_digits formatting: all match, all reconciliation identities hold (orders 24597+19934=44531; net revenue 1971306.75+1051989.86=3023296.61; rates and AOVs recomputed from the registry numerators/denominators; Wilson bounds recomputed from counts). Generator has no business literals; shipping_total, quarantined phrases and UNVERIFIED_CLAIM absent; caveats sit beside claims. Two release-integrity blockers: the report popul",
+  "wall_seconds": 333.5,
+  "cost": {
+    "at": "2026-09-16T19:53:36.267339+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-2b6956ff0bd8",
+    "agent_role": "glm-audit-release",
+    "started_at": "2026-09-16T19:48:06.383469+00:00",
+    "finished_at": "2026-09-16T19:53:36.263833+00:00",
+    "wall_seconds": 329.891,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 59433,
+    "cached_input_tokens": 847680,
+    "output_tokens": 9360,
+    "total_tokens": 921930,
+    "cost_usd": 0.02505471
+  }
+}

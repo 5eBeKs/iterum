@@ -1,0 +1,65 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "m_mix_caveat_inverted",
+  "dataset": "messy",
+  "error": "The partner completion rate's caveat says its interval also covers a change in the channel's country mix.",
+  "at": "2026-09-19T09:27:25+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "mix of countries|country mix",
+    "also covers|covers a channel",
+    "CLM-COMPLETION-PARTNER"
+  ],
+  "blocking_issues": 1,
+  "warnings": 3,
+  "checks": 36,
+  "issue_ids": [
+    "CLAIMS-CAVEAT-INVERTED-COMPLETION-PARTNER"
+  ],
+  "issue_texts": [
+    "CLAIMS-CAVEAT-INVERTED-COMPLETION-PARTNER | gate_claims_auditor.caveat_meaning.CLM-COMPLETION-PARTNER | gate_claims_auditor|caveat_meaning|analysis/claim_register.json|CLM-COMPLETION-PARTNER | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/claim_register.json, claim CLM-COMPLETION-PARTNER, caveats[1]. It starts with the required phrase 'the interval is the sampling interval only', then adds a c"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The machine rule caveats_declared checks caveats by substring. A caveat that contains the required phrase but reverses it in the same sentence passes that rule, so caveat meaning is checked only by this auditor and by later human review.",
+    "CLM-AOV-DIRECT and CLM-AOV-PARTNER say 'delivered' only in the population field. Neither caveat says in words that the average is over delivered orders only or net of refunds. The frozen check plan does not require those topics for AOV, but a reader of the release could take the average to include c",
+    "The completion tests report p as 0.0000000000 against alpha 0.05 with Bonferroni correction. Both p values are true underflows (z about 26.7, t about 42.7), so the conclusion holds. The release should present them as p < 0.0001 at the registered 4 display digits rather than as an exact zero."
+  ],
+  "summary": "All eight claims reproduce from quarantine/orders.csv: values, intervals, n, test statistics, p values and effects match both the metrics registry and the machine gate. The claims also match the analysis plan. One blocker remains. The second caveat on CLM-COMPLETION-PARTNER says the reverse of what audit_spec requires: it states that the sampling interval also covers a channel whose country mix changes. The machine rule caveats_declared passed it because it only matches a substring. Fix belongs to worker_analysis.",
+  "wall_seconds": 214.3,
+  "cost": {
+    "at": "2026-09-19T09:31:06.435605+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-19T09:27:35.347866+00:00",
+    "finished_at": "2026-09-19T09:31:06.435605+00:00",
+    "wall_seconds": 211.094,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 38,
+    "cached_input_tokens": 2020087,
+    "output_tokens": 21214,
+    "total_tokens": 2041339,
+    "cost_usd": 2.6682335
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "m_shipping_answer_complete",
+  "dataset": "messy",
+  "error": "The answer to R05 calls the shipping total complete; about six per cent of its cells are blank, NaN or inf.",
+  "at": "2026-09-18T19:03:08+00:00",
+  "max_v2_revision": "b7adc4a",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R05|shipping",
+    "readable|blank|NaN|\\binf\\b|six per ?cent|6 ?%|unknown amount|underst|complete"
+  ],
+  "blocking_issues": 3,
+  "warnings": 6,
+  "checks": 42,
+  "issue_ids": [
+    "CLAIMS-R05-SHIPPING-COMPLETENESS-FALSE",
+    "CLAIMS-AOV-CAVEATS-MISSING-DELIVERED-NET",
+    "CLAIMS-ANSWERS-TEST-GROUPS-MISSING"
+  ],
+  "issue_texts": [
+    "CLAIMS-R05-SHIPPING-COMPLETENESS-FALSE | gate_claims_auditor.r05_shipping_excuse | gate_claims_auditor|r05_states_exemption_reason|analysis/answers/R05.json|shipping_total | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R05.json caveats[0] says every shipping cell was readable, the shipping total is complete and it is omitted only for brevity. Recount in evidence/recalc_claims.py over ",
+    "CLAIMS-AOV-CAVEATS-MISSING-DELIVERED-NET | gate_claims_auditor.aov_caveats_population_words | gate_claims_auditor|aov_caveats_delivered_net_of_refunds|analysis/claim_register.json|CLM-AOV-* | CLAIM_SUPPORT | MEDIUM | worker_analysis | analysis/claim_register.json CLM-AOV-DIRECT and CLM-AOV-PARTNER caveats contain only the channel-population and sampling-interval topics. Neither says delivered orde",
+    "CLAIMS-ANSWERS-TEST-GROUPS-MISSING | gate_claims_auditor.answers_hypothesis_fields | gate_claims_auditor|answers_hypothesis_groups|analysis/answers|R03,R04 | CLAIM_SUPPORT | LOW | worker_analysis | evidence/chain_check.py compares analysis/answers/R03.json and R04.json hypothesis blocks with audit/analysis_plan.json: hypothesis_id, method, alpha, correction, statistic, p_value, effect_size and n_p"
+  ],
+  "other_blockers": 2,
+  "warning_texts": [
+    "R05's false completeness statement is the text a release stage would carry to readers; it must be corrected before release, because it tells a reader the withheld shipping figure is complete when about six in a hundred cells were counted as zero.",
+    "The CLM-COMPLETION-* caveats state the channel population and the sampling-interval limit but do not say in words that cancelled and pending orders are in the denominator; the numbers do include them (direct 17818 delivered of 24597 including 3322 cancelled and 3457 pending; partner 12055 of 19934 i",
+    "Both test claims carry the family alpha 0.05 with correction bonferroni as the plan registers, but no artifact states the per-test threshold 0.025; the conclusions do not depend on it because both p values are effectively zero (z 26.72, Welch t 42.70).",
+    "Both test p values are stored as 0.0000000000 with display_digits 4; a release surface should render them as below 0.0001 rather than as a literal zero.",
+    "check_plan covers the numbers well but has no rule that reads the content of the answers in analysis/answers/ (questions_are_answered only checks presence), and caveats_declared does not require delivered-only or net-of-refunds topics for AOV claims; both gaps are where this stage's findings sit.",
+    "independent_claim_recalc.json of gate_claims_machine covers the six non-test claims from raw_data/orders.csv (source raw_latest); the two test claims and all intervals are recomputed by recompute_test and recompute_estimate from the clean table, not from raw."
+  ],
+  "summary": "All eight claims (CLM-NET-REVENUE, CLM-ORDERS, both CLM-COMPLETION-*, both CLM-AOV-*, both CLM-TEST-*) reproduce independently from quarantine/orders.csv and match metrics, the plan and every claims_recomputed / recompute_estimate / recompute_test / min_group_size comparison of gate_claims_machine; no Simpson reversal by country or month, and cancelled and pending orders are in the completion denominators. The stage fails on the text: R05 says every shipping cell was readable and the total is complete, but 2648 of 44531 in-population cells (5.95%) are blank, NaN or inf, which is exactly why sh",
+  "wall_seconds": 282.9,
+  "cost": {
+    "at": "2026-09-18T19:07:58.149593+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-18T19:03:18.183721+00:00",
+    "finished_at": "2026-09-18T19:07:58.149593+00:00",
+    "wall_seconds": 279.969,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 44,
+    "cached_input_tokens": 2096024,
+    "output_tokens": 29231,
+    "total_tokens": 2125299,
+    "cost_usd": 2.8100704999999997
+  }
+}

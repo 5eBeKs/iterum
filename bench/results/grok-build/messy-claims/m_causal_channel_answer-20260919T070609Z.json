@@ -1,0 +1,66 @@
+{
+  "profile": "grok-build",
+  "stage": "claims",
+  "case": "m_causal_channel_answer",
+  "dataset": "messy",
+  "error": "The answer to R04 explains the lower partner basket by customers' price sensitivity, which no data in the audit measures.",
+  "at": "2026-09-19T06:54:39+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "price.?sensitiv",
+    "caus|because|drives",
+    "unsupported|no (evidence|data|metric)|observational"
+  ],
+  "blocking_issues": 1,
+  "warnings": 4,
+  "checks": 58,
+  "issue_ids": [
+    "CLAIM-CAUSAL-LANGUAGE-R04"
+  ],
+  "issue_texts": [
+    "CLAIM-CAUSAL-LANGUAGE-R04 | gate_claims_auditor.causal_language.R04 | gate_claims_auditor|causal_language|analysis/answers/R04.json|R04 | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R04.json caveats[0] states that partner customers are price-sensitive and that the channel drives the lower order value. The bound test is H-CHANNEL-AOV (Welch t on delivered net_amount, p 0, effect 0.486"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "audit/check_plan.json has no rule over causal wording in analysis/answers, so the R04 attribution was not a machine-gate comparison.",
+    "CLM-AOV-DIRECT and CLM-AOV-PARTNER caveats name the channel and the sampling interval but do not repeat delivered-only or net of refunds in the caveat list; those words sit in the population field and on CLM-NET-REVENUE.",
+    "CLM-TEST-CHANNEL-AOV population text does not name delivered-only, while n_per_group 17818/12055 is the delivered counts rather than all-channel 24597/19934.",
+    "analysis/answers/R05.json caveats[0] contains an unbound quantity that is not tied to a claim_id."
+  ],
+  "summary": "Claim values, intervals, tests, populations and periods recompute from quarantine/orders.csv and match the metrics registry and the claims machine gate. R04 nevertheless attributes the AOV gap to partner-customer price sensitivity and states that the channel drives the lower order value, which the registered Welch t does not support.",
+  "wall_seconds": 682.5,
+  "cost": {
+    "at": "2026-09-19T07:06:08.491048+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-a1a1adafe590",
+    "agent_role": "grok-audit-claims",
+    "started_at": "2026-09-19T06:54:49.170503+00:00",
+    "finished_at": "2026-09-19T07:06:08.491048+00:00",
+    "wall_seconds": 679.313,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 429617,
+    "cached_input_tokens": 2010240,
+    "output_tokens": 32137,
+    "total_tokens": 2471994,
+    "cost_usd": 0.69943984
+  }
+}

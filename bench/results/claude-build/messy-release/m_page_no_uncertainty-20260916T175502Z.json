@@ -1,0 +1,74 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "m_page_no_uncertainty",
+  "dataset": "messy",
+  "error": "The page says the channel figures are measured over every order and carry no uncertainty, beside their intervals.",
+  "at": "2026-09-16T17:49:19+00:00",
+  "max_v2_revision": "fa38876",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "no uncertainty|every order",
+    "interval|estimate|sampl"
+  ],
+  "blocking_issues": 5,
+  "warnings": 5,
+  "checks": 19,
+  "issue_ids": [
+    "REL-AUD-001",
+    "REL-AUD-002",
+    "REL-AUD-003",
+    "REL-AUD-004",
+    "REL-AUD-005"
+  ],
+  "issue_texts": [
+    "REL-AUD-001 | gate_release_auditor.wording_not_stronger_than_interval | gate_release_auditor|wording_not_stronger_than_interval|release/report.md|by_channel_estimates | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 23 says every channel figure was measured over all orders of the quarter and therefore carries no uncertainty. The four figures above it are kind=estimate claims (a",
+    "REL-AUD-002 | gate_release_auditor.population_beside_figure | gate_release_auditor|population_beside_figure|release/report.md|page_population | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3 gives one population for the whole page: orders in the quarter, one row per order, delivered only (generator line 62 copies CLM-NET-REVENUE's population). The claim register gives CLM-ORD",
+    "REL-AUD-003 | gate_release_auditor.card_context_and_n | gate_release_auditor|card_context_and_n|release/dashboard_data.json|cards | VISUALIZATION | MEDIUM | worker_release | release/dashboard_data.json: none of the six cards has population, period, unit; the four estimate cards ($.cards[2..5]) carry ci_low/ci_high but no n and no level. The period exists only at $.period. audit_spec.yaml release.e",
+    "REL-AUD-004 | gate_release_auditor.unit_label | gate_release_auditor|unit_label|release/report.md,release/dashboard_data.json|aov_and_cards | VISUALIZATION | MEDIUM | worker_release | release/report.md lines 18 and 20 show the AOV point and bounds (110.64, 87.27 ...) under the label 'aov direct/partner' with no currency; the claims' unit is EUR. release/dashboard_data.json shows no unit on any car",
+    "REL-AUD-005 | gate_release_auditor.aov_caveats | gate_release_auditor|aov_caveats|analysis/claim_register.json|CLM-AOV | CLAIM_SUPPORT | MEDIUM | worker_analysis | CLM-AOV-DIRECT and CLM-AOV-PARTNER caveats in analysis/claim_register.json are only the channel-population and sampling-interval caveats, so release/report.md lines 19/21 and dashboard cards 4-5 show neither 'net of refunds' nor 'delive"
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "gate_release_machine and gate_release_document both returned PASS on a release with the five blockers above: release_surface_contract.json has reconciliations [] and card_caveat_requirements [], the wording dictionary did not catch a census/no-uncertainty sentence, and no rule compares published sur",
+    "The printed 'n = N' and '0.95 interval' labels are excluded from binding on the grounds that recompute_estimate / ci_covers_point check them, but those rules check the claim, not the page. Hand-checked here: all four printed n equal the claim n and the metric n; the level equals analysis_plan level ",
+    "Gate evidence for this stage records no generator literal scan. src/release/build_release.py has numeric literal 2 at lines 21 (parents index), 102 and 115 (json indent) that are not listed in generator_literal_exclusions; none is a business figure.",
+    "Student intervals for AOV could not be recomputed from the inputs of this step (row-level net_amount is not an input); only point-inside and symmetry within rounding were verified (direct 0.7557/0.7543, partner 0.7659/0.7641 from point to bounds).",
+    "Dashboard labels are mechanically title-cased claim ids ('Aov Direct', 'Completion Direct'), not reader labels."
+  ],
+  "summary": "All 42 rendered numbers on the three release surfaces are bound, exactly formatted and agree with my own recomputation from registry components (Wilson bounds, AOV ratios, orders = 24597+19934, net revenue = sum of channel delivered net). The release still fails on what surrounds the numbers: report.md line 23 tells the reader the channel figures are a census with no uncertainty, which contradicts the intervals printed beside them and was not produced by the committed generator; the page-level population line labels every figure 'delivered only', which is wrong for the order count and both com",
+  "wall_seconds": 339.3,
+  "cost": {
+    "at": "2026-09-16T17:55:01.414812+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-1ec424ea468d",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-16T17:49:24.734395+00:00",
+    "finished_at": "2026-09-16T17:55:01.414812+00:00",
+    "wall_seconds": 336.687,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 36,
+    "cached_input_tokens": 1702171,
+    "output_tokens": 34963,
+    "total_tokens": 1737170,
+    "cost_usd": 2.6932670000000005
+  }
+}

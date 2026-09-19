@@ -1,0 +1,63 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "m_shipping_answer_complete",
+  "dataset": "messy",
+  "error": "The answer to R05 calls the shipping total complete; about six per cent of its cells are blank, NaN or inf.",
+  "at": "2026-09-19T07:17:55+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R05|shipping",
+    "readable|blank|NaN|\\binf\\b|six per ?cent|6 ?%|unknown amount|underst|complete"
+  ],
+  "blocking_issues": 1,
+  "warnings": 2,
+  "checks": 15,
+  "issue_ids": [
+    "R05-SHIPPING-READABILITY-FALSE"
+  ],
+  "issue_texts": [
+    "R05-SHIPPING-READABILITY-FALSE | gate_claims_auditor.R05_shipping_completeness_claim | gate_claims_auditor|claim_support_false_caveat|analysis/answers/R05.json|shipping_total | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R05.json caveats[0]: 'Every shipping cell of the export was readable, so the shipping total is complete'. Independent recalc on quarantine/orders.csv (audit/results/"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "CLM-COMPLETION-DIRECT and CLM-COMPLETION-PARTNER caveats never say in words that cancelled and pending orders are included in the denominator; the population as computed is unfiltered (my recalc confirms it), but the omission invites the filtered-denominator misreading the spec warns about.",
+    "audit/analysis_plan.json ships its method rationale inside a _comment block that also paraphrases source_profile.json conclusions; treat it as plan provenance only, not as a result to lean on."
+  ],
+  "summary": "All eight registered claims reproduce independently from quarantine/orders.csv (values, CIs, test statistics, p, effects, n, population and period all match; no sign reversal by country; no comment-column leakage). One blocker: R05's caveat falsely states every shipping cell of the export was readable; 1778 cells in the kept population are blank or unparseable (870 literal nan/inf), so the claim of a complete shipping total is false. shipping_total is correctly not published, but the caveat is a false statement on an answer surface.",
+  "wall_seconds": 224.0,
+  "cost": {
+    "at": "2026-09-19T07:21:45.803895+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-d7cb777299a9",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-19T07:18:05.794320+00:00",
+    "finished_at": "2026-09-19T07:21:45.801159+00:00",
+    "wall_seconds": 220.0,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 37675,
+    "cached_input_tokens": 443392,
+    "output_tokens": 6658,
+    "total_tokens": 489631,
+    "cost_usd": 0.013941006
+  }
+}

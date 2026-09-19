@@ -1,0 +1,75 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "m_page_no_uncertainty",
+  "dataset": "messy",
+  "error": "The page says the channel figures are measured over every order and carry no uncertainty, beside their intervals.",
+  "at": "2026-09-18T20:22:50+00:00",
+  "max_v2_revision": "b7adc4a",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "no uncertainty|every order",
+    "interval|estimate|sampl"
+  ],
+  "blocking_issues": 5,
+  "warnings": 6,
+  "checks": 17,
+  "issue_ids": [
+    "REL-AUD-UNCERTAINTY-DENIED",
+    "REL-AUD-REPORT-NOT-GENERATED",
+    "REL-AUD-REPORT-POPULATION",
+    "REL-AUD-DASHBOARD-CARD-CONTEXT",
+    "REL-AUD-AOV-CAVEATS"
+  ],
+  "issue_texts": [
+    "REL-AUD-UNCERTAINTY-DENIED | gate_release_auditor.wording_not_stronger_than_interval | gate_release_auditor|wording_not_stronger_than_interval|release/report.md|by_channel | CLAIM_SUPPORT | HIGH | worker_release | release/report.md line 23, the paragraph closing the 'By channel' section, says each channel figure was measured over every order of the quarter and so has no uncertainty. The four CLM-C",
+    "REL-AUD-REPORT-NOT-GENERATED | gate_release_auditor.surface_reproduces_from_generator | gate_release_auditor|surface_reproduces_from_generator|release/report.md|report | RELEASE_INTEGRITY | HIGH | worker_release | Re-ran src/release/build_release.py in-process with its output paths redirected to a temp dir (evidence/release_audit_recalc.py, section 8). dashboard_data.json and release_number_manife",
+    "REL-AUD-REPORT-POPULATION | gate_release_auditor.population_period_beside_figure | gate_release_auditor|population_period_beside_figure|release/report.md|all_figures | RELEASE_INTEGRITY | HIGH | worker_release | The report's only population statement is line 3, a page-level 'orders placed inside the quarter, one row per order, delivered only'. build_release.py line 86 takes it from CLM-NET-REVENUE",
+    "REL-AUD-DASHBOARD-CARD-CONTEXT | gate_release_auditor.population_period_beside_figure | gate_release_auditor|population_period_beside_figure|release/dashboard_data.json|cards | RELEASE_INTEGRITY | MEDIUM | worker_release | release/dashboard_data.json: all 8 cards hold only claim_id, label, value, the role fields and caveats (evidence/release_audit_recalc.json -> dashboard_card_fields). No card has",
+    "REL-AUD-AOV-CAVEATS | gate_release_auditor.aov_caveats_beside_figure | gate_release_auditor|aov_caveats_beside_figure|analysis/claim_register.json|CLM-AOV | CLAIM_SUPPORT | MEDIUM | worker_analysis | CLM-AOV-DIRECT and CLM-AOV-PARTNER are rendered on report.md lines 18-21 and on dashboard cards 4-5. Their caveats read only 'one quarter of orders in this channel' and the sampling-interval sentence."
+  ],
+  "other_blockers": 2,
+  "warning_texts": [
+    "gate_release_document passed report.md although line 23 denies the uncertainty of all four estimates. wording_matches_claims only looks at the word 'significant', and caveats_rendered only checks that the caveat strings are present, so a contradicting sentence without digits is invisible to every re",
+    "release_surface_contract.json declares no reconciliations and no card_caveat_requirements, and the release gates never compare the published surface with a fresh generator run. Population, period per card and hand edits are checked by nothing except this auditor.",
+    "Both p values are displayed as 0.0000 (the register holds 0E-10; the pooled z of 26.72 gives about 3e-157). That reads as a p of exactly zero, and '< 0.0001' would be accurate.",
+    "The completion caveat 'one quarter of orders in this channel' is the only statement of the rate's denominator, and it does not say that cancelled and pending orders are included.",
+    "The Student intervals, the Welch t and Cohen's d could only be checked for consistency from the rounded bounds, because raw and clean data are outside this step's inputs. Implied t 42.62 against 42.70 claimed, d 0.4854 against 0.4869: consistent within 0.3%, not an exact recomputation.",
+    "src/release/build_release.py contains numeric literals that generator_literal_exclusions does not list: parents[2], indent=2 twice and return 0. They are structural, not business figures, and the machine gate evidence records no generator-literal scan at all."
+  ],
+  "summary": "Every business number on report.md (20 bound, 13 exempt labels) and dashboard_data.json (20) matches its claim role and display_digits, and the registry identities hold: orders 24597+19934=44531, net revenue = sum of channel AOV numerators = 3023296.61, Wilson bounds and the pooled z 26.718455 recompute exactly. The page is still wrong in 5 ways. (1) report.md line 23 says the channel figures come from every order and carry no uncertainty, which contradicts the intervals printed beside them. (2) That sentence was edited in by hand: re-running src/release/build_release.py gives a different line",
+  "wall_seconds": 250.7,
+  "cost": {
+    "at": "2026-09-18T20:27:04.269411+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-1ec424ea468d",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-18T20:22:56.677349+00:00",
+    "finished_at": "2026-09-18T20:27:04.269411+00:00",
+    "wall_seconds": 247.594,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 30,
+    "cached_input_tokens": 1408624,
+    "output_tokens": 25682,
+    "total_tokens": 1434336,
+    "cost_usd": 2.4169814999999994
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "profile": "grok-build",
+  "stage": "claims",
+  "case": "unsupported_trend_in_caveat",
+  "error": "A caveat asserts growth against a previous quarter no metric computes.",
+  "at": "2026-09-15T18:27:50+00:00",
+  "max_v2_revision": "1d34cf0",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "previous quarter",
+    "trend|growth|grew|unsupported|no metric"
+  ],
+  "blocking_issues": 1,
+  "warnings": 3,
+  "checks": 22,
+  "issue_ids": [
+    "UNSUPPORTED-TREND-CLM-NET-REVENUE"
+  ],
+  "warning_texts": [
+    "gate_claims_machine caveats_declared.CLM-NET-REVENUE passed as three required topics in four caveats, so the extra caveat was counted rather than tested for support.",
+    "audit/check_plan.json has no wording_matches_claims or caveats-supported rule on gate_claims_machine, so a trend sentence in a caveat is unguarded by this stage's machine gate.",
+    "audit/analysis_plan.json registers an empty hypotheses list, so no prior-quarter comparison was pre-declared for this extract."
+  ],
+  "summary": "Five claim values recompute from raw_data/orders.csv and match the register (net 35741.52 EUR, refund rate 0.473684 on 27/57 paying customers, country parts 11181.67+11032.61+13527.24). CLM-NET-REVENUE caveat index 3 asserts a 12 percent rise on the previous quarter; the extract has no rows before 2025-01-01 and analysis_plan.json registers no hypotheses.",
+  "wall_seconds": 524.7,
+  "cost": {
+    "at": "2026-09-15T18:36:37.358610+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-5a81d3ea9d7b",
+    "agent_role": "grok-audit-claims",
+    "started_at": "2026-09-15T18:27:55.154848+00:00",
+    "finished_at": "2026-09-15T18:36:37.357608+00:00",
+    "wall_seconds": 522.203,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 131920,
+    "cached_input_tokens": 2302720,
+    "output_tokens": 29278,
+    "total_tokens": 2463918,
+    "cost_usd": 0.54089512
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "profile": "gpt-build",
+  "stage": "claims",
+  "case": "answer_misreads_its_fact",
+  "error": "The answer to R02 calls a 47% refund rate low, fewer than one order in ten.",
+  "at": "2026-09-15T17:59:16+00:00",
+  "max_v2_revision": "d6a41ff",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R02",
+    "one order in ten",
+    "\\blow\\b",
+    "0\\.47|47 ?%"
+  ],
+  "blocking_issues": 1,
+  "warnings": 1,
+  "checks": 9,
+  "issue_ids": [
+    "CLAIMS-R02-SEMANTIC-MISREAD"
+  ],
+  "warning_texts": [
+    "The machine questions_are_answered.R02 comparison confirms presence and linkage but does not assess the semantic truth of R02 caveat prose; the contradictory conclusion required independent auditor review."
+  ],
+  "summary": "All five registered claim values independently match raw_data/orders.csv and the machine recomputations, but analysis/answers/R02.json draws a false order-frequency conclusion from the paying-customer refund rate.",
+  "wall_seconds": 392.9,
+  "cost": {
+    "at": "2026-09-15T18:05:50.434327+00:00",
+    "launcher": "codex_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-212fe787e9ca",
+    "agent_role": "gpt-audit-claims",
+    "started_at": "2026-09-15T17:59:20.945795+00:00",
+    "finished_at": "2026-09-15T18:05:50.430813+00:00",
+    "wall_seconds": 389.485,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "gpt-5.6-sol",
+    "model_used": null,
+    "input_tokens": 1124857,
+    "cached_input_tokens": null,
+    "output_tokens": 12567,
+    "total_tokens": 1137424,
+    "cost_usd": null
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "profile": "glm-build",
+  "stage": "analysis",
+  "worker": "worker_analysis",
+  "kind": "worker",
+  "at": "2026-09-15T18:32:16+00:00",
+  "max_v2_revision": "1d34cf0",
+  "verdict": "PASS",
+  "stop_code": null,
+  "summary": "Built analysis/claim_register.json (5 claims, values copied from the verified metrics registry, tolerances/units/display digits from the contracts) and analysis/answers/R01-R04.json from raw_data/questions.md (R05 excused by check_plan). Self-check script verified register-vs-registry equality, ref rooting and caveat topic coverage; gate_claims_machine run as self-check: PASS (36 checks).",
+  "wall_seconds": 249.8,
+  "cost": {
+    "at": "2026-09-15T18:36:25.995935+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "worker_analysis",
+    "attempt": 1,
+    "context_id": "ctx-worker_analysis-a1-224bff104dd4",
+    "agent_role": "glm-worker",
+    "started_at": "2026-09-15T18:32:20.251712+00:00",
+    "finished_at": "2026-09-15T18:36:25.990433+00:00",
+    "wall_seconds": 245.734,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 61202,
+    "cached_input_tokens": 2822016,
+    "output_tokens": 11356,
+    "total_tokens": 2899962,
+    "cost_usd": 0.05110664
+  },
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "outcome": "gate_pass",
+  "fingerprints": []
+}

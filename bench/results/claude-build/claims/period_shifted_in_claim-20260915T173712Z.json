@@ -1,0 +1,60 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "period_shifted_in_claim",
+  "error": "One country claim carries a two-month period while its value is the full quarter's.",
+  "at": "2026-09-15T17:33:43+00:00",
+  "max_v2_revision": "2a6f8dc",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "period",
+    "02-28",
+    "CLM-NET-CZ"
+  ],
+  "blocking_issues": 1,
+  "warnings": 3,
+  "checks": 19,
+  "issue_ids": [
+    "GATE3-AUD-CLAIM-PERIOD-CLM-NET-CZ"
+  ],
+  "warning_texts": [
+    "CLM-NET-CZ in analysis/claim_register.json tells the reader its 13527.24 EUR covers January and February only, but the figure is the whole period through 2025-03-30; anything that renders the claim's period beside the number would publish a two-month label on a three-month total.",
+    "audit/check_plan.json has no rule that compares a claim's own period or population text with the spec period: claims_recomputed recomputes on the window hard-coded in the plan and caveats_declared only matches caveat phrases, so gate_claims_machine passed all 39 checks while one claim states the wro",
+    "The spec period ends 2025-03-30, while metrics/calculated_metrics.json names the period 2025-Q1-delivered and the spec's exclusion reason calls it the reported quarter; no raw row is dated 2025-03-31, so no figure changes, but a reader of 'Q1' would assume 31 March is included and the owner of the s"
+  ],
+  "summary": "All five claim values were recomputed from raw_data/orders.csv. Each matches the registry and the machine gate. But CLM-NET-CZ states its period as 2025-01-01..2025-02-28, while its value 13527.24 was calculated over the spec period 2025-01-01..2025-03-30. Over the period it states, the value would be 9248.36. So the claim is not supported by the period it declares.",
+  "wall_seconds": 204.1,
+  "cost": {
+    "at": "2026-09-15T17:37:11.505655+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-f58036111c74",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-15T17:33:50.661801+00:00",
+    "finished_at": "2026-09-15T17:37:11.504652+00:00",
+    "wall_seconds": 200.844,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 322,
+    "cached_input_tokens": 929676,
+    "output_tokens": 17646,
+    "total_tokens": 947644,
+    "cost_usd": 1.710728
+  }
+}

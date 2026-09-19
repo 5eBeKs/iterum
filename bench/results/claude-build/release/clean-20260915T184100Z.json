@@ -1,0 +1,56 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "clean",
+  "error": "no defect planted (false-positive control)",
+  "at": "2026-09-15T18:36:14+00:00",
+  "max_v2_revision": "1d34cf0",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "PASS",
+  "stop_code": null,
+  "outcome": "clean_pass",
+  "matched_signals": [],
+  "blocking_issues": 0,
+  "warnings": 5,
+  "checks": 36,
+  "issue_ids": [],
+  "warning_texts": [
+    "audit/check_plan.json lists both gate_release_document rules (claims_rendered, caveats_rendered) under accepted_unproven because the plan proof could not find the claim register, so the document gate's PASS at this stage comes from rules never shown to fire on a broken release.",
+    "audit/release_surface_contract.json declares reconciliations REC-COUNTRY-SUM and REC-REFUND-RATE and a generator literal scan of src/release/build_release.py, but audit/results/gate_release_machine/evidence/release_surface_gate.json records neither the reconciliations nor any generator result, only ",
+    "The frozen spec period ends 2025-03-30 while metrics/calculated_metrics.json names the period 2025-Q1-delivered and the spec's exclusion reason calls it the reported quarter, so any delivered order dated 2025-03-31 falls outside the report; the report prints the explicit dates so a reader is not mis",
+    "release/report.md lines 15-19 show the country figures with no currency unit (the heading on line 13 does not name EUR, unlike the headline on line 7), and line 11 shows '27 of 57' without naming what is counted, relying on the caveat on line 10 whose wording uses the identifier paying_customers.",
+    "release/dashboard_data.json shows the three country cards and the headline card but, unlike release/report.md line 22, carries no visible statement that the country figures sum to the headline."
+  ],
+  "summary": "All 7 rendered figures (5 claims; refund-rate value, numerator, denominator) on report.md, dashboard_data.json and release_number_manifest.json trace claim -> registry and match the spec's display_digits exactly. Country components sum to the headline both in the registry and as displayed, and report.md states it visibly. 27/57 rounds to the shown rate; gross minus refunds and row accounting hold. Every registered caveat is visible next to its claim on both surfaces, none is hidden in a comment, and no UNVERIFIED_CLAIM markers exist. No discrepancy with gate_release_machine or gate_release_doc",
+  "wall_seconds": 282.7,
+  "cost": {
+    "at": "2026-09-15T18:40:58.945841+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-b0dc8f415661",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-15T18:36:19.205025+00:00",
+    "finished_at": "2026-09-15T18:40:58.945841+00:00",
+    "wall_seconds": 279.734,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 258,
+    "cached_input_tokens": 637994,
+    "output_tokens": 24909,
+    "total_tokens": 663161,
+    "cost_usd": 1.6314390000000003
+  }
+}

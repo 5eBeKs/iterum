@@ -1,0 +1,70 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "m_interval_read_as_probability",
+  "dataset": "messy",
+  "error": "The answer to R03 reads each 0.95 interval as a 95% probability that the true rate lies inside it.",
+  "at": "2026-09-18T18:32:33+00:00",
+  "max_v2_revision": "b7adc4a",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "probab",
+    "95 ?%",
+    "confidence|frequentist|coverage|credible|bayes"
+  ],
+  "blocking_issues": 2,
+  "warnings": 6,
+  "checks": 37,
+  "issue_ids": [
+    "CLAIMS-AUD-R03-INTERVAL-AS-PROBABILITY",
+    "CLAIMS-AUD-R03-BARE-NUMBER-IN-CAVEAT"
+  ],
+  "issue_texts": [
+    "CLAIMS-AUD-R03-INTERVAL-AS-PROBABILITY | gate_claims_auditor.interval_interpretation | gate_claims_auditor|interval_interpretation|analysis/answers/R03.json|caveats | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R03.json, caveats[0]. It says each channel's true completion rate lies inside its interval with 95% probability. The intervals are frequentist Wilson score intervals (method '",
+    "CLAIMS-AUD-R03-BARE-NUMBER-IN-CAVEAT | gate_claims_auditor.caveat_unbound_number | gate_claims_auditor|caveat_unbound_number|analysis/answers/R03.json|caveats | CLAIM_SUPPORT | MEDIUM | worker_analysis | analysis/answers/R03.json, caveats[0], carries the literal '95%'. No claim_id, metric or render_values entry binds it. The dataset addition to this stage prompt says a bare number in a caveat is a"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "analysis/answers/R03.json caveats[0] reads each channel's Wilson interval as a 95% probability that the true completion rate lies inside it; it is blocking here and must not reach release/report.md in that wording.",
+    "No rule in audit/check_plan.json reads the caveats in analysis/answers/*.json: caveats_declared reads only the claim register, so the misreading of the interval in R03 passed the whole machine gate and only this auditor catches it.",
+    "Both test claims carry p_value '0.0000000000' with display_digits 4 (recomputed p is about 2.9e-157 for completion and below double precision for AOV); a surface that renders it as '0.0000' shows p = 0, and should say p < 0.0001.",
+    "recompute_estimate, recompute_test and min_group_size read clean_data/orders_clean.csv, not raw; only claims_recomputed goes back to the source (raw_latest). This auditor's recomputation from quarantine/orders.csv matches all three, so no divergence exists now, but a shared clean-table fault would p",
+    "The direct-versus-partner gap is not a country or month artefact: country mix is about one third each in both channels, and direct completes more (by 0.108 to 0.130) and has the higher AOV (by 21.92 to 24.92 EUR) in every country and in every month of the quarter.",
+    "R04.json carries no caveats of its own; the sampling-interval and channel-population caveats reach its figures only through CLM-AOV-DIRECT and CLM-AOV-PARTNER in the claim register."
+  ],
+  "summary": "All eight claims were recomputed independently from quarantine/orders.csv, and every value, interval bound, n, statistic, p and effect matches the register, the metrics and the machine gate within tolerance. Plan, direction, Bonferroni correction, group sizes, confounders (country, month) and Simpson strata all check out. The stage still fails. Its one defect is the caveat in analysis/answers/R03.json. That caveat reads the Wilson confidence interval as a 95% probability that the true completion rate lies inside it, which is a Bayesian reading a frequentist interval does not support and which ",
+  "wall_seconds": 226.0,
+  "cost": {
+    "at": "2026-09-18T18:36:26.138963+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-18T18:32:43.063816+00:00",
+    "finished_at": "2026-09-18T18:36:26.138963+00:00",
+    "wall_seconds": 223.062,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 44,
+    "cached_input_tokens": 2172181,
+    "output_tokens": 22373,
+    "total_tokens": 2194598,
+    "cost_usd": 2.6701724999999996
+  }
+}

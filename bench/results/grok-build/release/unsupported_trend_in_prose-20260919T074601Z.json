@@ -1,0 +1,64 @@
+{
+  "profile": "grok-build",
+  "stage": "release",
+  "case": "unsupported_trend_in_prose",
+  "dataset": "orders",
+  "error": "The page says revenue grew through the quarter; no monthly figure exists in the audit.",
+  "at": "2026-09-19T07:37:00+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "grew|growth|trend|strongest month|March",
+    "unsupported|no (metric|claim|figure)"
+  ],
+  "blocking_issues": 1,
+  "warnings": 3,
+  "checks": 33,
+  "issue_ids": [
+    "REL-UNSUPPORTED-TREND-PROSE"
+  ],
+  "issue_texts": [
+    "REL-UNSUPPORTED-TREND-PROSE | gate_release_auditor.unsupported_trend_in_prose | gate_release_auditor|claim_support|release/report.md|monthly_trend_prose | CLAIM_SUPPORT | HIGH | worker_release | release/report.md line 24 is a reader-visible assertion that net revenue rose month by month in the reported window and that March was the peak. analysis/claim_register.json has only CLM-NET-REVENUE, CLM-R"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "audit/check_plan.json lists gate_release_document.claims_rendered and gate_release_document.caveats_rendered under accepted_unproven because plan proof could not find analysis/claim_register.json, so those two rules have no breaker proof.",
+    "This stage's machine gates do not recompute any figure from source: audit/results/gate_release_document/evidence/checks.json has only claims_rendered and caveats_rendered, and gate_release_machine compares rendered text to the claim register. Narrative assertions without digits are unguarded by the ",
+    "The published period ends 2025-03-30, so any month-grain comparison of March against January and February uses a truncated March; the closing sentence of the report does not say so."
+  ],
+  "summary": "Bound headline, country, and refund-rate figures recompute from clean rows, raw population, metrics, and claims, and they match the three release surfaces. The last body sentence of release/report.md asserts a month-by-month net-revenue trend that has no claim_id, no metric_id, no monthly grain in calculated_metrics.json, and no UNVERIFIED_CLAIM wrapper. Machine gates of this stage never recomputed a figure from source (document checks.json has only claims_rendered and caveats_rendered) and they do not read qualitative prose, so that sentence is an auditor blocker for worker_release.",
+  "wall_seconds": 535.9,
+  "cost": {
+    "at": "2026-09-19T07:46:00.114055+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-67f1123267d5",
+    "agent_role": "grok-audit-release",
+    "started_at": "2026-09-19T07:37:07.475498+00:00",
+    "finished_at": "2026-09-19T07:46:00.114055+00:00",
+    "wall_seconds": 532.641,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 212194,
+    "cached_input_tokens": 1160576,
+    "output_tokens": 30578,
+    "total_tokens": 1403348,
+    "cost_usd": 0.40396896
+  }
+}

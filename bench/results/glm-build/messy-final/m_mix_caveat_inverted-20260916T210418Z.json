@@ -1,0 +1,77 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "m_mix_caveat_inverted",
+  "dataset": "messy",
+  "error": "The partner completion rate's caveat says its interval also covers a change in the channel's country mix.",
+  "at": "2026-09-16T20:42:20+00:00",
+  "max_v2_revision": "fa38876",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "mix of countries|country mix",
+    "also covers|covers a channel",
+    "CLM-COMPLETION-PARTNER"
+  ],
+  "blocking_issues": 1,
+  "warnings": 10,
+  "checks": 13,
+  "issue_ids": [
+    "FINAL-CAVEAT-INVERTED-PARTNER"
+  ],
+  "issue_texts": [
+    "FINAL-CAVEAT-INVERTED-PARTNER | final_glm_redteam.semantic_trap_caveat_direction | final_glm_redteam|semantic_trap_caveat_direction|analysis/claim_register.json|CLM-COMPLETION-PARTNER | SPEC_CONFLICT | HIGH | worker_analysis | analysis/claim_register.json:160 (CLM-COMPLETION-PARTNER caveats[1]) states the interval also covers a channel whose mix of countries changes; the same sentence is rendered "
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "Стадийные result.json всех четырёх worker-шагов несут в checks одну и ту же заглушку самопроверки со значением 0.473684, поэтому самопроверка воркеров не является доказательством; верификация стоит на машинных гейтах и моём независимом пересчёте, а не на словах стадий.",
+    "Все stage-результаты отчитывают модель openrouter/z-ai/glm-5.3-flash-fake, а в этом CLI ни одно событие вывода не называет модель, так что соответствие тиру подтверждено только собственными словами стадий, и строка о модели в финальном отчёте опирается на ничто, кроме этих слов.",
+    "Carry-файлы всех четырёх воркеров называют период 2025-01-01..2025-03-30 и population delivered-only, противоречащие спеке (2026-01-01..2026-03-31, все статусы остаются в чистой таблице); реальные артефакты спеке следуют и все числа сходятся с моим пересчётом, так что на числа это не повлияло, но ca",
+    "Машинный gate_release_document.wording_matches_claims прошёл вакуусно со словарём, в котором нет ни одного слова, поэтому единственное детерминированное правило о формулировках вокруг цифр в этом прогоне ничего проверять не могло, а caveats_declared проверяет только подстроку и направление кейвота н",
+    "Заголовок report.md 'Population: ... delivered only' описывает только претензию net revenue; четыре карточки каналов ниже имеют знаменатели со всеми статусами канала, и читатель полагается на карточные кейвоты 'one quarter of orders in this channel'.",
+    "Заметки всех пяти агентских аудиторов — заглушки 'driver e2e evidence', так что цепочка PASS стадийных аудиторов не содержит пересчёта и использована мной только как карта, не как доказательство.",
+    "analysis/claim_register.json не совпадает с собственным генератором: src/analysis/build_claims.py пишет ограничительную формулировку для обоих каналов, а инвертированная строка в реестре только у partner, поэтому происхождение реестра — не его объявленный генератор.",
+    "Прямая проверка того, что фразы из comment-колонки не дошли до реестра и поверхностей, у меня косвенная: политика карантина запрещает мне читать колонку, и прямой проверкой остаётся машинная выборка free_text_quarantined.values на 25 значений.",
+    "audit/decisions/ отсутствует, все пять решений в human_decisions.yaml RESOLVED и по данным применены верно (dedup last-wins, период по order_month, локаль доставки, знак рефанда, карантин), противоречащего данным допущения не нашёл.",
+    "Не проверено мной: plan_proof.json (proof плана) лежит вне моих input-путей, breaker-эксперименты плана я не повторял и принимаю frozen control-plane как данность."
+  ],
+  "summary": "Independent recount from the quarantine projection reproduces every published number exactly (population 44531 = 45000 - 459 outside quarter - 10 negative refunds; net_revenue 3023296.61; both Wilson completion CIs; both Student AOV CIs with my own t-quantile code, t=1.960097/1.960161; shipping_total 37792722.50 with locale parsing; both registered hypotheses' z=26.718455 and Welch t=42.699880; all 42 rendered figures bound on all three surfaces; dedup keeps the last revision 126/126; components cross-foot to the headline). One material blocker: the sampling-interval caveat of the partner-chan",
+  "wall_seconds": 1298.4,
+  "cost": {
+    "at": "2026-09-16T21:04:16.850145+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-44061c01fc96",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-16T20:42:41.877561+00:00",
+    "finished_at": "2026-09-16T21:04:16.850145+00:00",
+    "wall_seconds": 1294.969,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 260524,
+    "cached_input_tokens": 3828160,
+    "output_tokens": 25852,
+    "total_tokens": 4137552,
+    "cost_usd": 0.10718723999999998
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "profile": "glm-build",
+  "stage": "release",
+  "case": "m_page_no_uncertainty",
+  "dataset": "messy",
+  "error": "The page says the channel figures are measured over every order and carry no uncertainty, beside their intervals.",
+  "at": "2026-09-16T20:05:02+00:00",
+  "max_v2_revision": "fa38876",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "no uncertainty|every order",
+    "interval|estimate|sampl"
+  ],
+  "blocking_issues": 1,
+  "warnings": 5,
+  "checks": 11,
+  "issue_ids": [
+    "REL-WORDING-NO-UNCERTAINTY"
+  ],
+  "issue_texts": [
+    "REL-WORDING-NO-UNCERTAINTY | gate_release_auditor.estimate_wording | gate_release_auditor|estimate_wording|release/report.md|closing_paragraph | VISUALIZATION | HIGH | worker_release | release/report.md line 23: 'Each channel figure is measured over every order of the quarter, so it carries no uncertainty.' Verified against src/release/build_release.py line 80-81, which writes 'Each channel figure"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The four estimate cards in release/dashboard_data.json carry ci_low and ci_high but neither n nor the 0.95 interval label; the release_surface_contract's estimate_rendering only requires point and both bounds, and n is shown on release/report.md per estimate, so this was not raised as a blocker.",
+    "release/report.md line 3 prints the net-revenue population ('... delivered only') as the page header above the Orders headline, whose own population is not delivered-only; the orders card's caveats are correct but a reader could apply the header to both headline numbers.",
+    "The machine gate for rendered numbers (audit/results/gate_release_machine/evidence/release_surface_gate.json) checked only the 14 anchored render roles; it recorded no check_id list, so its comparisons could not be cited via machine_check and were re-verified independently instead.",
+    "Generator literals {0,1,2,4,8,02} in src/release/build_release.py: 8 and 1 are excluded by the contract and 0, 2, 4, 02 are slice/scaleb/format indices, not business figures.",
+    "The independent_claim_recalc referenced by audit/release_surface_contract.json (audit/results/gate_claims_machine/evidence/independent_claim_recalc.json) is outside this step's allowed input paths, so source-level recomputation was not possible from here; verification was against metrics/calculated_"
+  ],
+  "summary": "All 42 anchored numbers on all three surfaces match my own re-render of the claim registry exactly (money 0.01, proportions 1e-6, display_digits, comma grouping); segment identities and n/level recomputed independently and correct; shipping_total and quarantined-comment phrases absent; no UNVERIFIED_CLAIM. FAIL on one blocker: the shipped report.md closing sentence declares the channel figures carry no uncertainty, contradicting the 0.95 intervals printed beside four of those figures, and the shipped text no longer matches what the generator writes.",
+  "wall_seconds": 197.4,
+  "cost": {
+    "at": "2026-09-16T20:08:23.038381+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-bb5fe43c7858",
+    "agent_role": "glm-audit-release",
+    "started_at": "2026-09-16T20:05:09.236138+00:00",
+    "finished_at": "2026-09-16T20:08:23.035874+00:00",
+    "wall_seconds": 193.797,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 73527,
+    "cached_input_tokens": 465408,
+    "output_tokens": 7851,
+    "total_tokens": 550293,
+    "cost_usd": 0.018443274000000003
+  }
+}

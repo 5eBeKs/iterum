@@ -1,0 +1,76 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "m_effect_misnamed",
+  "dataset": "messy",
+  "error": "The R04 test calls its effect size a proportion difference; a Welch test on order values reports Cohen's d.",
+  "at": "2026-09-16T22:50:15+00:00",
+  "max_v2_revision": "fa38876",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "warned",
+  "matched_signals": [
+    "effect",
+    "cohen|proportion_difference|effect_name|effect size"
+  ],
+  "blocking_issues": 2,
+  "warnings": 8,
+  "checks": 18,
+  "issue_ids": [
+    "RELEASE-POPULATION-HEADER",
+    "DASHBOARD-ESTIMATE-MISSING-N"
+  ],
+  "issue_texts": [
+    "RELEASE-POPULATION-HEADER | final_redteam.release_population_statement | release|population_statement|release/report.md|headline_and_by_channel | CLAIM_SUPPORT | HIGH | worker_release | release/report.md line 3 states one flat population over all six cards: 'Population: orders placed inside the quarter, one row per order, delivered only.' It is exact for CLM-NET-REVENUE and both AOV claims, but co",
+    "DASHBOARD-ESTIMATE-MISSING-N | final_redteam.estimate_rendering_dashboard_n | release|estimate_rendering|release/dashboard_data.json|estimate_cards | RELEASE_INTEGRITY | MEDIUM | worker_release | audit/audit_spec.yaml release.estimate_rendering requires 'An estimate is rendered with its interval and its n beside it, always' (the same file's comments are the normative text human_decisions.yaml reso"
+  ],
+  "other_blockers": 2,
+  "warning_texts": [
+    "analysis/answers/R04.json labels its effect_size 0.486900 as 'proportion_difference'; my recount shows the Welch statistic's standardized effect is Cohen's d = 0.486900 (mean difference 23.369838 EUR over pooled SD), so the label is a copy of R03's effect name and misdescribes the number; no release",
+    "All four carry files in audit/checkpoints/ are identical templates that state period 2025-Q1 (2025-01-01..2025-03-30), grain 'one row per delivered order' and a refund-rate pitfall, none of which matches this audit (2026-Q1, one row per order, no refund-rate metric); no stage consumed them numerical",
+    "The four worker result.json files carry placeholder summaries ('driver e2e ...') and no disclosures or warnings, so the stage-level list of what a stage could not establish is empty; the substance of the run lives in the machine gates and the artifacts.",
+    "src/release/build_release.py is not among this stage's input paths, so the no-business-literal rule on the generator is attested by the machine release gate evidence (42 numbers bound, 0 unverified), not by my own reading of the generator.",
+    "raw_data/orders.csv and raw_data/questions.md are not among this stage's inputs by free-text policy, so the questions-answered rule is attested by the gate_claims_machine evidence, not recomputed by me; the comment column was never read by any step of this red team.",
+    "No output event of this CLI names the model, so the runner cannot verify which model answered; execution.model below is my own report of the path my handoff requires (openrouter/z-ai/glm-5.3-flash), not a measurement.",
+    "Every stage of this run, including this red team, is the same model family through one CLI; the PASS chain is not independent review, and the only load-bearing checks are the deterministic gates, the frozen plan and the recount in audit/results/final/evidence/.",
+    "The dashboard labels read 'Aov Direct' and 'Aov Partner'; cosmetic only, no number or meaning is affected."
+  ],
+  "summary": "Independent recount from the quarantine projection reproduces every published business number exactly (orders 44531, net revenue 3023296.61, completion 0.724397/0.604746 with Wilson bounds, AOV 110.64/87.27 with Student bounds, shipping 37792722.50 unpublished-by-name, z=26.718455, Welch t=42.699880), and my own parse of the clean table matches on all 13 columns including the three renamed columns no deterministic rule checks. Two release-surface defects block: the report's flat population sentence 'delivered only' is false for the orders card and both completion cards (cancelled and pending a",
+  "wall_seconds": 820.1,
+  "cost": {
+    "at": "2026-09-16T23:04:13.698943+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-fa7e5d32e69e",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-16T22:50:36.957368+00:00",
+    "finished_at": "2026-09-16T23:04:13.692552+00:00",
+    "wall_seconds": 816.735,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 68305,
+    "cached_input_tokens": 2050944,
+    "output_tokens": 17675,
+    "total_tokens": 2163827,
+    "cost_usd": 0.056465742000000006
+  }
+}

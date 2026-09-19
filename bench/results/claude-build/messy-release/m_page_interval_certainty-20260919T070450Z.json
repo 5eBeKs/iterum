@@ -1,0 +1,78 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "m_page_interval_certainty",
+  "dataset": "messy",
+  "error": "The page says each interval is where the true value lies with near certainty.",
+  "at": "2026-09-19T07:00:14+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "certaint|true value",
+    "sampling interval|interval"
+  ],
+  "blocking_issues": 6,
+  "warnings": 7,
+  "checks": 21,
+  "issue_ids": [
+    "REL-AUD-INTERVAL-CERTAINTY",
+    "REL-AUD-SURFACE-NOT-GENERATED",
+    "REL-AUD-PAGE-POPULATION",
+    "REL-AUD-DASH-ESTIMATE-N-LEVEL",
+    "REL-AUD-CARD-POPULATION-PERIOD",
+    "REL-AUD-UNIT-LABELS"
+  ],
+  "issue_texts": [
+    "REL-AUD-INTERVAL-CERTAINTY | gate_release_auditor.interval_wording | gate_release_auditor|interval_wording|release/report.md|by_channel_estimates | CLAIM_SUPPORT | HIGH | worker_release | release/report.md line 23 (the paragraph under the four channel estimates) says the interval locates the true value of the channel with near certainty. evidence/release_recheck_output.json wording_flags flags lin",
+    "REL-AUD-SURFACE-NOT-GENERATED | gate_release_auditor.surface_reproducible_from_generator | gate_release_auditor|surface_reproducible_from_generator|release/report.md|page | RELEASE_INTEGRITY | MEDIUM | worker_release | evidence/release_recheck.py imported src/release/build_release.py and redirected its three outputs to evidence/regen/, so the published files were never touched. The regenerated das",
+    "REL-AUD-PAGE-POPULATION | gate_release_auditor.population_matches_claims | gate_release_auditor|population_matches_claims|release/report.md|page_population | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3 sets one population for the whole page and includes 'delivered only'. It comes from the net-revenue claim's population (build_release.py line 86). CLM-ORDERS has the populat",
+    "REL-AUD-DASH-ESTIMATE-N-LEVEL | gate_release_auditor.estimate_rendering_dashboard | gate_release_auditor|estimate_rendering|release/dashboard_data.json|estimate_cards | VISUALIZATION | HIGH | worker_release | In release/dashboard_data.json, $.cards[2..5] (CLM-COMPLETION-DIRECT, CLM-COMPLETION-PARTNER, CLM-AOV-DIRECT, CLM-AOV-PARTNER) have the keys _claim_roles, caveats, ci_high, ci_low, claim_id, ",
+    "REL-AUD-CARD-POPULATION-PERIOD | gate_release_auditor.population_period_on_card | gate_release_auditor|population_period_on_card|release|all_cards | VISUALIZATION | MEDIUM | worker_release | No card in release/dashboard_data.json has a population or a period. The period appears once, at $.period, and population appears nowhere. In release/report.md the period is only in the H1 title and the popula",
+    "REL-AUD-UNIT-LABELS | gate_release_auditor.unit_labels | gate_release_auditor|unit_labels|release|money_and_rate_figures | VISUALIZATION | MEDIUM | worker_release | In release/report.md, lines 18 and 20 ('aov direct' and 'aov partner') show EUR amounts and their bounds with no currency. Only net revenue is labelled EUR (line 7). No card in release/dashboard_data.json has a unit (has_unit=false on "
+  ],
+  "other_blockers": 2,
+  "warning_texts": [
+    "gate_release_document passed release/report.md even though line 23 overstates the interval. Its wording_matches_claims rule only checks the word 'significant' next to a test claim, so it missed a sentence stronger than the evidence, and caveats_rendered only confirms that each caveat string appears ",
+    "audit/release_surface_contract.json declares reconciliations [] and card_caveat_requirements [], so no machine rule checks the identities or per-card population and period. I checked the identities by hand: orders 24597 + 19934 = 44531, net revenue 1971306.75 + 1051989.86 = 3023296.61, and each AOV ",
+    "Both p values are shown as 0.0000. My pooled two-proportion z gives about 2.9e-157, which is correct but reads as exactly zero; 'p < 0.0001' would be accurate.",
+    "The dashboard test cards (cards 6 and 7) show p, effect and statistic with no hypothesis id, alpha, correction or n per group, so on the dashboard a p value has no test context.",
+    "shipping_total is correctly absent from every surface, but the page never tells the reader it was withheld or why, although analysis/answers/R05.json records that note.",
+    "src/release/build_release.py contains the numeric literals 2 (lines 23, 132, 144) and 0 (line 149). They are a path depth, a JSON indent and an exit code, not business figures, but audit/release_surface_contract.json generator_literal_exclusions does not list them.",
+    "The AOV intervals could not be recomputed from the inputs this stage may read, because no standard deviation is in metrics or claims. I only checked that each point lies inside its bounds, and that the half-widths imply SDs of about 51.4 and 42.9 EUR, which is plausible for gross amounts between 5 a"
+  ],
+  "summary": "Every figure on the three release surfaces is bound and exact to the claim register. I recomputed the Wilson bounds, the completion z statistic and the reconciliation identities myself, and all of them match. The release still fails for six reasons. (1) report.md line 23 says the interval shows where the true channel value lies with near certainty. That is a stronger statement than a 0.95 sampling interval supports, and it contradicts each estimate's own caveat. (2) That same line is not what src/release/build_release.py writes, so the published page was edited after it was generated. (3) The ",
+  "wall_seconds": 270.9,
+  "cost": {
+    "at": "2026-09-19T07:04:48.993644+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-1ec424ea468d",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-19T07:00:21.377259+00:00",
+    "finished_at": "2026-09-19T07:04:48.993644+00:00",
+    "wall_seconds": 267.625,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 38,
+    "cached_input_tokens": 1828944,
+    "output_tokens": 26243,
+    "total_tokens": 1855225,
+    "cost_usd": 2.7147079999999995
+  }
+}

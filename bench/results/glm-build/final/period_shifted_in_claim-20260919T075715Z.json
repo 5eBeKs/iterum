@@ -1,0 +1,77 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "period_shifted_in_claim",
+  "dataset": "orders",
+  "error": "One country claim carries a two-month period while its value is the full quarter's.",
+  "at": "2026-09-19T07:35:55+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "period",
+    "02-28",
+    "CLM-NET-CZ"
+  ],
+  "blocking_issues": 1,
+  "warnings": 10,
+  "checks": 15,
+  "issue_ids": [
+    "FINAL-CLM-NET-CZ-PERIOD-SHIFT"
+  ],
+  "issue_texts": [
+    "FINAL-CLM-NET-CZ-PERIOD-SHIFT | final_redteam.claim_period_matches_metric_window | final_redteam|claim_period_mismatch|analysis/claim_register.json|CLM-NET-CZ | CLAIM_SUPPORT | HIGH | worker_analysis | audit/results/final/evidence/recount_final.py (output recount_final_output.json): CLM-NET-CZ.period = 2025-01-01..2025-02-28; its bound metric net_revenue_cz = 13527.24 equals the full-quarter sum o"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The false CZ window does not reach the reader surfaces: release/report.md, release/dashboard_data.json and release/release_number_manifest.json carry the headline period and are byte-identical (sha256 2c431b032a98ea67, 38d0bc4cd1ff2491, ef31efc1f4dbaf6a) to the digests the reference run sealed, so t",
+    "No deterministic rule covers a claim's period field: claims_recomputed in audit/check_plan.json recomputes values against its own filters and never compares the declared period, so every machine gate passed while the register's scope metadata was false; the uncovered assertion was caught only by thi",
+    "A reader who trusts the register's CZ window cannot reproduce the report's own reconciliation: 11181.67 + 11032.61 + 9248.36 = 31462.64 against the 35741.52 headline, and the missing 4278.88 is the March CZ part the published number includes and the declared window excludes.",
+    "RESOLVED assumption refund_rate_basis = paying_customers moves the headline rate from 0.473684 (27 of 57 distinct paying customers) to 0.189655 on the order-row basis (33 of 174 rows), a roughly 2.5x swing a reader may dispute; both figures verified.",
+    "RESOLVED assumption revenue_recognition = net_of_refunds moves the headline from 35741.52 net to 40235.02 gross; RESOLVED assumption timezone_for_dates = Europe/Warsaw shows no visible effect (order_date is a local date and the export carries no cross-zone data).",
+    "audit/AUDIT_REPORT.md documents the dataset's reference e2e run (claude profile, generated 2026-09-16, agent steps faked per README) and not this run, so its stage table and digests are baseline provenance rather than this run's record.",
+    "Worker and stage-auditor result files are driver-seeded records (model string openrouter/z-ai/glm-5.3-flash-fake, created_at 2026-01-01T00:00:00Z, summary driver e2e), so no stage-level judgment in the chain is an independent review, and no CLI output names a model anywhere, so every execution.model",
+    "Machine-unrecomputed figures confirmed by hand: excluded_order_rows 27 and excluded_outside_period 1, named in the reference AUDIT_REPORT's own gap table, both recomputed from raw here and correct (201 = 174 + 26 + 1, first-match exclusion order).",
+    "The permission map blocks edit-tool writes to raw sources but shell writes would only have been caught by the control lock after the fact, so write prevention was never actually asserted anywhere in this chain.",
+    "Not checkable from this stage: the release lock receipt lives outside the dataset and its client copy could not be verified, runner retry history and stale-input ledger belong to the human audit_runner.py report, and no drift_since_review field was present in the handoff, so the resolved assumptions"
+  ],
+  "summary": "One material blocker: analysis/claim_register.json CLM-NET-CZ declares period 2025-01-01..2025-02-28 while the metric it binds (net_revenue_cz = 13527.24) is the full-quarter 2025-01-01..2025-03-30 sum; independent raw recount confirms value 13527.24 = full quarter (Feb-truncated window would be 9248.36), so the register's scope binding is false and no machine rule reads claim.period. All 11 metrics, 5 claim values, 21 rendered numbers, reconciliations, boundary probes and carry continuity verified independently and correct; reader-visible surfaces byte-identical to the sealed reference digest",
+  "wall_seconds": 1261.3,
+  "cost": {
+    "at": "2026-09-19T07:57:13.900918+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-a8b473c51afe",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-19T07:36:16.943025+00:00",
+    "finished_at": "2026-09-19T07:57:13.895381+00:00",
+    "wall_seconds": 1256.953,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 125386,
+    "cached_input_tokens": 2176640,
+    "output_tokens": 15707,
+    "total_tokens": 2341006,
+    "cost_usd": 0.062233560000000014
+  }
+}

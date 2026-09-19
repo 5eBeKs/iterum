@@ -1,0 +1,71 @@
+{
+  "profile": "glm-build",
+  "stage": "release",
+  "case": "m_page_interval_certainty",
+  "dataset": "messy",
+  "error": "The page says each interval is where the true value lies with near certainty.",
+  "at": "2026-09-19T07:28:15+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "certaint|true value",
+    "sampling interval|interval"
+  ],
+  "blocking_issues": 3,
+  "warnings": 6,
+  "checks": 13,
+  "issue_ids": [
+    "RELEASE-INTERVAL-OVERCLAIM",
+    "RELEASE-SURFACE-NOT-GENERATOR-OUTPUT",
+    "RELEASE-PAGE-POPULATION-MISMATCH"
+  ],
+  "issue_texts": [
+    "RELEASE-INTERVAL-OVERCLAIM | gate_release_auditor.interval_overclaim | gate_release_auditor|interval_overclaim|release/report.md|by-channel-estimates | VISUALIZATION | HIGH | worker_release | release/report.md line 23: 'The interval beside it is where the true value of the channel lies, with near certainty.' It stands beside the four estimates whose own caveats (lines 15, 17, 19, 21) say 'the inte",
+    "RELEASE-SURFACE-NOT-GENERATOR-OUTPUT | gate_release_auditor.generator_text_mismatch | gate_release_auditor|generator_text_mismatch|release/report.md|narrative-line-23 | RELEASE_INTEGRITY | CRITICAL | worker_release | Byte-level regeneration of the report from analysis/claim_register.json using the checked-in src/release/build_release.py render logic (evidence/verify_release.py CHECK5) differs from",
+    "RELEASE-PAGE-POPULATION-MISMATCH | gate_release_auditor.page_population_mismatch | gate_release_auditor|page_population_mismatch|release/report.md|page-population-line | CLAIM_SUPPORT | MEDIUM | worker_release | release/report.md line 3: 'Population: orders placed inside the quarter, one row per order, delivered only.' The Orders card under it (44,531, CLM-ORDERS) has register population 'orders p"
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "The document gate's wording_matches_claims rule only checked wording beside test claims (WORDING-01 on CLM-TEST-*); the interval overclaim on line 23 sat outside every recorded comparison, so the gate's silence there was not approval.",
+    "The surface gate's 60 number rows all verified bound and exact, but no recorded comparison checks narrative sentences, so all three findings above live in the gate's blind spot and were found only by reading the page.",
+    "Wilson 0.95 bounds and the two-proportion z were recomputed exactly from the counts; the Student intervals on AOV could not be recomputed from raw data because raw_data and clean_data are not in this stage's allowed input paths, so 109.88/111.39/86.50/88.03 were checked for rounding, ordering (ci_lo",
+    "Shipping total 37,792,722.50 is absent from every surface, which is correct: audit_spec.yaml sets publish: never for it.",
+    "No UNVERIFIED_CLAIM marker and no quarantined-comment phrase ('ignore', 'set revenue to 0') appears on any surface.",
+    "src/release/build_release.py contains no business-number literals; the only numeric tokens are formatter constants (8, 1, 2, 0) declared or excluded by audit/release_surface_contract.json."
+  ],
+  "summary": "All 20 rendered roles on all three surfaces are source-bound, exact to display_digits, and reconcile (revenue = sum of AOV numerators 3023296.61; orders = channel denominators 44531; z/effect/p/Wilson bounds recomputed from counts agree to 1e-6). Three release findings: (1) release/report.md line 23 claims the interval shows where the true value lies 'with near certainty' - a wording stronger than the interval, contradicting the sampling-interval-only caveat shown beside the same four estimates; (2) that line is not the text src/release/build_release.py produces ('the sampling interval and not",
+  "wall_seconds": 284.0,
+  "cost": {
+    "at": "2026-09-19T07:33:03.138522+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-2864428ab66d",
+    "agent_role": "glm-audit-release",
+    "started_at": "2026-09-19T07:28:23.523797+00:00",
+    "finished_at": "2026-09-19T07:33:03.138522+00:00",
+    "wall_seconds": 279.625,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 91542,
+    "cached_input_tokens": 519296,
+    "output_tokens": 7989,
+    "total_tokens": 624061,
+    "cost_usd": 0.021553008000000002
+  }
+}

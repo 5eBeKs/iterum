@@ -1,0 +1,78 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "m_mix_caveat_inverted",
+  "dataset": "messy",
+  "error": "The partner completion rate's caveat says its interval also covers a change in the channel's country mix.",
+  "at": "2026-09-19T08:37:24+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "mix of countries|country mix",
+    "also covers|covers a channel",
+    "CLM-COMPLETION-PARTNER"
+  ],
+  "blocking_issues": 3,
+  "warnings": 7,
+  "checks": 11,
+  "issue_ids": [
+    "FINAL-REDTEAM-INTERVAL-CAVEAT-INVERTED",
+    "FINAL-REDTEAM-POPULATION-LINE-MIXED",
+    "FINAL-REDTEAM-CARRY-CONTRADICTS-ARTIFACTS"
+  ],
+  "issue_texts": [
+    "FINAL-REDTEAM-INTERVAL-CAVEAT-INVERTED | final_redteam.interval_caveat_semantics | final_glm_redteam|caveat_semantics_inverted|analysis/claim_register.json|CLM-COMPLETION-PARTNER | CLAIM_SUPPORT | HIGH | worker_analysis | caveat_parity.py FAIL interval_caveat.CLM-COMPLETION-PARTNER (audit/results/final/evidence/caveat_parity_result.json): the register caveat for CLM-COMPLETION-PARTNER reads 'the i",
+    "FINAL-REDTEAM-POPULATION-LINE-MIXED | final_redteam.report_population_line | final_glm_redteam|population_line_mixed|release/report.md|CLM-ORDERS | RELEASE_INTEGRITY | HIGH | worker_release | caveat_parity.py FAIL report.population_line.vs_CLM-ORDERS: release/report.md line 3 declares 'Population: orders placed inside the quarter, one row per order, delivered only.' over a headline that includes C",
+    "FINAL-REDTEAM-CARRY-CONTRADICTS-ARTIFACTS | final_redteam.carry_continuity | final_glm_redteam|carry_facts_contradict_artifacts|audit/checkpoints/worker_*.carry.json|all four worker stages | OTHER | HIGH | worker_clean | All four audit/checkpoints/worker_*.carry.json (clean, metrics, analysis, release) carry identical facts that contradict what those stages produced: period named '2025-Q1-delivere"
+  ],
+  "other_blockers": 2,
+  "warning_texts": [
+    "Every PASS in this run was produced by one model family, and the five stage-auditor evidence files contain only stub notes ('driver e2e evidence'), so the deterministic gates plus this report are the only verification the release actually has; this gate's verdict does not add a cross-vendor review t",
+    "Each stage result self-declares model openrouter/z-ai/glm-5.3-flash-fake, which is not the declared tier path openrouter/z-ai/glm-5.3-flash; the lane check passed on the substring 'glm', and model identity is unverifiable in this CLI by design, so the claim that this run ran on the declared model re",
+    "All four worker result.json files contain a single placeholder check (0.473684 against 0.473684, a number from nothing in this dataset) and empty disclosures, so the worker layer attests nothing; the operative evidence is the machine-gate checks and the recalculations in this result.",
+    "Partner completion wobbles month to month inside the quarter (0.594679, 0.616349, 0.603370) while direct stays near 0.72, so visible within-quarter drift exists that the sampling-interval caveat must not claim to cover; this makes the inverted caveat on the partner card materially worse, not just st",
+    "shipping_total recalculates to 37792722.50 as defined but rests on 2648 unreadable cells (5.9 percent of the population) each treated as zero, understating by an unbounded amount; it is correctly excused from publication by name and the R05 answer tells the reader so instead of showing the number.",
+    "Channel components reconcile exactly with the headline: 1971306.75 + 1051989.86 = 3023296.61 net revenue, 24597 + 19934 = 44531 completion denominators, 17818 + 12055 = 29873 delivered AOV denominators, so no card hides a different population from the headline.",
+    "Not established here and left for a human: byte-level integrity of raw_data/orders.csv itself (this gate may not open it under the free-text quarantine and worked from the quarantine projection and manifest), whether the five stage-auditor gates performed any work beyond their stub evidence, and the"
+  ],
+  "summary": "All 24 registry metrics, the clean table, the claim chain and the release bindings verified independently from quarantine/orders.csv with own code and found correct within declared tolerances; the release fails on meaning, not numbers: (1) CLM-COMPLETION-PARTNER carries an inverted sampling-interval caveat that asserts the interval covers a changing country mix, the opposite of the spec's semantic trap, and the inversion reaches both reader surfaces; (2) the report's global Population line says delivered only over a headline orders figure of 44531 that includes 7167 cancelled and 7491 pending ",
+  "wall_seconds": 1096.6,
+  "cost": {
+    "at": "2026-09-19T08:56:02.409098+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-91a5446b19f2",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-19T08:37:50.264380+00:00",
+    "finished_at": "2026-09-19T08:56:02.405308+00:00",
+    "wall_seconds": 1092.141,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 143071,
+    "cached_input_tokens": 2922752,
+    "output_tokens": 18239,
+    "total_tokens": 3105556,
+    "cost_usd": 0.07743372599999998
+  }
+}

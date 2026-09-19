@@ -1,0 +1,64 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "country_labels_swapped",
+  "error": "On the dashboard the PL and DE cards carry each other's labels; values and claim ids are untouched.",
+  "at": "2026-09-15T19:07:11+00:00",
+  "max_v2_revision": "1d34cf0",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "label",
+    "swap",
+    "\\bPL\\b.*\\bDE\\b|\\bDE\\b.*\\bPL\\b",
+    "dashboard"
+  ],
+  "blocking_issues": 1,
+  "warnings": 6,
+  "checks": 27,
+  "issue_ids": [
+    "REL-DASH-COUNTRY-LABEL-SWAP"
+  ],
+  "warning_texts": [
+    "The check plan has no deterministic rule binding a displayed label (such as a country code on a dashboard card) to the population of the claim it shows, so a swapped label passes every configured release check.",
+    "gate_release_machine reports all 21 rendered numbers bound and gate_release_document reports all 15 checks PASS, which disagrees with what a reader of release/dashboard_data.json cards[2] and cards[3] actually sees.",
+    "audit/check_plan.json lists gate_release_document rules claims_rendered and caveats_rendered under accepted_unproven because their breaker runs failed with FileNotFoundError, so that gate's PASS has never been shown to fire.",
+    "gate_release_document evidence/checks.json contains no recompute_*, claims_recomputed, component_sum or column_identity comparison, so at this stage no machine check recomputes a displayed number from source and the numeric verification of the release rests on the registry chain and on earlier gates",
+    "release/report.md states in words that country figures sum to the headline but does not print the sum; the three shown figures do add exactly to the shown 35,741.52.",
+    "The refund-rate caveat on both surfaces uses the identifier 'paying_customers' rather than plain words; the basis is disclosed but reads as a field name."
+  ],
+  "summary": "Every number shown on report.md, dashboard_data.json and the manifest is exact against the claim register and metrics registry (country parts sum to the headline 35741.52, gross 40235.02 minus refunds 4493.50 equals the headline, 27/57 = 0.473684 on the paying-customer basis), and report.md labels, caveats and population are correct and visible; but release/dashboard_data.json swaps the country labels: cards[2] reads 'Net revenue DE (EUR)' while showing CLM-NET-PL, and cards[3] reads 'Net revenue PL (EUR)' while showing CLM-NET-DE, so a dashboard reader attributes Poland's net revenue to Germa",
+  "wall_seconds": 252.1,
+  "cost": {
+    "at": "2026-09-15T19:11:26.657932+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-b0dc8f415661",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-15T19:07:17.235648+00:00",
+    "finished_at": "2026-09-15T19:11:26.657932+00:00",
+    "wall_seconds": 249.422,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 386,
+    "cached_input_tokens": 1044757,
+    "output_tokens": 21958,
+    "total_tokens": 1067101,
+    "cost_usd": 1.74963
+  }
+}

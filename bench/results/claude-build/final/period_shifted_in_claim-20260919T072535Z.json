@@ -1,0 +1,83 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "period_shifted_in_claim",
+  "dataset": "orders",
+  "error": "One country claim carries a two-month period while its value is the full quarter's.",
+  "at": "2026-09-19T07:19:10+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "period",
+    "02-28",
+    "CLM-NET-CZ"
+  ],
+  "blocking_issues": 1,
+  "warnings": 16,
+  "checks": 23,
+  "issue_ids": [
+    "FINAL-CLAIM-PERIOD-CZ"
+  ],
+  "issue_texts": [
+    "FINAL-CLAIM-PERIOD-CZ | final_claude_redteam.claim_period_matches_spec | final_claude_redteam|claim_period_matches_spec|analysis/claim_register.json|CLM-NET-CZ | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/claim_register.json gives CLM-NET-CZ period 2025-01-01..2025-02-28. The other four claims, metrics/calculated_metrics.json period and audit_spec.yaml population.period all give 2025-01-01."
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "This profile is single-vendor. The architect, four workers, five auditors and this red team are one Claude model family, so an error the model is prone to sits on both sides of every check. No cross-vendor (GPT or other) gate exists in this system, and only the deterministic layer (machine gates, fr",
+    "Writes over raw sources and frozen machinery were blocked only for edit tools, via permissions.deny in .claude/settings.json, and not for the shell. A modified raw file would be caught afterwards by the control lock, not prevented. I make no claim that such a write was impossible.",
+    "The LLM audit layer contributed no independent evidence in this run. All five auditor results (gate0_semantic, gate_clean_auditor, gate_metrics_auditor, gate_claims_auditor, gate_release_auditor) and all four worker results are placeholder records: summary 'driver e2e <step>', evidence notes with no",
+    "No deterministic rule checks the period attached to a figure. check_plan never compares a claim's period field with audit_spec population.period, and release_surface_contract.json excludes ISO period labels in report.md (text_exclusions) and $.period in dashboard_data.json (json_exclusions). A shift",
+    "check_plan lists gate_release_document claims_rendered and caveats_rendered under accepted_unproven: plan proof failed on a FileNotFoundError, so those PASS results were never shown to fire on a broken release. I read both surfaces myself. Every card and report caveat matches its claim's caveats, bu",
+    "The release renders a single global period label and never a claim's own period (card_caveat_requirements in the release contract is empty). A reader cannot tell from the page when a card's period differs from the headline's: today the CZ card sits under 2025-01-01..2025-03-30 while its claim says 2",
+    "Of the three RESOLVED rulings, the paying_customers basis for the refund rate looks the most likely to mislead, and it moves the published refund rate 0.473684 (27/57). On order rows the rate is 0.189655 (33/174). Counting only customers with a full refund gives 0.210526 (12/57). Refunded EUR are 0.",
+    "The net_of_refunds ruling deducts every refund at its order's date, because the export has no refund date. Refunds issued after 2025-03-30 on in-period orders reduce this period's net revenue 35741.52, while in-period refunds on older orders are invisible. The whole 4493.50 EUR refund total (33 refu",
+    "The Europe/Warsaw timezone ruling cannot be checked, because order_date is a bare date with no time or offset. The rows a date shift would move are the delivered boundary orders O00008 (DE, 2025-01-01, fully refunded), O00082 (CZ, 2025-01-01), O00198 (PL, 2025-01-01) and O00064 (CZ, 2025-03-30). Dro",
+    "audit_spec calls the period 'the reported quarter', and the metrics registry names it 2025-Q1-delivered, yet it ends 2025-03-30 rather than 2025-03-31. No row in this export is dated 2025-03-31, so no figure moves today. The report never tells the reader that 31 March is outside the period, and on a",
+    "The four worker carries are identical apart from step_id and context_id. Each records the population as status=delivered without the period restriction the spec attaches, and each lists one pitfall (refund basis) and no boundary pitfall. The carry channel therefore did not carry the inclusive-bounda",
+    "The release never shows R04's row accounting: 201 raw rows, 174 kept, 26 not delivered (16 cancelled, 10 pending), and 1 delivered row outside the period (O00201, 2025-04-01, 999.99). It also never says that R05 (customer lifetime value) was declined for lack of an acquisition date. Both live only i",
+    "I did not read the generator code (src/**), which is outside my input globs. The only checks on it are figures_not_hardcoded for src/analysis and the release gate's scan for numeric literals, and neither inspects non-numeric literals such as a period string. The shifted CZ period most likely origina",
+    "The handoff carries no drift_since_review field. Its absence does not prove that the stage code's assumptions hold, and I checked those assumptions against this export only.",
+    "In the metrics registry, net_revenue stores gross revenue 40235.02 under a field named numerator with a null denominator. No rule checks non-value registry fields such as population, grain, formula text or this numerator, and a later stage could misread it as the numerator of a ratio.",
+    "I did not verify runner retry history, stale inputs or whether the control lock was intact, because they are outside my inputs. A person has to check them in audit_runner.py report."
+  ],
+  "summary": "FAIL on one material blocker. Claim CLM-NET-CZ in analysis/claim_register.json declares the period 2025-01-01..2025-02-28, but audit_spec population.period is 2025-01-01..2025-03-30. Its value, 13527.24, is CZ net revenue for the spec period (62 rows). For the period the claim declares, my own recalculation from raw_data/orders.csv gives 9248.36 (43 rows), so the claim states a false fact. The country components the report reconciles to the headline therefore declare mixed periods. Both release surfaces show the figure under the spec period, which contradicts the register. Every other figure r",
+  "wall_seconds": 366.3,
+  "cost": {
+    "at": "2026-09-19T07:25:34.503569+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-d423fa05b27b",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-19T07:19:31.359801+00:00",
+    "finished_at": "2026-09-19T07:25:34.503569+00:00",
+    "wall_seconds": 363.14,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 52,
+    "cached_input_tokens": 2655555,
+    "output_tokens": 41867,
+    "total_tokens": 2697474,
+    "cost_usd": 3.6730965
+  }
+}

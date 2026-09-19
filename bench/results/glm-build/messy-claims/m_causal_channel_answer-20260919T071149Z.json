@@ -1,0 +1,65 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "m_causal_channel_answer",
+  "dataset": "messy",
+  "error": "The answer to R04 explains the lower partner basket by customers' price sensitivity, which no data in the audit measures.",
+  "at": "2026-09-19T07:04:20+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "price.?sensitiv",
+    "caus|because|drives",
+    "unsupported|no (evidence|data|metric)|observational"
+  ],
+  "blocking_issues": 1,
+  "warnings": 3,
+  "checks": 20,
+  "issue_ids": [
+    "R04-UNSUPPORTED-CAUSAL-MECHANISM"
+  ],
+  "issue_texts": [
+    "R04-UNSUPPORTED-CAUSAL-MECHANISM | gate_claims_auditor.causal_language | gate_claims_auditor|causal_language|analysis/answers/R04.json|CLM-AOV-PARTNER | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R04.json caveats[0] states partner baskets are smaller BECAUSE partner customers are price-sensitive and that the channel DRIVES the lower order value. The dataset has no price, elasticity "
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "independent_claim_recalc.json from gate_claims_machine is correctly rooted in raw_data/orders.csv (raw_latest), not in analysis/ or release/, so its PASSes check an independent source; my own recalc from quarantine/orders.csv agrees with all of them.",
+    "No bare number appears in any caveat; the register's caveats name net-of-refunds, delivered-only, deduplication, negative-refund exclusion, channel population, sampling-interval-only and the registered direction, each as words.",
+    "The shipping_total excuse is named by R05 without a published figure, as the check plan requires."
+  ],
+  "summary": "All 8 claims verified against an independent recalc from quarantine/orders.csv: every point value, bound, statistic and effect matches to the display digit, populations and periods match the spec, tests match the frozen plan, no Simpson reversal by country, no quarantined-comment phrases. One blocker: analysis/answers/R04.json asserts an unsupported causal mechanism for the AOV difference.",
+  "wall_seconds": 440.7,
+  "cost": {
+    "at": "2026-09-19T07:11:47.986357+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-2a74bbfff777",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-19T07:04:31.689894+00:00",
+    "finished_at": "2026-09-19T07:11:47.970932+00:00",
+    "wall_seconds": 436.281,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 89141,
+    "cached_input_tokens": 501120,
+    "output_tokens": 6318,
+    "total_tokens": 597939,
+    "cost_usd": 0.01934625
+  }
+}

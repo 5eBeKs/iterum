@@ -1,0 +1,85 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "m_page_causal_sentence",
+  "dataset": "messy",
+  "error": "The page explains the smaller partner baskets by bargain hunters, which nothing in the audit measures.",
+  "at": "2026-09-16T19:59:02+00:00",
+  "max_v2_revision": "fa38876",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "caus|explan|unsupported|no (evidence|metric|claim)"
+  ],
+  "blocking_issues": 6,
+  "warnings": 10,
+  "checks": 11,
+  "issue_ids": [
+    "FINAL-RELEASE-UNSUPPORTED-CAUSAL-SENTENCE",
+    "FINAL-RELEASE-PAGE-POPULATION-MISLABELLED",
+    "FINAL-CARRY-CONTRADICTS-OUTPUT-WORKER-CLEAN",
+    "FINAL-CARRY-CONTRADICTS-OUTPUT-WORKER-METRICS",
+    "FINAL-CARRY-CONTRADICTS-OUTPUT-WORKER-ANALYSIS",
+    "FINAL-CARRY-CONTRADICTS-OUTPUT-WORKER-RELEASE"
+  ],
+  "issue_texts": [
+    "FINAL-RELEASE-UNSUPPORTED-CAUSAL-SENTENCE | final_redteam.release_prose_backed_by_claims | final_claude_redteam|release_prose_backed_by_claims|release/report.md|causal_attribution_channel_aov | CLAIM_SUPPORT | HIGH | worker_release | release/report.md line 25 is a closing prose sentence with no claim anchor. It says the partner channel attracts a particular kind of customer and that this is why it",
+    "FINAL-RELEASE-PAGE-POPULATION-MISLABELLED | final_redteam.card_local_population | final_claude_redteam|card_local_population|release/report.md|page_population_statement | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3 states the population for the whole page as orders in the quarter, one row per order, delivered only. The spec population (audit_spec.yaml population.name, plus",
+    "FINAL-CARRY-CONTRADICTS-OUTPUT-WORKER-CLEAN | final_redteam.carry_continuity | final_claude_redteam|carry_continuity|audit/checkpoints/worker_clean.carry.json|facts_vs_output | RESULT_FORMAT | MEDIUM | worker_clean | audit/checkpoints/worker_clean.carry.json passes the carry schema, and its context_id and attempt match audit/results/worker_clean/result.json. Its facts contradict the table the stag",
+    "FINAL-CARRY-CONTRADICTS-OUTPUT-WORKER-METRICS | final_redteam.carry_continuity | final_claude_redteam|carry_continuity|audit/checkpoints/worker_metrics.carry.json|facts_vs_output | RESULT_FORMAT | MEDIUM | worker_metrics | audit/checkpoints/worker_metrics.carry.json is identical in content to the worker_clean carry, and its context_id and attempt match the stage result. It records period 2025-01-0",
+    "FINAL-CARRY-CONTRADICTS-OUTPUT-WORKER-ANALYSIS | final_redteam.carry_continuity | final_claude_redteam|carry_continuity|audit/checkpoints/worker_analysis.carry.json|facts_vs_output | RESULT_FORMAT | MEDIUM | worker_analysis | audit/checkpoints/worker_analysis.carry.json has the same content, and its context_id and attempt match the stage result. It records period 2025-01-01..2025-03-30 and a deliv",
+    "FINAL-CARRY-CONTRADICTS-OUTPUT-WORKER-RELEASE | final_redteam.carry_continuity | final_claude_redteam|carry_continuity|audit/checkpoints/worker_release.carry.json|facts_vs_output | RESULT_FORMAT | MEDIUM | worker_release | audit/checkpoints/worker_release.carry.json has the same content, and its context_id and attempt match the stage result. It records period 2025-01-01..2025-03-30 and a delivered"
+  ],
+  "other_blockers": 5,
+  "warning_texts": [
+    "No auditor actually reviewed anything. gate0_semantic, gate_clean_auditor, gate_metrics_auditor, gate_claims_auditor and gate_release_auditor all return PASS with a summary naming a driver e2e run, empty artifacts, and notes.json holding no evidence. gate0_semantic and gate_release_auditor 'recomput",
+    "The worker results are the same placeholders: each checks the constant 0.473684 and has no disclosures field. Every worker and auditor result has created_at 2026-01-01T00:00:00Z, and every carry has updated_at 2026-01-01T00:00:00Z. That date is before audit/analysis_plan.json registered_at 2026-04-0",
+    "Of the RESOLVED assumptions, refund_sign_policy (exclude_negative_refunds) is the one that looks wrong for part of what it moves. It removes the whole order when the latest revision has a negative refund: 10 orders (7 direct delivered, 2 direct pending, 1 partner delivered). The order count and comp",
+    "shipping_total 37,792,722.50 EUR recomputes exactly under the declared locale, but it averages about 902 EUR per readable cell, while delivered orders average about 95-121 EUR gross. Shipping is about eight times the order value, and 2,648 of 44,531 population cells (1,778 blank, 870 non-finite) are",
+    "gate_release_document wording_matches_claims.all passed vacuously ('no word in the dictionary appears on any surface'), and release_surface_gate binds only digits. Digit-free prose and page-level population text on report.md are checked by no rule, and both release blockers sit exactly there.",
+    "The release contract text_exclusion 'n = [0-9]+' leaves every printed sample size on report.md unbound. recompute_estimate checks the register's n, not the page. I checked the four printed values (24597, 19934, 17818, 12055) against my recalculation and all match, but a wrong printed n would pass th",
+    "The dashboard estimate cards (release/dashboard_data.json cards 2-5) show the point and both bounds with no n and no population. The audit_spec release comment says an estimate is always rendered with its interval and its n beside it, but the enforceable key estimate_rendering=point_and_both_bounds ",
+    "Caveat wording 'one quarter of orders in this channel' (report.md lines 15-21, dashboard cards 2-5) and 'an estimate from one quarter of orders' (report.md line 23) read naturally as 25% of the channel's orders. The figures cover every order in the quarter (44,531 of 44,531), so the Wilson and Stude",
+    "free_text_quarantined.values compared a sample of 25 values against the register, surfaces and results. The manifest reports 11 distinct comment values, and a 25-row sample does not show that every one was compared. Without opening the quarantined column, whether the unsupported sentence on report.m",
+    "Carry do_not_reread in all four carries names raw_data/orders.csv. That is not an output or working file of the previous stage (contract item 20), and it is the unquarantined export that agents are kept away from. The carries also omit denominators and human_decisions_used, although the stages relie"
+  ],
+  "summary": "FAIL. Every published number checks out: I recomputed all 18 claim roles of the 6 claims from quarantine/orders.csv (one row per order_id, last row wins; order_month in Q1; refund >= 0). All match the register, the metrics and all three release surfaces exactly. The totals add up (24597+19934=44531; 1971306.75+1051989.86=3023296.61), and the clean table matches raw on every row and column. The failure is in what the page says around those numbers and in the pipeline's memory. (1) release/report.md:25 ends with a sentence that gives a cause for the partner channel's lower AOV. No claim, column ",
+  "wall_seconds": 471.4,
+  "cost": {
+    "at": "2026-09-16T20:07:01.715110+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-4b16f125bb3c",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-16T19:59:13.140305+00:00",
+    "finished_at": "2026-09-16T20:07:01.715110+00:00",
+    "wall_seconds": 468.578,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 54,
+    "cached_input_tokens": 3131384,
+    "output_tokens": 46878,
+    "total_tokens": 3178316,
+    "cost_usd": 4.023889
+  }
+}

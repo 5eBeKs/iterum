@@ -1,0 +1,69 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "m_page_no_uncertainty",
+  "dataset": "messy",
+  "error": "The page says the channel figures are measured over every order and carry no uncertainty, beside their intervals.",
+  "at": "2026-09-18T20:19:13+00:00",
+  "max_v2_revision": "b7adc4a",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "no uncertainty|every order",
+    "interval|estimate|sampl"
+  ],
+  "blocking_issues": 3,
+  "warnings": 4,
+  "checks": 20,
+  "issue_ids": [
+    "REL-AUD-UNCERTAINTY-DENIED",
+    "REL-AUD-PAGE-POPULATION",
+    "REL-AUD-DASHBOARD-CARD-CONTEXT"
+  ],
+  "issue_texts": [
+    "REL-AUD-UNCERTAINTY-DENIED | gate_release_auditor.wording_not_stronger_than_interval | gate_release_auditor|wording_not_stronger_than_interval|release/report.md|by_channel | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 23, under 'By channel', calls every channel figure a measurement over every order of the quarter and says it therefore carries no uncertainty. No claim in anal",
+    "REL-AUD-PAGE-POPULATION | gate_release_auditor.population_matches_claim | gate_release_auditor|population_matches_claim|release/report.md|page_population | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3 is the only population statement on the page, and it says 'delivered only'. That is CLM-NET-REVENUE's population. CLM-ORDERS (44,531) and CLM-COMPLETION-DIRECT and -PARTNER ha",
+    "REL-AUD-DASHBOARD-CARD-CONTEXT | gate_release_auditor.card_context_on_card | gate_release_auditor|card_context_on_card|release/dashboard_data.json|cards | RELEASE_INTEGRITY | MEDIUM | worker_release | release/dashboard_data.json: every card has only claim_id, label, value, _claim_roles, caveats and the role fields (see dashboard_card_fields in evidence/recompute_release.json). No card has populati"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "Both registered tests show p as 0.0000 on report.md and dashboard_data.json. At display_digits 4 this is faithful to the register, but a reader sees a p of exactly zero where 'p < 0.0001' would be accurate.",
+    "The machine release gates never checked page prose that contains no digits and no 'significant': wording_matches_claims looks only for 'significant', and release_surface_contract.json has empty reconciliations and card_caveat_requirements. Per-card context, the page population and uncertainty wordin",
+    "This auditor could not reproduce the AOV interval bounds and the Welch statistic and effect exactly, because the step's inputs have no row-level variance. The standard deviations implied by the published bounds give a t of about 42.62 against 42.70 published, and a d of about 0.4854 against 0.4869 p",
+    "The release generator src/release/build_release.py is not among this step's inputs, so this auditor did not verify that it has no business-number literals."
+  ],
+  "summary": "All 40 business numbers on report.md and dashboard_data.json match the claim register's formatting and my own recompute from metric components, and the reconciliation identities hold. The release still fails on its text. (1) report.md line 23 says each channel figure is a census that carries no uncertainty, which contradicts the four sampling intervals printed beside it and the registered tests. (2) report.md line 3 puts a page-level population of 'delivered only' over the order count and both completion rates, whose populations are all orders. (3) The estimate cards in dashboard_data.json car",
+  "wall_seconds": 210.4,
+  "cost": {
+    "at": "2026-09-18T20:22:47.889910+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-1ec424ea468d",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-18T20:19:20.514578+00:00",
+    "finished_at": "2026-09-18T20:22:47.889910+00:00",
+    "wall_seconds": 207.375,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 28,
+    "cached_input_tokens": 1228560,
+    "output_tokens": 21207,
+    "total_tokens": 1249795,
+    "cost_usd": 2.136832
+  }
+}

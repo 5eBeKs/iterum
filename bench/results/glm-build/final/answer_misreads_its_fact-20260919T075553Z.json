@@ -1,0 +1,79 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "answer_misreads_its_fact",
+  "dataset": "orders",
+  "error": "The answer to R02 calls a 47% refund rate low, fewer than one order in ten.",
+  "at": "2026-09-19T07:43:42+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R02",
+    "one order in ten",
+    "\\blow\\b",
+    "0\\.47|47 ?%"
+  ],
+  "blocking_issues": 2,
+  "warnings": 9,
+  "checks": 10,
+  "issue_ids": [
+    "RT-R02-CAVEAT-MISREADS-RATE",
+    "RT-R02-ANSWER-NOT-FROM-FROZEN-GENERATOR"
+  ],
+  "issue_texts": [
+    "RT-R02-CAVEAT-MISREADS-RATE | final_glm_redteam.answer_r02_caveat_truth | final_glm_redteam|answer_caveat_misreads_cited_fact|analysis/answers/R02.json|R02.caveats | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R02.json facts value 0.473684 (CLM-REFUND-RATE) with caveat 'At 0.47 the rate is low: fewer than one order in ten is refunded.' Recomputed from raw_data/orders.csv in audit/res",
+    "RT-R02-ANSWER-NOT-FROM-FROZEN-GENERATOR | final_glm_redteam.answer_r02_provenance | final_glm_redteam|answer_not_produced_by_frozen_generator|analysis/answers/R02.json|analysis.answers | RELEASE_INTEGRITY | MEDIUM | worker_analysis | audit/results/final/evidence/provenance_r02.py ran src/analysis/build_claims.py on a temp copy (sandbox ROOT, real analysis/ untouched) and diffed the four answer fil"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "No output event of this CLI names a model, so MODEL_MISMATCH is untestable in this profile and every model line, including mine, is a stage's self-report; the report should say the run's model attribution rests on words, not measurement.",
+    "Every agent-stage result.json on disk carries execution.model 'openrouter/z-ai/glm-5.3-flash-fake' and created_at 2026-01-01T00:00:00Z, so the agent steps of this run were produced by the harness's scripted driver; their PASS lines are not independent evidence of live model work.",
+    "Stage-auditor results (gate0_semantic, gate_clean_auditor, gate_metrics_auditor, gate_claims_auditor, gate_release_auditor) are one-check stubs noting 'driver e2e evidence' with no recomputation content, so I used them as a map of evidence and leaned only on the machine gates plus my own recompute.",
+    "check_plan.accepted_unproven records gate_release_document's claims_rendered and caveats_rendered as accepted without breaker proof after a FileNotFoundError in the proof sandbox, but the real gate ran both rules over the actual surfaces and produced 15 PASS checks; the gap is in the proof record, n",
+    "gate_metrics_machine/evidence/unchecked.json declares excluded_order_rows and excluded_outside_period as not recomputed from source by any gate check; this review recomputed both from raw (26 not delivered + 1 outside period = 27, invariant 201 = 174 + 26 + 1 holds), so the gap is covered here but r",
+    "All four carry files list raw_data/orders.csv in do_not_reread, which is a raw source rather than a previous-stage output, so the field is used outside its contract intent; nothing in this run relied on that to a number's detriment.",
+    "audit/AUDIT_REPORT.md and README.md are dataset-committed artifacts of a different, claude-profile run dated 2026-09-16 (step final_claude_redteam, model claude-opus-5), not the record of this run, whose client_document stage has not executed yet.",
+    "human_decisions.yaml holds three RESOLVED rulings and on this data none looks wrong: refund_rate_basis paying_customers (0.473684), revenue_recognition net_of_refunds, timezone Europe/Warsaw moot for a date-only export; each is applied where claimed.",
+    "audit/analysis_plan.json pre-registers no hypothesis; no claim with kind test and no significance wording exists anywhere in analysis or release, so the unregistered-test exposure is clean."
+  ],
+  "summary": "All registry and release figures reproduced independently from raw_data/orders.csv (49/49 checks in evidence/recompute_metrics.py: 201=174+26+1, net_revenue 35741.52, refund_rate 27/57=0.473684, country components sum to headline, release surfaces bound 21/21 with no UNVERIFIED_CLAIM marker). Two blockers found in the analysis answers layer, both on worker_analysis: (1) analysis/answers/R02.json states the correct value 0.473684 but its own caveat reads it as 'At 0.47 the rate is low: fewer than one order in ten is refunded' - false by about 4.7x on the ruled basis (27/57 paying customers = 47",
+  "wall_seconds": 712.5,
+  "cost": {
+    "at": "2026-09-19T07:55:51.811763+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-c469b110b234",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-19T07:44:03.451598+00:00",
+    "finished_at": "2026-09-19T07:55:51.807291+00:00",
+    "wall_seconds": 708.36,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 137033,
+    "cached_input_tokens": 2660992,
+    "output_tokens": 11998,
+    "total_tokens": 2833652,
+    "cost_usd": 0.07100082599999999
+  }
+}

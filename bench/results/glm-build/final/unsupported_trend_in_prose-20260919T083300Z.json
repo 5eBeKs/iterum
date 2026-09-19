@@ -1,0 +1,75 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "unsupported_trend_in_prose",
+  "dataset": "orders",
+  "error": "The page says revenue grew through the quarter; no monthly figure exists in the audit.",
+  "at": "2026-09-19T08:15:45+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "grew|growth|trend|strongest month|March",
+    "unsupported|no (metric|claim|figure)"
+  ],
+  "blocking_issues": 1,
+  "warnings": 9,
+  "checks": 17,
+  "issue_ids": [
+    "FINAL-REDTEAM-UNSUPPORTED-TREND-PROSE"
+  ],
+  "issue_texts": [
+    "FINAL-REDTEAM-UNSUPPORTED-TREND-PROSE | final_redteam.unsupported_trend_in_prose | final_glm_redteam|release.render_claims_only|release/report.md|trend_sentence_line_24 | CLAIM_SUPPORT | HIGH | worker_release | audit/results/final/evidence/final_recalc.py (checks release.surface_matches_generator, final_redteam.unsupported_trend_in_prose): release/report.md line 24 'Revenue grew steadily through t"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The trend sentence happens to be true on the current data (own recalc: monthly net revenue 2025-01=10198.19, 2025-02=11891.89, 2025-03=13651.44, March the maximum), so no reader is misled today, but nothing binds it and any data refresh strands it like a hardcoded number.",
+    "Every worker and auditor stage result in this run is a driver e2e stub (model field 'openrouter/z-ai/glm-5.3-flash-fake', created_at 2026-01-01, one synthetic check each), so no stage-level reasoning is attested by them; the only real assurance for the numbers is the machine gates plus this recalcul",
+    "No CLI output event names the model, so 'executed on glm-5.3-flash' is confirmed by nothing except the stages' own self-reports and MODEL_MISMATCH is unverifiable in this launcher, as its Capabilities section records.",
+    "The chain is single-vendor end to end (architect, workers, auditors and this gate are one model family), so the chain of PASSes is not cross-vendor review; what actually held here is the deterministic layer - machine gates, frozen check plan, control lock and release surface gate - and this verdict ",
+    "check_plan.json records gate_release_document rules claims_rendered and caveats_rendered as accepted_unproven (proof harness FileNotFoundError), so those two document rules were never shown to fire on a broken dataset, though they did run for real here (15 checks, all PASS).",
+    "gate_metrics_machine/evidence/unchecked.json admits excluded_order_rows and excluded_outside_period are not recomputed from source by any machine rule; this recalc closes both from raw (27 and 1, and the invariant 201=174+26+1 holds).",
+    "All four carry files list raw_data/orders.csv under do_not_reread although raw is a spec input rather than a previous stage's output; harmless in this run because every downstream figure recomputes from raw, but wrong as a memory instruction.",
+    "Raw-source writes were not prevented by the permission map, whose globs match command text rather than paths; a mutated raw file would only be caught after the fact by the control lock, so the barrier claim in the report must be worded as detection, not prevention.",
+    "What stayed unchecked: whether any stage actually answered on the declared frontier model (self-reports only), and stage-level reasoning behind the stub results; retry history and stale inputs belong to the human report from audit_runner.py and were not invented here."
+  ],
+  "summary": "Independent recalculation from raw_data/orders.csv with own code (audit/results/final/evidence/final_recalc.py) confirms every registry metric, claim and rendered number: population 174 delivered rows inside inclusive 2025-01-01..2025-03-30; net revenue 35741.52 (40235.02 gross - 4493.50 refunds); refund rate 27/57 unique paying customers = 0.473684 on the ruled basis (row-basis contrast 33/174=0.189655); row accounting 201=174+26+1; country components sum to the headline; all 21 rendered numbers on the three surfaces exact, caveats visible, no unregistered test claims, no blanket UNVERIFIED_C",
+  "wall_seconds": 1024.6,
+  "cost": {
+    "at": "2026-09-19T08:32:58.655707+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-a91d5dbde8a5",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-19T08:15:58.421022+00:00",
+    "finished_at": "2026-09-19T08:32:58.650679+00:00",
+    "wall_seconds": 1020.235,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 166796,
+    "cached_input_tokens": 1486336,
+    "output_tokens": 14833,
+    "total_tokens": 1691748,
+    "cost_usd": 0.053532588
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "profile": "grok-build",
+  "stage": "release",
+  "worker": "worker_release",
+  "kind": "worker",
+  "at": "2026-09-15T18:15:39+00:00",
+  "max_v2_revision": "d6a41ff",
+  "verdict": "PASS",
+  "stop_code": null,
+  "summary": "Rendered report.md, dashboard_data.json, and release_number_manifest.json from analysis/claim_register.json. Local release_surface_gate bound 21 of 21 visible figures with 0 issues; five release tests passed.",
+  "wall_seconds": 533.8,
+  "cost": {
+    "at": "2026-09-15T18:24:32.191054+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "worker_release",
+    "attempt": 1,
+    "context_id": "ctx-worker_clean-a1-fcf14e235b0e",
+    "agent_role": "grok-worker",
+    "started_at": "2026-09-15T18:15:42.715706+00:00",
+    "finished_at": "2026-09-15T18:24:32.191054+00:00",
+    "wall_seconds": 529.484,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 148512,
+    "cached_input_tokens": 2999808,
+    "output_tokens": 31129,
+    "total_tokens": 3179449,
+    "cost_usd": 0.67445868
+  },
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "outcome": "gate_pass",
+  "fingerprints": []
+}

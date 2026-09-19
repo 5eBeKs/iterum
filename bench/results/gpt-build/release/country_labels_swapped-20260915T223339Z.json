@@ -1,0 +1,59 @@
+{
+  "profile": "gpt-build",
+  "stage": "release",
+  "case": "country_labels_swapped",
+  "error": "On the dashboard the PL and DE cards carry each other's labels; values and claim ids are untouched.",
+  "at": "2026-09-15T22:28:24+00:00",
+  "max_v2_revision": "7e1d71f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "label",
+    "swap",
+    "\\bPL\\b.*\\bDE\\b|\\bDE\\b.*\\bPL\\b",
+    "dashboard"
+  ],
+  "blocking_issues": 1,
+  "warnings": 1,
+  "checks": 42,
+  "issue_ids": [
+    "REL-DASH-COUNTRY-LABELS-SWAPPED"
+  ],
+  "warning_texts": [
+    "The release machine gate bound all 21 numbers and the document gate verified claim and caveat presence, but neither gate checked semantic identity between a dashboard card label and its country claim, allowing the PL/DE swap to pass both automated gates."
+  ],
+  "summary": "Independent rechecks match both prior gates on 21 numeric bindings and 15 claim/caveat comparisons, but the dashboard swaps the PL and DE country labels, so the release is materially misleading.",
+  "wall_seconds": 310.8,
+  "cost": {
+    "at": "2026-09-15T22:33:38.224998+00:00",
+    "launcher": "codex_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-d8d6cafbe3bd",
+    "agent_role": "gpt-audit-release",
+    "started_at": "2026-09-15T22:28:29.838750+00:00",
+    "finished_at": "2026-09-15T22:33:38.224037+00:00",
+    "wall_seconds": 308.39,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "gpt-5.6-sol",
+    "model_used": null,
+    "input_tokens": 1006915,
+    "cached_input_tokens": null,
+    "output_tokens": 14948,
+    "total_tokens": 1021863,
+    "cost_usd": null
+  }
+}

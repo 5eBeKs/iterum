@@ -1,0 +1,66 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "m_shipping_answer_complete",
+  "dataset": "messy",
+  "error": "The answer to R05 calls the shipping total complete; about six per cent of its cells are blank, NaN or inf.",
+  "at": "2026-09-18T19:08:00+00:00",
+  "max_v2_revision": "b7adc4a",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R05|shipping",
+    "readable|blank|NaN|\\binf\\b|six per ?cent|6 ?%|unknown amount|underst|complete"
+  ],
+  "blocking_issues": 1,
+  "warnings": 5,
+  "checks": 36,
+  "issue_ids": [
+    "CLAIMS-R05-SHIPPING-CAVEAT-FALSE"
+  ],
+  "issue_texts": [
+    "CLAIMS-R05-SHIPPING-CAVEAT-FALSE | gate_claims_auditor.R05.shipping_exemption | gate_claims_auditor|answer_caveat_contradicts_data|analysis/answers/R05.json|shipping_total | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R05.json caveats[0] states that the shipping column was fully readable, that shipping_total is therefore complete, and that it is omitted only for brevity. Recount in a"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "questions_are_answered in gate_claims_machine only checks that each answer file has question and facts fields, so it passed R05 even though R05's caveat is false; no deterministic rule reads what an answer says.",
+    "Both test p-values are stored as 0.0000000000 with display_digits 4; the release should render them as p < 0.0001 rather than a literal zero (recomputed z = 26.72 and t = 42.70 put p far below any threshold).",
+    "Both tests record the nominal alpha 0.05 with a Bonferroni correction over two registered tests, which means a per-test threshold of 0.025; the conclusions do not change because p is effectively zero, but release wording should state the adjusted threshold rather than 0.05.",
+    "recompute_estimate, recompute_test and min_group_size in gate_claims_machine read clean_data/orders_clean.csv, not raw; only claims_recomputed reaches the raw export. This audit's recount from the quarantine projection agrees with all of them, so there is no gap now, but a shared cleaning mistake wo",
+    "CLM-NET-REVENUE's population excludes 10 in-quarter orders whose latest revision has a negative refund, but its caveats do not mention that; the check plan does not require it, while CLM-ORDERS does state it."
+  ],
+  "summary": "All eight claims reproduce exactly from quarantine/orders.csv (last revision per order_id, order_month 2026-01..03, refund >= 0): 44531 orders, net revenue 3023296.61, completion 0.724397 / 0.604746 with Wilson bounds, AOV 110.64 / 87.27 with Student bounds, z 26.718455 / effect 0.119652 and Welch t 42.699880 / d 0.486900. Every value, bound, n, level, method, hypothesis, alpha and correction ties byte for byte to metrics and the frozen plan; the channel gaps keep their sign in every country and every month. One blocker: the caveat in analysis/answers/R05.json says every shipping cell was read",
+  "wall_seconds": 210.8,
+  "cost": {
+    "at": "2026-09-18T19:11:38.108546+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-18T19:08:10.204040+00:00",
+    "finished_at": "2026-09-18T19:11:38.107540+00:00",
+    "wall_seconds": 207.891,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 30,
+    "cached_input_tokens": 1591841,
+    "output_tokens": 21241,
+    "total_tokens": 1613112,
+    "cost_usd": 2.5808485
+  }
+}

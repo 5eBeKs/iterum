@@ -1,0 +1,66 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "question_restated_narrower",
+  "dataset": "orders",
+  "error": "R02 is restated without the half that asks on which basis the rate is taken.",
+  "at": "2026-09-19T06:38:33+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R02",
+    "basis",
+    "restat|narrow|half|question"
+  ],
+  "blocking_issues": 1,
+  "warnings": 4,
+  "checks": 21,
+  "issue_ids": [
+    "CLAIMS-AUD-R02-QUESTION-NARROWED"
+  ],
+  "issue_texts": [
+    "CLAIMS-AUD-R02-QUESTION-NARROWED | gate_claims_auditor.question_fidelity.R02 | gate_claims_auditor|question_fidelity|analysis/answers/R02.json|R02 | CLAIM_SUPPORT | MEDIUM | worker_analysis | raw_data/questions.md R02 asks two things: the refund rate, and on which basis (order rows or paying customers). analysis/answers/R02.json sets `question` to the rate alone, its `facts` hold only CLM-REFUND-R"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "analysis/answers/R01.json restates R01 without its population qualifier (delivered orders inside the period) and carries no caveat of its own; the figure is computed on the right population and the claim register states it, but the answer file on its own reads as a broader question than the one aske",
+    "The spec period ends 2025-03-30, one day short of calendar Q1, while metrics and R01 call it the reported quarter; the raw export has no row dated 2025-03-31, so no figure changes, but the label and the period differ by a day.",
+    "refund_rate counts a customer as refunded when any in-period delivered order has refund_amount > 0, including partial refunds of a few euros; the paying-customer basis (0.473684) reads about 2.5 times the order-row reading (0.189655), which is the gap the spec ruling exists to pin, and a reader shou",
+    "Machine coverage of analysis/answers/* is presence-only for R01 to R03: questions_are_answered checks that `question` and `facts` exist and binds figures only for R04, so the fidelity of restated questions and the values in R01 to R03 facts are checked by this auditor alone."
+  ],
+  "summary": "All five claims reproduce exactly from raw_data/orders.csv (net 35741.52, refund rate 27/57 = 0.473684 on paying customers, PL 11181.67, DE 11032.61, CZ 13527.24, parts sum to headline with 0.00 difference), R04 row accounting 201 = 174 + 26 + 1 holds, and the machine gate's recalc is rooted in raw only. One blocker: analysis/answers/R02.json restates R02 as 'the refund rate' and drops the asked sub-question on which basis, so the answer's facts assert only the rate and the basis survives only as a caveat string.",
+  "wall_seconds": 175.0,
+  "cost": {
+    "at": "2026-09-19T06:41:31.902412+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-f58036111c74",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-19T06:38:40.135252+00:00",
+    "finished_at": "2026-09-19T06:41:31.902412+00:00",
+    "wall_seconds": 171.766,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 30,
+    "cached_input_tokens": 1209000,
+    "output_tokens": 18004,
+    "total_tokens": 1227034,
+    "cost_usd": 1.873555
+  }
+}

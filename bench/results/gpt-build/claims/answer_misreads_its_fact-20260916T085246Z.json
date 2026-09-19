@@ -1,0 +1,57 @@
+{
+  "profile": "gpt-build",
+  "stage": "claims",
+  "case": "answer_misreads_its_fact",
+  "error": "The answer to R02 calls a 47% refund rate low, fewer than one order in ten.",
+  "at": "2026-09-16T08:47:35+00:00",
+  "max_v2_revision": "7e1d71f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R02",
+    "0\\.47|47 ?%"
+  ],
+  "blocking_issues": 1,
+  "warnings": 1,
+  "checks": 8,
+  "issue_ids": [
+    "CLAIMS-R02-MISINTERPRETATION"
+  ],
+  "warning_texts": [
+    "The frozen machine plan checks that R02 exists and links its numeric fact, but it has no deterministic rule for semantic consistency of the answer's free-text interpretation, which is where the blocking contradiction appears."
+  ],
+  "summary": "All five registered claim values, populations, periods, and raw-source machine recalculations agree, but analysis/answers/R02.json materially misinterprets the 0.473684 paying-customer refund rate as an order-level rate below 10%.",
+  "wall_seconds": 307.1,
+  "cost": {
+    "at": "2026-09-16T08:52:45.258508+00:00",
+    "launcher": "codex_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-10fd99ee6446",
+    "agent_role": "gpt-audit-claims",
+    "started_at": "2026-09-16T08:47:40.525777+00:00",
+    "finished_at": "2026-09-16T08:52:45.257507+00:00",
+    "wall_seconds": 304.718,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "gpt-5.6-sol",
+    "model_used": null,
+    "input_tokens": 1135916,
+    "cached_input_tokens": null,
+    "output_tokens": 12590,
+    "total_tokens": 1148506,
+    "cost_usd": null
+  }
+}

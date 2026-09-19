@@ -1,0 +1,65 @@
+{
+  "profile": "glm-build",
+  "stage": "release",
+  "case": "m_channel_labels_swapped_page",
+  "dataset": "messy",
+  "error": "On the page the direct and partner completion lines carry each other's labels; the figures and anchors are untouched.",
+  "at": "2026-09-16T19:53:38+00:00",
+  "max_v2_revision": "fa38876",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "label",
+    "swap|transpos|mislabel",
+    "direct|partner"
+  ],
+  "blocking_issues": 1,
+  "warnings": 3,
+  "checks": 15,
+  "issue_ids": [
+    "RELEASE-CHANNEL-LABELS-SWAPPED"
+  ],
+  "issue_texts": [
+    "RELEASE-CHANNEL-LABELS-SWAPPED | gate_release_auditor.label_matches_claim | gate_release_auditor|label_matches_claim|release/report.md|by_channel_completion | VISUALIZATION | HIGH | worker_release | release/report.md lines 14 and 16: 'completion partner:' is followed by anchor claim:CLM-COMPLETION-DIRECT with 0.724397 (n=24597) and 'completion direct:' by claim:CLM-COMPLETION-PARTNER with 0.604746"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "release/report.md line 3 states the page population as 'delivered only', which is the net-revenue claim's population; the Orders card beneath it (44,531) counts all statuses including cancelled and pending, and its own caveats do not correct that reading.",
+    "audit/results/gate_release_machine/evidence/ contains only release_surface_gate.json (a per-number list) and the gate's result.json carries only summary counters; no per-check checks.json exists for gate_release_machine, so this auditor's number-binding checks carry machine_check null even though al",
+    "The label swap shows the release surface can drift from src/release/build_release.py after generation; no gate compares the shipped report.md byte-wise with a fresh generator run, so hand edits to wording are visible to no check except this one."
+  ],
+  "summary": "All 42 rendered numbers on 3 surfaces are bound, exact and independently recomputed from raw_data (recompute.py); but release/report.md shows the two channel completion labels swapped: line 14 reads 'completion partner' over CLM-COMPLETION-DIRECT (0.724397, n=24597, the direct channel per raw recount) and line 16 reads 'completion direct' over CLM-COMPLETION-PARTNER (0.604746, n=19934). Every reader of the page reads each rate as the other channel's; the machine gate checked numbers, not labels, so it passed. The shipped report.md also diverges from its own generator, which derives labels from",
+  "wall_seconds": 311.8,
+  "cost": {
+    "at": "2026-09-16T19:58:53.904297+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-c79aa4b4f758",
+    "agent_role": "glm-audit-release",
+    "started_at": "2026-09-16T19:53:45.740422+00:00",
+    "finished_at": "2026-09-16T19:58:53.899762+00:00",
+    "wall_seconds": 308.172,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 71938,
+    "cached_input_tokens": 708544,
+    "output_tokens": 6982,
+    "total_tokens": 791809,
+    "cost_usd": 0.022654811999999996
+  }
+}

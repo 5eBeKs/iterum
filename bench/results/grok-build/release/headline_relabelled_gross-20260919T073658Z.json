@@ -1,0 +1,66 @@
+{
+  "profile": "grok-build",
+  "stage": "release",
+  "case": "headline_relabelled_gross",
+  "dataset": "orders",
+  "error": "The page calls net revenue 'Gross revenue'; the number is net of refunds.",
+  "at": "2026-09-19T07:27:01+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "gross",
+    "label",
+    "net revenue"
+  ],
+  "blocking_issues": 1,
+  "warnings": 4,
+  "checks": 37,
+  "issue_ids": [
+    "HEADLINE-LABELLED-GROSS"
+  ],
+  "issue_texts": [
+    "HEADLINE-LABELLED-GROSS | gate_release_auditor.headline_label.CLM-NET-REVENUE | gate_release_auditor|headline_label|release/report.md|CLM-NET-REVENUE | VISUALIZATION | CRITICAL | worker_release | release/report.md line 7, visible to the reader as Gross revenue, EUR: 35,741.52, is anchored to CLM-NET-REVENUE role value. Independent recast from raw_data/orders.csv on delivered orders 2025-01-01..202"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "audit/check_plan.json maps spec trap gross-is-not-net only to gate_metrics_machine.recompute_metric; the release document plan has claims_rendered and caveats_rendered and no headline Gross-versus-Net label rule, so this stage's machine silence on the word Gross is not approval.",
+    "gate_release_machine bound all 21 displayed figures across report.md, dashboard_data.json, and release_number_manifest.json and recorded PASS; it does not inspect whether the visible headline word is Gross or Net.",
+    "gate_release_document PASSed caveats_rendered.CLM-NET-REVENUE because the words net of refunds sit on the same report card as the Gross label, so caveat presence and label truth are not the same check.",
+    "The report tells the reader that country figures sum to the headline and both are net of refunds, which is numerically true (11181.67 + 11032.61 + 13527.24 = 35741.52) and still leaves the headline word Gross in place."
+  ],
+  "summary": "release/report.md line 7 labels CLM-NET-REVENUE as Gross revenue while the bound value 35741.52 is net of refunds (raw recast gross 40235.02 minus refunds 4493.50). Dashboard, generator, claim register, and spec all say net. Country parts 11181.67 + 11032.61 + 13527.24 = 35741.52 and refund rate 0.473684 = 27/57 recompute; both machine gates passed number-binding and caveat presence and did not inspect the Gross versus Net label.",
+  "wall_seconds": 592.6,
+  "cost": {
+    "at": "2026-09-19T07:36:57.016772+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-3ac9766c4304",
+    "agent_role": "grok-audit-release",
+    "started_at": "2026-09-19T07:27:07.647818+00:00",
+    "finished_at": "2026-09-19T07:36:57.016772+00:00",
+    "wall_seconds": 589.375,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 120644,
+    "cached_input_tokens": 1508992,
+    "output_tokens": 33674,
+    "total_tokens": 1663310,
+    "cost_usd": 0.40726152
+  }
+}

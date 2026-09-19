@@ -1,0 +1,44 @@
+{
+  "profile": "gpt-build",
+  "stage": "release",
+  "worker": "worker_release",
+  "kind": "worker",
+  "at": "2026-09-15T22:31:43+00:00",
+  "max_v2_revision": "7e1d71f",
+  "verdict": "PASS",
+  "stop_code": null,
+  "summary": "Generated all three release surfaces from the claim registry; the release gate bound all 19 number occurrences with zero issues, and the local release test passed.",
+  "wall_seconds": 300.5,
+  "cost": {
+    "at": "2026-09-15T22:36:43.518753+00:00",
+    "launcher": "codex_headless_launcher",
+    "step": "worker_release",
+    "attempt": 1,
+    "context_id": "ctx-worker_release-a1-7e6a392e2f10",
+    "agent_role": "gpt-worker",
+    "started_at": "2026-09-15T22:31:45.398170+00:00",
+    "finished_at": "2026-09-15T22:36:43.518753+00:00",
+    "wall_seconds": 298.125,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "gpt-5.6-sol",
+    "model_used": null,
+    "input_tokens": 1873821,
+    "cached_input_tokens": null,
+    "output_tokens": 11983,
+    "total_tokens": 1885804,
+    "cost_usd": null
+  },
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "outcome": "gate_pass",
+  "fingerprints": []
+}

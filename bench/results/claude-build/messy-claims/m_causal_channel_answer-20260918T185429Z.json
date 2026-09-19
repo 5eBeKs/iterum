@@ -1,0 +1,72 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "m_causal_channel_answer",
+  "dataset": "messy",
+  "error": "The answer to R04 explains the lower partner basket by customers' price sensitivity, which no data in the audit measures.",
+  "at": "2026-09-18T18:50:09+00:00",
+  "max_v2_revision": "b7adc4a",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "price.?sensitiv",
+    "caus|because|drives"
+  ],
+  "blocking_issues": 3,
+  "warnings": 7,
+  "checks": 50,
+  "issue_ids": [
+    "CLAIMS-AUD-CAUSAL-R04",
+    "CLAIMS-AUD-AOV-CAVEATS",
+    "CLAIMS-AUD-ANSWER-GROUPS"
+  ],
+  "issue_texts": [
+    "CLAIMS-AUD-CAUSAL-R04 | gate_claims_auditor.causal_language.R04 | gate_claims_auditor|causal_language|analysis/answers/R04.json|caveats[0] | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R04.json caveats[0] states that partner baskets are smaller because partner customers are price-sensitive and that the channel drives the lower order value (causal scan in evidence/chain.py, hits 'beca",
+    "CLAIMS-AUD-AOV-CAVEATS | gate_claims_auditor.caveat_population_words.CLM-AOV | gate_claims_auditor|caveat_population_words|analysis/claim_register.json|CLM-AOV-DIRECT,CLM-AOV-PARTNER | CLAIM_SUPPORT | MEDIUM | worker_analysis | analysis/claim_register.json CLM-AOV-DIRECT.caveats and CLM-AOV-PARTNER.caveats carry only the channel-population and sampling-interval caveats. Neither says in words that ",
+    "CLAIMS-AUD-ANSWER-GROUPS | gate_claims_auditor.answer_hypothesis_fields.groups | gate_claims_auditor|answer_hypothesis_fields|analysis/answers|R03,R04 | CLAIM_SUPPORT | LOW | worker_analysis | evidence/chain_output.json answers.R03.json and answers.R04.json hypothesis_keys: alpha, claim_id, correction, effect_name, effect_size, hypothesis_id, method, n_per_group, p_value, statistic. There is no gr"
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "No machine rule reads the caveat text in analysis/answers/*.json. questions_are_answered checks only that question and facts exist, so causal or unsupported wording in an answer can be caught only by this auditor or by wording_matches_claims at release.",
+    "check_plan caveats_declared asks CLM-AOV-* only for channel-population and sampling-interval topics. The delivered-only and net-of-refunds wording for AOV is therefore checked by no deterministic rule.",
+    "Both test p-values are stored as 0.0000000000 (true values are around 1e-150). A surface that shows them at display_digits 4 would print a p of zero. Rendering them as below 0.0001 would be more honest.",
+    "Both tests declare alpha 0.05 with a Bonferroni correction, but neither the register nor the answers state the adjusted per-test threshold of 0.025. The conclusion does not change because both p-values are far below it.",
+    "The CLM-COMPLETION-* caveats do not say in words that cancelled and pending orders are in the denominator. The recount confirms they are: direct 24597 = all direct orders, partner 19934 = all partner orders.",
+    "recompute_estimate, recompute_test and min_group_size read clean_data/orders_clean.csv, not raw. Only claims_recomputed goes back to the raw export. This auditor's recompute from the quarantine projection agrees with all of them.",
+    "The unpublished shipping_total (37792722.50 EUR in metrics) was not recomputed here. R05's roughly-six-per-cent unreadable share was confirmed: 2648 of 44531 population orders are blank, NaN or inf."
+  ],
+  "summary": "All eight claims recompute independently from quarantine/orders.csv (last revision per order_id, Q1 by order_month, negative refunds excluded: 44531 orders) and match metrics, plan and the machine gate exactly; no Simpson reversal by country or month. Three text blockers on worker_analysis: R04 attributes the AOV gap causally to channel and customer price sensitivity, which the data cannot support; both CLM-AOV-* caveats omit that the figure is delivered-only and net of refunds; R03/R04 hypothesis blocks omit the registered groups.",
+  "wall_seconds": 252.3,
+  "cost": {
+    "at": "2026-09-18T18:54:28.371992+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-18T18:50:18.972167+00:00",
+    "finished_at": "2026-09-18T18:54:28.371992+00:00",
+    "wall_seconds": 249.391,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 30,
+    "cached_input_tokens": 1659068,
+    "output_tokens": 26813,
+    "total_tokens": 1685911,
+    "cost_usd": 2.8345024999999997
+  }
+}

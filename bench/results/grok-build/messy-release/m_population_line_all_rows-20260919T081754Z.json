@@ -1,0 +1,66 @@
+{
+  "profile": "grok-build",
+  "stage": "release",
+  "case": "m_population_line_all_rows",
+  "dataset": "messy",
+  "error": "The page's population line says every export row; the figures are over one row per order after deduplication.",
+  "at": "2026-09-19T08:06:41+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "every row|export row|revision|dedup|one row per order"
+  ],
+  "blocking_issues": 1,
+  "warnings": 5,
+  "checks": 44,
+  "issue_ids": [
+    "REL-POPULATION-ALL-ROWS"
+  ],
+  "issue_texts": [
+    "REL-POPULATION-ALL-ROWS | gate_release_auditor.population_line | gate_release_auditor|population_line|release/report.md|all-rows | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3 reads 'Population: every row of the export inside the quarter, delivered only.' audit_spec.yaml population.name and CLM-ORDERS.population are 'orders placed inside the quarter, one row per order'. The"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "Dashboard estimate cards carry ci_low and ci_high but no n; n is printed only on release/report.md beside each estimate.",
+    "Dashboard cards have no population field, so a dashboard reader never sees the spec population and inherits only the report header.",
+    "AOV cards copy the claim caveats (channel quarter; sampling interval only) and do not repeat net of refunds or delivered orders only, which appear on the revenue card.",
+    "gate_release_machine and gate_release_document both PASS; they bind rendered numbers and copy claim caveats and do not inspect the page-level Population sentence, which is why this auditor's FAIL is not a numeric disagreement with those gates.",
+    "Completion caveats say one quarter of orders in this channel, but the header's delivered-only wording can still make a reader treat the denominator as delivered orders."
+  ],
+  "summary": "Headline numbers recast from metrics components match the claim register and the three release surfaces (net revenue 3023296.61, orders 44531, channel rates and AOVs). The report Population line does not: it says every row of the export inside the quarter, delivered only, against spec grain one row per order after deduplication. gate_release_machine bound 60/60 numbers and gate_release_document found claim caveats present; neither inspects that header, so their PASS is not a disagreement on the population sentence.",
+  "wall_seconds": 667.8,
+  "cost": {
+    "at": "2026-09-19T08:17:53.336722+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-4c20338e8b1d",
+    "agent_role": "grok-audit-release",
+    "started_at": "2026-09-19T08:06:49.023956+00:00",
+    "finished_at": "2026-09-19T08:17:53.336722+00:00",
+    "wall_seconds": 664.328,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 212105,
+    "cached_input_tokens": 2076288,
+    "output_tokens": 34955,
+    "total_tokens": 2323348,
+    "cost_usd": 0.56850856
+  }
+}

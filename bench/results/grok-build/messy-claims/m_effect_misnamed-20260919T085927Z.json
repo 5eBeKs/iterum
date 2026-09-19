@@ -1,0 +1,68 @@
+{
+  "profile": "grok-build",
+  "stage": "claims",
+  "case": "m_effect_misnamed",
+  "dataset": "messy",
+  "error": "The R04 test calls its effect size a proportion difference; a Welch test on order values reports Cohen's d.",
+  "at": "2026-09-19T08:46:03+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "effect",
+    "cohen|proportion_difference|effect_name|effect size"
+  ],
+  "blocking_issues": 3,
+  "warnings": 3,
+  "checks": 46,
+  "issue_ids": [
+    "CLAIMS-EFFECT-NAME-AOV",
+    "CLAIMS-AOV-CAVEATS-FILTERS",
+    "CLAIMS-AOV-TEST-POPULATION"
+  ],
+  "issue_texts": [
+    "CLAIMS-EFFECT-NAME-AOV | gate_claims_auditor.effect_name.CLM-TEST-CHANNEL-AOV | gate_claims_auditor|effect_name|analysis/answers/R04.json|CLM-TEST-CHANNEL-AOV | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R04.json hypothesis.effect_name is proportion_difference for effect_size 0.486900. metrics/calculated_metrics.json channel_aov_test_effect.unit is cohens_d, as is analysis/claim_reg",
+    "CLAIMS-AOV-CAVEATS-FILTERS | gate_claims_auditor.caveats.CLM-AOV | gate_claims_auditor|caveats|analysis/claim_register.json|CLM-AOV | CLAIM_SUPPORT | HIGH | worker_analysis | CLM-AOV-DIRECT and CLM-AOV-PARTNER are computed on delivered net_amount, but their caveats only mention the channel mix and the sampling interval. They do not say delivered orders only or net of refunds. Population names deli",
+    "CLAIMS-AOV-TEST-POPULATION | gate_claims_auditor.population.CLM-TEST-CHANNEL-AOV | gate_claims_auditor|population|analysis/claim_register.json|CLM-TEST-CHANNEL-AOV | CLAIM_SUPPORT | HIGH | worker_analysis | CLM-TEST-CHANNEL-AOV population is the same all-orders string as CLM-TEST-CHANNEL-COMPLETION. The test is filtered to is_delivered=1 (n_per_group 17818, 12055). A reader of the population field"
+  ],
+  "other_blockers": 2,
+  "warning_texts": [
+    "Country is in the table; the direct-minus-partner gap keeps the same sign in CZ, DE and PL for both completion and AOV, so it is a mix difference rather than a Simpson reversal.",
+    "R05 names shipping_total as unpublished; the caveat restates an unbound share of unreadable shipping cells and is not a published total.",
+    "gate_claims_machine independent_claim_recalc.json is rooted in raw_data/orders.csv as raw_latest; this auditor recalculated the same figures from quarantine/orders.csv because the quarantine manifest declared free text removed."
+  ],
+  "summary": "Headline point and estimate figures recompute from quarantine/orders.csv and match the metrics registry. R04 names the Welch AOV effect as a proportion difference although the recomputed effect is Cohen's d 0.4869 on a 23.37 EUR mean gap. CLM-AOV caveats omit delivered-only and net of refunds. CLM-TEST-CHANNEL-AOV population text describes the all-orders frame used by the completion test.",
+  "wall_seconds": 795.1,
+  "cost": {
+    "at": "2026-09-19T08:59:25.983011+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-5729859c905c",
+    "agent_role": "grok-audit-claims",
+    "started_at": "2026-09-19T08:46:14.121214+00:00",
+    "finished_at": "2026-09-19T08:59:25.983011+00:00",
+    "wall_seconds": 791.86,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 376137,
+    "cached_input_tokens": 2160768,
+    "output_tokens": 39635,
+    "total_tokens": 2576540,
+    "cost_usd": 0.70395912
+  }
+}

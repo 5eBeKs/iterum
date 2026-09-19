@@ -1,0 +1,71 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "m_causal_channel_answer",
+  "dataset": "messy",
+  "error": "The answer to R04 explains the lower partner basket by customers' price sensitivity, which no data in the audit measures.",
+  "at": "2026-09-19T06:41:35+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "price.?sensitiv",
+    "caus|because|drives",
+    "unsupported|no (evidence|data|metric)|observational"
+  ],
+  "blocking_issues": 3,
+  "warnings": 5,
+  "checks": 39,
+  "issue_ids": [
+    "CLAIMS-AUD-CAUSAL-R04",
+    "CLAIMS-AUD-AOV-CAVEATS",
+    "CLAIMS-AUD-AOV-TEST-POPULATION"
+  ],
+  "issue_texts": [
+    "CLAIMS-AUD-CAUSAL-R04 | gate_claims_auditor.causal_language.R04 | gate_claims_auditor|causal_language|analysis/answers/R04.json|caveats | CLAIM_SUPPORT | HIGH | worker_analysis | The analysis/answers/R04.json caveats[0] explains the AOV gap between channels as a customer trait (price sensitivity) and says the channel causes the lower order value. evidence/chain.py flags causal wording in that cave",
+    "CLAIMS-AUD-AOV-CAVEATS | gate_claims_auditor.caveats_population_words.aov | gate_claims_auditor|caveats_population_words|analysis/claim_register.json|CLM-AOV-DIRECT,CLM-AOV-PARTNER | CLAIM_SUPPORT | MEDIUM | worker_analysis | In analysis/claim_register.json, CLM-AOV-DIRECT and CLM-AOV-PARTNER each carry two caveats: one on the channel population and one on the sampling interval. Neither caveat say",
+    "CLAIMS-AUD-AOV-TEST-POPULATION | gate_claims_auditor.population_matches_computation.CLM-TEST-CHANNEL-AOV | gate_claims_auditor|population_matches_computation|metrics/calculated_metrics.json|channel_aov_test | METRIC_DEFINITION | MEDIUM | worker_metrics | In metrics/calculated_metrics.json, channel_aov_test_p_value, channel_aov_test_statistic and channel_aov_test_effect all describe their populatio"
+  ],
+  "other_blockers": 2,
+  "warning_texts": [
+    "Both test claims record alpha 0.05 with correction bonferroni. The per-test threshold after correction (0.025 for two registered tests) is not written anywhere. The conclusion is unaffected because both p values are below 1e-10, but the correction is named rather than shown to be applied.",
+    "Both p values are stored as 0.0000000000 with display_digits 4, so a release surface that renders them verbatim will show p equal to zero. They should be rendered as a bound (below 0.0001).",
+    "No machine rule reads the text of analysis/answers/*.json. questions_are_answered checks only that the fields are present, and wording_matches_claims runs only on the release report. The unsupported causal sentence in R04 got through exactly this gap and will reach the release stage unless it is cor",
+    "recompute_estimate, recompute_test and min_group_size read clean_data/orders_clean.csv, not raw. Only claims_recomputed returns to the export. My recount from quarantine/orders.csv agrees with all of them, so the clean table introduced no discrepancy here.",
+    "The channel differences are not explained by country or month. Completion minus partner ranges 0.108 to 0.130 across countries and 0.103 to 0.129 across months, and the AOV gap ranges 21.92 to 24.92 EUR. Each channel is split close to one third per country. Stability across strata still does not ide"
+  ],
+  "summary": "All eight claims trace byte for byte to metrics, and my recount from the quarantine file matches every machine-gate comparison: 44531 orders, 3023296.61 EUR net revenue, both completion rates, both AOVs, the Wilson and Student intervals, and both registered tests. The chain check found 0 mismatches in 114 comparisons. There is no Simpson reversal and no confounding: the sign of both channel differences holds in every country and every month, and the country mix is balanced across channels. The stage fails on the wording. analysis/answers/R04.json gives a causal explanation, including a custome",
+  "wall_seconds": 256.3,
+  "cost": {
+    "at": "2026-09-19T06:45:59.349430+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-19T06:41:46.343817+00:00",
+    "finished_at": "2026-09-19T06:45:59.349430+00:00",
+    "wall_seconds": 253.0,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 32,
+    "cached_input_tokens": 1678121,
+    "output_tokens": 26158,
+    "total_tokens": 1704311,
+    "cost_usd": 2.8025935
+  }
+}

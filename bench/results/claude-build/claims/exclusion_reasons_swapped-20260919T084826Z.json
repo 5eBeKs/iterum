@@ -1,0 +1,66 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "exclusion_reasons_swapped",
+  "dataset": "orders",
+  "error": "R04 attaches each exclusion count to the other rule: 26 rows 'outside period', 1 row 'not delivered'.",
+  "at": "2026-09-19T08:46:26+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R04",
+    "exclusion",
+    "swap|reason|rule",
+    "not_delivered|outside_period"
+  ],
+  "blocking_issues": 1,
+  "warnings": 3,
+  "checks": 14,
+  "issue_ids": [
+    "CLAIMS-R04-EXCLUSION-LABELS-SWAPPED"
+  ],
+  "issue_texts": [
+    "CLAIMS-R04-EXCLUSION-LABELS-SWAPPED | gate_claims_auditor.r04_exclusion_labels | gate_claims_auditor|r04_exclusion_labels|analysis/answers/R04.json|R04 | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R04.json facts[1] and facts[2]; recomputed in audit/results/gate_claims_auditor/evidence/recalc.py (output in recalc_output.json). Walking raw_data/orders.csv through audit_spec population"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "R04 (row exclusions by rule) is checked by the machine gate only for its numbers: questions_are_answered compares the stated counts with the registry and never checks which exclusion rule each count is attached to, so a swapped reason passes the gate; this auditor is the only check on that pairing.",
+    "Free-text answer caveats in analysis/answers/R02.json and R03.json are not covered by any deterministic rule (caveats_declared reads only claim_register.json); both were read by hand and are consistent with the spec and the recalculation.",
+    "metrics/calculated_metrics.json records the gross total 40235.02 under net_revenue.numerator, although net revenue is a difference, not a ratio; the value is the correct gross sum, but the field name could mislead a later stage that reads numerator as a ratio term."
+  ],
+  "summary": "All five claims recompute from raw_data/orders.csv to the published values (net revenue 35741.52 EUR, refund rate 0.473684 on 27/57 paying customers, PL 11181.67, DE 11032.61, CZ 13527.24; the parts sum to the headline), and each claim's population, period and caveats match the spec. One blocker: analysis/answers/R04.json has the two exclusion reasons swapped. The 26 non-delivered rows are labelled as the period exclusion, and the 1 delivered row dated 2025-04-01 is labelled as the status exclusion. The counts are right, but R04's answer to 'under which exclusion' is wrong, and questions_are_a",
+  "wall_seconds": 115.1,
+  "cost": {
+    "at": "2026-09-19T08:48:24.752373+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-f58036111c74",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-19T08:46:32.748841+00:00",
+    "finished_at": "2026-09-19T08:48:24.752373+00:00",
+    "wall_seconds": 112.0,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 26,
+    "cached_input_tokens": 968442,
+    "output_tokens": 12574,
+    "total_tokens": 981042,
+    "cost_usd": 1.5697115
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "m_population_line_all_rows",
+  "dataset": "messy",
+  "error": "The page's population line says every export row; the figures are over one row per order after deduplication.",
+  "at": "2026-09-16T23:38:10+00:00",
+  "max_v2_revision": "fa38876",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "every row|export row|revision|dedup|one row per order"
+  ],
+  "blocking_issues": 1,
+  "warnings": 9,
+  "checks": 16,
+  "issue_ids": [
+    "POPULATION-LINE-REPORT"
+  ],
+  "issue_texts": [
+    "POPULATION-LINE-REPORT | gate_release_document.wording_matches_claims.population_line | gate_release_document|wording_matches_claims|release/report.md|population_line | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3, 'Population: every row of the export inside the quarter, delivered only.' (stripped-of-comments text captured in audit/results/final/evidence/surface_check_outpu"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The machine wording_matches_claims rule fired on nothing in this run ('no word in the dictionary appears on any surface'), so the report's top population line sat under no deterministic check; the gate's silence there was not approval and the single-vendor chain did not cover the gap.",
+    "All four worker result.json files, all four checkpoint carry files and all four stage-auditor notes are driver e2e placeholders (canned check expected=actual=0.473684, model strings ending in '-fake', created_at 2026-01-01T00:00:00Z), so no stage's self-report carries signal in this run and this ver",
+    "The carry files state a 2025-Q1 period (2025-01-01..2025-03-30), a delivered-only population and a refund-rate-per-paying-customer pitfall, all three of which contradict this dataset (2026-Q1 by order_month, all statuses kept in the clean table, no refund-rate metric exists), so any later reader tru",
+    "src/analysis and src/release code are not among my declared inputs, so figures_not_hardcoded and the generator-literal rule rest on the machine gates' recorded evidence, which I read but could not re-execute.",
+    "raw_data/questions.md is not among my declared inputs, so I verified that each of the five answers in analysis/answers carries its question and fact fields with resolvable claim references but could not re-read the question list itself; questions_are_answered rests on the machine gate's record.",
+    "The registered assumption of H-CHANNEL-COMPLETION that the quarter is not a period in which either channel changed how it books orders cannot be verified from the export; if it is false it moves the z=26.718455 (p about 0 at any alpha) significance statement in analysis/answers/R03.json, not the pub",
+    "The two registered hypotheses' verdicts appear only in analysis/answers/R03.json and R04.json and on no release surface, so a reader of report.md and dashboard_data.json never sees the significance statement; no rule requires it and the report itself claims no significance, but the strongest finding",
+    "p_value is rendered as the exact string 0.0000000000 in R03 and R04 while the recomputed two-sided p underflows float64 (0.0), a display convention rather than a wrong claim, but the string reads as a measured zero rather than a bound.",
+    "The estimate caveats on every card say the interval says nothing about a changing country mix, which is correct, but no surface or answer quantifies the mix (the population splits 14799 CZ, 14736 PL, 14996 DE), so the reader cannot judge how much that unquantified caveat could matter."
+  ],
+  "summary": "Independent recount from quarantine/orders.csv (45917 rows, 45000 distinct orders) reproduces every published number exactly: orders 44531, net revenue 3023296.61, completion 0.724397 (17818/24597) and 0.604746 (12055/19934), AOV 110.64 (1971306.75/17818) and 87.27 (1051989.86/12055), all four Wilson/Student intervals to the displayed digit, shipping_total 37792722.50 (computed, unpublished), the shipping locale parse matching the clean table to the cent on every row, and both registered hypothesis statistics (z 26.718455, Welch t 42.699880, d 0.486900). The single material fault is on the one",
+  "wall_seconds": 707.7,
+  "cost": {
+    "at": "2026-09-16T23:50:06.009558+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-dc33192a9003",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-16T23:38:21.811960+00:00",
+    "finished_at": "2026-09-16T23:50:06.009558+00:00",
+    "wall_seconds": 704.204,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 91948,
+    "cached_input_tokens": 2875904,
+    "output_tokens": 20074,
+    "total_tokens": 3017721,
+    "cost_usd": 0.07500409200000001
+  }
+}

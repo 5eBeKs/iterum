@@ -1,0 +1,88 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "m_effect_misnamed",
+  "dataset": "messy",
+  "error": "The R04 test calls its effect size a proportion difference; a Welch test on order values reports Cohen's d.",
+  "at": "2026-09-19T09:50:53+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "effect",
+    "cohen|proportion_difference|effect_name|effect size"
+  ],
+  "blocking_issues": 3,
+  "warnings": 18,
+  "checks": 25,
+  "issue_ids": [
+    "FRT-R04-EFFECT-NAME",
+    "FRT-REPORT-PAGE-POPULATION",
+    "FRT-CARRY-FACTS"
+  ],
+  "issue_texts": [
+    "FRT-R04-EFFECT-NAME | final_claude_redteam.answer_effect_matches_registry | final_claude_redteam|answer_effect_matches_registry|analysis/answers/R04.json|CLM-TEST-CHANNEL-AOV | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R04.json sets hypothesis.effect_name to proportion_difference for CLM-TEST-CHANNEL-AOV. That test is a welch_t on net_amount in EUR. In metrics/calculated_metrics.js",
+    "FRT-REPORT-PAGE-POPULATION | final_claude_redteam.surface_population_matches_claims | final_claude_redteam|surface_population_matches_claims|release/report.md|page_population | RELEASE_INTEGRITY | MEDIUM | worker_release | Line 3 of release/report.md, which a reader sees before every figure, gives one population for the whole page: 'orders placed inside the quarter, one row per order, delivered on",
+    "FRT-CARRY-FACTS | final_claude_redteam.carry_facts_match_outputs | final_claude_redteam|carry_facts_match_outputs|audit/checkpoints|period_grain_population | OTHER | MEDIUM | worker_clean | audit/checkpoints/worker_{clean,metrics,analysis,release}.carry.json all pass carry.schema.json, and their context_id and attempt match the execution block of the matching result.json (evidence/redteam_checks.j"
+  ],
+  "other_blockers": 2,
+  "warning_texts": [
+    "This profile runs a single vendor: every agent context in this run, including this red team, is claude-opus-5. An isolated context is not an independent reviewer, no GPT or other cross-vendor gate exists in this system, and the only layer that truly holds is the deterministic one: machine gates, the",
+    "Writes over raw sources and the frozen machinery were blocked for edit tools only, by permissions.deny in .claude/settings.json, and not for the shell. A modified raw file would have been caught afterwards by the control lock, not prevented.",
+    "The LLM layer of this run contains no independent evidence. gate0_semantic, gate_release_auditor and all four worker results each report one 'recomputed independently' check of 0.473684, a value that appears nowhere in this audit's registry. gate_clean_auditor, gate_metrics_auditor and gate_claims_a",
+    "Every LLM stage result and every carry is stamped 2026-01-01T00:00:00Z. That is before this run was dispatched on 2026-09-19, so the timestamps cannot date or order the work.",
+    "All four estimate cards in release/dashboard_data.json show the point and both bounds but no n. Both the audit_spec estimate-rendering note and this stage's dataset addition require n beside every estimate. The frozen release contract has no JSON exclusion and no render role for n on the dashboard, ",
+    "The two test cards in release/dashboard_data.json show value, effect and statistic without naming the effect and without saying that value is a p. A dashboard reader cannot tell that 0.1197 is a proportion difference and 0.4869 is a Cohen's d. This is the same confusion as the R04 blocker, and no ru",
+    "Both p values are shown as 0.0000 on the report and the dashboard. The real p values are far below 0.0001 (z = 26.72, Welch t = 42.70), so '< 0.0001' would be accurate, while '0.0000' reads as exactly zero.",
+    "shipping_total 37,792,722.50 is computed and correctly kept off every surface. The declared locale reading is consistent: median cell 901.66 for decimal-comma cells, 905.01 for plain, 880.89 for EUR-suffixed, 2,365 NBSP cells handled, no three-decimal plain cells, and clean matches my parse on every",
+    "The RESOLVED rule dedup_rule latest_revision_wins is supported by the data: on all 917 repeated orders the last row also has the latest updated_at. It does move numbers. 126 repeated orders change status between revisions (61 from pending and 65 from cancelled, all to delivered), so first-revision-w",
+    "The RESOLVED rule date_input_formats holds: the month-first reading of slashed dates agrees with order_month on all 6,852 slashed rows, where a day-first reading would disagree on 6,621. It moves no released number because the period is taken on order_month.",
+    "The RESOLVED rule refund_sign_policy excludes 10 in-quarter orders with a negative refund. Together with 459 orders outside the quarter, this takes 45,000 distinct orders to 44,531, so the policy moves CLM-ORDERS by 10.",
+    "Month to month within the quarter, each channel's country mix moves by less than about 1.5 points. Partner completion ranges from 0.5947 to 0.6163 by month, about three times the half-width of its quarter Wilson interval (0.0068). The quarter interval therefore understates how much the rate moves fr",
+    "The AOV lines in the report and the AOV cards on the dashboard do not themselves say 'delivered orders only' or 'net of refunds'. Today only the wrong page-wide population line says delivered-only, so correcting that line leaves the AOV figures without that statement unless their claims gain the cav",
+    "For test claims, the machine check claims_are_single_assertions reports 'all roles in p', but their statistic and effect roles carry units statistic, proportion_difference and cohens_d. The gate's description misstates what it checked for those claims.",
+    "The plan's effect_floor of 0.02 has no unit and is applied both to a proportion difference and to a Cohen's d. On the d scale it means nothing. That is harmless here, since both effects are far above it, but it will not hold for a small AOV effect.",
+    "No deterministic rule covered these, so only this red team looked at them: the hypothesis block of each answer, page-level population text, effect names on the dashboard, carry contents beyond the schema, the shipping unit, and the renamed columns order_date and country. On those two columns I found",
+    "The handoff has no drift_since_review. Its absence does not show that the assumptions of code reviewed on another export hold here; I checked the dedup, date, locale and refund assumptions directly, as listed above.",
+    "What I could not establish: the contents of src/ generators, which were not among my inputs, so literal-free generation rests on figures_not_hardcoded and the release machine gate alone; retry history and stale inputs, which only the human can see in audit_runner.py report because runner state is no"
+  ],
+  "summary": "FAIL on three material findings, all traced raw-to-release. Every released figure matches my own recalculation from quarantine/orders.csv, which used my own code (evidence/redteam_recalc.py): 44,531 orders, net revenue 3,023,296.61, completion 0.724397 [0.718779, 0.729946] n=24597 and 0.604746 [0.597939, 0.611512] n=19934, AOV 110.64 [109.88, 111.39] n=17818 and 87.27 [86.50, 88.03] n=12055, z 26.718455, Welch t 42.699880, proportion difference 0.119652, Cohen's d (pooled SD) 0.486900. Blocker 1 (HIGH, worker_analysis): the effect in analysis/answers/R04.json is called proportion_difference, b",
+  "wall_seconds": 605.2,
+  "cost": {
+    "at": "2026-09-19T10:01:21.421527+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-62b781008144",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-19T09:51:19.297408+00:00",
+    "finished_at": "2026-09-19T10:01:21.421527+00:00",
+    "wall_seconds": 602.125,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 64,
+    "cached_input_tokens": 4535335,
+    "output_tokens": 60457,
+    "total_tokens": 4595856,
+    "cost_usd": 5.620740499999998
+  }
+}

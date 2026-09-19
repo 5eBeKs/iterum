@@ -1,0 +1,65 @@
+{
+  "profile": "grok-build",
+  "stage": "claims",
+  "case": "m_mix_caveat_inverted",
+  "dataset": "messy",
+  "error": "The partner completion rate's caveat says its interval also covers a change in the channel's country mix.",
+  "at": "2026-09-19T06:53:26+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "mix of countries|country mix",
+    "also covers|covers a channel",
+    "CLM-COMPLETION-PARTNER"
+  ],
+  "blocking_issues": 1,
+  "warnings": 3,
+  "checks": 53,
+  "issue_ids": [
+    "CLM-COMPLETION-PARTNER-MIX-CAVEAT-INVERTED"
+  ],
+  "issue_texts": [
+    "CLM-COMPLETION-PARTNER-MIX-CAVEAT-INVERTED | gate_claims_auditor.sampling_interval_meaning.CLM-COMPLETION-PARTNER | gate_claims_auditor|sampling_interval_meaning|analysis/claim_register.json|CLM-COMPLETION-PARTNER | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/claim_register.json CLM-COMPLETION-PARTNER caveats[1] keeps 'the interval is the sampling interval only' and then asserts that the sam"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "AOV estimate caveats do not restate delivered-only or net of refunds; the population field names delivered and the formula uses net_amount on delivered rows, which is how the numbers were computed.",
+    "CLM-TEST-CHANNEL-AOV population string names the whole-channel contrast; the test and n_per_group 17818/12055 are delivered-only, matching the registered hypothesis filter.",
+    "gate_claims_machine caveats_declared only matches the prefix about a sampling interval, so the inverted remainder on CLM-COMPLETION-PARTNER was invisible to that rule."
+  ],
+  "summary": "Independent recalc from quarantine/orders.csv matches all eight claim values, intervals, tests and n. CLM-COMPLETION-PARTNER inverts the sampling-interval caveat: it keeps the required prefix and then says the interval also covers a changing country mix, which is the opposite of the spec trap and of the three sibling estimate caveats.",
+  "wall_seconds": 699.5,
+  "cost": {
+    "at": "2026-09-19T07:05:13.779653+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-79cdbb4451f4",
+    "agent_role": "grok-audit-claims",
+    "started_at": "2026-09-19T06:53:37.601438+00:00",
+    "finished_at": "2026-09-19T07:05:13.779653+00:00",
+    "wall_seconds": 696.188,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 271928,
+    "cached_input_tokens": 2412032,
+    "output_tokens": 39452,
+    "total_tokens": 2723412,
+    "cost_usd": 0.67543856
+  }
+}

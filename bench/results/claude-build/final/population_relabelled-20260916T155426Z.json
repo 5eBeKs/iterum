@@ -1,0 +1,79 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "population_relabelled",
+  "dataset": "orders",
+  "error": "The headline claim says its population is all orders, while the spec and its own caveats say delivered orders.",
+  "at": "2026-09-16T15:47:54+00:00",
+  "max_v2_revision": "e48d886",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "all orders",
+    "CLM-NET-REVENUE"
+  ],
+  "blocking_issues": 1,
+  "warnings": 11,
+  "checks": 42,
+  "issue_ids": [
+    "FINAL-CLAIM-POPULATION-RELABELLED"
+  ],
+  "issue_texts": [
+    "FINAL-CLAIM-POPULATION-RELABELLED | final_claude_redteam.claim_population_label | final_claude_redteam|claim_population_label|analysis/claim_register.json|CLM-NET-REVENUE | CLAIM_SUPPORT | HIGH | worker_analysis | In analysis/claim_register.json, claims[0] (CLM-NET-REVENUE) has population 'all orders inside the period'. In metrics/calculated_metrics.json, net_revenue has population 'delivered orde"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "No check_plan rule covers a claim's population field or the prose of release/report.md (its title, population line and the closing sentence that country figures sum to the headline), so a relabelled population passes every machine gate and only this final review caught it.",
+    "gate_release_document's claims_rendered and caveats_rendered are listed under accepted_unproven in audit/check_plan.json because their proof run failed on a missing claim_register.json, so their 15 PASS checks were never shown able to fail, yet gate0_machine plan_proven reports 0 accepted unproven.",
+    "The five judgment auditors (gate0_semantic, gate_clean_auditor, gate_metrics_auditor, gate_claims_auditor, gate_release_auditor) left placeholder evidence notes, no artifacts and created_at 2026-01-01T00:00:00Z, and their 'independent' checks cite the registry under review rather than raw data, so t",
+    "All four worker results have placeholder summaries, created_at 2026-01-01T00:00:00Z (before the 2026-09-16 dispatch), no disclosures field and empty warnings, and each reports recomputing the refund rate as 0.473684, including worker_clean, which computes no rate, so these self-reports are not evide",
+    "The four carries are identical apart from their ids, are all dated 2026-01-01T00:00:00Z, and define the population as status=delivered without the period bound, so a stage that trusted the definition alone would drop the 2025-01-01..2025-03-30 filter (net revenue would become 36741.51 with order O00",
+    "The spec period ends 2025-03-30, but the registry names it 2025-Q1 and clean_data/exclusions.json calls it the reported quarter, and Q1 ends 2025-03-31; no row is dated 2025-03-31 here, so net revenue stays 35741.52, but on a refreshed export this assumption would silently drop a day of revenue.",
+    "revenue_recognition net_of_refunds is applied by order date because the export has no refund date, so all 4493.50 EUR of refunds are netted inside the quarter; if any refund was issued after the quarter closed, the 35741.52 headline is understated by up to that amount.",
+    "CLM-REFUND-RATE counts a customer as refunded on any refund above zero, a rule written in check_plan.json rather than the spec; 15 of the 27 refunded customers had only partial refunds, so counting only full refunds gives 12/57 = 0.210526 instead of 0.473684, and no release caveat tells the reader p",
+    "The paying-customer basis is 2.50 times the order-row basis (0.473684 vs 33/174 = 0.189655), which matches risk_register.yaml's 'roughly 2.5x' but not the audit_spec comment's 'roughly a factor of three'.",
+    "In metrics/calculated_metrics.json, net_revenue carries numerator 40235.02 (the gross sum) and a null denominator, and the country metrics' formula text reads country = country; neither is rendered or checked, but a consumer who reads numerator as a ratio part would misread the headline.",
+    "The R04 row accounting (201 raw, 174 kept, 26 not delivered, 1 outside the period) and the R05 excuse appear only in analysis files and on neither release surface, so a report reader cannot see how many orders were dropped or that the lifetime-value question went unanswered."
+  ],
+  "summary": "Every published number reproduces from raw_data/orders.csv: net revenue 35741.52 EUR over 174 delivered in-period rows, refund rate 27/57 = 0.473684 paying customers, PL 11181.67 + DE 11032.61 + CZ 13527.24 = headline, R04 accounting 201 = 174 + 26 + 1. All 21 rendered numbers on 3 surfaces are bound and exact, the machine release gate saw the same 21, and both reconciliations hold. One material blocker: the headline claim CLM-NET-REVENUE is registered with population 'all orders inside the period', and release/report.md shows the reader 'Population: all orders inside the period.' above figure",
+  "wall_seconds": 374.9,
+  "cost": {
+    "at": "2026-09-16T15:54:24.838859+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-d423fa05b27b",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-16T15:48:12.604369+00:00",
+    "finished_at": "2026-09-16T15:54:24.838859+00:00",
+    "wall_seconds": 372.234,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 46,
+    "cached_input_tokens": 2474686,
+    "output_tokens": 45152,
+    "total_tokens": 2519884,
+    "cost_usd": 3.7639180000000003
+  },
+  "rescored_at": "2026-09-16T15:54:36+00:00"
+}

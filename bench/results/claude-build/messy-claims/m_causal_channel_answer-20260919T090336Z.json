@@ -1,0 +1,66 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "m_causal_channel_answer",
+  "dataset": "messy",
+  "error": "The answer to R04 explains the lower partner basket by customers' price sensitivity, which no data in the audit measures.",
+  "at": "2026-09-19T09:00:06+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "price.?sensitiv",
+    "caus|because|drives"
+  ],
+  "blocking_issues": 1,
+  "warnings": 5,
+  "checks": 39,
+  "issue_ids": [
+    "CLAIMS-AUD-R04-CAUSAL"
+  ],
+  "issue_texts": [
+    "CLAIMS-AUD-R04-CAUSAL | gate_claims_auditor.causal_language.R04 | gate_claims_auditor|causal_language|analysis/answers/R04.json|caveats | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R04.json, key caveats[0]. The answer attributes the AOV gap to a customer trait (price sensitivity) and says the channel causes the lower order value. The export has no price, basket, customer-segment or "
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "No rule in audit/check_plan.json reads the prose in analysis/answers/*.json: questions_are_answered checks only that a question and facts fields exist, and caveats_declared reads only the register. The causal sentence in R04 got through the machine gate for that reason, and the release rule wording_",
+    "Both test p-values are stored as 0.0000000000 with display_digits 4, so they will render as 0.0000. The recomputed p for H-CHANNEL-COMPLETION is about 3e-157 and for H-CHANNEL-AOV it underflows double precision. A reader should see this as below 0.0001, not as a p of exactly zero.",
+    "The register records the family alpha 0.05 with correction bonferroni, but not the per-test threshold of 0.025. Both p-values are far below either threshold, so the conclusions do not change, but the applied alpha is implied rather than written down.",
+    "The machine gate's claims_are_single_assertions evidence reports all roles in unit p for both test claims, while their statistic and effect render_values carry the units statistic, proportion_difference and cohens_d. The gate passed, but its evidence string does not describe the artifact accurately.",
+    "The completion denominator includes 7491 pending orders, as the spec requires. The completion rate therefore counts orders still in flight at quarter end as not completed. Per-month rates show no drop in March (direct 0.732054, partner 0.603370), so censoring does not visibly bias the channel compar"
+  ],
+  "summary": "All eight claims recompute independently from quarantine/orders.csv and match metrics, the register, the plan and the machine gate within tolerance (orders 44531, net revenue 3023296.61, completion 0.724397/0.604746 with Wilson bounds, AOV 110.64/87.27 with Student bounds, z 26.718455, Welch t 42.699880, d 0.486900). The claim->metric->plan chain has no gaps, and confounder, Simpson, selection and multiplicity checks pass. One blocker: the caveat in analysis/answers/R04.json states a causal mechanism, namely that partner customers are price-sensitive and the channel itself drives the lower ord",
+  "wall_seconds": 201.8,
+  "cost": {
+    "at": "2026-09-19T09:03:35.023787+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-19T09:00:16.380026+00:00",
+    "finished_at": "2026-09-19T09:03:35.023787+00:00",
+    "wall_seconds": 198.641,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 30,
+    "cached_input_tokens": 1549401,
+    "output_tokens": 22313,
+    "total_tokens": 1571744,
+    "cost_usd": 2.611841
+  }
+}

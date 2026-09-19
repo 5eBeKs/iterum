@@ -1,0 +1,55 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "clean",
+  "error": "no defect planted (false-positive control)",
+  "at": "2026-09-15T17:35:12+00:00",
+  "max_v2_revision": "2a6f8dc",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "PASS",
+  "stop_code": null,
+  "outcome": "clean_pass",
+  "matched_signals": [],
+  "blocking_issues": 0,
+  "warnings": 4,
+  "checks": 14,
+  "issue_ids": [],
+  "warning_texts": [
+    "The gate_claims_machine plan compares CLM-REFUND-RATE only as the rounded 6-digit ratio; the register also carries render_values numerator 27 and denominator 57, which no claims-gate rule compares individually, so they rest on this auditor's recount (evidence/recompute_output.json, refund_rate_parts",
+    "metrics/calculated_metrics.json gives net_revenue_pl, net_revenue_de and net_revenue_cz the formula text 'SUM(net_amount) WHERE country = country', which is a tautology as written; the values are correct, but the text would not reproduce them if a reader took it literally.",
+    "metrics/calculated_metrics.json writes refund_rate grain as 'one unit per paying_customers' while audit_spec.yaml says 'one unit per paying customer'; the meaning agrees, but the wording is not the spec's.",
+    "The inclusive end boundary is load-bearing for every EUR claim: order O00064 is dated 2025-03-30 and a half-open period would give net revenue 35473.34 instead of 35741.52, so any later surface that describes the period as ending before 30 March would contradict the published figure."
+  ],
+  "summary": "All five claims traced claim -> metric -> raw_data/orders.csv and recomputed independently with Decimal arithmetic; every value matches the register, the metrics registry and the gate_claims_machine recalc exactly, populations and periods are the ones the numbers are computed on, CLM-REFUND-RATE states the paying-customer basis in words, and the machine recalc is rooted in raw_data only.",
+  "wall_seconds": 165.2,
+  "cost": {
+    "at": "2026-09-15T17:37:59.359606+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-f58036111c74",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-15T17:35:16.976618+00:00",
+    "finished_at": "2026-09-15T17:37:59.359606+00:00",
+    "wall_seconds": 162.391,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 194,
+    "cached_input_tokens": 520503,
+    "output_tokens": 14791,
+    "total_tokens": 535488,
+    "cost_usd": 1.3600169999999998
+  }
+}

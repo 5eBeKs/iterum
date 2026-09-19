@@ -1,0 +1,68 @@
+{
+  "profile": "grok-build",
+  "stage": "claims",
+  "case": "m_mix_caveat_inverted",
+  "dataset": "messy",
+  "error": "The partner completion rate's caveat says its interval also covers a change in the channel's country mix.",
+  "at": "2026-09-19T07:32:38+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "mix of countries|country mix",
+    "also covers|covers a channel",
+    "CLM-COMPLETION-PARTNER"
+  ],
+  "blocking_issues": 3,
+  "warnings": 2,
+  "checks": 55,
+  "issue_ids": [
+    "CLAIMS-INVERTED-MIX-CAVEAT",
+    "CLAIMS-AOV-CAVEATS-MISSING",
+    "CLAIMS-AOV-TEST-POPULATION"
+  ],
+  "issue_texts": [
+    "CLAIMS-INVERTED-MIX-CAVEAT | gate_claims_auditor.caveat_mix_polarity.CLM-COMPLETION-PARTNER | gate_claims|inverted_mix_caveat|analysis/claim_register.json|CLM-COMPLETION-PARTNER | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/claim_register.json CLM-COMPLETION-PARTNER second caveat states that the sampling interval also covers a channel whose mix of countries changes. audit_spec.yaml semantic ",
+    "CLAIMS-AOV-CAVEATS-MISSING | gate_claims_auditor.caveat_aov_population | gate_claims|aov_caveats_missing|analysis/claim_register.json|CLM-AOV | CLAIM_SUPPORT | HIGH | worker_analysis | Stage prompt requires CLM-AOV-DIRECT and CLM-AOV-PARTNER caveats to say delivered-only and net of refunds in words. Both caveats only name channel population and the sampling interval. Population fields say delivere",
+    "CLAIMS-AOV-TEST-POPULATION | gate_claims_auditor.population.CLM-TEST-CHANNEL-AOV | gate_claims|population_mismatch|analysis/claim_register.json|CLM-TEST-CHANNEL-AOV | CLAIM_SUPPORT | HIGH | worker_analysis | CLM-TEST-CHANNEL-AOV population is the same all-orders channel comparison used for the completion test, but n_per_group is 17818 and 12055, which is delivered-only. Independent Welch t on deli"
+  ],
+  "other_blockers": 2,
+  "warning_texts": [
+    "R05 caveats contain an unbound percentage about unreadable shipping cells; a panel scanner can treat that as an unbound figure.",
+    "Country is a potential confounder in the export; the direct-minus-partner completion gap stays positive in CZ, DE and PL and the AOV gap does too, but the register does not publish that breakdown."
+  ],
+  "summary": "Independent quarantine recalc matches every published point, interval, n, p, statistic and effect. CLM-COMPLETION-PARTNER inverts the sampling-interval mix caveat (it claims the Wilson interval also covers a changing country mix). AOV claims omit delivered-only and net-of-refunds wording in caveats; CLM-TEST-CHANNEL-AOV states an all-orders population while n is delivered-only.",
+  "wall_seconds": 757.3,
+  "cost": {
+    "at": "2026-09-19T07:45:22.508974+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-873aa0fadf52",
+    "agent_role": "grok-audit-claims",
+    "started_at": "2026-09-19T07:32:48.576716+00:00",
+    "finished_at": "2026-09-19T07:45:22.508974+00:00",
+    "wall_seconds": 753.938,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 418726,
+    "cached_input_tokens": 2203776,
+    "output_tokens": 44956,
+    "total_tokens": 2667458,
+    "cost_usd": 0.75108584
+  }
+}

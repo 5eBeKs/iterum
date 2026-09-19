@@ -1,0 +1,64 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "m_interval_read_as_probability",
+  "dataset": "messy",
+  "error": "The answer to R03 reads each 0.95 interval as a 95% probability that the true rate lies inside it.",
+  "at": "2026-09-19T06:55:44+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "probab",
+    "95 ?%",
+    "confidence|frequentist|coverage|credible|bayes"
+  ],
+  "blocking_issues": 1,
+  "warnings": 2,
+  "checks": 17,
+  "issue_ids": [
+    "R03-INTERVAL-AS-PROBABILITY"
+  ],
+  "issue_texts": [
+    "R03-INTERVAL-AS-PROBABILITY | gate_claims_auditor.R03.caveat_interval_interpretation | claims_registry|R03_caveat_interval_as_probability|analysis/answers/R03.json|caveats | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R03.json caveats[0]: asserts a 95% probability that each channel's true completion rate lies inside its interval. A Wilson (frequentist) confidence interval says nothin"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "analysis/answers/R05.json caveats contain the bare quantity 'six per cent'; it mirrors the registered shipping_total excuse wording and binds to no claim value, but a panel scanner may read it as an unbound number.",
+    "audit/analysis_plan.json registered no hypothesis over the shipping column, so no deterministic check validates the R05 shipping narrative beyond the registered excuse; the machine gate's silence there is not an approval."
+  ],
+  "summary": "All 8 claims reproduce from an independent recalc of quarantine/orders.csv (44531 orders; net_revenue 3023296.61; completion 0.724397/0.604746 Wilson; AOV 110.64/87.27 Student; z=26.718455, t=42.699880, cohens_d 0.486900); hypothesis fields match audit/analysis_plan.json; effect sign holds in every country stratum; no quarantined comment text leaks into the registry. One blocker: analysis/answers/R03.json states the confidence interval as a probability that the true rate lies inside it - the interval read as a probability, the semantic trap the spec names.",
+  "wall_seconds": 238.8,
+  "cost": {
+    "at": "2026-09-19T06:59:50.446429+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-b6191c115d80",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-19T06:55:55.825674+00:00",
+    "finished_at": "2026-09-19T06:59:50.435371+00:00",
+    "wall_seconds": 234.61,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 101105,
+    "cached_input_tokens": 671552,
+    "output_tokens": 7468,
+    "total_tokens": 781550,
+    "cost_usd": 0.023855285999999993
+  }
+}

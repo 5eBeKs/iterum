@@ -1,0 +1,68 @@
+{
+  "profile": "grok-build",
+  "stage": "release",
+  "case": "m_page_interval_certainty",
+  "dataset": "messy",
+  "error": "The page says each interval is where the true value lies with near certainty.",
+  "at": "2026-09-19T08:30:00+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "certaint|true value",
+    "sampling interval|interval"
+  ],
+  "blocking_issues": 2,
+  "warnings": 5,
+  "checks": 75,
+  "issue_ids": [
+    "REL-INTERVAL-OVERSTATEMENT",
+    "REL-POPULATION-DELIVERED-ONLY"
+  ],
+  "issue_texts": [
+    "REL-INTERVAL-OVERSTATEMENT | gate_release_auditor.estimate_wording_overstates_interval | gate_release_auditor|estimate_wording_overstates_interval|release/report.md|channel_estimates | VISUALIZATION | CRITICAL | worker_release | release/report.md line 23, after the four estimate bullets that already print the sampling-interval caveat, tells the reader the interval is where the true value of the ch",
+    "REL-POPULATION-DELIVERED-ONLY | gate_release_auditor.page_population_delivered_only | gate_release_auditor|page_population_delivered_only|release/report.md|orders_and_completion | VISUALIZATION | HIGH | worker_release | release/report.md line 3 labels the whole page as delivered only, which is the CLM-NET-REVENUE population. CLM-ORDERS value 44531 is all in-period orders (claim population has no d"
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "gate_release_machine wrote audit/results/gate_release_machine/evidence/release_surface_gate.json and no evidence/checks.json; it bound 60 of 60 numbers on the three required surfaces and skipped none.",
+    "gate_release_document wording_matches_claims PASSed WORDING-01 (significant beside both tests) and did not treat report.md line 23 as a wording hit, because that sentence is outside the rule vocabulary.",
+    "Dashboard estimate cards carry value, ci_low and ci_high but no n field and no 0.95 interval label; report.md shows both bounds, the 0.95 interval label, and n matching each claim.",
+    "AOV cards omit net of refunds and delivered orders only; those phrases sit on the revenue card and in the page population line. Frozen caveats_declared does not require those topics on AOV.",
+    "src/release/build_release.py would emit the sampling-interval-only sentence on the channel-estimates paragraph; report.md line 23 diverges from that generator."
+  ],
+  "summary": "Release digits bind to the claim register and recompute from metrics (net revenue 3023296.61, orders 44531, both channel rates and AOVs, Wilson bounds). FAIL: report.md line 23 overstates the 0.95 sampling interval as the true channel value with near certainty, and line 3 labels the whole page delivered only so the 44531 orders figure and the completion rates read as delivered-only. gate_release_machine bound 60/60 numbers and skipped no surface; gate_release_document PASSed wording_matches_claims on WORDING-01 only and did not score the interval sentence.",
+  "wall_seconds": 731.0,
+  "cost": {
+    "at": "2026-09-19T08:42:15.417048+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-b7c1376bbfea",
+    "agent_role": "grok-audit-release",
+    "started_at": "2026-09-19T08:30:07.717669+00:00",
+    "finished_at": "2026-09-19T08:42:15.417048+00:00",
+    "wall_seconds": 727.703,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 160688,
+    "cached_input_tokens": 2391296,
+    "output_tokens": 40566,
+    "total_tokens": 2592550,
+    "cost_usd": 0.5985428
+  }
+}

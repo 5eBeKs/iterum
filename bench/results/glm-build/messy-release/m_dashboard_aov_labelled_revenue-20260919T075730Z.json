@@ -1,0 +1,67 @@
+{
+  "profile": "glm-build",
+  "stage": "release",
+  "case": "m_dashboard_aov_labelled_revenue",
+  "dataset": "messy",
+  "error": "On the dashboard the direct average order value card is labelled revenue.",
+  "at": "2026-09-19T07:52:51+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "Revenue Direct",
+    "label",
+    "aov|average order"
+  ],
+  "blocking_issues": 2,
+  "warnings": 3,
+  "checks": 12,
+  "issue_ids": [
+    "REL-AOV-CARD-REVENUE-LABEL",
+    "REL-AOV-CARD-MISSING-CAVEATS"
+  ],
+  "issue_texts": [
+    "REL-AOV-CARD-REVENUE-LABEL | gate_release_auditor.card_label_matches_claim | release|card_label|release/dashboard_data.json|CLM-AOV-DIRECT | VISUALIZATION | HIGH | worker_release | release/dashboard_data.json $.cards[4]: claim_id CLM-AOV-DIRECT, value 110.64, label 'Revenue Direct'; src/release/build_release.py line 121 derives label as claim_id.removeprefix('CLM-').replace('-',' ').title() = 'Aov",
+    "REL-AOV-CARD-MISSING-CAVEATS | gate_release_auditor.aov_required_caveats_visible | release|required_caveats|analysis/claim_register.json|CLM-AOV-DIRECT,CLM-AOV-PARTNER | CLAIM_SUPPORT | MEDIUM | worker_analysis | audit/prompts/AUDITOR_RELEASE.md additions require 'net of refunds' and 'delivered orders only' beside every revenue and AOV figure. CLM-AOV-DIRECT and CLM-AOV-PARTNER caveat lists in ana"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "Report header line 3 states the page population as 'orders placed inside the quarter, one row per order, delivered only', but the orders-in-quarter card counts cancelled and pending orders too; the header reuses the net-revenue claim's population as the whole-report population and a reader applying ",
+    "The machine release gate bound every value but checked no labels and the release surface contract has an empty card_caveat_requirements list, so both findings above passed two PASS gates; the release document gate's caveats_rendered checks only verify that registry caveats appear, not that required ",
+    "The completion cards' caveat 'one quarter of orders in this channel' is the only wording covering the whole-channel denominator; it is present on both cards and on the report lines, so the denominator trap is covered, though only implicitly."
+  ],
+  "summary": "All 60 rendered numbers on the three release surfaces reproduce exactly from the claim register and metrics (money 0.01, proportion 1e-6, exact display_digits), component sums and segment-rate identities hold, no unbound numbers, no quarantined comment phrases, no shipping_total, no generator literals, both tests carry effect/statistic/p and significant beside the claim. Two blockers: (1) dashboard card $.cards[4] shows the AOV-direct estimate 110.64 under the label 'Revenue Direct' — an average order value presented as revenue, and a label the shipped generator cannot produce (it would render",
+  "wall_seconds": 274.2,
+  "cost": {
+    "at": "2026-09-19T07:57:29.313239+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-dae92d35a678",
+    "agent_role": "glm-audit-release",
+    "started_at": "2026-09-19T07:52:59.465413+00:00",
+    "finished_at": "2026-09-19T07:57:29.309978+00:00",
+    "wall_seconds": 269.844,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 64872,
+    "cached_input_tokens": 1291008,
+    "output_tokens": 10014,
+    "total_tokens": 1371349,
+    "cost_usd": 0.033719724
+  }
+}

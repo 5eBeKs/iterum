@@ -1,0 +1,84 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "m_completion_population_delivered",
+  "dataset": "messy",
+  "error": "The direct completion rate says its population is delivered orders, over which a completion rate is always 1.",
+  "at": "2026-09-16T19:03:57+00:00",
+  "max_v2_revision": "fa38876",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "CLM-COMPLETION-DIRECT",
+    "population",
+    "delivered",
+    "denominator|cancel|always|trivial|1\\.0|100 ?%"
+  ],
+  "blocking_issues": 4,
+  "warnings": 10,
+  "checks": 18,
+  "issue_ids": [
+    "FINAL-CLAIM-POPULATION-COMPLETION-DIRECT",
+    "FINAL-REPORT-POPULATION-DELIVERED-ONLY",
+    "FINAL-DASHBOARD-ESTIMATE-WITHOUT-N",
+    "FINAL-CARRY-CONTRADICTS-STAGE-OUTPUT"
+  ],
+  "issue_texts": [
+    "FINAL-CLAIM-POPULATION-COMPLETION-DIRECT | final_claude_redteam.claim_population_matches_metric | final_claude_redteam|claim_population_matches_metric|analysis/claim_register.json|CLM-COMPLETION-DIRECT | CLAIM_SUPPORT | HIGH | worker_analysis | In analysis/claim_register.json, CLM-COMPLETION-DIRECT.population restricts the claim to delivered orders in the direct channel. Its source metric completi",
+    "FINAL-REPORT-POPULATION-DELIVERED-ONLY | final_claude_redteam.surface_population_matches_claims | final_claude_redteam|surface_population_matches_claims|release/report.md|report_population_line | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3 states one population for the whole report: orders inside the quarter, one row per order, delivered only. That is the population of CLM",
+    "FINAL-DASHBOARD-ESTIMATE-WITHOUT-N | final_claude_redteam.estimate_rendered_with_n | final_claude_redteam|estimate_rendered_with_n|release/dashboard_data.json|estimate_cards | RELEASE_INTEGRITY | MEDIUM | worker_release | In release/dashboard_data.json, cards[2..5] (CLM-COMPLETION-DIRECT, CLM-COMPLETION-PARTNER, CLM-AOV-DIRECT, CLM-AOV-PARTNER) carry value, ci_low and ci_high but no n, no level an",
+    "FINAL-CARRY-CONTRADICTS-STAGE-OUTPUT | final_claude_redteam.carry_matches_stage_output | final_claude_redteam|carry_matches_stage_output|audit/checkpoints/*.carry.json|worker_stages | OTHER | HIGH | worker_clean | All four carries (audit/checkpoints/worker_clean, worker_metrics, worker_analysis, worker_release .carry.json) pass the carry schema. Their context_id and attempt match the execution blo"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The intermediate LLM results carry no review. worker_clean, worker_metrics, worker_analysis, worker_release, gate0_semantic, gate_clean_auditor, gate_metrics_auditor, gate_claims_auditor and gate_release_auditor all have a placeholder summary and created_at 2026-01-01T00:00:00Z. That timestamp is ea",
+    "No worker result has a disclosures field, and all their warnings are empty. Whether any stage departed from its prompt cannot be judged from the results. The numbers were checked here from the data instead.",
+    "Beyond the blockers, several places have no deterministic rule over them, and the placeholder auditors rest them on this red team alone, which is more than one stage can carry. (a) The report prints n = 24597/19934/17818/12055. release_surface_contract text_exclusions exempts that text, and recomput",
+    "One assumption looks wrong: under refund_sign_policy (RESOLVED in audit/human_decisions.yaml), a negative refund drops the whole order, not just the refund value. The 10 in-quarter orders affected (7 direct delivered, 2 direct pending, 1 partner delivered) have intact channel and status, so a fault ",
+    "The completion caveats never say that pending orders count as not completed. Pending is 7491 of 44531 orders, and its monthly share is flat (direct 1161/1193/1105, partner 1396/1270/1368), so it is not an end-of-quarter censoring artefact. Still, a reader who reads 'completion' as 'not cancelled' is",
+    "Dashboard cards carry no card-local population or confidence level, and the period is given once at the top. The release contract's card_caveat_requirements is empty, so no gate asks for them.",
+    "analysis/answers/R03.json and R04.json write p_value as 0.0000000000, a rounded display of a value that is not zero. The registered tests themselves check out: method, alpha and Bonferroni match audit/analysis_plan.json; the recomputed z is about 26.718 with difference 0.119652; the Welch t of about",
+    "The formula text of completion_rate_* and aov_* in metrics/calculated_metrics.json filters on 'channel = channel', which states no filter. The values were recounted per channel and are right. Only the documentation is empty.",
+    "shipping_total is 37792722.50 over 41883 readable orders, about 902 EUR of shipping per order against gross amounts of 5–312 EUR. The export does write shipping values up to 1799, and the locale parsing traced correctly (for example M000849, M000482, M001764), so the magnitude comes from the column,",
+    "gate0_machine plan_proven reports 4 gates not provable before the lock. For those gates, no evidence in this handoff shows that their checks fire on a broken dataset."
+  ],
+  "summary": "FAIL with 4 blockers. All six published claims and their bounds match a recount from quarantine/orders.csv: 44531 orders, net revenue 3023296.61, completion 17818/24597 and 12055/19934 with Wilson bounds, and AOV 110.64 and 87.27. What fails is how the numbers are described. (1) The register gives CLM-COMPLETION-DIRECT a delivered-only population, although its n of 24597 includes 6779 cancelled and pending orders (worker_analysis). (2) release/report.md labels the whole report delivered-only, above an order count and completion rates that include every status (worker_release). (3) The dashboar",
+  "wall_seconds": 875.3,
+  "cost": {
+    "at": "2026-09-16T19:18:52.004613+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-62b781008144",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-16T19:04:19.525548+00:00",
+    "finished_at": "2026-09-16T19:18:52.004013+00:00",
+    "wall_seconds": 872.468,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 128,
+    "cached_input_tokens": 9794551,
+    "output_tokens": 79509,
+    "total_tokens": 9874188,
+    "cost_usd": 8.754214499999996
+  }
+}

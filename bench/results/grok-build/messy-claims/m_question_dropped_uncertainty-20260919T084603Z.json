@@ -1,0 +1,70 @@
+{
+  "profile": "grok-build",
+  "stage": "claims",
+  "case": "m_question_dropped_uncertainty",
+  "dataset": "messy",
+  "error": "R03 is restated without the half of the brief that asks how precisely each rate is known.",
+  "at": "2026-09-19T08:32:53+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R03",
+    "uncertain|precis|interval",
+    "restat|narrow|question|brief"
+  ],
+  "blocking_issues": 3,
+  "warnings": 4,
+  "checks": 49,
+  "issue_ids": [
+    "R03-DROPPED-UNCERTAINTY",
+    "AOV-CAVEATS-MISSING-DELIVERED-NET",
+    "AOV-TEST-POPULATION-NOT-DELIVERED"
+  ],
+  "issue_texts": [
+    "R03-DROPPED-UNCERTAINTY | gate_claims_auditor.R03.uncertainty | gate_claims_auditor|question_uncertainty|analysis/answers/R03.json|R03 | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R03.json question field is the completion rate of each channel. raw_data/questions.md R03 asks how precisely that rate is known, and analysis/answers/R04.json still restates its sibling question with its u",
+    "AOV-CAVEATS-MISSING-DELIVERED-NET | gate_claims_auditor.CLM-AOV.caveats | gate_claims_auditor|caveats_population|analysis/claim_register.json|CLM-AOV | CLAIM_SUPPORT | HIGH | worker_analysis | CLM-AOV-DIRECT and CLM-AOV-PARTNER were recomputed on delivered rows net of refunds, but their caveats only name channel population and the sampling interval. CLM-NET-REVENUE caveats do say net of refunds an",
+    "AOV-TEST-POPULATION-NOT-DELIVERED | gate_claims_auditor.CLM-TEST-CHANNEL-AOV.population | gate_claims_auditor|population_mismatch|analysis/claim_register.json|CLM-TEST-CHANNEL-AOV | CLAIM_SUPPORT | HIGH | worker_analysis | H-CHANNEL-AOV in audit/analysis_plan.json filters on is_delivered. Independent recalc used 17818 direct and 12055 partner delivered orders. CLM-TEST-CHANNEL-AOV.population is or"
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "analysis/answers/R05.json caveats use a prose share of unreadable shipping cells that is not bound to a claim_id.",
+    "R03 and R04 hypothesis objects carry n_per_group and method but do not restate the plan group names direct and partner.",
+    "check_plan.json has no country-stratified rule; country mix and Simpson sign were auditor-only checks and the direct-minus-partner sign held in PL, DE and CZ.",
+    "CLM-AOV-DIRECT population names delivered but not net of refunds; the net-of-refunds wording lives only on CLM-NET-REVENUE caveats."
+  ],
+  "summary": "Independent recalc from quarantine/orders.csv matches the six point/estimate claims and both registered tests, but analysis/answers/R03.json restates the brief without the precision/uncertainty clause, CLM-AOV-* caveats omit delivered-only and net of refunds in words, and CLM-TEST-CHANNEL-AOV names a population that is not the delivered-only table the test used.",
+  "wall_seconds": 780.9,
+  "cost": {
+    "at": "2026-09-19T08:46:01.787038+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-b41aab83f9b6",
+    "agent_role": "grok-audit-claims",
+    "started_at": "2026-09-19T08:33:04.341474+00:00",
+    "finished_at": "2026-09-19T08:46:01.787038+00:00",
+    "wall_seconds": 777.438,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 330720,
+    "cached_input_tokens": 3610624,
+    "output_tokens": 42842,
+    "total_tokens": 3984186,
+    "cost_usd": 0.92609336
+  }
+}

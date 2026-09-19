@@ -1,0 +1,61 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "question_restated_narrower",
+  "error": "R02 is restated without the half that asks on which basis the rate is taken.",
+  "at": "2026-09-15T18:20:44+00:00",
+  "max_v2_revision": "1d34cf0",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R02",
+    "basis",
+    "restat|narrow|half|question"
+  ],
+  "blocking_issues": 1,
+  "warnings": 4,
+  "checks": 14,
+  "issue_ids": [
+    "CLAIMS-AUD-R02-QUESTION-NARROWED"
+  ],
+  "warning_texts": [
+    "analysis/answers/R01.json restates the question as 'net revenue for the reported quarter', dropping the 'over delivered orders inside the period' qualifier from raw_data/questions.md; the linked claim still carries that population and caveat, so the figure is right, but the answer record no longer s",
+    "No deterministic rule in audit/check_plan.json compares an answer file's restated question with the text in raw_data/questions.md, so a question narrowed in restatement passes questions_are_answered; only auditor judgment covers that surface.",
+    "analysis/answers/R03.json asserts the country parts sum to the headline without stating a figure and cites a check from another stage; the claim is true (11181.67 + 11032.61 + 13527.24 = 35741.52, recomputed from raw), but the answer itself carries no verifiable number for that half of R03.",
+    "metrics/calculated_metrics.json gives the per-country formula as 'SUM(net_amount) WHERE country = country', a tautological text that does not name the grouping; the values are correct, but the formula field does not document them."
+  ],
+  "summary": "All five claims recompute exactly from raw_data/orders.csv (net 35741.52; refund rate 27/57 = 0.473684 on paying customers; PL 11181.67, DE 11032.61, CZ 13527.24), populations, periods and caveats are the ones the figures were computed on, and the machine recalc is rooted in raw only; FAIL because analysis/answers/R02.json restates the question as only 'the refund rate', dropping the 'on which basis — order rows or paying customers' half that raw_data/questions.md asks, which questions_are_answered does not compare.",
+  "wall_seconds": 248.1,
+  "cost": {
+    "at": "2026-09-15T18:24:54.877856+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-f58036111c74",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-15T18:20:49.693821+00:00",
+    "finished_at": "2026-09-15T18:24:54.877349+00:00",
+    "wall_seconds": 245.188,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 322,
+    "cached_input_tokens": 998652,
+    "output_tokens": 20709,
+    "total_tokens": 1019683,
+    "cost_usd": 1.8604084999999997
+  }
+}

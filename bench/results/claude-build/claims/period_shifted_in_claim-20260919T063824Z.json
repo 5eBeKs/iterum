@@ -1,0 +1,66 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "period_shifted_in_claim",
+  "dataset": "orders",
+  "error": "One country claim carries a two-month period while its value is the full quarter's.",
+  "at": "2026-09-19T06:36:19+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "period",
+    "02-28",
+    "CLM-NET-CZ"
+  ],
+  "blocking_issues": 1,
+  "warnings": 4,
+  "checks": 14,
+  "issue_ids": [
+    "CLAIMS-AUD-CZ-PERIOD-MISLABELLED"
+  ],
+  "issue_texts": [
+    "CLAIMS-AUD-CZ-PERIOD-MISLABELLED | gate_claims_auditor.claim_period_matches_computation.CLM-NET-CZ | gate_claims_auditor|claim_period_matches_computation|analysis/claim_register.json|CLM-NET-CZ | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/claim_register.json claims[CLM-NET-CZ].period is 2025-01-01..2025-02-28. The other four claims, metrics/calculated_metrics.json period, and audit_spec.yam"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "gate_claims_machine claims_recomputed hard-codes the spec period (2025-01-01..2025-03-30) for every claim and never compares it with each claim's own `period` field. A claim whose declared period differs from the period its number was computed on still passes, as CLM-NET-CZ did. Nothing deterministi",
+    "caveats_declared matches caveat wording only. CLM-NET-CZ passes it with 'period boundaries are inclusive on both ends' even though the boundaries it declares are not the spec's.",
+    "audit_spec.yaml sets the reported period to 2025-01-01..2025-03-30, and metrics name it '2025-Q1-delivered', although a calendar quarter ends on 2025-03-31. The raw export has no rows dated 2025-03-31, so no figure changes. A reader who sees 'Q1' next to a period ending on the 30th may still read it",
+    "The refund-rate basis matters to the size of the number. On the ruled paying-customer basis it is 27/57 = 0.473684. On an order-row basis it would be 33/174 = 0.189655. Any release text must keep the basis next to the figure."
+  ],
+  "summary": "I recomputed all five claims from raw_data/orders.csv. All five values match the spec population: delivered orders, 2025-01-01..2025-03-30 inclusive. CLM-NET-CZ is one blocker. Its register entry gives the period as 2025-01-01..2025-02-28, but its value 13527.24 is the full-period CZ net. On the period it declares, CZ net is 9248.36 over 43 rows. The machine gate did not catch this because it recomputes every claim on the spec period and never reads the claim's declared period. The headline, the refund rate (27/57 paying customers, with the basis stated in words), PL, DE, the country sum (3574",
+  "wall_seconds": 119.4,
+  "cost": {
+    "at": "2026-09-19T06:38:23.225914+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-f58036111c74",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-19T06:36:28.927437+00:00",
+    "finished_at": "2026-09-19T06:38:23.225914+00:00",
+    "wall_seconds": 114.297,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 28,
+    "cached_input_tokens": 1085132,
+    "output_tokens": 12301,
+    "total_tokens": 1097461,
+    "cost_usd": 1.6177645
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "exclusion_reasons_swapped",
+  "error": "R04 attaches each exclusion count to the other rule: 26 rows 'outside period', 1 row 'not delivered'.",
+  "at": "2026-09-15T17:40:40+00:00",
+  "max_v2_revision": "2a6f8dc",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R04",
+    "exclusion",
+    "swap|reason|rule",
+    "not_delivered|outside_period"
+  ],
+  "blocking_issues": 1,
+  "warnings": 2,
+  "checks": 12,
+  "issue_ids": [
+    "CLAIMS-AUD-R04-EXCLUSION-LABELS-SWAPPED"
+  ],
+  "warning_texts": [
+    "analysis/answers/R04.json attributes 26 excluded rows to the period boundary and 1 to status, the reverse of the raw data, so R04's 'under which rule' part is answered wrongly while every count is right.",
+    "The check plan's questions_are_answered rule for R04 compares only the three count values with the metrics registry and never reads each fact's exclusion rule, so gate_claims_machine passed questions_are_answered.R04 over the swapped attribution; no deterministic rule in the plan binds an exclusion "
+  ],
+  "summary": "All five claims recompute exactly from raw_data/orders.csv (net 35741.52; refund rate 0.473684 = 27/57 paying customers; PL 11181.67, DE 11032.61, CZ 13527.24), populations, periods and caveats are correct, and independent_claim_recalc.json is rooted only in raw. The stage fails on analysis/answers/R04.json: the two exclusion rules are attached to the wrong counts (26 non-delivered rows labelled as outside the period, 1 out-of-period row labelled as not delivered), which the machine gate does not check.",
+  "wall_seconds": 177.3,
+  "cost": {
+    "at": "2026-09-15T17:43:42.983839+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-f58036111c74",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-15T17:40:51.885620+00:00",
+    "finished_at": "2026-09-15T17:43:42.983839+00:00",
+    "wall_seconds": 171.093,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 258,
+    "cached_input_tokens": 674334,
+    "output_tokens": 13754,
+    "total_tokens": 688346,
+    "cost_usd": 1.3931159999999998
+  }
+}

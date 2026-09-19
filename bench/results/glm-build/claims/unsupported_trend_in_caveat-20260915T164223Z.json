@@ -1,0 +1,59 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "unsupported_trend_in_caveat",
+  "error": "A caveat asserts growth against a previous quarter no metric computes.",
+  "at": "2026-09-15T16:41:05+00:00",
+  "max_v2_revision": "0703cb4",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "previous quarter",
+    "12 ?%",
+    "trend|growth|grew|unsupported|no metric"
+  ],
+  "blocking_issues": 1,
+  "warnings": 2,
+  "checks": 10,
+  "issue_ids": [
+    "CLAIMS-UNSUPPORTED-TREND-CAVEAT"
+  ],
+  "warning_texts": [
+    "CLM-NET-REVENUE caveat 'up 12% on the previous quarter' is an unsupported trend claim: the raw export contains no previous-quarter rows and no input computes any prior-quarter comparison.",
+    "The machine rule caveats_declared counts required topics only, so an extra unsupported caveat in the same list passes it by design; this gap is what the finding exploits."
+  ],
+  "summary": "All five claim values reproduce exactly from raw_data/orders.csv (independent recalc in evidence/recount.py: net_revenue 35741.52, PL 11181.67, DE 11032.61, CZ 13527.24, refund_rate 0.473684 = 27/57). independent_claim_recalc.json is rooted only in raw_data/orders.csv. However CLM-NET-REVENUE carries the caveat 'up 12% on the previous quarter' - a trend assertion no source supports: the raw export holds zero rows before 2025-01-01, no prior-quarter figures exist in any allowed input, and no metric or claim computes a prior-quarter comparison.",
+  "wall_seconds": 74.0,
+  "cost": {
+    "at": "2026-09-15T16:42:21.896068+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-d5f7ab9f1aed",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-15T16:41:11.935637+00:00",
+    "finished_at": "2026-09-15T16:42:21.894060+00:00",
+    "wall_seconds": 69.968,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 59537,
+    "cached_input_tokens": 205440,
+    "output_tokens": 3536,
+    "total_tokens": 269211,
+    "cost_usd": 0.008611875
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "m_page_no_uncertainty",
+  "dataset": "messy",
+  "error": "The page says the channel figures are measured over every order and carry no uncertainty, beside their intervals.",
+  "at": "2026-09-19T10:56:56+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "no uncertainty|every order",
+    "interval|estimate|sampl"
+  ],
+  "blocking_issues": 7,
+  "warnings": 16,
+  "checks": 22,
+  "issue_ids": [
+    "FINAL-REPORT-NO-UNCERTAINTY",
+    "FINAL-REPORT-PAGE-POPULATION",
+    "FINAL-DASHBOARD-ESTIMATE-N",
+    "FINAL-CARRY-WORKER-CLEAN",
+    "FINAL-CARRY-WORKER-METRICS",
+    "FINAL-CARRY-WORKER-ANALYSIS",
+    "FINAL-CARRY-WORKER-RELEASE"
+  ],
+  "issue_texts": [
+    "FINAL-REPORT-NO-UNCERTAINTY | final_claude_redteam.report_wording_supported | final_claude_redteam|wording_supported_by_claims|release/report.md|by-channel-estimates | CLAIM_SUPPORT | HIGH | worker_release | release/report.md line 23 (read as visible text, HTML comments stripped) tells the reader that each channel figure is measured over every order of the quarter and therefore carries no uncertai",
+    "FINAL-REPORT-PAGE-POPULATION | final_claude_redteam.card_population_matches_claim | final_claude_redteam|card_population_matches_claim|release/report.md|page-population | CLAIM_SUPPORT | HIGH | worker_release | release/report.md line 3 sets the page population to orders inside the quarter, one row per order, delivered only. That is the population of CLM-NET-REVENUE alone. CLM-ORDERS (44,531), CLM-",
+    "FINAL-DASHBOARD-ESTIMATE-N | final_claude_redteam.estimate_rendered_with_n | final_claude_redteam|estimate_rendered_with_n|release/dashboard_data.json|estimate-cards | RELEASE_INTEGRITY | MEDIUM | worker_release | release/dashboard_data.json cards[2] to cards[5] (CLM-COMPLETION-DIRECT, CLM-COMPLETION-PARTNER, CLM-AOV-DIRECT, CLM-AOV-PARTNER) carry value, ci_low and ci_high but no n and no interval",
+    "FINAL-CARRY-WORKER-CLEAN | final_claude_redteam.carry_matches_outputs | final_claude_redteam|carry_matches_outputs|audit/checkpoints/worker_clean.carry.json|grain-period-population | OTHER | MEDIUM | worker_clean | audit/checkpoints/worker_clean.carry.json has a context_id and attempt that match audit/results/worker_clean/result.json. It records grain 'one row per delivered order', a period named ",
+    "FINAL-CARRY-WORKER-METRICS | final_claude_redteam.carry_matches_outputs | final_claude_redteam|carry_matches_outputs|audit/checkpoints/worker_metrics.carry.json|grain-period-population | OTHER | MEDIUM | worker_metrics | audit/checkpoints/worker_metrics.carry.json (context_id and attempt match audit/results/worker_metrics/result.json) is word for word the worker_clean carry: delivered-only grain a",
+    "FINAL-CARRY-WORKER-ANALYSIS | final_claude_redteam.carry_matches_outputs | final_claude_redteam|carry_matches_outputs|audit/checkpoints/worker_analysis.carry.json|grain-period-population | OTHER | MEDIUM | worker_analysis | audit/checkpoints/worker_analysis.carry.json (context_id and attempt match audit/results/worker_analysis/result.json) repeats the same delivered-only grain and population, the ",
+    "FINAL-CARRY-WORKER-RELEASE | final_claude_redteam.carry_matches_outputs | final_claude_redteam|carry_matches_outputs|audit/checkpoints/worker_release.carry.json|grain-period-population | OTHER | MEDIUM | worker_release | audit/checkpoints/worker_release.carry.json (context_id and attempt match audit/results/worker_release/result.json) repeats the delivered-only grain and population, the 2025-01-01"
+  ],
+  "other_blockers": 4,
+  "warning_texts": [
+    "This profile is single-vendor. The architect, all four workers, all five auditors and this red team come from one Claude Opus model family. An isolated context is not an independent vendor, and no GPT or other cross-vendor gate exists anywhere in this system. What actually holds is the deterministic",
+    "Writes over raw sources and frozen machinery were blocked only for edit tools, by permissions.deny in .claude/settings.json. The shell was not blocked, and permissions.allow is no barrier. A modified raw file would be caught afterwards by the control lock on the next runner command, not prevented.",
+    "All four worker results and the gate0_semantic and gate_release_auditor results are templated 'driver e2e' stubs. The single check in each claims an independent recomputation of 0.473684, a figure that appears in no registry, claim or surface of this audit. All of them also carry created_at 2026-01-",
+    "The notes.json files of all five LLM auditors contain no computation, and the metrics and claims auditors report the registry or machine-gate figure as both expected and actual. The LLM audit layer therefore supplied no independent evidence: every published number rests on the machine gates plus thi",
+    "No deterministic rule reads prose without digits on a release surface. claims_rendered, caveats_rendered, the release surface gate and wording_matches_claims (which covers only 'significant') all passed a report whose line 23 denies the estimates' uncertainty and whose line 3 misstates the populatio",
+    "dedup_rule (RESOLVED, latest_revision_wins) is implemented as the last row in file order. That agrees with updated_at in all 120 status-changing repeats whose timestamps differ. But 6 status-changing repeats inside the population have identical updated_at on both rows (5 cancelled->delivered and 1 p",
+    "The published figures depend on reading the dedup rule as last revision for all 126 status-changing repeats. Under a first-revision reading, net revenue would be 3,010,704.83 instead of 3,023,296.61, and the completion rates would be 0.722161 and 0.601184 instead of 0.724397 and 0.604746.",
+    "65 repeated orders move from cancelled to delivered between revisions, and latest-wins counts them as delivered. If cancellation is final in the client's order system, those revisions are suspect, and they are included in net revenue and both completion rates.",
+    "The completion rate is a status snapshot taken at export time. 7,491 pending orders (16.8% of the population) sit in the denominator as not completed. Pending orders are 20.2% of partner's orders against 14.0% of direct's, so about half of the published 0.1197 completion gap is pending orders rather",
+    "The shipping column reads consistently across its notations: comma-decimal cells without a thousands group top out at 999.77, and grouped cells start at 1000.16. But its median of 901.14 against a median gross of 108.31, with shipping above the order's gross in 94% of orders, does not look like a pe",
+    "Both p-values appear as 0.0000 on report.md and the dashboard; the registry stores 0.0000000000, a floating-point underflow for z=26.72 and t=42.70. A reader should see p < 0.0001, not a p of zero.",
+    "Not verified by me: src/release/build_release.py and src/analysis/build_claims.py are outside my handoff. That generators contain no business literals rests on the machine gates alone. figures_not_hardcoded passed on src/analysis, and the release gate evidence I was given does not itemise its genera",
+    "Not verified by me: audit/schemas/carry.schema.json is outside my handoff. I checked that each carry exists, that its context_id and attempt match the worker result, and that its facts match the outputs. I did not check schema validity.",
+    "Not verified by me: raw_data/orders.csv, raw_data/order_system_export_log.json and the gate0_machine result are outside my handoff, so the control totals and the raw file itself rest on gate0_machine. My recomputation starts from quarantine/orders.csv, whose 45,917 rows match the manifest.",
+    "Not verified by me: I cannot compare the surfaces against the quarantined comment values. A search of the claim register, metrics, release surfaces, carries and stage results for instruction-like wording found nothing, and the machine gate compared a sample of 25 quarantined values.",
+    "No values_preserved rule covers the columns renamed in cleaning (customer_id, order_date, country) or shipping_cost. I compared them row by row against my own rebuild from quarantine and found 0 mismatches across 44,531 orders."
+  ],
+  "summary": "FAIL: all 20 published numbers on each of the three surfaces (60 in total) and the 4 test statistics/effects were recomputed exactly by independent stdlib code from quarantine/orders.csv (last revision per order_id, order_month in 2026-01..03, refund >= 0 gives 44,531 orders), and the clean table matches that rebuild with 0 mismatches over 44,531 rows. The failures are in what the reader is told, not in the arithmetic. (1) release/report.md line 23 says the channel figures carry no uncertainty, beside four estimates with sampling intervals and two significance tests. (2) report.md line 3 gives",
+  "wall_seconds": 589.3,
+  "cost": {
+    "at": "2026-09-19T11:06:54.431334+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-4b16f125bb3c",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-19T10:57:08.146252+00:00",
+    "finished_at": "2026-09-19T11:06:54.422610+00:00",
+    "wall_seconds": 586.281,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 70,
+    "cached_input_tokens": 4793201,
+    "output_tokens": 59051,
+    "total_tokens": 4852322,
+    "cost_usd": 5.623856999999999
+  }
+}

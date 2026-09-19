@@ -1,0 +1,74 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "m_completion_population_delivered",
+  "dataset": "messy",
+  "error": "The direct completion rate says its population is delivered orders, over which a completion rate is always 1.",
+  "at": "2026-09-19T09:40:27+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "delivered",
+    "denominator|cancel|always|trivial|1\\.0|100 ?%"
+  ],
+  "blocking_issues": 1,
+  "warnings": 7,
+  "checks": 16,
+  "issue_ids": [
+    "STALE-CARRY-FACTS"
+  ],
+  "issue_texts": [
+    "STALE-CARRY-FACTS | final_glm_redteam.carry_facts_continuity | final_glm_redteam|carry_facts_contradict_stage_output|audit/checkpoints/*.carry.json|all_worker_stages | SPEC_CONFLICT | HIGH | worker_clean | audit/checkpoints/worker_clean.carry.json, worker_metrics.carry.json, worker_analysis.carry.json, worker_release.carry.json are byte-identical boilerplate: periods[0] declares name 2025-Q1-deliv"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "All ten model-context stages (four workers, five gates, gate0 semantic) self-reported execution.model 'openrouter/z-ai/glm-5.3-flash-fake', which contains the required marker 'openrouter/z-ai/glm-5.3-flash' but is not the exact spec path, and no CLI output event names a model, so the claim that this",
+    "The five human-context gate results (gate0_semantic, gate_clean_auditor, gate_metrics_auditor, gate_claims_auditor, gate_release_auditor) contain only stub content (summary 'driver e2e', evidence 'driver e2e evidence', no substantive findings), so the chain of model reviews is empty and the audit's ",
+    "The four worker result.json files are also stub-level (summary 'driver e2e ...', one generic check each, disclosures null), so no stage reasoning is recorded there, although the artifacts those stages produced were verified independently by this gate.",
+    "None of the five RESOLVED human decisions looks wrong on the data: each was re-applied and re-verified in my recount (dedup last-revision-wins over 45000 orders; month-first slashed dates with zero disagreements between ORDER DATE month and order_month across all 45917 rows; locale shipping parsed e",
+    "drift_since_review is absent from the handoff, so no code-vs-current-data shift review was possible, but I verified the analysis plan's registered assumptions directly on current data: one row per order after deduplication holds (44531 unique keys) and group sizes 24597 and 19934 sit far above the r",
+    "shipping_total (37792722.50) is correctly unpublished by name and understates itself by the 2648 unreadable shipping cells in the population (1778 blank, 870 NaN/inf, about six per cent), which answer R05 explains to the reader; no surface carries it.",
+    "The carry schema audit/schemas/carry.schema.json is outside my declared input paths, so I could not validate the carries against the schema myself; the fact-continuity requirement failed on its face regardless."
+  ],
+  "summary": "Every business number in the release chain reconciles with my independent recount from the quarantine projection and the clean table (population 45000-459 outside-quarter-10 negative-refund = 44531 orders; net revenue 3023296.61 exact; completion 0.724397/0.604746 with Wilson bounds matching to 1e-10; AOV 110.64/87.27 with Student bounds matching; both registered tests matching to full float precision; all 20 rendered strings on 3 surfaces bound to my own reformatted values; no literal business figures in generators; free text contained). One material blocker: all four worker carry files state",
+  "wall_seconds": 1452.6,
+  "cost": {
+    "at": "2026-09-19T10:05:00.980462+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-d55fb2e4a2eb",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-19T09:40:52.357683+00:00",
+    "finished_at": "2026-09-19T10:05:00.976772+00:00",
+    "wall_seconds": 1448.609,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 230604,
+    "cached_input_tokens": 2957120,
+    "output_tokens": 21056,
+    "total_tokens": 3233460,
+    "cost_usd": 0.08772552000000002
+  }
+}

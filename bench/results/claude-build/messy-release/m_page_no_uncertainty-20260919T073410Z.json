@@ -1,0 +1,72 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "m_page_no_uncertainty",
+  "dataset": "messy",
+  "error": "The page says the channel figures are measured over every order and carry no uncertainty, beside their intervals.",
+  "at": "2026-09-19T07:30:05+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "no uncertainty|every order",
+    "interval|estimate|sampl"
+  ],
+  "blocking_issues": 4,
+  "warnings": 5,
+  "checks": 19,
+  "issue_ids": [
+    "REL-CENSUS-SENTENCE",
+    "REL-PAGE-POPULATION",
+    "REL-DASH-CONTEXT",
+    "REL-DASH-ESTIMATE-N-LEVEL"
+  ],
+  "issue_texts": [
+    "REL-CENSUS-SENTENCE | gate_release_auditor.wording_not_stronger_than_interval | gate_release_auditor|wording_not_stronger_than_interval|release/report.md|by_channel | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 23, under 'By channel', says each channel figure was measured over every order of the quarter and so carries no uncertainty, and then calls the interval a sampling in",
+    "REL-PAGE-POPULATION | gate_release_auditor.population_beside_figure | gate_release_auditor|population_beside_figure|release/report.md|page_population_line | VISUALIZATION | MEDIUM | worker_release | release/report.md line 3 gives the population for the whole page as orders placed inside the quarter, one row per order, 'delivered only'. The generator (src/release/build_release.py line 86) copies it",
+    "REL-DASH-CONTEXT | gate_release_auditor.card_population_period | gate_release_auditor|card_population_period|release/dashboard_data.json|cards | VISUALIZATION | MEDIUM | worker_release | release/dashboard_data.json: none of the 8 cards has a population or a period field (evidence/release_audit.json checks.dashboard_card_context). The period appears only once, as the top-level $.period, and the pop",
+    "REL-DASH-ESTIMATE-N-LEVEL | gate_release_auditor.estimate_n_and_level_shown | gate_release_auditor|estimate_n_and_level_shown|release/dashboard_data.json|estimate_cards | VISUALIZATION | MEDIUM | worker_release | release/dashboard_data.json cards[2..5] (CLM-COMPLETION-DIRECT/PARTNER, CLM-AOV-DIRECT/PARTNER) carry ci_low and ci_high but no n and no interval level. The register has n (24597, 19934, "
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "release/report.md line 23 contradicts the intervals printed beside the channel estimates: it says the channel figures carry no uncertainty, and the generator does not produce that sentence, so the page was edited after generation.",
+    "Both tests show p as 0.0000 at display_digits 4 on report.md and dashboard_data.json. A reader will see p = 0 rather than p < 0.0001; the value is correct to the registry but reads as an exact zero.",
+    "The dashboard test cards (cards[6], cards[7]) show p, effect and statistic but no hypothesis_id, alpha, correction or n per group, so the dashboard's comparison is less qualified than the report's.",
+    "The machine gates have no rule that holds a surface to the generator's own output, no rule for per-card population/period (release_surface_contract.json has card_caveat_requirements and reconciliations empty), and wording_matches_claims only knows the 'significant' pattern. All three findings in thi",
+    "The AOV test statistic and effect were checked only for consistency with the rounded interval widths (implied Welch t 42.62 vs 42.70, Cohen's d 0.4854 vs 0.4869, both within what bounds rounded to 0.01 allow), not recomputed from order-level data."
+  ],
+  "summary": "Every one of the 40 numbers on report.md and dashboard_data.json (plus the 20 in the manifest) is anchored to its claim and role and renders exactly from the register. The register agrees with the metrics. The reconciliation identities hold, and the Wilson intervals and two-proportion z recompute from the registry counts. The release still fails on its wording and context. (1) report.md line 23 was edited by hand after generation. It now tells the reader that the channel figures were measured over every order and carry no uncertainty, which contradicts the interval printed beside each of the f",
+  "wall_seconds": 239.4,
+  "cost": {
+    "at": "2026-09-19T07:34:09.539475+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-1ec424ea468d",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-19T07:30:13.366895+00:00",
+    "finished_at": "2026-09-19T07:34:09.539475+00:00",
+    "wall_seconds": 236.172,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 36,
+    "cached_input_tokens": 1770281,
+    "output_tokens": 24212,
+    "total_tokens": 1794529,
+    "cost_usd": 2.6108225
+  }
+}

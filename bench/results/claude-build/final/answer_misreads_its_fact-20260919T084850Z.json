@@ -1,0 +1,85 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "answer_misreads_its_fact",
+  "dataset": "orders",
+  "error": "The answer to R02 calls a 47% refund rate low, fewer than one order in ten.",
+  "at": "2026-09-19T08:42:57+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R02",
+    "one order in ten",
+    "\\blow\\b",
+    "0\\.47|47 ?%"
+  ],
+  "blocking_issues": 1,
+  "warnings": 17,
+  "checks": 16,
+  "issue_ids": [
+    "FINAL-R02-ANSWER-MISREADS-FACT"
+  ],
+  "issue_texts": [
+    "FINAL-R02-ANSWER-MISREADS-FACT | final_claude_redteam.answer_matches_fact.R02 | final_claude_redteam|answer_matches_fact|analysis/answers/R02.json|CLM-REFUND-RATE | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R02.json caveats[1] reads CLM-REFUND-RATE (0.473684) as a low rate and as fewer than one order in ten refunded. audit/results/final/evidence/redteam_recalc.json recomputes from "
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "This run is single-vendor: every worker, auditor and this red team is Claude Opus 5, so the auditor PASS verdicts are not independent review, and only the deterministic layer (machine gates, frozen check_plan, control lock, release surface gate) really holds the release numbers.",
+    "Nothing blocked writes to raw_data/ from the shell: permissions.deny in .claude/settings.json covers the edit tools only, so a modified raw file would have been caught afterwards by the control lock, not prevented.",
+    "Every LLM stage result has a placeholder summary ('driver e2e ...'), a fixed created_at of 2026-01-01T00:00:00Z and an evidence notes.json with no computation: the four workers, gate0_semantic, gate_clean_auditor, gate_metrics_auditor, gate_claims_auditor and gate_release_auditor. Their 'recomputed ",
+    "gate_claims_auditor returned PASS on worker_analysis without reading the answer prose, so the R02 misreading of the refund rate went through the only non-machine check that covered analysis/answers/.",
+    "No deterministic rule reads the prose caveats in analysis/answers/*.json: questions_are_answered checks only field presence and the three R04 counts. Human or red-team reading is the only check on how the answers describe their facts.",
+    "check_plan.json lists gate_release_document claims_rendered and caveats_rendered under accepted_unproven, because the plan proof hit a FileNotFoundError. Their PASS has never been shown to fire on a broken release. I confirmed by my own reading that all 5 claims and every caveat appear on report.md ",
+    "The spec period ends 2025-03-30, one day short of calendar Q1, while the registry names the period '2025-Q1-delivered' and R01 speaks of 'the reported quarter'. No raw row is dated 2025-03-31, so net revenue 35741.52 and every other figure are unchanged on this export, but a later export with 31 Mar",
+    "The revenue_recognition ruling (net of refunds) nets every refund into its order's quarter because the export has no refund date. Net revenue 35741.52 EUR (after 4493.50 of refunds) therefore depends on an export snapshot date that the data does not state.",
+    "The refund_rate_basis ruling (paying customers) moves the refund rate from 0.189655 (33 refunded of 174 order rows) to 0.473684 (27 of 57 customers), a 2.50x difference. The report shows the basis caveat. The stricter reading of 'paying' as positive net spend gives the same 0.473684, because no cust",
+    "The timezone ruling (Europe/Warsaw) cannot be checked from the data, because order_date is a bare date. If the source system stamped dates in UTC, the three delivered orders on 2025-01-01 (O00008, O00082, O00198) and the one on 2025-03-30 (O00064) are the rows whose period membership could move.",
+    "All four worker carries define the population as 'status=delivered' and leave out the period filter the stages actually applied; the period appears only in the separate periods field. All four also put raw_data/orders.csv under do_not_reread, although it is not an output of a previous stage.",
+    "The release report never tells its reader that R05 (customer lifetime value) was excused as unanswerable from this extract, and it does not show the R04 row accounting (201 raw = 174 kept + 26 not delivered + 1 outside the period). Both exist only in check_plan.json and analysis/answers/R04.json.",
+    "values_preserved in gate_clean_machine does not cover order_date. My own trace found clean order_date equal to raw on all 174 rows, but no machine rule holds that column.",
+    "The registry's net_revenue carries an unlabeled 'numerator' of 40235.02, which is the gross total, and the country metrics' formula text reads 'WHERE country = country'. Neither reaches a reader, but both would mislead anyone who reuses the registry.",
+    "Some things I could not establish because they are outside my allowed inputs. I could not validate the carries against audit/schemas/carry.schema.json. I could not read the release gate's code for [:N] slicing or magnitude filters; its evidence covers all 3 release files with 21 numbers, equal to my",
+    "The handoff has no drift_since_review field, and its absence does not show that the stage code's assumptions hold. I checked the period, basis and boundary assumptions above on the current export only.",
+    "Retry history and stale inputs are not in my handoff and I did not check them; a human should review them with audit_runner.py report."
+  ],
+  "summary": "One material blocker. My own code (audit/results/final/evidence/redteam_recalc.py) recomputes every release figure from raw_data/orders.csv, and they all reproduce: net revenue 35741.52 EUR, PL 11181.67, DE 11032.61, CZ 13527.24 (sum = headline), refund rate 0.473684 = 27/57 paying customers, and row accounting 201 = 174 + 26 + 1. The clean table matches my population row by row, and all 21 numbers shown on the three release files match my display strings. The failure is in analysis/answers/R02.json. That answer's second caveat misreads its own fact. It calls the 0.47 rate low and restates it ",
+  "wall_seconds": 335.1,
+  "cost": {
+    "at": "2026-09-19T08:48:49.469470+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-d423fa05b27b",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-19T08:43:17.467333+00:00",
+    "finished_at": "2026-09-19T08:48:49.469470+00:00",
+    "wall_seconds": 332.0,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 46,
+    "cached_input_tokens": 2331195,
+    "output_tokens": 37573,
+    "total_tokens": 2368814,
+    "cost_usd": 3.3071399999999995
+  }
+}

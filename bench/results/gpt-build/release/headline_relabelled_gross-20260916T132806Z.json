@@ -1,0 +1,58 @@
+{
+  "profile": "gpt-build",
+  "stage": "release",
+  "case": "headline_relabelled_gross",
+  "error": "The page calls net revenue 'Gross revenue'; the number is net of refunds.",
+  "at": "2026-09-16T13:21:24+00:00",
+  "max_v2_revision": "e48d886",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "gross",
+    "label",
+    "net revenue"
+  ],
+  "blocking_issues": 1,
+  "warnings": 1,
+  "checks": 27,
+  "issue_ids": [
+    "REL-AUD-HEADLINE-NET-LABEL"
+  ],
+  "warning_texts": [
+    "The release machine gate reports all 21 numeric instances as bound and the document gate reports all 15 presence and caveat checks as passing, but neither gate checks whether the visible KPI label preserves the metric's net-versus-gross meaning."
+  ],
+  "summary": "FAIL: all 21 displayed business-number instances and all 15 document-gate comparisons were independently reproduced, but release/report.md mislabels the net-revenue headline as gross revenue.",
+  "wall_seconds": 398.0,
+  "cost": {
+    "at": "2026-09-16T13:28:05.028791+00:00",
+    "launcher": "codex_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-f63bae2b2dee",
+    "agent_role": "gpt-audit-release",
+    "started_at": "2026-09-16T13:21:29.447163+00:00",
+    "finished_at": "2026-09-16T13:28:05.028791+00:00",
+    "wall_seconds": 395.579,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "gpt-5.6-sol",
+    "model_used": null,
+    "input_tokens": 1745257,
+    "cached_input_tokens": null,
+    "output_tokens": 18232,
+    "total_tokens": 1763489,
+    "cost_usd": null
+  }
+}

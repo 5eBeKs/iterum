@@ -1,0 +1,69 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "m_page_causal_sentence",
+  "dataset": "messy",
+  "error": "The page explains the smaller partner baskets by bargain hunters, which nothing in the audit measures.",
+  "at": "2026-09-18T19:47:39+00:00",
+  "max_v2_revision": "b7adc4a",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "caus|explan|unsupported|no (evidence|metric|claim)"
+  ],
+  "blocking_issues": 3,
+  "warnings": 5,
+  "checks": 16,
+  "issue_ids": [
+    "REL-AUD-CAUSAL-SENTENCE",
+    "REL-AUD-SURFACE-NOT-GENERATED",
+    "REL-AUD-PAGE-POPULATION"
+  ],
+  "issue_texts": [
+    "REL-AUD-CAUSAL-SENTENCE | gate_release_auditor.no_unregistered_claims | gate_release_auditor|no_unregistered_claims|release/report.md|line32 | CLAIM_SUPPORT | HIGH | worker_release | release/report.md line 32 (last line of 'The registered comparisons') is free prose with no claim anchor. It compares partner with direct and gives a causal reason for the partner channel's smaller average order value",
+    "REL-AUD-SURFACE-NOT-GENERATED | gate_release_auditor.surface_reproducible_from_generator | gate_release_auditor|surface_reproducible_from_generator|release/report.md|document | RELEASE_INTEGRITY | HIGH | worker_release | src/release/build_release.py main() ends the report after the last registered comparison's caveat line plus one blank line, and nothing in it writes a sentence after that point. r",
+    "REL-AUD-PAGE-POPULATION | gate_release_auditor.population_beside_number | gate_release_auditor|population_beside_number|release/report.md|page_population_line | RELEASE_INTEGRITY | MEDIUM | worker_release | report.md line 3 prints the population of CLM-NET-REVENUE ('... one row per order, delivered only') once for the whole page; build_release.py writes it from revenue['population']. It is the onl"
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "The cards in release/dashboard_data.json carry no population, and the four estimate cards carry no n and no interval level, so a reader of the dashboard sees both bounds without the sample size or the population they belong to.",
+    "Both registered tests show p as 0.0000, which a reader can take for exactly zero; the true p is far below 0.0001 and would read better as a bound.",
+    "gate_release_document's wording_matches_claims passed report.md and missed the unanchored causal sentence on line 32, because it looks only at sentences with a significance word beside a test claim.",
+    "gate_release_document's free_text_quarantined checked a sample of 25 quarantined values, so the gates cannot confirm or rule out that report.md line 32 came from the quarantined comment column.",
+    "No machine rule checks that a release surface equals the generator's output, that the page carries no unanchored claim prose, or that the reconciliation identities hold (audit/release_surface_contract.json declares reconciliations and card_caveat_requirements empty), so this auditor's hand check is "
+  ],
+  "summary": "The release fails. All 20 numbers on report.md and all 20 on dashboard_data.json are bound to their claims and match the register at display_digits. The Wilson intervals, the z test, the n values and the three reconciliation identities recompute correctly by hand. The failures are in the prose: report.md line 32 is an unanchored causal sentence comparing the channels that no claim or registered hypothesis supports, and the registered generator does not produce it, so the surface was edited after generation. Separately, the only population shown on the page (line 3, 'delivered only') is wrong f",
+  "wall_seconds": 268.0,
+  "cost": {
+    "at": "2026-09-18T19:52:10.771643+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-1ec424ea468d",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-18T19:47:45.752419+00:00",
+    "finished_at": "2026-09-18T19:52:10.771643+00:00",
+    "wall_seconds": 265.016,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 28,
+    "cached_input_tokens": 1262893,
+    "output_tokens": 28350,
+    "total_tokens": 1291271,
+    "cost_usd": 2.404327
+  }
+}

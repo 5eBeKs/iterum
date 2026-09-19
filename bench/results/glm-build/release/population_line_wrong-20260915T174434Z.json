@@ -1,0 +1,59 @@
+{
+  "profile": "glm-build",
+  "stage": "release",
+  "case": "population_line_wrong",
+  "error": "The page's population line says all orders; every figure is over delivered orders.",
+  "at": "2026-09-15T17:41:10+00:00",
+  "max_v2_revision": "2a6f8dc",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "all orders"
+  ],
+  "blocking_issues": 1,
+  "warnings": 3,
+  "checks": 20,
+  "issue_ids": [
+    "REPORT-POPULATION-LINE-WRONG"
+  ],
+  "warning_texts": [
+    "release/report.md line 3 declares the wrong population for the whole report while every caveat below it says delivered-only; the page is internally contradictory to a human reader.",
+    "The number-binding is otherwise clean: my independent recount from raw_data/orders.csv matched all 21 rendered figures to their display_digits and both reconciliations (REC-COUNTRY-SUM and REC-REFUND-RATE) hold.",
+    "gate_release_document accepted_unproven in audit/check_plan.json lists claims_rendered and caveats_rendered as accepted without a breaker run; my own caveat-set comparison against the claim register covers the same ground manually and found no missing caveat."
+  ],
+  "summary": "All 21 rendered numbers on the three release surfaces reproduce exactly from raw_data/orders.csv (net_revenue 35741.52, refund_rate 27/57=0.473684, PL 11181.67 + DE 11032.61 + CZ 13527.24 = 35741.52, row accounting 201=174+26+1); caveat sets match the claim register on both surfaces; no UNVERIFIED_CLAIM markers. FAIL because release/report.md line 3 states the population as 'all orders inside the period' while the audit spec population is 'delivered orders inside the period' and both the claim register and the report's own caveats say delivered-only.",
+  "wall_seconds": 194.0,
+  "cost": {
+    "at": "2026-09-15T17:44:30.500037+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-27a39ea1c956",
+    "agent_role": "glm-audit-release",
+    "started_at": "2026-09-15T17:41:28.997521+00:00",
+    "finished_at": "2026-09-15T17:44:30.474013+00:00",
+    "wall_seconds": 181.484,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 36114,
+    "cached_input_tokens": 199296,
+    "output_tokens": 5584,
+    "total_tokens": 242215,
+    "cost_usd": 0.007422239999999998
+  }
+}

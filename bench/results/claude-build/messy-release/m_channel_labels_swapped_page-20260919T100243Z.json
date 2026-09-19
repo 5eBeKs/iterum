@@ -1,0 +1,72 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "m_channel_labels_swapped_page",
+  "dataset": "messy",
+  "error": "On the page the direct and partner completion lines carry each other's labels; the figures and anchors are untouched.",
+  "at": "2026-09-19T09:59:43+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "label",
+    "swap|transpos|mislabel",
+    "direct|partner"
+  ],
+  "blocking_issues": 4,
+  "warnings": 4,
+  "checks": 16,
+  "issue_ids": [
+    "REL-AUD-001",
+    "REL-AUD-002",
+    "REL-AUD-003",
+    "REL-AUD-004"
+  ],
+  "issue_texts": [
+    "REL-AUD-001 | gate_release_auditor.label_matches_claim | gate_release_auditor|label_matches_claim|release/report.md|completion_by_channel | VISUALIZATION | CRITICAL | worker_release | release/report.md line 14: the visible label 'completion partner' comes before the anchors CLM-COMPLETION-DIRECT:value/ci_low/ci_high (0.724397, 0.718779..0.729946, n = 24597). Line 16: the visible label 'completion ",
+    "REL-AUD-002 | gate_release_auditor.population_beside_figure | gate_release_auditor|population_beside_figure|release/report.md|page_population | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3 gives one page-wide population ending in 'delivered only'. No line on the page carries its own population. In analysis/claim_register.json, CLM-ORDERS and both CLM-COMPLETION-* claims hav",
+    "REL-AUD-003 | gate_release_auditor.estimate_caveats_complete | gate_release_auditor|estimate_caveats_complete|analysis/claim_register.json|aov_and_completion_caveats | CLAIM_SUPPORT | MEDIUM | worker_analysis | In analysis/claim_register.json, the caveats of CLM-AOV-DIRECT and CLM-AOV-PARTNER include neither 'net of refunds' nor 'delivered orders only'. CLM-COMPLETION-DIRECT and CLM-COMPLETION-PAR",
+    "REL-AUD-004 | gate_release_auditor.dashboard_estimate_context | gate_release_auditor|dashboard_estimate_context|release/dashboard_data.json|estimate_cards | VISUALIZATION | MEDIUM | worker_release | release/dashboard_data.json cards[2] to cards[5] (the four estimates) and cards[0] to cards[1] carry value, ci_low/ci_high and caveats, but no n, no interval level and no population. The period appears"
+  ],
+  "other_blockers": 2,
+  "warning_texts": [
+    "The swapped completion labels passed both machine gates. release_surface_gate binds each number to the anchor comment next to it, and gate_release_document checks only that the claim is present. No rule in audit/check_plan.json compares the words a reader sees with the claim_id they label.",
+    "release/report.md line 3 applies a delivered-only population to the whole page. A reader will take the completion rates (0.60 to 0.72) as shares among delivered orders, which is the wrong-denominator reading the spec's semantic traps warn about.",
+    "The dashboard only has caveats per card. Without n and population beside each estimate, the interval cannot be read as a sampling interval over a known count.",
+    "reconciliations and card_caveat_requirements in audit/release_surface_contract.json are empty, so the machine gate checked no reconciliation identity and no per-card context. I checked the identities myself (they hold); per-card context is covered only by this audit."
+  ],
+  "summary": "Every figure on the page matches the registry and my own recomputation. But release/report.md prints the direct and partner completion rates under each other's names: line 14 says 'completion partner' but shows CLM-COMPLETION-DIRECT (0.724397, n = 24597), and line 16 says 'completion direct' but shows CLM-COMPLETION-PARTNER (0.604746, n = 19934). So a reader sees partner as the higher channel, while the test right below says a positive effect means direct is higher. Neither machine gate checks the visible label against the claim anchor, so both passed it. Three more blockers: the page-level po",
+  "wall_seconds": 175.5,
+  "cost": {
+    "at": "2026-09-19T10:02:42.319343+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-1ec424ea468d",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-19T09:59:49.867636+00:00",
+    "finished_at": "2026-09-19T10:02:42.319343+00:00",
+    "wall_seconds": 172.453,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 30,
+    "cached_input_tokens": 1169503,
+    "output_tokens": 17043,
+    "total_tokens": 1186576,
+    "cost_usd": 1.8319665
+  }
+}

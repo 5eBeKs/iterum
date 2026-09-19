@@ -1,0 +1,62 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "population_line_wrong",
+  "error": "The page's population line says all orders; every figure is over delivered orders.",
+  "at": "2026-09-15T19:00:04+00:00",
+  "max_v2_revision": "1d34cf0",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "all orders"
+  ],
+  "blocking_issues": 1,
+  "warnings": 6,
+  "checks": 27,
+  "issue_ids": [
+    "REL-AUD-POPULATION-LINE"
+  ],
+  "warning_texts": [
+    "release/report.md line 3 states the population as all orders inside the period while the spec, the registries and the claim caveats say delivered orders only; the header line and the report's free text are covered by no deterministic rule in check_plan.json, so both release gates passing is silence ",
+    "check_plan.json lists claims_rendered and caveats_rendered under accepted_unproven (prove-plan could not find the claim register), so the only two rules gate_release_document applies were never shown to fire on a broken release.",
+    "gate_release_machine records its comparisons in release_surface_gate.json rather than evidence/checks.json, and gate_release_document's checks.json has no recompute_*, claims_recomputed, component_sum or column_identity entry, so none of this stage's numeric recomputes has a machine comparison to cr",
+    "The spec period ends 2025-03-30 while R01 asks for the reported quarter and calculated_metrics names the period 2025-Q1-delivered; the release follows the frozen spec consistently, but a human may want to confirm that the quarter is meant to exclude 2025-03-31.",
+    "release/dashboard_data.json has a period but no population field, so a dashboard reader gets the population only through each card's caveats.",
+    "release/report.md line 11 shows the refund-rate numerator and denominator as 27 of 57 without naming the unit on that line; only the caveat line above it says they are paying customers."
+  ],
+  "summary": "All 21 rendered numbers across report.md, dashboard_data.json and the manifest recompute from calculated_metrics.json and display exactly (country sum 35741.52 = headline, 27/57 = 0.473684, 40235.02 - 4493.50 = 35741.52), and every claim caveat is visible outside HTML comments; but report.md line 3 tells the reader the population is all orders inside the period, contradicting the spec population (delivered orders inside the period) that governs every figure on the page, and no release gate rule reads that line.",
+  "wall_seconds": 216.4,
+  "cost": {
+    "at": "2026-09-15T19:03:43.332884+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-b0dc8f415661",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-15T19:00:09.332272+00:00",
+    "finished_at": "2026-09-15T19:03:43.332884+00:00",
+    "wall_seconds": 214.0,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 322,
+    "cached_input_tokens": 781586,
+    "output_tokens": 18670,
+    "total_tokens": 800578,
+    "cost_usd": 1.4831225000000001
+  }
+}

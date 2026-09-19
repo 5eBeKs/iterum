@@ -1,0 +1,59 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "unsupported_trend_in_prose",
+  "error": "The page says revenue grew through the quarter; no monthly figure exists in the audit.",
+  "at": "2026-09-15T19:11:38+00:00",
+  "max_v2_revision": "1d34cf0",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "grew|growth|trend|strongest month|March",
+    "unsupported|no (metric|claim|figure)"
+  ],
+  "blocking_issues": 1,
+  "warnings": 3,
+  "checks": 26,
+  "issue_ids": [
+    "REL-AUD-UNSUPPORTED-TREND-PROSE"
+  ],
+  "warning_texts": [
+    "release/report.md line 24 claims revenue rose month by month and names a strongest month, but the metrics and claim registries have no data by month, so a reader is given a trend nobody in this audit computed.",
+    "audit/check_plan.json lists both gate_release_document rules (claims_rendered and caveats_rendered) under accepted_unproven, because the proof run could not find the claim register in its sandbox; their PASS on this run has never been shown to fire on a broken release.",
+    "No deterministic rule in audit/check_plan.json covers text on release surfaces that contains no number, so a sentence without digits can make any business assertion and only the human-judgment auditor stands between it and the reader."
+  ],
+  "summary": "All 7 figures shown in the report, on the dashboard and in the manifest match the claim register and metrics registry exactly, and the country figures add up to net revenue with a gap of 0.00. Every caveat is visible text, the refund rate says it is taken over paying customers, and no UNVERIFIED_CLAIM marker is used. The release still fails: release/report.md line 24 claims revenue grew month by month and that March was the strongest month. No claim, metric or recomputable figure backs that sentence, and neither release gate can see it.",
+  "wall_seconds": 232.3,
+  "cost": {
+    "at": "2026-09-15T19:15:33.744541+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-b0dc8f415661",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-15T19:11:43.901994+00:00",
+    "finished_at": "2026-09-15T19:15:33.744541+00:00",
+    "wall_seconds": 229.844,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 418,
+    "cached_input_tokens": 1036861,
+    "output_tokens": 20048,
+    "total_tokens": 1057327,
+    "cost_usd": 1.66887
+  }
+}

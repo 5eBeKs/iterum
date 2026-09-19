@@ -1,0 +1,64 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "headline_relabelled_gross",
+  "error": "The page calls net revenue 'Gross revenue'; the number is net of refunds.",
+  "at": "2026-09-15T18:51:43+00:00",
+  "max_v2_revision": "1d34cf0",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "gross",
+    "label",
+    "net revenue"
+  ],
+  "blocking_issues": 2,
+  "warnings": 6,
+  "checks": 30,
+  "issue_ids": [
+    "REL-AUD-HEADLINE-LABELLED-GROSS",
+    "REL-AUD-REPORT-NOT-GENERATOR-OUTPUT"
+  ],
+  "warning_texts": [
+    "release/report.md line 7 presents the net revenue figure 35,741.52 as 'Gross revenue', while gross revenue for the same delivered in-period orders is 40,235.02, and the report now disagrees with the dashboard card for the same claim.",
+    "No release-stage machine rule compares label wording with the metric behind a number: gate_release_machine binds each number to a claim and role, and gate_release_document only checks that a claim and its caveat strings are present, so a relabelled headline passes both with PASS.",
+    "Neither release gate recomputed any figure: gate_release_document/evidence/checks.json holds only claims_rendered and caveats_rendered presence checks, and gate_release_machine writes no checks.json, so this auditor's recomputation from raw is the only numeric check at the release stage and its figu",
+    "audit/check_plan.json lists gate_release_document claims_rendered and caveats_rendered under accepted_unproven because the prove-plan breaker failed on a missing claim_register.json, so their PASS has never been shown to fire on a dropped claim or caveat.",
+    "metrics/calculated_metrics.json net_revenue carries a numerator field of 40235.02, which is gross revenue and is not part of the spec formula; a release role reading that field would place gross under a net claim.",
+    "release/report.md line 22 asserts that the country figures sum to the headline without showing the sum; the reader can verify it from the three visible figures (11,181.67 + 11,032.61 + 13,527.24 = 35,741.52), but no total line is rendered."
+  ],
+  "summary": "All 7 shown figures (21 renderings across report, dashboard and manifest) recompute exactly from raw_data/orders.csv and the country figures sum to the headline, but release/report.md line 7 labels CLM-NET-REVENUE (net, 35,741.52) as 'Gross revenue'; gross for the same population is 40,235.02, the dashboard calls the same card 'Net revenue (EUR)', and the generator would have written 'Net revenue', so the published report was altered after generation and misstates the headline metric. Neither release gate inspects label wording, so both passed it.",
+  "wall_seconds": 279.7,
+  "cost": {
+    "at": "2026-09-15T18:56:25.977779+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-b0dc8f415661",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-15T18:51:49.029384+00:00",
+    "finished_at": "2026-09-15T18:56:25.977779+00:00",
+    "wall_seconds": 276.953,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 290,
+    "cached_input_tokens": 736595,
+    "output_tokens": 24500,
+    "total_tokens": 761385,
+    "cost_usd": 1.707259
+  }
+}

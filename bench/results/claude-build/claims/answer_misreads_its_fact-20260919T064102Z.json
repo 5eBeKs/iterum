@@ -1,0 +1,67 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "answer_misreads_its_fact",
+  "dataset": "orders",
+  "error": "The answer to R02 calls a 47% refund rate low, fewer than one order in ten.",
+  "at": "2026-09-19T06:38:26+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R02",
+    "one order in ten",
+    "\\blow\\b",
+    "0\\.47|47 ?%"
+  ],
+  "blocking_issues": 1,
+  "warnings": 4,
+  "checks": 18,
+  "issue_ids": [
+    "CLAIMS-R02-ANSWER-MISREADS-FACT"
+  ],
+  "issue_texts": [
+    "CLAIMS-R02-ANSWER-MISREADS-FACT | gate_claims_auditor.answer_prose_matches_fact.R02 | gate_claims_auditor|answer_prose_matches_fact|analysis/answers/R02.json|R02 | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R02.json caveats[1] calls the 0.47 rate low and says it means fewer than one order in ten is refunded. Independent recompute in audit/results/gate_claims_auditor/evidence/recalc_"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "No deterministic rule in audit/check_plan.json reads the prose in analysis/answers/*.json: questions_are_answered checks only that an answer exists, plus the R04 figures. So the R02 misreading passed the machine gate, and any later interpretive caveat in an answer is checked by this auditor alone.",
+    "47 of the 57 paying customers have more than one delivered order in the period. That is why the customer-basis refund rate (0.473684) is about 2.5 times the order-row rate (0.189655). Any release text that places the rate near order counts must name the basis, or readers will take it for a share of ",
+    "Customer-basis refund rates by country (CZ 12/43 = 0.279070, DE 9/37 = 0.243243, PL 11/37 = 0.297297) are each well below the pooled 0.473684. Customers who buy in several countries are counted once per country but are refunded in only one. A per-country refund-rate split would therefore not reconci",
+    "metrics/calculated_metrics.json names the period 2025-Q1-delivered, but the spec period ends on 2025-03-30, not 2025-03-31. The raw export has no rows dated 2025-03-31, so no figure changes. Still, a 'quarter' label on a period one day short could mislead a reader of a future export."
+  ],
+  "summary": "All five claims recompute exactly from raw_data/orders.csv (net 35741.52; refund rate 27/57 = 0.473684 on paying customers; PL 11181.67, DE 11032.61, CZ 13527.24; parts sum to headline) and R04 row accounting holds (201 = 174 + 26 + 1). One blocker: the second caveat in analysis/answers/R02.json misreads its own fact. It calls 0.473684 low and describes it as fewer than one order in ten refunded. The figure counts customers, not orders: 27 of 57 paying customers, nearly half. Even on the order-row basis the spec did not choose, the rate is 33/174 = 0.189655, about one in five.",
+  "wall_seconds": 151.6,
+  "cost": {
+    "at": "2026-09-19T06:41:01.065705+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-f58036111c74",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-19T06:38:32.658156+00:00",
+    "finished_at": "2026-09-19T06:41:01.065705+00:00",
+    "wall_seconds": 148.406,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 28,
+    "cached_input_tokens": 1040212,
+    "output_tokens": 16202,
+    "total_tokens": 1056442,
+    "cost_usd": 1.747084
+  }
+}

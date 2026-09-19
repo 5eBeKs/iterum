@@ -1,0 +1,44 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "worker": "worker_release",
+  "kind": "worker",
+  "at": "2026-09-15T18:42:30+00:00",
+  "max_v2_revision": "1d34cf0",
+  "verdict": "PASS",
+  "stop_code": null,
+  "summary": "src/release/build_release.py rewritten to read period, inclusivity, population, refund_rate_basis, revenue_recognition, country values, metric units/display_digits/tolerance and the component metric-id pattern from audit/audit_spec.yaml and audit/check_plan.json, stopping with a named key when one is missing or the register disagrees; it rendered release/report.md, release/dashboard_data.json and release/release_number_manifest.json. release_surface_gate.py: 21 numbers checked, 21 bound, 0 unverified, 0 issues; gate_release_document (claims_rendered, caveats_rendered): PASS; 13 release tests p",
+  "wall_seconds": 491.3,
+  "cost": {
+    "at": "2026-09-15T18:50:41.562208+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "worker_release",
+    "attempt": 1,
+    "context_id": "cc-worker_release-a1-d43997d310ed",
+    "agent_role": "claude-worker",
+    "started_at": "2026-09-15T18:42:33.031844+00:00",
+    "finished_at": "2026-09-15T18:50:41.562208+00:00",
+    "wall_seconds": 488.516,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 546,
+    "cached_input_tokens": 2339990,
+    "output_tokens": 42755,
+    "total_tokens": 2383291,
+    "cost_usd": 3.5809194999999994
+  },
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "outcome": "gate_pass",
+  "fingerprints": []
+}

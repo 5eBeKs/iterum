@@ -1,0 +1,67 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "exclusion_reasons_swapped",
+  "dataset": "orders",
+  "error": "R04 attaches each exclusion count to the other rule: 26 rows 'outside period', 1 row 'not delivered'.",
+  "at": "2026-09-19T06:38:28+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R04",
+    "exclusion",
+    "swap|reason|rule",
+    "not_delivered|outside_period"
+  ],
+  "blocking_issues": 1,
+  "warnings": 4,
+  "checks": 15,
+  "issue_ids": [
+    "CLAIMS-R04-EXCLUSION-LABELS-SWAPPED"
+  ],
+  "issue_texts": [
+    "CLAIMS-R04-EXCLUSION-LABELS-SWAPPED | gate_claims_auditor.r04_exclusion_labels | gate_claims_auditor|r04_exclusion_labels|analysis/answers/R04.json|R04 | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R04.json facts[1] (metric_id excluded_not_delivered, value 26) has exclusion 'order_date outside period', and facts[2] (metric_id excluded_outside_period, value 1) has exclusion 'status !="
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "questions_are_answered.R04 in gate_claims_machine compares only the three counts in R04 with the metrics registry and passed an answer whose rule labels are swapped; nothing deterministic checks which exclusion rule each count is attributed to, which is what R04 asks.",
+    "The metrics registry names the period '2025-Q1-delivered' while audit_spec.yaml pins its end at 2025-03-30, one day before the calendar quarter ends; the export has no rows dated 2025-03-31, so no published figure changes, but a reader of 'Q1' would assume 31 March is included.",
+    "CLM-REFUND-RATE counts a paying customer as refunded when any delivered order has refund_amount > 0, including partial refunds (for example 13.08 on a 26.15 order); the caveats say the denominator is paying customers but do not say that a partial refund counts the whole customer as refunded.",
+    "The alternative reading of refund rate on order rows would be 33/174 = 0.189655, against the published 27/57 = 0.473684 on paying customers; the published figure follows the spec ruling, but the two readings differ by about 2.5 times, so the basis has to stay printed next to the number in the releas"
+  ],
+  "summary": "All five claims recompute exactly from raw_data/orders.csv (net 35741.52, refund rate 27/57 = 0.473684 on paying customers, PL 11181.67, DE 11032.61, CZ 13527.24; country parts sum to the headline) and the row accounting 201 = 174 + 26 + 1 holds. One blocker: analysis/answers/R04.json assigns each exclusion count the other rule's label (26 is labelled as the period exclusion and 1 as the status exclusion), so the answer to R04's 'under which exclusion' question is wrong while every number is right.",
+  "wall_seconds": 122.1,
+  "cost": {
+    "at": "2026-09-19T06:40:33.251809+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-f58036111c74",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-19T06:38:34.349364+00:00",
+    "finished_at": "2026-09-19T06:40:33.251809+00:00",
+    "wall_seconds": 118.906,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 24,
+    "cached_input_tokens": 871594,
+    "output_tokens": 13410,
+    "total_tokens": 885028,
+    "cost_usd": 1.549996
+  }
+}

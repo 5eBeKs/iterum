@@ -1,0 +1,65 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "m_shipping_answer_complete",
+  "dataset": "messy",
+  "error": "The answer to R05 calls the shipping total complete; about six per cent of its cells are blank, NaN or inf.",
+  "at": "2026-09-16T19:18:05+00:00",
+  "max_v2_revision": "fa38876",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R05|shipping",
+    "readable|blank|NaN|\\binf\\b|six per ?cent|6 ?%|unknown amount|underst|complete"
+  ],
+  "blocking_issues": 1,
+  "warnings": 4,
+  "checks": 13,
+  "issue_ids": [
+    "R05-SHIPPING-CAVEAT-FALSE"
+  ],
+  "issue_texts": [
+    "R05-SHIPPING-CAVEAT-FALSE | gate_claims_auditor.r05_caveat_truth | gate_claims_auditor|r05_caveat_truth|analysis/answers/R05.json|shipping_total_excusal_reason | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R05.json line 11: the caveat asserts every shipping cell of the export was readable and the total is complete. Independent recalc (audit/results/gate_claims_auditor/evidence/recalc"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The machine gate's independent_claim_recalc.json lists raw_data/orders.csv as its source path; the stage prompt expected the recalc to be rooted in clean_data/, and raw_data carries the quarantined comment column, so a human should confirm the gate's recalculation did not carry comment text anywhere",
+    "shipping_total magnitude (EUR 37,792,722.50 over 44,531 orders, max single cell 1,799.99 vs gross max 312.16) is unusual relative to order values but parses exactly per the declared locale rule (space thousands, comma decimal) and reproduces the worker's number; treated as a data property, not a cal",
+    "R03 and R04 publish test statistics (z, t, p, effect sizes) for which checks.json contains no recompute_test comparison; they were verified by this auditor's own recalc instead (z=26.718455, t=42.699880, pooled d=0.486900 all exact).",
+    "R01 carries no caveat text of its own; its population caveats live in the claim register and were verified there, so no blocker was raised."
+  ],
+  "summary": "All six registered claims and both R03/R04 hypothesis statistics reproduce exactly from quarantine/orders.csv under independent recalc (dedup last-revision, Q1 by order_month, negative-refund exclusion, delivered filters, full-channel denominators; net-of-refunds AOV). Chain claim->metric->registry closes with no gap; no comment-column phrases in the register; no unregistered hypothesis. One blocker: R05's caveat states every shipping cell was readable and the shipping total is complete, while 2,648 of 44,531 clean rows (~5.9%) have blank/NaN/inf shipping cells (recalc: 1,778 blank, 869 NaN, 1",
+  "wall_seconds": 239.4,
+  "cost": {
+    "at": "2026-09-16T19:22:10.316194+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-da5c382292c9",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-16T19:18:14.495063+00:00",
+    "finished_at": "2026-09-16T19:22:10.316194+00:00",
+    "wall_seconds": 235.813,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 71060,
+    "cached_input_tokens": 390208,
+    "output_tokens": 8270,
+    "total_tokens": 471185,
+    "cost_usd": 0.016394244
+  }
+}

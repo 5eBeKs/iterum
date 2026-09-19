@@ -1,0 +1,77 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "m_channel_labels_swapped_page",
+  "dataset": "messy",
+  "error": "On the page the direct and partner completion lines carry each other's labels; the figures and anchors are untouched.",
+  "at": "2026-09-16T23:50:08+00:00",
+  "max_v2_revision": "fa38876",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "label",
+    "swap|transpos|mislabel",
+    "direct|partner"
+  ],
+  "blocking_issues": 1,
+  "warnings": 10,
+  "checks": 16,
+  "issue_ids": [
+    "FINAL-CHANNEL-LABEL-SWAP"
+  ],
+  "issue_texts": [
+    "FINAL-CHANNEL-LABEL-SWAP | gate_release_document.label_matches_claim_population | gate_release_document|label_matches_claim_population|release/report.md|CLM-COMPLETION-DIRECT,CLM-COMPLETION-PARTNER | VISUALIZATION | HIGH | worker_release | release/report.md line 14: '- completion partner: <!-- claim:CLM-COMPLETION-DIRECT:value --> 0.724397 (... n = 24597)' but CLM-COMPLETION-DIRECT's declared popu"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "Check-plan gap for the human: no deterministic rule in the frozen check_plan.json binds a surface label to the claim's population (wording_matches_claims' dictionary had zero overlap with the page), so a label swap passes every machine gate and this profile's deterministic layer cannot catch it next",
+    "release/report.md is not what its own generator emits for this claim register - src/release/build_release.py derives labels from claim_id and produced the correct labels on the other two surfaces at 22:36, while report.md (mtime 02:50:08) was altered outside its generator; the clean fix is regenerat",
+    "Worker and gate-auditor results in audit/results/ are driver placeholder records ('driver e2e', one dummy check 0.473684, no reviewer evidence), so in this single-vendor profile the numbers stand on the machine gates and this final recalculation, not on any intermediate auditor PASS.",
+    "MODEL_MISMATCH is unverifiable in this CLI: no output event names a model, so every execution.model - including the one on this result - is only a stage's self-report, and the workers self-reported 'openrouter/z-ai/glm-5.3-flash-fake', which satisfies the lane's required substring but is not the dec",
+    "The carry files (audit/checkpoints/*.carry.json) describe a different audit - period '2025-Q1-delivered', grain 'one row per delivered order', a refund-rate pitfall that exists in no metric of this dataset; no number was moved by them (all outputs are 2026-Q1 and verified), but they are misleading h",
+    "The report's page-level population sentence 'orders placed inside the quarter, one row per order, delivered only' is CLM-NET-REVENUE's population and sits above by-channel estimates whose denominators include cancelled and pending orders; each figure's own caveats are correct, but a hurried reader c",
+    "The analysis plan's registered assumption that neither channel changed how it books orders during the quarter is unverifiable from this export; it moves no number, but the run cannot test it.",
+    "The export's channel column is the declared data of record and nothing outside it exists to test the producer's labeling, so 'which physical channel is which' is beyond what this run can establish; internal consistency data -> register -> dashboard is verified and the page is the sole deviation.",
+    "Unchecked by design and left to the human: audit/source_profile.json, audit/plan_proof.json, audit/results/gate0_machine/** and raw_data/orders.csv are outside my declared inputs (raw under quarantine policy), so the plan-over-profile digest binding and the comment column's content were not re-verif",
+    "audit/decisions/ does not exist and the handoff lists no rulings, so the five RESOLVED entries in human_decisions.yaml were verified by application and recalculation only: dedup (last-row-wins, 917 repeats), month-first dates, shipping locale (1 548,88 -> 1548.88 inside 37792722.50), negative-refund"
+  ],
+  "summary": "FAIL on one material blocker: the two completion-rate lines on release/report.md are labelled the wrong way round (line 14 label 'completion partner' carries CLM-COMPLETION-DIRECT, line 16 label 'completion direct' carries CLM-COMPLETION-PARTNER), so a reader of the report gets the inverted channel conclusion; every bound number on all three surfaces is correct — 25/25 of my own recalculations from quarantine/orders.csv matched the registry to its declared tolerances, including Wilson/Student intervals, both registered hypothesis statistics, the exclusion accounting (45000 - 459 out-of-quarter",
+  "wall_seconds": 648.3,
+  "cost": {
+    "at": "2026-09-17T00:01:04.379004+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-b3f0577a826f",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-16T23:50:19.690297+00:00",
+    "finished_at": "2026-09-17T00:01:04.379004+00:00",
+    "wall_seconds": 644.688,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 85133,
+    "cached_input_tokens": 2333568,
+    "output_tokens": 16663,
+    "total_tokens": 2456931,
+    "cost_usd": 0.047615744700000004
+  }
+}

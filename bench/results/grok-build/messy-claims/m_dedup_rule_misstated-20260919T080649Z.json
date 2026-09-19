@@ -1,0 +1,66 @@
+{
+  "profile": "grok-build",
+  "stage": "claims",
+  "case": "m_dedup_rule_misstated",
+  "dataset": "messy",
+  "error": "The answer to R02 says the first revision of an order is kept; the spec and the clean stage keep the last.",
+  "at": "2026-09-19T07:56:11+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "first revision",
+    "last revision|latest|latest_revision_wins|dedup_rule"
+  ],
+  "blocking_issues": 1,
+  "warnings": 5,
+  "checks": 54,
+  "issue_ids": [
+    "CLAIM-DEDUP-RULE-MISSTATED"
+  ],
+  "issue_texts": [
+    "CLAIM-DEDUP-RULE-MISSTATED | CLAIM-02.CLM-ORDERS.dedup_rule | gate_claims_auditor|dedup_rule|analysis/answers/R02.json|CLM-ORDERS | CLAIM_SUPPORT | CRITICAL | worker_analysis | analysis/answers/R02.json caveats state that the first revision is kept and that this is audit_spec.yaml dedup_rule. audit_spec.yaml dedup_rule is latest_revision_wins; check_plan raw_latest keep is last. Independent recomp"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "analysis/answers/R02.json is outside caveats_declared, so gate_claims_machine could not see the misstated revision rule.",
+    "CLM-ORDERS register caveats name one row after deduplication and exclusion of negative refunds, but they do not name that the last revision wins.",
+    "CLM-AOV-DIRECT and CLM-AOV-PARTNER caveats do not say net of refunds in words; the population field says delivered, and the figure is the mean of net_amount on delivered rows.",
+    "CLM-TEST-CHANNEL-AOV population text does not name the delivered-only filter that its n_per_group and the analysis plan assume.",
+    "shipping_total remains excused by name and is not a published claim; R05 names that excuse."
+  ],
+  "summary": "R02 misstates the frozen dedup rule as first-revision-kept and cites audit_spec.yaml for that. Spec and check_plan keep the last row per order_id. Independent quarantine recompute matches every published point, interval, and test under last-revision-wins; first-revision net revenue is 3010704.83, not the published 3023296.61.",
+  "wall_seconds": 628.2,
+  "cost": {
+    "at": "2026-09-19T08:06:47.605261+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-cf4a26453abf",
+    "agent_role": "grok-audit-claims",
+    "started_at": "2026-09-19T07:56:23.284087+00:00",
+    "finished_at": "2026-09-19T08:06:47.605261+00:00",
+    "wall_seconds": 624.328,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 153358,
+    "cached_input_tokens": 1981312,
+    "output_tokens": 36796,
+    "total_tokens": 2171466,
+    "cost_usd": 0.51617032
+  }
+}

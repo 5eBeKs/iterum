@@ -1,0 +1,74 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "m_channel_labels_swapped_page",
+  "dataset": "messy",
+  "error": "On the page the direct and partner completion lines carry each other's labels; the figures and anchors are untouched.",
+  "at": "2026-09-18T20:04:01+00:00",
+  "max_v2_revision": "b7adc4a",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "label",
+    "swap|transpos|mislabel",
+    "direct|partner"
+  ],
+  "blocking_issues": 4,
+  "warnings": 6,
+  "checks": 15,
+  "issue_ids": [
+    "REL-AUD-LABEL-SWAP",
+    "REL-AUD-POPULATION-PER-FIGURE",
+    "REL-AUD-DASH-ESTIMATE-N",
+    "REL-AUD-AOV-CAVEATS"
+  ],
+  "issue_texts": [
+    "REL-AUD-LABEL-SWAP | gate_release_auditor.label_matches_claim | gate_release_auditor|label_matches_claim|release/report.md|completion_by_channel | VISUALIZATION | CRITICAL | worker_release | release/report.md line 14 reads 'completion partner' but anchors CLM-COMPLETION-DIRECT (0.724397, CI 0.718779..0.729946, n = 24597). Line 16 reads 'completion direct' but anchors CLM-COMPLETION-PARTNER (0.6047",
+    "REL-AUD-POPULATION-PER-FIGURE | gate_release_auditor.population_period_beside_figure | gate_release_auditor|population_period_beside_figure|release/report.md|page_population | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3 applies one page-level population, 'orders placed inside the quarter, one row per order, delivered only', which is CLM-NET-REVENUE's population, to every f",
+    "REL-AUD-DASH-ESTIMATE-N | gate_release_auditor.estimate_rendering | gate_release_auditor|estimate_rendering|release/dashboard_data.json|estimate_cards | VISUALIZATION | MEDIUM | worker_release | release/dashboard_data.json cards[2..5] (CLM-COMPLETION-DIRECT, CLM-COMPLETION-PARTNER, CLM-AOV-DIRECT, CLM-AOV-PARTNER) carry value, ci_low and ci_high. They have no n, no interval level and no population",
+    "REL-AUD-AOV-CAVEATS | gate_release_auditor.aov_caveats | gate_release_auditor|aov_caveats|analysis/claim_register.json|CLM-AOV | CLAIM_SUPPORT | MEDIUM | worker_analysis | report.md lines 18-21 and dashboard cards[4] and cards[5] show AOV 110.64 and 87.27. The only caveats beside them are the channel-population and sampling-interval ones. Neither 'net of refunds' nor 'delivered orders only' appear"
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "No machine rule in audit/check_plan.json or audit/release_surface_contract.json compares a visible label with the claim anchored beside it. gate_release_machine checks number-to-anchor binding, and gate_release_document checks presence, caveats and wording, so both passed report.md with the direct a",
+    "caveats_rendered in gate_release_document checks that caveat text is present somewhere on the surface, not that it sits beside its figure, and caveats_declared does not require net-of-refunds or delivered-only for the AOV claims.",
+    "The published release/report.md does not match what src/release/build_release.py would generate: the generator derives labels from claim_id and orders direct before partner. The page was changed after generation, or by a different generator than the one declared.",
+    "gate_release_machine evidence records only rendered-number rows and has no record of a generator literal scan. A manual read of src/release/build_release.py found no business-number literal: only Decimal(1), which the contract exempts, the 8 in utf-8, which it also exempts, and parents[2], a path de",
+    "Both p values display as 0.0000 at 4 display digits. The recomputed two-proportion p is about 2.9e-157, so the display is correct but reads as exactly zero; '< 0.0001' would be more honest to a reader.",
+    "shipping_total (37792722.50 in the metrics) appears on no surface, which is correct for a metric marked publish: never. No UNVERIFIED_CLAIM marker and no quarantined free-text phrase was found on report.md or dashboard_data.json."
+  ],
+  "summary": "Every one of the 60 numbers on the release surfaces matches the register and recomputes from metric numerators and denominators (net revenue 3023296.61 = 1971306.75 + 1051989.86; orders 44531 = 24597 + 19934; Wilson bounds, the z statistic and the effect match to 6 dp). The page still misleads the reader. On report.md lines 14 and 16 the completion rows carry swapped channel labels: the direct rate 0.724397 (n = 24597) is labelled partner, and the partner rate 0.604746 is labelled direct. This contradicts the dashboard and the registered-direction caveat. Also, the page-level population says '",
+  "wall_seconds": 194.7,
+  "cost": {
+    "at": "2026-09-18T20:07:19.307263+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-1ec424ea468d",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-18T20:04:07.854425+00:00",
+    "finished_at": "2026-09-18T20:07:19.307263+00:00",
+    "wall_seconds": 191.453,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 28,
+    "cached_input_tokens": 1123630,
+    "output_tokens": 19278,
+    "total_tokens": 1142936,
+    "cost_usd": 1.970535
+  }
+}

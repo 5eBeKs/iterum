@@ -1,0 +1,61 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "population_relabelled",
+  "error": "The headline claim says its population is all orders, while the spec and its own caveats say delivered orders.",
+  "at": "2026-09-15T17:39:09+00:00",
+  "max_v2_revision": "2a6f8dc",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "all orders",
+    "CLM-NET-REVENUE"
+  ],
+  "blocking_issues": 1,
+  "warnings": 4,
+  "checks": 15,
+  "issue_ids": [
+    "CLAIMS-POPULATION-RELABEL-CLM-NET-REVENUE"
+  ],
+  "warning_texts": [
+    "The claim register's own population field and its own caveat disagree for CLM-NET-REVENUE: 'all orders inside the period' versus 'delivered orders only'; one of the two is false about the published number.",
+    "The machine rule caveats_declared passed for CLM-NET-REVENUE because it matches topics against caveats only and never reads the population field, so the gate's silence on the relabelled population is not approval.",
+    "check_plan.json lists caveats_rendered and claims_rendered for gate_release_document as accepted_unproven because plan proof hit FileNotFoundError; the release-surface render of caveats is therefore unproven by a deterministic rule so far.",
+    "CLM-NET-REVENUE's caveat list omits the topic id wording 'delivered orders inside the period' but satisfies the check with 'delivered orders only'; acceptable under the check plan's any_of list, noted only because of the contradicting population field."
+  ],
+  "summary": "All five claim values reproduce exactly from raw_data/orders.csv under my own recalc (net 35741.52; rate 27/57=0.473684; PL 11181.67, DE 11032.61, CZ 13527.24; row accounting 201=174+26+1), machine gate's independent_claim_recalc.json is rooted only in raw_data/orders.csv, but CLM-NET-REVENUE declares a population that is not the one the number is computed on: the register says 'all orders inside the period' while the value is SUM(net) over delivered orders inside the period, which is the audit_spec population 'delivered orders inside the period'.",
+  "wall_seconds": 111.8,
+  "cost": {
+    "at": "2026-09-15T17:41:03.902922+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-4d1b046bf8c9",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-15T17:39:16.404421+00:00",
+    "finished_at": "2026-09-15T17:41:03.868097+00:00",
+    "wall_seconds": 107.469,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 61091,
+    "cached_input_tokens": 287040,
+    "output_tokens": 4933,
+    "total_tokens": 355528,
+    "cost_usd": 0.010764425000000001
+  }
+}

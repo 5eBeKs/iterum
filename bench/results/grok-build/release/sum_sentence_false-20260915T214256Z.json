@@ -1,0 +1,61 @@
+{
+  "profile": "grok-build",
+  "stage": "release",
+  "case": "sum_sentence_false",
+  "error": "The page says the country figures sum to the headline before refunds; both are net of refunds.",
+  "at": "2026-09-15T21:33:25+00:00",
+  "max_v2_revision": "2cc51dd",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "before refunds",
+    "net of refunds",
+    "sum"
+  ],
+  "blocking_issues": 1,
+  "warnings": 4,
+  "checks": 44,
+  "issue_ids": [
+    "REL-COUNTRY-SUM-FALSE-SENTENCE"
+  ],
+  "warning_texts": [
+    "Frozen audit/check_plan.json has no gate_release_machine rules, and that gate wrote no evidence/checks.json, so this stage has no recompute_*, claims_recomputed, component_sum, or column_identity comparisons to cite.",
+    "claims_rendered and caveats_rendered are listed under accepted_unproven in audit/check_plan.json, so presence of caveat strings was not breaker-proven.",
+    "release/dashboard_data.json never states that country nets sum to headline net_revenue; the only reader-facing reconciliation sentence is the false one on release/report.md line 22.",
+    "The refund-rate numerator 27 equals metrics.excluded_order_rows 27; the report labels 27 as paying customers, which matches CLM-REFUND-RATE and not the row-accounting metric."
+  ],
+  "summary": "FAIL: all 21 rendered numbers match analysis/claim_register.json (PL 11181.67 + DE 11032.61 + CZ 13527.24 = net_revenue 35741.52; refund rate 27/57 = 0.473684), but release/report.md line 22 tells the reader those country figures sum to the headline before refunds (gross 40235.02).",
+  "wall_seconds": 563.6,
+  "cost": {
+    "at": "2026-09-15T21:42:55.222150+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-b05b5df3b01d",
+    "agent_role": "grok-audit-release",
+    "started_at": "2026-09-15T21:33:36.222620+00:00",
+    "finished_at": "2026-09-15T21:42:55.222150+00:00",
+    "wall_seconds": 559.0,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 247806,
+    "cached_input_tokens": 1341440,
+    "output_tokens": 32127,
+    "total_tokens": 1621373,
+    "cost_usd": 0.46209196
+  }
+}

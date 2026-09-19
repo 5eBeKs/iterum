@@ -1,0 +1,74 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "m_page_no_uncertainty",
+  "dataset": "messy",
+  "error": "The page says the channel figures are measured over every order and carry no uncertainty, beside their intervals.",
+  "at": "2026-09-19T10:02:45+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "no uncertainty|every order",
+    "interval|estimate|sampl"
+  ],
+  "blocking_issues": 5,
+  "warnings": 5,
+  "checks": 13,
+  "issue_ids": [
+    "REL-A1-CENSUS-WORDING",
+    "REL-A1-NOT-GENERATED",
+    "REL-A1-POPULATION-LABEL",
+    "REL-A1-DASHBOARD-CARD-CONTEXT",
+    "REL-A1-AOV-CAVEATS"
+  ],
+  "issue_texts": [
+    "REL-A1-CENSUS-WORDING | gate_release_auditor.wording_not_stronger_than_interval | gate_release_auditor|wording_not_stronger_than_interval|release/report.md|by_channel | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 23, in the 'By channel' section directly under the four estimates: the visible sentence says each channel figure is measured over every order of the quarter and so ",
+    "REL-A1-NOT-GENERATED | gate_release_auditor.surface_matches_generator | gate_release_auditor|surface_matches_generator|release/report.md|document | RELEASE_INTEGRITY | HIGH | worker_release | src/release/build_release.py lines 103-106 emit the channel-section sentence as 'an estimate from one quarter of orders'. That text is absent from release/report.md, and the report's line 23 carries different",
+    "REL-A1-POPULATION-LABEL | gate_release_auditor.population_beside_figure | gate_release_auditor|population_beside_figure|release/report.md|page_population | VISUALIZATION | HIGH | worker_release | release/report.md line 3 prints one page-level population ending 'delivered only'. The generator takes it from CLM-NET-REVENUE alone (build_release.py line 86). The population of CLM-ORDERS, CLM-COMPLETIO",
+    "REL-A1-DASHBOARD-CARD-CONTEXT | gate_release_auditor.card_carries_context | gate_release_auditor|card_carries_context|release/dashboard_data.json|cards | VISUALIZATION | MEDIUM | worker_release | release/dashboard_data.json: all 8 cards have only the keys claim_id, label, value, _claim_roles and caveats, plus ci_low/ci_high or effect/statistic. None has a population or period. The only period is t",
+    "REL-A1-AOV-CAVEATS | gate_release_auditor.aov_caveats | gate_release_auditor|aov_caveats|analysis/claim_register.json|CLM-AOV | CLAIM_SUPPORT | MEDIUM | worker_analysis | analysis/claim_register.json: the caveats of CLM-AOV-DIRECT and CLM-AOV-PARTNER are only 'one quarter of orders in this channel' and the sampling-interval caveat. Neither 'net of refunds' nor 'delivered orders only' is present (r"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "No machine rule covers the release's biggest defect: wording_matches_claims only checks the word 'significant' (WORDING-01), and every other release rule reads digits, so a sentence that tells the reader to disregard the intervals passed both release gates.",
+    "release_surface_contract.json declares no reconciliations and no card_caveat_requirements, so the machine gate did not check the component sums or whether a card carries its population and period. My recomputation shows the identities hold, but only this auditor's judgment covers card context.",
+    "Both registered tests print p as 0.0000 at four digits. My recomputation gives p ≈ 3e-157 for the completion test, and a reader may read the printed value as exactly zero. Printing '< 0.0001' would be accurate.",
+    "The significance verdict on both tests is correct under the plan: p is below the Bonferroni-adjusted alpha of 0.025, and the positive effects correctly mean direct is higher. The completion effect 0.119652 equals 0.724397 - 0.604746 to registry precision.",
+    "The generator contains the numeric literals 2 (parents[2], indent=2) and 0 (return code). They are structural, not business figures, but release_surface_contract.json lists exclusions only for 8 and 1, so the gate's generator scan either tolerates them silently or did not run. Its evidence file does"
+  ],
+  "summary": "Every one of the 60 rendered numbers across report.md, dashboard_data.json and the manifest is bound and exact: I reformatted each from the registry independently and recomputed the Wilson bounds, the z statistic, the effect and the reconciliation identities from metrics numerators and denominators. The release still fails on four grounds. (1) report.md line 23 tells the reader that the channel figures were measured over every order and carry no uncertainty. That census reading contradicts the intervals printed on lines 14-20. (2) build_release.py does not write that sentence, so the published",
+  "wall_seconds": 215.9,
+  "cost": {
+    "at": "2026-09-19T10:06:24.890215+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-1ec424ea468d",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-19T10:02:52.238065+00:00",
+    "finished_at": "2026-09-19T10:06:24.890215+00:00",
+    "wall_seconds": 212.656,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 30,
+    "cached_input_tokens": 1381718,
+    "output_tokens": 20859,
+    "total_tokens": 1402607,
+    "cost_usd": 2.2352634999999994
+  }
+}

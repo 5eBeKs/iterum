@@ -1,0 +1,60 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "unsupported_trend_in_caveat",
+  "error": "A caveat asserts growth against a previous quarter no metric computes.",
+  "at": "2026-09-15T17:37:24+00:00",
+  "max_v2_revision": "2a6f8dc",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "previous quarter",
+    "12 ?%",
+    "trend|growth|grew|unsupported|no metric"
+  ],
+  "blocking_issues": 1,
+  "warnings": 3,
+  "checks": 14,
+  "issue_ids": [
+    "CLAIMS-AUD-UNSUPPORTED-TREND-CAVEAT"
+  ],
+  "warning_texts": [
+    "The only machine rule over caveat text in check_plan.json is caveats_declared, which checks required topics are present and ignores any additional assertion, so an unsupported growth statement on CLM-NET-REVENUE passed gate_claims_machine; caveat content beyond required topics is checked by no deter",
+    "The render_values numerator (27) and denominator (57) of CLM-REFUND-RATE are only ref-resolved by claim_refs_resolve and never recomputed by gate_claims_machine; independent recompute from raw_data/orders.csv matches both.",
+    "The date_format rule comment in check_plan.json says the raw file carried eight non-existent dates, but the current raw_data/orders.csv parses cleanly with zero invalid dates, so that comment describes a different version of the export."
+  ],
+  "summary": "All five claim values recompute exactly from raw_data/orders.csv (net 35741.52; refund rate 27/57 = 0.473684 on paying customers; PL 11181.67, DE 11032.61, CZ 13527.24), populations and periods match the spec, and the machine recalc is rooted only in raw_data. The gate fails on one blocker: CLM-NET-REVENUE carries a caveat asserting 12% growth on the previous quarter, which no metric, claim or source row supports.",
+  "wall_seconds": 177.2,
+  "cost": {
+    "at": "2026-09-15T17:40:24.413585+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-f58036111c74",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-15T17:37:32.036800+00:00",
+    "finished_at": "2026-09-15T17:40:24.413585+00:00",
+    "wall_seconds": 172.375,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 226,
+    "cached_input_tokens": 574279,
+    "output_tokens": 14989,
+    "total_tokens": 589494,
+    "cost_usd": 1.3856879999999998
+  }
+}

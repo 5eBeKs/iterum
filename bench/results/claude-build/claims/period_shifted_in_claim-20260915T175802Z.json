@@ -1,0 +1,60 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "period_shifted_in_claim",
+  "error": "One country claim carries a two-month period while its value is the full quarter's.",
+  "at": "2026-09-15T17:54:43+00:00",
+  "max_v2_revision": "2a6f8dc",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "period",
+    "02-28",
+    "CLM-NET-CZ"
+  ],
+  "blocking_issues": 1,
+  "warnings": 3,
+  "checks": 15,
+  "issue_ids": [
+    "CLAIMS-AUD-CZ-PERIOD-MISSTATED"
+  ],
+  "warning_texts": [
+    "No deterministic rule in audit/check_plan.json compares a claim's own period field with the spec period: claims_recomputed filters raw by the dates frozen in the plan and caveats_declared matches wording only, so gate_claims_machine passed CLM-NET-CZ while its register entry names a two-month period",
+    "The published CLM-NET-CZ period label would mislead a reader of the release: 13527.24 EUR presented as January-February net revenue for CZ, when January-February CZ net is 9248.36 EUR and the remainder comes from March orders.",
+    "audit_spec.yaml sets the period end to 2025-03-30 while metrics/calculated_metrics.json names the period 2025-Q1-delivered; raw_data/orders.csv has no rows dated 2025-03-31, so no figure changes, but the quarter label and the stated end date disagree by one day."
+  ],
+  "summary": "All five claim values recompute from raw_data/orders.csv and match both the register and gate_claims_machine within tolerance, but CLM-NET-CZ declares period 2025-01-01..2025-02-28 while its value 13527.24 is the net over the spec period 2025-01-01..2025-03-30; on its own stated period the figure would be 9248.36, so the claim states a period it was not calculated on.",
+  "wall_seconds": 188.9,
+  "cost": {
+    "at": "2026-09-15T17:58:01.694105+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-f58036111c74",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-15T17:54:59.024759+00:00",
+    "finished_at": "2026-09-15T17:58:01.694105+00:00",
+    "wall_seconds": 182.672,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 354,
+    "cached_input_tokens": 962245,
+    "output_tokens": 15141,
+    "total_tokens": 977740,
+    "cost_usd": 1.5727395
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "profile": "gpt-build",
+  "stage": "claims",
+  "case": "clean",
+  "error": "no defect planted (false-positive control)",
+  "at": "2026-09-16T07:47:44+00:00",
+  "max_v2_revision": "7e1d71f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "PASS",
+  "stop_code": null,
+  "outcome": "clean_pass",
+  "matched_signals": [],
+  "blocking_issues": 0,
+  "warnings": 0,
+  "checks": 9,
+  "issue_ids": [],
+  "warning_texts": [],
+  "summary": "All five registered claims were independently recomputed from raw_data/orders.csv and agree with their metric links, declared populations and periods, caveats, and the five machine-gate comparisons.",
+  "wall_seconds": 299.6,
+  "cost": {
+    "at": "2026-09-16T07:52:45.456622+00:00",
+    "launcher": "codex_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-3e87f8952b99",
+    "agent_role": "gpt-audit-claims",
+    "started_at": "2026-09-16T07:47:48.476418+00:00",
+    "finished_at": "2026-09-16T07:52:45.454617+00:00",
+    "wall_seconds": 296.984,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "gpt-5.6-sol",
+    "model_used": null,
+    "input_tokens": 1590095,
+    "cached_input_tokens": null,
+    "output_tokens": 12735,
+    "total_tokens": 1602830,
+    "cost_usd": null
+  }
+}

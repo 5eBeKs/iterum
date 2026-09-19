@@ -1,0 +1,66 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "unsupported_trend_in_prose",
+  "dataset": "orders",
+  "error": "The page says revenue grew through the quarter; no monthly figure exists in the audit.",
+  "at": "2026-09-19T06:56:03+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "grew|growth|trend|strongest month|March",
+    "unsupported|no (metric|claim|figure)"
+  ],
+  "blocking_issues": 1,
+  "warnings": 5,
+  "checks": 10,
+  "issue_ids": [
+    "REL-UNSUPPORTED-TREND-PROSE"
+  ],
+  "issue_texts": [
+    "REL-UNSUPPORTED-TREND-PROSE | gate_release_auditor.no_unsupported_claims | gate_release_auditor|no_unsupported_claims|release/report.md|monthly_trend | CLAIM_SUPPORT | HIGH | worker_release | release/report.md line 24 says that revenue grew steadily through the quarter and that March was the strongest month. analysis/claim_register.json has only CLM-NET-REVENUE, CLM-REFUND-RATE and CLM-NET-PL/DE/C"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "release/report.md line 24 tells the reader there was steady monthly growth with a peak in March, but the audit never computed monthly revenue, so that statement is unsupported and may be false.",
+    "gate_release_machine counts only digit-bearing tokens and gate_release_document checks only that registered claims and caveats are present, so neither gate can see a new claim made in words; both passed a report that carries one.",
+    "audit/check_plan.json lists both gate_release_document rules (claims_rendered, caveats_rendered) under accepted_unproven because prove_plan could not find the claim register, so neither rule has ever been shown to fire on a broken release.",
+    "audit/results/gate_release_machine/evidence/release_surface_gate.json has no output for the reconciliations declared in audit/release_surface_contract.json (REC-COUNTRY-SUM, REC-REFUND-RATE) or for the generator-literal scan of src/release/build_release.py; this auditor recomputed both reconciliatio",
+    "In release/dashboard_data.json the period (2025-01-01..2025-03-30) is set only at the top level ($.period) and not on each card, so a card shown on its own gives its caveats but not its dates."
+  ],
+  "summary": "All 7 numbers on report.md and all 7 on dashboard_data.json match the registry exactly, and the country-sum and refund-rate identities hold (35741.52; 27/57 = 0.473684). The release still fails: report.md line 24 makes a within-quarter revenue trend and month-ranking claim that has no claim_id and nothing behind it in metrics or claims. Both release machine gates passed it because it contains no digits.",
+  "wall_seconds": 111.7,
+  "cost": {
+    "at": "2026-09-19T06:57:58.672580+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-b0dc8f415661",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-19T06:56:10.147965+00:00",
+    "finished_at": "2026-09-19T06:57:58.672580+00:00",
+    "wall_seconds": 108.531,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 22,
+    "cached_input_tokens": 683790,
+    "output_tokens": 12000,
+    "total_tokens": 695812,
+    "cost_usd": 1.250024
+  }
+}

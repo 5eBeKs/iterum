@@ -1,0 +1,96 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "m_page_causal_sentence",
+  "dataset": "messy",
+  "error": "The page explains the smaller partner baskets by bargain hunters, which nothing in the audit measures.",
+  "at": "2026-09-19T08:15:34+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "caus|explan|unsupported|no (evidence|metric|claim)"
+  ],
+  "blocking_issues": 7,
+  "warnings": 19,
+  "checks": 22,
+  "issue_ids": [
+    "FINAL-RT-CAUSAL-SENTENCE",
+    "FINAL-RT-PAGE-POPULATION",
+    "FINAL-RT-DASHBOARD-N",
+    "FINAL-RT-CARRY-WORKER-CLEAN",
+    "FINAL-RT-CARRY-WORKER-METRICS",
+    "FINAL-RT-CARRY-WORKER-ANALYSIS",
+    "FINAL-RT-CARRY-WORKER-RELEASE"
+  ],
+  "issue_texts": [
+    "FINAL-RT-CAUSAL-SENTENCE | final_claude_redteam.report_prose_bound_to_claims | final_claude_redteam|report_prose_bound_to_claims|release/report.md|partner_basket_cause | CLAIM_SUPPORT | HIGH | worker_release | release/report.md line 32 is the page's closing line and has no claim anchor. It attributes the partner channel's smaller baskets to the type of customer the channel attracts. No claim in an",
+    "FINAL-RT-PAGE-POPULATION | final_claude_redteam.card_population | final_claude_redteam|card_population|release/report.md|page_population_line | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3 says the population of the whole page is orders in the quarter, one row per order, delivered only. That is the population of CLM-NET-REVENUE alone. CLM-ORDERS (44,531), CLM-COMPLETION-DIR",
+    "FINAL-RT-DASHBOARD-N | final_claude_redteam.estimate_rendering_n | final_claude_redteam|estimate_rendering_n|release/dashboard_data.json|estimate_cards | RELEASE_INTEGRITY | MEDIUM | worker_release | In release/dashboard_data.json, the cards for CLM-COMPLETION-DIRECT, CLM-COMPLETION-PARTNER, CLM-AOV-DIRECT and CLM-AOV-PARTNER have value, ci_low and ci_high but no n. The claims' n values are 24597,",
+    "FINAL-RT-CARRY-WORKER-CLEAN | final_claude_redteam.carry_continuity.worker_clean | final_claude_redteam|carry_continuity|audit/checkpoints/worker_clean.carry.json|facts | OTHER | MEDIUM | worker_clean | audit/checkpoints/worker_clean.carry.json passes carry.schema.json, and its context_id and attempt match the execution block of audit/results/worker_clean/result.json. Its facts contradict what the",
+    "FINAL-RT-CARRY-WORKER-METRICS | final_claude_redteam.carry_continuity.worker_metrics | final_claude_redteam|carry_continuity|audit/checkpoints/worker_metrics.carry.json|facts | OTHER | MEDIUM | worker_metrics | audit/checkpoints/worker_metrics.carry.json passes the schema and matches its result's context_id and attempt. Its content is the same as the worker_clean carry: period 2025-01-01..2025-03-",
+    "FINAL-RT-CARRY-WORKER-ANALYSIS | final_claude_redteam.carry_continuity.worker_analysis | final_claude_redteam|carry_continuity|audit/checkpoints/worker_analysis.carry.json|facts | OTHER | MEDIUM | worker_analysis | audit/checkpoints/worker_analysis.carry.json passes the schema and matches its result's context_id and attempt. It carries the same content: period 2025-01-01..2025-03-30, population st",
+    "FINAL-RT-CARRY-WORKER-RELEASE | final_claude_redteam.carry_continuity.worker_release | final_claude_redteam|carry_continuity|audit/checkpoints/worker_release.carry.json|facts | OTHER | LOW | worker_release | audit/checkpoints/worker_release.carry.json passes the schema and matches its result's context_id and attempt. It carries the same content as the others (period 2025-01-01..2025-03-30, status="
+  ],
+  "other_blockers": 6,
+  "warning_texts": [
+    "This profile runs on one vendor: every context in the run, this red team included, is the same model family, so no step here is an independent-vendor review. There is no GPT gate over anyone's work. Only the deterministic layer (machine gates, frozen check_plan, control lock, release surface gate) h",
+    "All five LLM auditor results (gate0_semantic, gate_clean_auditor, gate_metrics_auditor, gate_claims_auditor, gate_release_auditor) and all four worker results are placeholders. They have 'driver e2e' summaries, created_at 2026-01-01T00:00:00Z, one-line evidence notes, and a 'recomputed independently",
+    "Every carry lists raw_data/orders.csv, the export that still contains the comment column, under do_not_reread as 'already summarized', which suggests a worker opened it. free_text_quarantined checks only declared input globs and a 25-value sample, so an undeclared read is invisible to every gate, an",
+    "I could not establish where the causal sentence on report.md line 32 came from (worker prose or the quarantined comment column). Its words are not among the manifest's top_tokens, but those cover only the 12 most frequent tokens of 11 distinct comments.",
+    "The completion rates count 7,491 pending orders as not completed (14% of direct, 20% of partner, flat from January to March, so this is not end-of-quarter censoring). Revisions show pending orders later becoming delivered (61 pending->delivered), so the rates are a status snapshot at export time rat",
+    "The spec-declared population assumption that looks most doubtful is the one above: pending in the denominator moves CLM-COMPLETION-DIRECT, CLM-COMPLETION-PARTNER and the CLM-TEST-CHANNEL-COMPLETION effect of 0.1197. Excluding pending, the rates would be 0.842857 and 0.758176 over 21,140 and 15,900 o",
+    "Readable shipping cells average 902.34 per order (median 901.14), against a mean gross of 109.22. Shipping exceeds the order's gross on 39,368 orders, so the 'EUR' unit that metrics/calculated_metrics.json gives shipping_total (37,792,722.50) is doubtful. Most likely the column is not per-order ship",
+    "dedup_rule (latest_revision_wins) holds: in all 917 repeated orders the file-last row also has the latest updated_at, and every revision moves toward delivered (61 from pending, 65 from cancelled). But 549 pairs share an identical updated_at, and 6 of those change status, so 777.99 EUR of net revenu",
+    "refund_sign_policy excludes 10 in-quarter orders (8 delivered) for negative refunds. Keeping them as written would add 1,290.57 EUR to net revenue (645.29 with the sign flipped) and 10 orders to 44,531. The report names the rule but not how many orders it removed.",
+    "The analysis plan's independence assumption ('one row per order, so the observations are independent') does not strictly hold: 44,531 orders come from 4,198 customers (10.6 each, up to 23). A customer-clustered standard error, however, gives a design effect of 0.99 to 1.03 (evidence/clustering_outpu",
+    "The report does not tell the reader that shipping cost (question R05) was computed and deliberately withheld. That explanation exists only in analysis/answers/R05.json, so a reader asking about shipping finds nothing on the page.",
+    "Both test p values are shown as '0.0000'. The completion z of 26.72 corresponds to p of about 1e-157, so '< 0.0001' would avoid a reader taking the p value as exactly zero.",
+    "The caveat 'one quarter of orders in this channel' can be read as 25 per cent of orders rather than one calendar quarter, which changes what the sampling caveat means.",
+    "The AOV lines and cards say 'orders in this channel', but n = 17,818 and 12,055 are delivered orders only. The delivered restriction appears in the claim register's population field, not on the AOV lines or cards themselves.",
+    "No deterministic rule checks several places where these defects sit: prose without numbers on a release surface, n on dashboard cards, the content of carries, and the renamed columns customer_id/order_date/country, which values_preserved skips (I checked those and found 0 mismatches over 44,531 orde",
+    "I did not verify control_totals_match against raw_data/order_system_export_log.json, profile_recomputed or plan_proven, because those sources are outside my inputs. I rely on gate0_machine PASS (36 checks) for them.",
+    "I did not inspect src/release/build_release.py for business literals, because it is outside my inputs. I rely on gate_release_machine, which bound all 60 numbers on 3 surfaces and found no [:N] slicing, magnitude filter or UNVERIFIED_CLAIM marker; I confirmed that no marker appears under release/.",
+    "Retry history and stale inputs are not in the handoff, so I did not check them. Anyone relying on this run should read audit_runner.py report.",
+    "No audit/decisions/*.json exists and the handoff's rulings list is empty, so no human ruling was applied after Gate 0. All five human_decisions.yaml entries are RESOLVED by spec keys, and the data support three of them outright: slashed dates read month-first agree with order_month on all 6,852 rows"
+  ],
+  "summary": "FAIL with 7 blockers. Every published figure checks out: my own code over quarantine/orders.csv reproduces all 19 registry values exactly, and they trace unchanged from clean to metrics to claims to all three release surfaces (60 of 60 numbers bound). The page around those figures is wrong in three places. (1) release/report.md line 32 gives an unregistered causal explanation for the partner channel's lower AOV, and the data contradict it: 4,158 of 4,198 customers buy through both channels. (2) report.md line 3 says the whole page covers delivered orders only. That is true of 1 of the 8 claims",
+  "wall_seconds": 607.1,
+  "cost": {
+    "at": "2026-09-19T08:25:50.487845+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-4b16f125bb3c",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-19T08:15:46.787037+00:00",
+    "finished_at": "2026-09-19T08:25:50.487845+00:00",
+    "wall_seconds": 603.703,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 70,
+    "cached_input_tokens": 4854604,
+    "output_tokens": 62066,
+    "total_tokens": 4916740,
+    "cost_usd": 5.748002499999999
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "profile": "glm-build",
+  "stage": "release",
+  "case": "m_population_line_all_rows",
+  "dataset": "messy",
+  "error": "The page's population line says every export row; the figures are over one row per order after deduplication.",
+  "at": "2026-09-19T07:38:43+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "every row|export row|revision|dedup|one row per order"
+  ],
+  "blocking_issues": 2,
+  "warnings": 5,
+  "checks": 12,
+  "issue_ids": [
+    "REL-POPULATION-LINE",
+    "REL-DASHBOARD-ESTIMATE-N"
+  ],
+  "issue_texts": [
+    "REL-POPULATION-LINE | gate_release_auditor.population_line | gate_release_auditor|population_line_matches_register|release/report.md|line 3 | RELEASE_INTEGRITY | CRITICAL | worker_release | release/report.md line 3: 'Population: every row of the export inside the quarter, delivered only.' — verified by audit/results/gate_release_auditor/evidence/recount_release.py (FAIL population_line.matches_reg",
+    "REL-DASHBOARD-ESTIMATE-N | gate_release_auditor.estimate_rendering | gate_release_auditor|estimate_n_beside_interval|release/dashboard_data.json|estimate cards | RELEASE_INTEGRITY | MEDIUM | worker_release | audit/results/gate_release_auditor/evidence/recount_release.py (FAIL estimate.dashboard.n_missing.CLM-COMPLETION-DIRECT/PARTNER, CLM-AOV-DIRECT/PARTNER). The four estimate cards in release/das"
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "The claim register gives the AOV estimates neither 'delivered orders only' nor 'net of refunds' as caveats; the frozen audit/check_plan.json rule caveats_declared requires only channel-population and sampling-interval-only for CLM-AOV-*, so the release conforms to the plan, but the stage-prompt addi",
+    "The population strings of the AOV claims ('...delivered, channel = ...') are not rendered on any surface; only the caveats are shown, so the delivered-only nature of AOV is invisible to the reader (register-level, not a release-rendering fault).",
+    "check_plan.json caveats_declared and the stage-prompt caveat checklist otherwise agree and all required topics are present on both surfaces for all 8 claims.",
+    "Wilson bounds, the two-proportion-z statistic, the completion rates, the effect difference and the AOV quotients all reproduce from the register's own numerators/denominators within tolerance; only the student-t AOV bounds were not independently recomputable from the allowed inputs (they need per-or",
+    "release_surface_gate.json checked 60 numbers/20 roles/8 claims with 0 issues; my independent re-render agrees on all 60, so the machine gate's rendered-number contract is confirmed, but neither release gate checked the population sentence, which is where the real defect sat."
+  ],
+  "summary": "All 60 rendered numbers on all 3 surfaces re-rendered independently from the claim register with display_digits and match exactly; all reconciliation identities (component sum, ratios, wilson bounds, two-proportion z, aov quotients, point-in-interval) recomputed and hold; wording, absent shipping_total, no UNVERIFIED_CLAIM, no quarantined text, no business literals in the generator all verified. FAIL on two findings: the report population line contradicts the claim register (says 'every row of the export ... delivered only', denying dedup and mislabeling the Orders headline), and dashboard est",
+  "wall_seconds": 564.0,
+  "cost": {
+    "at": "2026-09-19T07:48:10.801851+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-1853a96c34af",
+    "agent_role": "glm-audit-release",
+    "started_at": "2026-09-19T07:38:51.055598+00:00",
+    "finished_at": "2026-09-19T07:48:10.797334+00:00",
+    "wall_seconds": 559.734,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 116095,
+    "cached_input_tokens": 813568,
+    "output_tokens": 9560,
+    "total_tokens": 948075,
+    "cost_usd": 0.030731274000000003
+  }
+}

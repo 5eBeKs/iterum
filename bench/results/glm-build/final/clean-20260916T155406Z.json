@@ -1,0 +1,70 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "clean",
+  "dataset": "orders",
+  "error": "no defect planted (false-positive control)",
+  "at": "2026-09-16T15:41:32+00:00",
+  "max_v2_revision": "e48d886",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "PASS",
+  "stop_code": null,
+  "outcome": "clean_pass",
+  "matched_signals": [],
+  "blocking_issues": 0,
+  "warnings": 10,
+  "checks": 17,
+  "issue_ids": [],
+  "issue_texts": [],
+  "other_blockers": 0,
+  "warning_texts": [
+    "Agent-layer provenance in this fixture is driver-written, not model-written: all four worker results and the committed AUDIT_REPORT.md carry driver e2e provenance (parent context max-driver-1ac9d81ecb08, model ids suffixed '-fake', created_at 2026-01-01), so the single-vendor chain of agent PASSes i",
+    "The committed audit/AUDIT_REPORT.md names profile max-v2/claude-code, final step final_claude_redteam and model claude-opus-5, while this run's audit/pipeline.json is the glm-build variant whose final step is final_glm_redteam on openrouter/z-ai/glm-5.3-flash; the two fixture records disagree about ",
+    "No output of this CLI names a model, so which model actually answered at any stage is unverifiable from artifacts; MODEL_MISMATCH cannot be machine-checked in this profile and execution.model on every stage, including this one, is self-report.",
+    "audit/audit_spec.yaml comment overstates the two refund-rate bases as differing by 'roughly a factor of three'; on this data the factor is 2.4976 (0.473684 over 0.189655), matching README's own 2.5 table - prose-only, moves no published number.",
+    "src/analysis/build_claims.py (docstring, line ~22) contains the comma-formatted business figure for the PL figure; it documents corpus history, no code reads it, and every published figure was recomputed by this gate from raw and matches the registry byte for byte - recorded because the figures_not_",
+    "All four worker carry files list raw_data/orders.csv in do_not_reread, though it is neither a previous-stage output nor previous-stage working data (that field is for previous-stage outputs only), and their population definition omits the period clause (period is carried separately in 'periods'); ru",
+    "audit_spec.yaml release.surfaces names two reading surfaces while release_surface_contract.json requires a third surface (release/release_number_manifest.json, required: true); the stricter contract is the enforced one, the manifest exists and all 7 of its numbers are bound - documentation-level div",
+    "Unchecked by this gate, and resting on the machine layer: checklib rule implementations (outside declared inputs), runner state, retry history and stale-input snapshots (human's task via audit_runner.py report), and the profiling step's source_profile.json (machine-recomputed by gate0, and no publis",
+    "No headless-renderable images exist in the release; the stage prompt permits this and the two surfaces plus the number manifest were checked as text and JSON values as a reader sees them.",
+    "All three RESOLVED human decisions were verified as applied and none looks wrong against the data: refund_rate_basis=paying_customers (rate is 27/57 customers, not 33/174 rows), revenue_recognition=net_of_refunds (35741.52, not gross 40235.02), timezone_for_dates=Europe/Warsaw (order_date is date-on"
+  ],
+  "summary": "Independent final red-team recalculation of demo-orders from raw_data/orders.csv with fresh Decimal-based code (audit/results/final/evidence/recalc.py, output in evidence/recalc_output.json): 56 recomputations, 0 failures. Population 201 raw rows = 174 delivered in-period (2025-01-01..2025-03-30 inclusive; 2025-03-30 rows kept, delivered 2025-04-01 row O00201 excluded) + 26 not-delivered + 1 outside period; net_revenue 35741.52 EUR (gross 40235.02 - refunds 4493.50), refund_rate 0.473684 on the spec's paying_customers basis (27 distinct refunded customers / 57 paying customers, NOT the order-r",
+  "wall_seconds": 747.9,
+  "cost": {
+    "at": "2026-09-16T15:54:05.664497+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-ded0dcd7c52d",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-16T15:41:41.522011+00:00",
+    "finished_at": "2026-09-16T15:54:05.657482+00:00",
+    "wall_seconds": 744.141,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 115022,
+    "cached_input_tokens": 2419008,
+    "output_tokens": 16810,
+    "total_tokens": 2576093,
+    "cost_usd": 0.06661982400000001
+  },
+  "rescored_at": "2026-09-16T15:54:36+00:00"
+}

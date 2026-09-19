@@ -1,0 +1,64 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "m_interval_read_as_probability",
+  "dataset": "messy",
+  "error": "The answer to R03 reads each 0.95 interval as a 95% probability that the true rate lies inside it.",
+  "at": "2026-09-19T06:41:32+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "probab",
+    "95 ?%",
+    "confidence|frequentist|coverage|credible|bayes"
+  ],
+  "blocking_issues": 1,
+  "warnings": 2,
+  "checks": 16,
+  "issue_ids": [
+    "INTERVAL-READ-AS-PROBABILITY"
+  ],
+  "issue_texts": [
+    "INTERVAL-READ-AS-PROBABILITY | gate_claims_auditor.caveat_interpretation.R03 | gate_claims_auditor|caveat_interpretation|analysis/answers/R03.json|ci_probability_language | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R03.json caveats[0]: 'There is a 95% probability that each channel's true completion rate lies inside its interval.' This is the frequentist/probability misreading of a "
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The machine gate's independent_claim_recalc.json is rooted in raw_data/orders.csv, which is correct for a machine step; my own recalc used the quarantine projection per manifest declared:true and agrees on every value.",
+    "shipping_total (37792722.50) is excused from publication by name in the check plan and answered in words in R05 with no claim and no published figure, which matches the spec's publish: never."
+  ],
+  "summary": "All 8 claims independently recomputed from quarantine/orders.csv (manifest declared:true, so the quarantine projection is the source; comment column never opened). Every point, CI bound, n, statistic, p and effect matches metrics/calculated_metrics.json and analysis/claim_register.json within spec tolerance; population and period derivations (45000 deduped, 459 out-of-period, 10 negative-refund exclusions, 44531 in population) match the registered caveats. Both test hypotheses are registered in audit/analysis_plan.json with matching method/alpha/correction; multiplicity (2 of 2, bonferroni app",
+  "wall_seconds": 150.7,
+  "cost": {
+    "at": "2026-09-19T06:44:10.773960+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-d4c7ee96b43e",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-19T06:41:44.567101+00:00",
+    "finished_at": "2026-09-19T06:44:10.771941+00:00",
+    "wall_seconds": 146.203,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 61051,
+    "cached_input_tokens": 359424,
+    "output_tokens": 6529,
+    "total_tokens": 428029,
+    "cost_usd": 0.014230422000000001
+  }
+}

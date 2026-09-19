@@ -1,0 +1,64 @@
+{
+  "profile": "glm-build",
+  "stage": "release",
+  "case": "country_labels_swapped",
+  "error": "On the dashboard the PL and DE cards carry each other's labels; values and claim ids are untouched.",
+  "at": "2026-09-15T17:44:53+00:00",
+  "max_v2_revision": "2a6f8dc",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "label",
+    "swap",
+    "\\bPL\\b.*\\bDE\\b|\\bDE\\b.*\\bPL\\b",
+    "dashboard"
+  ],
+  "blocking_issues": 1,
+  "warnings": 6,
+  "checks": 10,
+  "issue_ids": [
+    "DASH-COUNTRY-LABELS-SWAPPED"
+  ],
+  "warning_texts": [
+    "release/dashboard_data.json carries swapped country card labels: CLM-NET-PL labelled 'Net revenue DE (EUR)' and CLM-NET-DE labelled 'Net revenue PL (EUR)', while both values are correct.",
+    "The shipped dashboard_data.json does not match its own generator: src/release/build_release.py line 108 derives labels from the claim_id suffix and would render 'Net revenue PL' and 'Net revenue DE' correctly, so the artifact is stale or was edited after generation.",
+    "No deterministic rule in audit/check_plan.json compares a displayed card label with the claim's population, so the machine gate's silence on labels is not approval; this judgement gap is what the swap slipped through.",
+    "audit/results/gate_release_machine/evidence/ contains no checks.json and the gate_release_document checks.json holds only claims_rendered/caveats_rendered presence comparisons, so no machine-recomputed comparison existed for me to cite and every machine_check in my checks is null.",
+    "The CLM-REFUND-RATE number, its numerator 27 and denominator 57, and the 'denominator is unique paying_customers, not order rows' caveat are all plainly visible on both surfaces, not hidden in an HTML comment.",
+    "No displayed number is marked UNVERIFIED_CLAIM on any surface."
+  ],
+  "summary": "All 7 displayed claim numbers on all 3 surfaces recompute exactly from raw_data/orders.csv (net_revenue 35741.52 = 11181.67 + 11032.61 + 13527.24; refund_rate 27/57 = 0.473684), every caveat is visible, no UNVERIFIED_CLAIM markers, but release/dashboard_data.json shows card CLM-NET-PL (11,181.67, the Polish figure) under the label 'Net revenue DE (EUR)' and card CLM-NET-DE (11,032.61, the German figure) under 'Net revenue PL (EUR)' — the two country labels are swapped and the reader is misattributed. FAIL with one blocker on worker_release.",
+  "wall_seconds": 193.4,
+  "cost": {
+    "at": "2026-09-15T17:48:13.232595+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-c79e483d4ca9",
+    "agent_role": "glm-audit-release",
+    "started_at": "2026-09-15T17:45:09.841006+00:00",
+    "finished_at": "2026-09-15T17:48:13.185893+00:00",
+    "wall_seconds": 183.297,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 80215,
+    "cached_input_tokens": 556864,
+    "output_tokens": 5929,
+    "total_tokens": 645083,
+    "cost_usd": 0.016370085
+  }
+}

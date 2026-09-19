@@ -1,0 +1,55 @@
+{
+  "profile": "gpt-build",
+  "stage": "release",
+  "case": "clean",
+  "error": "no defect planted (false-positive control)",
+  "at": "2026-09-15T18:24:49+00:00",
+  "max_v2_revision": "1d34cf0",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "clean_blocked",
+  "matched_signals": [],
+  "blocking_issues": 1,
+  "warnings": 2,
+  "checks": 42,
+  "issue_ids": [
+    "REL-MANIFEST-CONTEXT"
+  ],
+  "warning_texts": [
+    "audit/check_plan.json marks gate_release_document claims_rendered and caveats_rendered as accepted_unproven because its breaker fixtures lacked analysis/claim_register.json; this audit reproduced the current comparisons, but plan breaker coverage remains absent.",
+    "audit/results/gate_release_machine/evidence/release_surface_gate.json records 21 numeric bindings without check_id fields, so their independent auditor checks correctly use machine_check null; all 21 records nevertheless agree with the fresh trace."
+  ],
+  "summary": "All 21 displayed business-number occurrences trace exactly through claim roles to calculated metrics, all 15 release-document comparisons were independently reproduced, country components equal net revenue, and the refund ratio recomputes exactly; however, the required release_number_manifest surface exposes seven numbers with no period, population, or caveats, so the release is not context-complete for a reader.",
+  "wall_seconds": 469.1,
+  "cost": {
+    "at": "2026-09-15T18:32:40.157983+00:00",
+    "launcher": "codex_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-f55b5d287935",
+    "agent_role": "gpt-audit-release",
+    "started_at": "2026-09-15T18:24:54.199874+00:00",
+    "finished_at": "2026-09-15T18:32:40.154972+00:00",
+    "wall_seconds": 465.953,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "gpt-5.6-sol",
+    "model_used": null,
+    "input_tokens": 1448125,
+    "cached_input_tokens": null,
+    "output_tokens": 20295,
+    "total_tokens": 1468420,
+    "cost_usd": null
+  }
+}

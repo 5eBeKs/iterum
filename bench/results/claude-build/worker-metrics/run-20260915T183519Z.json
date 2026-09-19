@@ -1,0 +1,44 @@
+{
+  "profile": "claude-build",
+  "stage": "metrics",
+  "worker": "worker_metrics",
+  "kind": "worker",
+  "at": "2026-09-15T18:29:20+00:00",
+  "max_v2_revision": "1d34cf0",
+  "verdict": "PASS",
+  "stop_code": null,
+  "summary": "metrics/calculated_metrics.json written by src/metrics/build_metrics.py with 11 metrics: net_revenue, refund_amount_total, refund_rate (basis paying_customers read from audit_spec.yaml; distinct refunded customers over distinct paying customers), net_revenue_pl/de/cz, and the five row-accounting counts copied from clean_data/exclusions.json. The script no longer hardcodes anything the contract declares: period, basis, exclusions, metric ids, units, tolerances and display digits now come from the spec, and column names from check_plan.json. A separate recompute from the clean table passed 28 of",
+  "wall_seconds": 356.1,
+  "cost": {
+    "at": "2026-09-15T18:35:15.740568+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "worker_metrics",
+    "attempt": 1,
+    "context_id": "cc-worker_metrics-a1-e09e0a185b2e",
+    "agent_role": "claude-worker",
+    "started_at": "2026-09-15T18:29:22.721323+00:00",
+    "finished_at": "2026-09-15T18:35:15.740568+00:00",
+    "wall_seconds": 353.016,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 578,
+    "cached_input_tokens": 1708389,
+    "output_tokens": 30606,
+    "total_tokens": 1739573,
+    "cost_usd": 2.4437755
+  },
+  "machine": {
+    "gates": {
+      "gate_metrics_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "outcome": "gate_pass",
+  "fingerprints": []
+}

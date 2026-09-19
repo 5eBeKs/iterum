@@ -1,0 +1,58 @@
+{
+  "profile": "grok-build",
+  "stage": "claims",
+  "case": "question_restated_narrower",
+  "error": "R02 is restated without the half that asks on which basis the rate is taken.",
+  "at": "2026-09-15T15:43:00+00:00",
+  "max_v2_revision": "0703cb4",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R02",
+    "basis",
+    "restat|narrow|half|question"
+  ],
+  "blocking_issues": 1,
+  "warnings": 1,
+  "checks": 18,
+  "issue_ids": [
+    "R02-QUESTION-RESTATED-NARROWER"
+  ],
+  "warning_texts": [
+    "The frozen check plan rule questions_are_answered only tests that an answer file exists with required fields and that R04 cites declared metrics; it does not compare restated question text to the brief, so a green machine gate is not approval of restatement fidelity."
+  ],
+  "summary": "Raw recalc from raw_data/orders.csv matches all five claim values (net 35741.52 EUR, refund rate 0.473684 = 27/57 paying customers, PL 11181.67, DE 11032.61, CZ 13527.24). analysis/answers/R02.json restates the brief more narrowly: it drops the basis clause the question asked.",
+  "wall_seconds": 441.3,
+  "cost": {
+    "at": "2026-09-15T15:50:24.721795+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-7cc6fdc6f7cc",
+    "agent_role": "grok-audit-claims",
+    "started_at": "2026-09-15T15:43:06.172298+00:00",
+    "finished_at": "2026-09-15T15:50:24.721795+00:00",
+    "wall_seconds": 438.546,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 291220,
+    "cached_input_tokens": 1370240,
+    "output_tokens": 23041,
+    "total_tokens": 1684501,
+    "cost_usd": 0.47797404
+  }
+}

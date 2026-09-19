@@ -1,0 +1,72 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "m_channel_labels_swapped_page",
+  "dataset": "messy",
+  "error": "On the page the direct and partner completion lines carry each other's labels; the figures and anchors are untouched.",
+  "at": "2026-09-18T20:07:21+00:00",
+  "max_v2_revision": "b7adc4a",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "label",
+    "swap|transpos|mislabel",
+    "direct|partner"
+  ],
+  "blocking_issues": 4,
+  "warnings": 4,
+  "checks": 19,
+  "issue_ids": [
+    "REL-CHANNEL-LABEL-SWAP",
+    "REL-REPORT-POPULATION-NOT-ON-FIGURE",
+    "REL-DASHBOARD-ESTIMATE-CARDS-INCOMPLETE",
+    "REL-AOV-CAVEATS-MISSING"
+  ],
+  "issue_texts": [
+    "REL-CHANNEL-LABEL-SWAP | gate_release_auditor.label_matches_claim | gate_release_auditor|label_matches_claim|release/report.md|completion_by_channel | VISUALIZATION | CRITICAL | worker_release | release/report.md line 14 carries the visible label 'completion partner' in front of the anchors for CLM-COMPLETION-DIRECT (0.724397, 0.718779..0.729946, n = 24597). Line 16 carries 'completion direct' in ",
+    "REL-REPORT-POPULATION-NOT-ON-FIGURE | gate_release_auditor.population_period_on_figure | gate_release_auditor|population_period_on_figure|release/report.md|all_claims | VISUALIZATION | HIGH | worker_release | release/report.md line 3 prints one page-wide population: 'orders placed inside the quarter, one row per order, delivered only'. The generator takes it from CLM-NET-REVENUE's population (buil",
+    "REL-DASHBOARD-ESTIMATE-CARDS-INCOMPLETE | gate_release_auditor.dashboard_estimate_card | gate_release_auditor|dashboard_estimate_card|release/dashboard_data.json|cards | VISUALIZATION | HIGH | worker_release | The four estimate cards in release/dashboard_data.json ($.cards[2] to $.cards[5], CLM-COMPLETION-* and CLM-AOV-*) carry value, ci_low and ci_high. None carries n (24597, 19934, 17818 and 120",
+    "REL-AOV-CAVEATS-MISSING | gate_release_auditor.aov_caveats | gate_release_auditor|aov_caveats|analysis/claim_register.json|CLM-AOV-DIRECT,CLM-AOV-PARTNER | CLAIM_SUPPORT | MEDIUM | worker_analysis | The dataset's release-audit additions require the 'net of refunds' and 'delivered orders only' caveats beside both revenue and AOV. The AOV lines on release/report.md (lines 18-21) and dashboard cards["
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "The release machine gate marked report.md lines 14 and 16 as bound and exact. It checks number-to-anchor binding only; no rule in audit/check_plan.json or audit/release_surface_contract.json compares a visible label with the claim it is anchored to. So a swapped channel label passes every determinis",
+    "audit/release_surface_contract.json declares no reconciliations and no card_caveat_requirements, and the check plan has no rule for per-figure population or period, dashboard n or level, or label-to-claim agreement. Those parts of the release are covered by auditor judgement alone.",
+    "Both registered tests show p as 0.0000, the register's 0.0000000000 at 4 digits. The completion test p recomputed from the counts is about 2.9e-157, so the figure is correct, but a reader sees a p of exactly zero where '< 0.0001' would be accurate.",
+    "The dashboard labels 'Aov Direct' and 'Aov Partner' and the report labels 'aov direct' and 'aov partner' are claim ids with the prefix stripped, not reader-facing names such as 'Average order value'."
+  ],
+  "summary": "All 60 rendered numbers on the three surfaces match the claim register and my own recomputation from registry components. That covers the rates, the Wilson bounds, the two-proportion z and effect, and the identities 24597+19934=44531 and 1971306.75+1051989.86=3023296.61. The page is still wrong for a reader. report.md lines 14 and 16 swap the channel labels of the two completion rates, so it reads as partner completing 0.724397 and direct 0.604746. That contradicts the register, the dashboard and the page's own test caveat. The published report also differs from what src/release/build_release.",
+  "wall_seconds": 266.6,
+  "cost": {
+    "at": "2026-09-18T20:11:51.677483+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-1ec424ea468d",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-18T20:07:28.206711+00:00",
+    "finished_at": "2026-09-18T20:11:51.673680+00:00",
+    "wall_seconds": 263.469,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 40,
+    "cached_input_tokens": 2032502,
+    "output_tokens": 26431,
+    "total_tokens": 2058973,
+    "cost_usd": 2.798596500000001
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "m_page_interval_certainty",
+  "dataset": "messy",
+  "error": "The page says each interval is where the true value lies with near certainty.",
+  "at": "2026-09-16T23:04:16+00:00",
+  "max_v2_revision": "fa38876",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "certaint|true value",
+    "sampling interval|interval"
+  ],
+  "blocking_issues": 3,
+  "warnings": 10,
+  "checks": 16,
+  "issue_ids": [
+    "RT-CERTAINTY-OVERCLAIM",
+    "RT-SURFACE-GENERATOR-DIVERGENCE",
+    "RT-POPULATION-LINE"
+  ],
+  "issue_texts": [
+    "RT-CERTAINTY-OVERCLAIM | gate_release_document.wording_matches_claims | gate_release_document|wording_matches_claims|release/report.md|line23-certainty-overclaim | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 23: 'Each channel figure is an estimate from one quarter of orders. The interval beside it is where the true value of the channel lies, with near certainty.' It sits und",
+    "RT-SURFACE-GENERATOR-DIVERGENCE | gate_release_document.generator_matches_surface | gate_release_document|generator_matches_surface|release/report.md|closing-paragraph | RELEASE_INTEGRITY | HIGH | worker_release | src/release/build_release.py (mtime 2026-09-15 22:21, before the pipeline ran) appends 'The interval beside it is the sampling interval and nothing else.' (lines 79-82). The deployed rel",
+    "RT-POPULATION-LINE | gate_release_document.wording_matches_claims | gate_release_document|wording_matches_claims|release/report.md|population-line-delivered-only | CLAIM_SUPPORT | MEDIUM | worker_release | release/report.md line 3: 'Population: orders placed inside the quarter, one row per order, delivered only.' - copied by build_release.py (line 62) from the net-revenue claim's population and us"
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "The declared machine rule wording_matches_claims is vacuous in this run: its dictionary is empty, so its PASS ('no word in the dictionary appears on any surface') checked nothing, and wording on release surfaces was verified by no stage before this gate.",
+    "Release-gate result and evidence files were re-stamped 2026-09-17 02:04:18-23 (+0300), after release/report.md was rewritten at 02:04:15, and still passed; a surface-gate PASS therefore exists for a surface whose wording the gate cannot see.",
+    "All worker and stage-auditor result.json files are driver stubs (summary 'driver e2e ...', created_at 2026-01-01T00:00:00Z, a single decorative check of 0.473684, model string openrouter/z-ai/glm-5.3-flash-fake); their 'recomputed independently' PASSes carry no verification weight, and the real veri",
+    "The four carry files (audit/checkpoints/worker_*.carry.json) contain facts contradicted by the spec - period '2025-Q1-delivered' (2025-01-01..2025-03-30), population 'delivered orders', refund-rate pitfall - stale boilerplate from another dataset; no artifact acted on them, but they are not trustwor",
+    "docs/history/NOTES_LANE_C.md, cited by check_plan.json and src/analysis/build_claims.py as the record of why a kind:test claim cannot pass the claims gate, does not exist in this tree.",
+    "Free-text quarantine could only be verified indirectly: the comment column is absent from the projection and from my inputs, the machine free_text checks sampled 25 of 45917 values (0 hits), and a phrase scan of surfaces, register and answers found 0 hits; the 11 distinct comment sentences were neve",
+    "No output event of this CLI names the answering model; MODEL_MISMATCH is unverifiable in this profile, every execution.model including mine is a self-report, and the '-fake' suffix in worker and auditor results can be neither confirmed nor refuted from the CLI.",
+    "Retry history and stale inputs are visible only to a human in audit_runner.py report; I did not check them and cannot.",
+    "shipping_total 37792722.50 reproduces exactly under my own locale parse, and stays unpublished by design; its unknown understatement (2648 of 44531 population rows, 5.95%, unreadable and treated as zero) remains a property of the metric, not an error found.",
+    "What I did not verify: no machine gate was re-executed by me, plan_proof.json was accepted on gate0's own summary line, and README.md's figures were deliberately not read as answers."
+  ],
+  "summary": "Independent recomputation from the quarantine projection with my own code confirms every published number, interval and test statistic (population 44531 = 45000 distinct - 459 out-of-quarter - 10 negative-refund; net revenue 3023296.61; Wilson and Student intervals at level 0.95 exact to display digits; both registered hypotheses reproduce: pooled two-proportion z=26.718455, Welch t=42.699880). The numbers are clean. The release surface is not: release/report.md line 23 tells the reader the interval is 'where the true value of the channel lies, with near certainty' - the exact overclaim the au",
+  "wall_seconds": 784.1,
+  "cost": {
+    "at": "2026-09-16T23:17:27.742842+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-26d366aba1ce",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-16T23:04:27.074162+00:00",
+    "finished_at": "2026-09-16T23:17:27.739786+00:00",
+    "wall_seconds": 783.313,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 106966,
+    "cached_input_tokens": 1913600,
+    "output_tokens": 17847,
+    "total_tokens": 2067089,
+    "cost_usd": 0.058065839999999994
+  }
+}

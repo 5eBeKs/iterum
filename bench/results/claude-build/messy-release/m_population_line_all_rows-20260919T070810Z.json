@@ -1,0 +1,69 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "m_population_line_all_rows",
+  "dataset": "messy",
+  "error": "The page's population line says every export row; the figures are over one row per order after deduplication.",
+  "at": "2026-09-19T07:04:29+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "every row|export row|revision|dedup|one row per order"
+  ],
+  "blocking_issues": 3,
+  "warnings": 4,
+  "checks": 14,
+  "issue_ids": [
+    "REL-AUD-POPULATION-LINE-HAND-EDITED",
+    "REL-AUD-PAGE-POPULATION-IS-REVENUE-POPULATION",
+    "REL-AUD-DASHBOARD-CARDS-MISSING-CONTEXT"
+  ],
+  "issue_texts": [
+    "REL-AUD-POPULATION-LINE-HAND-EDITED | gate_release_auditor.population_line_matches_register | gate_release_auditor|population_line_matches_register|release/report.md|page_population | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3 says the population is every row of the export inside the quarter, delivered only. evidence/regen_diff.py re-ran src/release/build_release.py with ",
+    "REL-AUD-PAGE-POPULATION-IS-REVENUE-POPULATION | gate_release_auditor.population_beside_each_figure | gate_release_auditor|population_beside_each_figure|src/release/build_release.py|report_md | VISUALIZATION | HIGH | worker_release | src/release/build_release.py line 86 writes the population of CLM-NET-REVENUE ('... delivered only') as one page-level 'Population:' line in release/report.md. No per-",
+    "REL-AUD-DASHBOARD-CARDS-MISSING-CONTEXT | gate_release_auditor.card_population_period_n_level | gate_release_auditor|card_population_period_n_level|release/dashboard_data.json|cards | VISUALIZATION | MEDIUM | worker_release | In release/dashboard_data.json, 0 of 8 cards carry a population and 0 of 8 carry a period (evidence/recompute_out.json: dashboard_cards_with_population, dashboard_cards_with_"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "Both registered tests print their p as '0.0000'. A reader can take that as p equal to zero; the register holds a p below the display precision, and 'p < 0.0001' would state it honestly.",
+    "No deterministic rule in audit/check_plan.json or audit/release_surface_contract.json checks the population or period text on a surface: reconciliations and card_caveat_requirements are empty, and gate_release_document only checks claim presence, caveats and 'significant' wording. So gate_release_ma",
+    "gate_release_document's caveats_rendered passed release/dashboard_data.json although no card carries a population or a period. The rule checks caveat strings only, so its PASS says nothing about population or period coverage on the dashboard.",
+    "The Student intervals for CLM-AOV-DIRECT/PARTNER and the Welch statistic and Cohen's d for CLM-TEST-CHANNEL-AOV could not be recomputed from row-level data within this stage's inputs. Backing each channel's standard deviation out of its rounded interval gives t of about 42.62 and d of about 0.4854, "
+  ],
+  "summary": "All 60 rendered numbers on the three release surfaces match the claim register at display_digits, and the reconciliations, Wilson bounds, z-test and n labels recompute independently. The release still fails on what the numbers are said to be about. (1) The published report's page-level population line was not produced by the generator (regeneration differs on line 3 only), and it describes the population as every row of the export, which is the pre-deduplication grain, contradicting the 44,531 deduplicated orders. (2) The generator itself prints the net-revenue population ('delivered only') as",
+  "wall_seconds": 215.6,
+  "cost": {
+    "at": "2026-09-19T07:08:08.544229+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-1ec424ea468d",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-19T07:04:36.845671+00:00",
+    "finished_at": "2026-09-19T07:08:08.544229+00:00",
+    "wall_seconds": 211.703,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 28,
+    "cached_input_tokens": 1243540,
+    "output_tokens": 21123,
+    "total_tokens": 1264691,
+    "cost_usd": 2.144939
+  }
+}

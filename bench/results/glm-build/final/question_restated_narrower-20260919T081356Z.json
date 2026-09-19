@@ -1,0 +1,66 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "question_restated_narrower",
+  "dataset": "orders",
+  "error": "R02 is restated without the half that asks on which basis the rate is taken.",
+  "at": "2026-09-19T07:57:18+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "PASS",
+  "stop_code": null,
+  "outcome": "warned",
+  "matched_signals": [
+    "restat|narrow|half|question"
+  ],
+  "blocking_issues": 0,
+  "warnings": 5,
+  "checks": 18,
+  "issue_ids": [],
+  "issue_texts": [],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The metrics registry names the frozen period '2025-Q1-delivered' while the declared range ends 2025-03-30, one day short of quarter end; no row falls on 2025-03-31, so no number moves, and every release surface shows the exact boundaries, but the internal label is imprecise.",
+    "The handoff carries no drift_since_review index, so the claim that stage assumptions hold on the current export rests on this gate's direct recalculation alone, not on any measurement of column drift since profiling.",
+    "Reader-facing wording only: the report's closing line 'Country figures sum to the headline; both are net of refunds' uses 'both' over three country figures plus the headline; no number is affected.",
+    "Every stage's created_at and every carry's updated_at in this run is the fixed epoch 2026-01-01T00:00:00Z, so provenance timestamps carry no information; ordering is established only by runner logs a human reads in audit_runner.py report.",
+    "No output event of the opencode CLI names the executing model, so the model attribution for this run and every stage is unverifiable from output evidence and rests on stage self-reports."
+  ],
+  "summary": "Final GLM red-team gate, PASS with no material blockers. I recomputed the entire number chain from raw_data/orders.csv with my own code (audit/results/final/evidence/recalc_core.py, 32/32 checks): population 174 of 201 rows (26 not delivered, 1 outside period, partition exact, no first-match overlap), net_revenue 35741.52 EUR, refund_amount_total 4493.50 EUR, refund_rate 0.473684 = 27/57 paying customers (the ruled basis; the unruled order-row basis would be 0.189655 = 33/174), country components PL 11181.67 + DE 11032.61 + CZ 13527.24 = headline exactly, clean table equals the population set ",
+  "wall_seconds": 977.3,
+  "cost": {
+    "at": "2026-09-19T08:13:54.747386+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-fed6f0990e40",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-19T07:57:41.764450+00:00",
+    "finished_at": "2026-09-19T08:13:54.742932+00:00",
+    "wall_seconds": 972.984,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 98902,
+    "cached_input_tokens": 1907712,
+    "output_tokens": 14654,
+    "total_tokens": 2035980,
+    "cost_usd": 0.052094496000000004
+  }
+}

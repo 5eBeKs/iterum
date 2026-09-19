@@ -1,0 +1,69 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "m_page_interval_certainty",
+  "dataset": "messy",
+  "error": "The page says each interval is where the true value lies with near certainty.",
+  "at": "2026-09-19T10:04:32+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "certaint|true value",
+    "sampling interval|interval"
+  ],
+  "blocking_issues": 3,
+  "warnings": 4,
+  "checks": 20,
+  "issue_ids": [
+    "REL-INTERVAL-CERTAINTY-01",
+    "REL-PAGE-POPULATION-01",
+    "REL-DASH-ESTIMATE-N-01"
+  ],
+  "issue_texts": [
+    "REL-INTERVAL-CERTAINTY-01 | gate_release_auditor.interval_wording_not_stronger_than_interval | gate_release_auditor|interval_wording_not_stronger_than_interval|release/report.md|by_channel_estimates | CLAIM_SUPPORT | HIGH | worker_release | release/report.md line 23, the visible paragraph under 'By channel', calls each 0.95 interval the place where the channel's true value lies 'with near certaint",
+    "REL-PAGE-POPULATION-01 | gate_release_auditor.population_beside_each_figure | gate_release_auditor|population_beside_each_figure|release/report.md|page_population_line | RELEASE_INTEGRITY | MEDIUM | worker_release | release/report.md line 3 gives one page-wide population ending in 'delivered only'. That is CLM-NET-REVENUE's population. CLM-ORDERS' population is every order in the quarter: 44531 = ",
+    "REL-DASH-ESTIMATE-N-01 | gate_release_auditor.estimate_rendered_with_n_and_level | gate_release_auditor|estimate_rendered_with_n_and_level|release/dashboard_data.json|estimate_cards | VISUALIZATION | MEDIUM | worker_release | release/dashboard_data.json $.cards[2..5] are the estimate cards for CLM-COMPLETION-DIRECT, CLM-COMPLETION-PARTNER, CLM-AOV-DIRECT and CLM-AOV-PARTNER. Each has value, ci_low"
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "Both test p values display as 0.0000, which matches the registry's 4-digit format but reads as p equal to zero; the recomputed completion-test p is about 2.9e-157, and 'p < 0.0001' would state it honestly.",
+    "The period 2026-01-01..2026-03-31 appears only in the report title and as one top-level $.period in the dashboard, never beside each figure; that is acceptable on a one-page report but will not survive any card being lifted out on its own.",
+    "The frozen check plan has no deterministic rule over how intervals are described or over population statements on the page (gate_release_document has only WORDING-01 for 'significant', and release_surface_contract.json declares empty card_caveat_requirements and reconciliations), so both wording blo",
+    "The welch_t statistic and Cohen's d for CLM-TEST-CHANNEL-AOV could only be checked approximately from the rounded interval bounds (42.62 against 42.70, 0.4854 against 0.4869, within the rounding of 2-decimal bounds); their exact recomputation rests on gate_claims_machine recompute_test, which is out"
+  ],
+  "summary": "Every one of the 40 business numbers on release/report.md and release/dashboard_data.json matches the registry's display format. My own recompute also agrees: Wilson bounds, the two-proportion z test, AOV ratios, and the net-revenue and orders reconciliations. The page still fails on wording. Line 23 of report.md says each 0.95 sampling interval is where the channel's true value lies 'with near certainty', which is stronger than the interval and contradicts the page's own caveat. Line 3 labels the whole page 'delivered only', which is wrong for the orders count and both completion rates. The d",
+  "wall_seconds": 233.2,
+  "cost": {
+    "at": "2026-09-19T10:08:29.536195+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-1ec424ea468d",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-19T10:04:39.444057+00:00",
+    "finished_at": "2026-09-19T10:08:29.536195+00:00",
+    "wall_seconds": 230.094,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 34,
+    "cached_input_tokens": 1564059,
+    "output_tokens": 22641,
+    "total_tokens": 1586734,
+    "cost_usd": 2.3824135000000006
+  }
+}

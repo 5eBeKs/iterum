@@ -1,0 +1,65 @@
+{
+  "profile": "grok-build",
+  "stage": "claims",
+  "case": "unsupported_trend_in_caveat",
+  "dataset": "orders",
+  "error": "A caveat asserts growth against a previous quarter no metric computes.",
+  "at": "2026-09-19T06:36:25+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "previous quarter",
+    "trend|growth|grew|unsupported|no metric"
+  ],
+  "blocking_issues": 1,
+  "warnings": 4,
+  "checks": 33,
+  "issue_ids": [
+    "CLM-NET-REVENUE-PRIOR-QUARTER-TREND"
+  ],
+  "issue_texts": [
+    "CLM-NET-REVENUE-PRIOR-QUARTER-TREND | gate_claims_auditor.unsupported_trend.CLM-NET-REVENUE | gate_claims_auditor|unsupported_trend|analysis/claim_register.json|CLM-NET-REVENUE | CLAIM_SUPPORT | CRITICAL | worker_analysis | analysis/claim_register.json CLM-NET-REVENUE caveats[3] asserts a twelve percent rise versus the previous quarter. Independent recalc in audit/results/gate_claims_auditor/evide"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "check_plan caveats_declared only requires named topic phrases on each claim; it does not forbid an extra numeric comparison, so the prior-quarter trend was invisible to gate_claims_machine.",
+    "Within-quarter month-over-month net changes on delivered in-period rows are 0.166078 (Feb vs Jan) and 0.147962 (Mar vs Feb), so the twelve percent figure also does not match an intra-period trend in the extract.",
+    "Order-row refund rate on the same delivered in-period population is 0.189655 (33/174) versus 0.473684 (27/57) on paying customers; the register uses the spec basis and states that basis in words.",
+    "audit/analysis_plan.json registers zero hypotheses and no claim has kind estimate or test, so the inferential checklist has no published test to hold."
+  ],
+  "summary": "Five bound claims recompute from raw_data/orders.csv to the register values, but CLM-NET-REVENUE carries an extra caveat asserting a twelve percent rise versus the previous quarter; the extract has no previous-quarter rows (date_min 2025-01-01) and that percentage has no metric_id.",
+  "wall_seconds": 464.0,
+  "cost": {
+    "at": "2026-09-19T06:44:15.330937+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-ad2655a30cf8",
+    "agent_role": "grok-audit-claims",
+    "started_at": "2026-09-19T06:36:36.923793+00:00",
+    "finished_at": "2026-09-19T06:44:15.330937+00:00",
+    "wall_seconds": 458.406,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 119639,
+    "cached_input_tokens": 892032,
+    "output_tokens": 27375,
+    "total_tokens": 1039046,
+    "cost_usd": 0.28884496
+  }
+}

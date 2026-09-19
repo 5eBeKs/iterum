@@ -1,0 +1,61 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "population_line_wrong",
+  "error": "The page's population line says all orders; every figure is over delivered orders.",
+  "at": "2026-09-15T17:59:24+00:00",
+  "max_v2_revision": "d6a41ff",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "all orders"
+  ],
+  "blocking_issues": 1,
+  "warnings": 5,
+  "checks": 30,
+  "issue_ids": [
+    "REL-AUD-POPULATION-LINE"
+  ],
+  "warning_texts": [
+    "release/report.md line 3 describes the population as every order in the period, which includes cancelled and pending orders; a reader who takes it at face value would think the 35,741.52 headline covers 200 orders rather than the 174 delivered ones.",
+    "Both release gates passed a page that misstates its own population: caveats_rendered only confirms each registered caveat string appears somewhere on the surface, and nothing in audit/check_plan.json checks the population or period wording a surface prints, so that wording is checked by auditor judg",
+    "audit/check_plan.json lists gate_release_document claims_rendered and caveats_rendered under accepted_unproven (the plan proof crashed with FileNotFoundError), so the only document-level rules on this stage were never shown to fire on a broken release.",
+    "audit/audit_spec.yaml sets the period end to 2025-03-30 while the spec calls it the reported quarter and calculated_metrics.json names the period 2025-Q1-delivered; the raw export has no delivered order on 2025-03-31, so no figure changes, but a human should confirm the 89-day window is intended.",
+    "metrics/calculated_metrics.json writes the country formula as SUM(net_amount) WHERE country = country, which is a tautology as text; the values are correct against raw, but the formula string does not say which country each metric selects."
+  ],
+  "summary": "All 21 shown numbers (7 render roles, 5 claims, 3 surfaces) recompute exactly from raw_data/orders.csv and country figures visibly sum to net_revenue, but release/report.md line 3 states the population as all orders inside the period, contradicting the spec population (delivered orders inside the period) and the page's own caveats; neither release gate reads that sentence, so it passed both.",
+  "wall_seconds": 278.0,
+  "cost": {
+    "at": "2026-09-15T18:04:03.848652+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-b0dc8f415661",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-15T17:59:29.377263+00:00",
+    "finished_at": "2026-09-15T18:04:03.848652+00:00",
+    "wall_seconds": 274.468,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 578,
+    "cached_input_tokens": 1550853,
+    "output_tokens": 22618,
+    "total_tokens": 1574049,
+    "cost_usd": 2.0787434999999994
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "profile": "grok-build",
+  "stage": "release",
+  "case": "headline_relabelled_gross",
+  "error": "The page calls net revenue 'Gross revenue'; the number is net of refunds.",
+  "at": "2026-09-15T20:22:58+00:00",
+  "max_v2_revision": "06eb683",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "gross",
+    "label",
+    "net revenue"
+  ],
+  "blocking_issues": 1,
+  "warnings": 2,
+  "checks": 33,
+  "issue_ids": [
+    "HEADLINE-GROSS-LABEL"
+  ],
+  "warning_texts": [
+    "The frozen check_plan accepted gate_release_document claims_rendered and caveats_rendered as unproven at Gate 0 after plan-proof could not open analysis/claim_register.json, so those rules ran here without a recorded breaker.",
+    "The release-stage machine plan only binds numbers and checks that registered caveats appear; it has no rule that the visible headline word for CLM-NET-REVENUE must say net rather than gross, which is the spec's first semantic trap and more than a number-binding gate can carry."
+  ],
+  "summary": "All 21 bound release figures recast from claim_register.json and calculated_metrics.json match (net_revenue 35741.52, PL+DE+CZ 11181.67+11032.61+13527.24, refund 27/57=0.473684), but release/report.md line 7 labels CLM-NET-REVENUE as Gross revenue while the figure is net of refunds.",
+  "wall_seconds": 583.3,
+  "cost": {
+    "at": "2026-09-15T20:32:43.393470+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-30332147571f",
+    "agent_role": "grok-audit-release",
+    "started_at": "2026-09-15T20:23:03.124418+00:00",
+    "finished_at": "2026-09-15T20:32:43.391463+00:00",
+    "wall_seconds": 580.281,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 267030,
+    "cached_input_tokens": 2232192,
+    "output_tokens": 35643,
+    "total_tokens": 2534865,
+    "cost_usd": 0.63376476
+  }
+}

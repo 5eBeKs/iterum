@@ -1,0 +1,58 @@
+{
+  "profile": "gpt-build",
+  "stage": "claims",
+  "case": "question_restated_narrower",
+  "error": "R02 is restated without the half that asks on which basis the rate is taken.",
+  "at": "2026-09-16T12:50:48+00:00",
+  "max_v2_revision": "e48d886",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R02",
+    "restat|narrow|half|question"
+  ],
+  "blocking_issues": 1,
+  "warnings": 2,
+  "checks": 1,
+  "issue_ids": [
+    "GCA-INPUT-RAW-SOURCES-MISSING"
+  ],
+  "warning_texts": [
+    "The deterministic questions_are_answered checks report only that answer files exist and contain facts; without raw_data/questions.md, this auditor cannot verify that the answer question fields preserve the original question scope.",
+    "The handoff omits audit/human_decisions.yaml even though the stage prompt requires it to be read."
+  ],
+  "summary": "Independent claim recomputation and question-scope verification are blocked because the handoff excludes the required raw sources.",
+  "wall_seconds": 194.6,
+  "cost": {
+    "at": "2026-09-16T12:54:04.965740+00:00",
+    "launcher": "codex_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-73f5377c09ee",
+    "agent_role": "gpt-audit-claims",
+    "started_at": "2026-09-16T12:50:52.771995+00:00",
+    "finished_at": "2026-09-16T12:54:04.961503+00:00",
+    "wall_seconds": 192.187,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "gpt-5.6-sol",
+    "model_used": null,
+    "input_tokens": 1070203,
+    "cached_input_tokens": null,
+    "output_tokens": 7839,
+    "total_tokens": 1078042,
+    "cost_usd": null
+  }
+}

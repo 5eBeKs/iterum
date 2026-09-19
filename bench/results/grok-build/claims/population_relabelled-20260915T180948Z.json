@@ -1,0 +1,59 @@
+{
+  "profile": "grok-build",
+  "stage": "claims",
+  "case": "population_relabelled",
+  "error": "The headline claim says its population is all orders, while the spec and its own caveats say delivered orders.",
+  "at": "2026-09-15T18:02:30+00:00",
+  "max_v2_revision": "d6a41ff",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "all orders",
+    "CLM-NET-REVENUE"
+  ],
+  "blocking_issues": 1,
+  "warnings": 2,
+  "checks": 17,
+  "issue_ids": [
+    "CLAIM-POPULATION-CLM-NET-REVENUE"
+  ],
+  "warning_texts": [
+    "The claims machine gate has no rule that binds claim.population to audit_spec.yaml population.name or to the filters used by claims_recomputed, so a relabelled population can pass that gate.",
+    "CLM-NET-REVENUE caveats name delivered orders only while the population field names all orders inside the period, which is why caveats_declared.CLM-NET-REVENUE passed."
+  ],
+  "summary": "Five claim values recompute from raw_data/orders.csv on delivered orders in 2025-01-01..2025-03-30 (net 35741.52, refund rate 0.473684 = 27/57, PL 11181.67, DE 11032.61, CZ 13527.24). CLM-NET-REVENUE.population is labelled all orders inside the period, which on raw nets 41881.34 over 200 rows, not the published 35741.52 over 174 delivered rows.",
+  "wall_seconds": 427.6,
+  "cost": {
+    "at": "2026-09-15T18:09:45.711311+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-ab1b75dd4798",
+    "agent_role": "grok-audit-claims",
+    "started_at": "2026-09-15T18:02:45.155438+00:00",
+    "finished_at": "2026-09-15T18:09:45.711311+00:00",
+    "wall_seconds": 420.563,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 122431,
+    "cached_input_tokens": 1317376,
+    "output_tokens": 23331,
+    "total_tokens": 1463138,
+    "cost_usd": 0.35480224
+  }
+}

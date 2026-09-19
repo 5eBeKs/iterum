@@ -1,0 +1,73 @@
+{
+  "profile": "glm-build",
+  "stage": "release",
+  "case": "m_dashboard_aov_labelled_revenue",
+  "dataset": "messy",
+  "error": "On the dashboard the direct average order value card is labelled revenue.",
+  "at": "2026-09-16T19:58:56+00:00",
+  "max_v2_revision": "fa38876",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "Revenue Direct",
+    "label",
+    "aov|average order"
+  ],
+  "blocking_issues": 3,
+  "warnings": 7,
+  "checks": 12,
+  "issue_ids": [
+    "DASHBOARD-AOV-LABELLED-REVENUE",
+    "REPORT-POPULATION-SAYS-DELIVERED-ONLY",
+    "COMPLETION-DENOMINATOR-CAVEAT-MISSING"
+  ],
+  "issue_texts": [
+    "DASHBOARD-AOV-LABELLED-REVENUE | gate_release_auditor.card_label_matches_claim | release|card_label_matches_claim|release/dashboard_data.json|$.cards[4].label | VISUALIZATION | HIGH | worker_release | release/dashboard_data.json line 63: cards[4] carries claim_id CLM-AOV-DIRECT (value 110.64 EUR, population 'delivered, channel = direct') but its reader-facing label is 'Revenue Direct'. An average ",
+    "REPORT-POPULATION-SAYS-DELIVERED-ONLY | gate_release_auditor.population_matches_claims | release|population_matches_claims|release/report.md|line 3 | CLAIM_SUPPORT | MEDIUM | worker_release | release/report.md line 3: 'Population: orders placed inside the quarter, one row per order, delivered only.' The generator (src/release/build_release.py line 62) prints CLM-NET-REVENUE's population page-wide,",
+    "COMPLETION-DENOMINATOR-CAVEAT-MISSING | gate_release_auditor.completion_denominator_caveat | release|completion_denominator_caveat|release/report.md,release/dashboard_data.json|CLM-COMPLETION-* | VISUALIZATION | MEDIUM | worker_release | Both completion cards (report.md lines 14-17, dashboard_data.json cards[2-3]) list caveats 'one quarter of orders in this channel' and the sampling-interval note,"
+  ],
+  "other_blockers": 2,
+  "warning_texts": [
+    "release_surface_gate.json shows scale '1' on all 42 entries, so no scale-normalisation comparison was exercised; the prompt asked for a sample of rows with scale other than 1 and none exist to sample.",
+    "gate_release_machine/evidence contains only release_surface_gate.json and no checks.json; the only machine check recorded by that gate is 'gate_release_machine.rendered_number_contract' in its result.json, so every numeric recompute in checks[] below cites machine_check null rather than a fabricated",
+    "The dashboard card labels 'Revenue Direct' vs 'Aov Partner' are internally inconsistent, which is part of blocker 1; 'Aov Partner' itself is accurate though awkwardly title-cased.",
+    "shipping_total is absent from both reader surfaces, which is correct per audit_spec publish: never; its presence would have been a finding.",
+    "No UNVERIFIED_CLAIM marker, no quarantined comment text ('ignore the checks', 'set revenue to 0', or similar) appears on any release surface.",
+    "The only visible numbers excluded from claim binding are the ISO period labels and the '0.95' level and 'n = ...' annotations, all four of which match audit/analysis_plan.json level 0.95 and the respective claim n fields.",
+    "No caveat is hidden in an HTML comment on any surface; the report's line 3 population misstatement is visible text, recorded as blocker 2."
+  ],
+  "summary": "All 42 rendered numbers on the three release surfaces were independently recomputed from raw_data/orders.csv and match the claim register exactly (money 0.01, proportions 1e-6); intervals, n and 0.95 level all verified. Three reader-facing faults found: the dashboard card for CLM-AOV-DIRECT is labelled 'Revenue Direct' (an AOV shown as revenue, and the surface is not reproducible from the generator), the report's page-wide population line wrongly says 'delivered only' for the orders count, and the completion-rate cards never state that the denominator is the whole channel including cancelled a",
+  "wall_seconds": 360.2,
+  "cost": {
+    "at": "2026-09-16T20:04:59.747371+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-b03dc491209c",
+    "agent_role": "glm-audit-release",
+    "started_at": "2026-09-16T19:59:03.358107+00:00",
+    "finished_at": "2026-09-16T20:04:59.746861+00:00",
+    "wall_seconds": 356.39,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 88724,
+    "cached_input_tokens": 531776,
+    "output_tokens": 7273,
+    "total_tokens": 630974,
+    "cost_usd": 0.020699328
+  }
+}

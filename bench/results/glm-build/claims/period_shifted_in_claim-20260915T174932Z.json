@@ -1,0 +1,60 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "period_shifted_in_claim",
+  "error": "One country claim carries a two-month period while its value is the full quarter's.",
+  "at": "2026-09-15T17:46:05+00:00",
+  "max_v2_revision": "2a6f8dc",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "period",
+    "02-28",
+    "CLM-NET-CZ"
+  ],
+  "blocking_issues": 1,
+  "warnings": 3,
+  "checks": 9,
+  "issue_ids": [
+    "CLAIM-PERIOD-MISMATCH-CZ"
+  ],
+  "warning_texts": [
+    "No rule in audit/check_plan.json validates a claim's declared period or population field against audit_spec.yaml; gate_claims_machine compares only values, so the machine gate's PASS on CLM-NET-CZ never read the wrong period field and this error reached the gate uncaught.",
+    "audit/check_plan.json accepted_unproven records caveats_rendered and claims_rendered for gate_release_document as unproven (FileNotFoundError during prove-plan), so rendering of the five claims and their caveats has no deterministic proof yet and rests on the release stage's own checks.",
+    "CLM-REFUND-RATE's caveats and render_values do state the paying_customers basis in words (numerator 27, denominator 57), as required."
+  ],
+  "summary": "All five claim values independently reproduced from raw_data/orders.csv (net_revenue 35741.52, refund_rate 0.473684 = 27/57 paying customers, PL 11181.67, DE 11032.61, CZ 13527.24; components sum to headline). One blocker: CLM-NET-CZ declares period 2025-01-01..2025-02-28, contradicting the spec period 2025-01-01..2025-03-30 on which its value 13527.24 was actually computed (CZ net through 2025-02-28 is 9248.36). The claim's period field misdescribes its own population.",
+  "wall_seconds": 196.2,
+  "cost": {
+    "at": "2026-09-15T17:49:28.505589+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-1e31ad4a18ab",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-15T17:46:29.663467+00:00",
+    "finished_at": "2026-09-15T17:49:28.487620+00:00",
+    "wall_seconds": 178.828,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 91567,
+    "cached_input_tokens": 395328,
+    "output_tokens": 5268,
+    "total_tokens": 493839,
+    "cost_usd": 0.014533444999999999
+  }
+}

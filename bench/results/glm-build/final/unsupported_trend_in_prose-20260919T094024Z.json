@@ -1,0 +1,77 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "unsupported_trend_in_prose",
+  "dataset": "orders",
+  "error": "The page says revenue grew through the quarter; no monthly figure exists in the audit.",
+  "at": "2026-09-19T09:22:48+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "grew|growth|trend|strongest month|March",
+    "unsupported|no (metric|claim|figure)"
+  ],
+  "blocking_issues": 1,
+  "warnings": 11,
+  "checks": 8,
+  "issue_ids": [
+    "UNSUPPORTED-TREND-IN-PROSE"
+  ],
+  "issue_texts": [
+    "UNSUPPORTED-TREND-IN-PROSE | final_redteam.prose_trend_support | gate_release_document|prose_assertion_unbacked|release/report.md|trend-quarter | CLAIM_SUPPORT | HIGH | worker_release | release/report.md line 24 asserts a quarterly growth trend with no claim anchor within 400 characters in either direction and no registered support: analysis/claim_register.json holds 5 FACT claims and metrics/calc"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "Every context in this run is the same model family (glm), so the PASS chains carry no cross-vendor independence; what holds the published numbers is the deterministic layer (machine gates, frozen check plan, release surface gate) plus this file's independent recalculation, which agree everywhere.",
+    "No output event of this CLI names a model, so the runner cannot verify which model answered at any stage: MODEL_MISMATCH is unverifiable here, every execution.model field is self-report, and the line 'run executed on model X' is supported by nothing but the stages' own words.",
+    "The permission map denied edit tools over raw sources and frozen machinery but not the shell, so a raw write was never impossible: control lock would catch it on the next runner command, after the fact - integrity here rests on detection, not prevention.",
+    "All worker and stage-auditor result.json files are driver-seeded fixtures ('driver e2e' summaries, model 'openrouter/z-ai/glm-5.3-flash-fake', created_at 2026-01-01T00:00:00Z), so their one-line 'recomputed independently' checks are not evidence of stage reasoning; I treated the numbers as standing ",
+    "check_plan.json accepted_unproven lists claims_rendered and caveats_rendered as unproven at plan-proof (FileNotFoundError in the prove sandbox); both rules subsequently ran for real in gate_release_document and passed, so no registered claim or caveat stayed unchecked, but for those two rules the pl",
+    "gate_metrics_machine/evidence/unchecked.json names excluded_order_rows and excluded_outside_period as metrics no gate filter recomputes from source; my recalc confirms both directly from raw (27 and 1), so this run closes the gap rather than inheriting it.",
+    "The trend sentence is measure-dependent and the reader is never told which measure it means: monthly net EUR rises while monthly delivered order counts dip in February (57 -> 55 -> 62), and audit/audit_spec.yaml declares no monthly metric, formula, population or unit for either reading.",
+    "release/report.md contains a line its declared generator cannot produce, which means a release surface is no longer byte-reproducible from src/release/build_release.py; no contract rule I have seen declares surface-generator equality, so this is recorded as the mechanism of the blocker and a warning",
+    "drift_since_review is absent from the handoff, so assumption-freshness of the shipped code against the current export was not assessed by that mechanism, and with no field present its absence is not evidence the assumptions hold.",
+    "rulings in the handoff are empty and audit/decisions/ does not exist; the three RESOLVED entries in human_decisions.yaml are applied where claimed and visible to the reader (paying_customers basis in the rate's caveat and numerator/denominator, net-of-refunds on headline and countries, order_date a ",
+    "Not checked, and outside my inputs by design: runner state, retry history and stale-input snapshots (the human's audit_runner.py report job), README/brief numbers (not among my allowed inputs), and audit/AUDIT_REPORT.md (not among my allowed inputs)."
+  ],
+  "summary": "Independent recalculation from raw_data/orders.csv alone reproduces every published figure exactly (net_revenue 35741.52; refund_amount_total 4493.50; refund_rate 27/57 = 0.473684 on the paying_customers basis; PL 11181.67 / DE 11032.61 / CZ 13527.24 summing to the headline; row accounting 201 = 174 + 26 + 1), the clean layer is an exact population trace with correct net_amount and is_refunded, all rendered numbers on all three surfaces are claim-bound and exact, no unregistered test exists, and carry continuity holds. One material blocker: release/report.md line 24 asserts 'Revenue grew stead",
+  "wall_seconds": 1046.7,
+  "cost": {
+    "at": "2026-09-19T09:40:23.320695+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-810d010a49e9",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-19T09:23:00.902645+00:00",
+    "finished_at": "2026-09-19T09:40:23.318682+00:00",
+    "wall_seconds": 1042.406,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 96660,
+    "cached_input_tokens": 1674304,
+    "output_tokens": 10098,
+    "total_tokens": 1795967,
+    "cost_usd": 0.046443672
+  }
+}

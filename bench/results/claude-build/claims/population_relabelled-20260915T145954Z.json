@@ -1,0 +1,62 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "population_relabelled",
+  "error": "The headline claim says its population is all orders, while the spec and its own caveats say delivered orders.",
+  "at": "2026-09-15T14:56:21+00:00",
+  "max_v2_revision": "0703cb4",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "all orders",
+    "CLM-NET-REVENUE"
+  ],
+  "blocking_issues": 1,
+  "warnings": 5,
+  "checks": 14,
+  "issue_ids": [
+    "CLAIMS-AUD-POPULATION-RELABELLED-NET-REVENUE"
+  ],
+  "warning_texts": [
+    "audit/check_plan.json has no deterministic rule over a claim's population or period fields: caveats_declared only matches caveat text, so a claim whose population field contradicts its caveats (as CLM-NET-REVENUE does) passes gate_claims_machine unchallenged.",
+    "CLM-REFUND-RATE states its basis in the caveat through the identifier paying_customers rather than plain words; the meaning is clear and the topic rule accepts it, but the release should render it as paying customers so a reader does not see a column name.",
+    "The refund rate basis moves the figure materially on this data: paying customers give 27/57 = 0.473684, while the order-row reading would give 33/174 = 0.189655, so any surface that omits the basis invites a misread.",
+    "metrics/calculated_metrics.json describes net_revenue_pl, net_revenue_de and net_revenue_cz with the formula text 'SUM(net_amount) WHERE country = country', which is tautological; the values are correct but the formula does not say which country it filters.",
+    "analysis/answers/R01.json restates the question as net revenue for the reported quarter and drops the population qualifier (delivered orders inside the period) that raw_data/questions.md puts in R01."
+  ],
+  "summary": "All five claim values recompute exactly from raw_data/orders.csv (net 35741.52, refund rate 27/57 = 0.473684, PL 11181.67, DE 11032.61, CZ 13527.24) and the machine recalc is rooted in raw only, but CLM-NET-REVENUE declares its population as all orders inside the period while its value is computed on delivered orders inside the period (174 rows); taken literally that label selects 200 rows and a net of 41881.34, so the claim is mislabelled and contradicts its own caveat.",
+  "wall_seconds": 209.8,
+  "cost": {
+    "at": "2026-09-15T14:59:53.628630+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-f58036111c74",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-15T14:56:26.518332+00:00",
+    "finished_at": "2026-09-15T14:59:53.628630+00:00",
+    "wall_seconds": 207.11,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 354,
+    "cached_input_tokens": 1045449,
+    "output_tokens": 17767,
+    "total_tokens": 1063570,
+    "cost_usd": 1.732631
+  }
+}

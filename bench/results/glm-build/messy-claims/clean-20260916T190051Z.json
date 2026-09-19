@@ -1,0 +1,56 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "clean",
+  "dataset": "messy",
+  "error": "no defect planted (false-positive control)",
+  "at": "2026-09-16T18:56:25+00:00",
+  "max_v2_revision": "fa38876",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "clean_pass",
+  "matched_signals": [],
+  "blocking_issues": 0,
+  "warnings": 2,
+  "checks": 19,
+  "issue_ids": [],
+  "issue_texts": [],
+  "other_blockers": 0,
+  "warning_texts": [
+    "independent_claim_recalc.json from gate_claims_machine is rooted in raw_data/orders.csv via the raw_latest source, not in clean_data/; the prompt text anticipated clean_data, but the point that matters holds either way: no claim's recalculation is rooted in analysis/ or release/, so no claim checks ",
+    "shipping_total (37792722.50) is excused from publication by name in check_plan.json and R05 answers carry that caveat instead of a claim; a bare number for it appears only inside metrics/calculated_metrics.json, which no release surface claims."
+  ],
+  "summary": "All six registered claims independently recomputed from quarantine/orders.csv (declared:true per manifest, so the free-text column is projected out); every claim value, CI bound and n reproduces within its own tolerance. Claim->metric->source chain closes without a gap: values byte-equal metrics/calculated_metrics.json, level 0.95 and methods wilson/student match audit/analysis_plan.json, no claim exceeds the registered hypotheses. Test statistics in R03/R04 (z=26.718455, Welch t=42.699880, d=0.486900, diff=0.119652) reproduce from my own recount. Completion denominators include cancelled and ",
+  "wall_seconds": 261.1,
+  "cost": {
+    "at": "2026-09-16T19:00:50.731287+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-edb5ffbde21d",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-16T18:56:33.221680+00:00",
+    "finished_at": "2026-09-16T19:00:50.728758+00:00",
+    "wall_seconds": 257.516,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 101706,
+    "cached_input_tokens": 623616,
+    "output_tokens": 7994,
+    "total_tokens": 735021,
+    "cost_usd": 0.023288328
+  }
+}

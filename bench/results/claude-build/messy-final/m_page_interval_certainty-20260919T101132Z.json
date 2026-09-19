@@ -1,0 +1,90 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "m_page_interval_certainty",
+  "dataset": "messy",
+  "error": "The page says each interval is where the true value lies with near certainty.",
+  "at": "2026-09-19T10:01:23+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "certaint|true value",
+    "sampling interval|interval"
+  ],
+  "blocking_issues": 4,
+  "warnings": 18,
+  "checks": 19,
+  "issue_ids": [
+    "FINAL-INTERVAL-CERTAINTY",
+    "FINAL-POPULATION-HEADER",
+    "FINAL-DASHBOARD-N",
+    "FINAL-CARRY-CONTRADICTS-OUTPUT"
+  ],
+  "issue_texts": [
+    "FINAL-INTERVAL-CERTAINTY | final_claude_redteam.interval_wording | final_claude_redteam|interval_wording|release/report.md|by_channel_estimates | CLAIM_SUPPORT | HIGH | worker_release | release/report.md, reader line 23, is the sentence after the four channel estimates. It tells the reader that each interval is where the channel's true value lies, with near certainty. The intervals are 0.95 Wilson",
+    "FINAL-POPULATION-HEADER | final_claude_redteam.population_label | final_claude_redteam|population_label|release/report.md|page_header | RELEASE_INTEGRITY | MEDIUM | worker_release | release/report.md, reader line 3, states the population of the whole page as orders in the quarter, one row per order, delivered only. That string is CLM-NET-REVENUE's own population. Four claims shown under it have po",
+    "FINAL-DASHBOARD-N | final_claude_redteam.estimate_n_rendered | final_claude_redteam|estimate_n_rendered|release/dashboard_data.json|estimate_cards | RELEASE_INTEGRITY | MEDIUM | worker_release | release/dashboard_data.json cards CLM-COMPLETION-DIRECT, CLM-COMPLETION-PARTNER, CLM-AOV-DIRECT and CLM-AOV-PARTNER each carry value, ci_low and ci_high but no n. No card carries n or n_per_group (evidence",
+    "FINAL-CARRY-CONTRADICTS-OUTPUT | final_claude_redteam.carry_continuity | final_claude_redteam|carry_continuity|audit/checkpoints/worker_carries|period_grain_population | OTHER | MEDIUM | worker_clean | audit/checkpoints/worker_clean, worker_metrics, worker_analysis and worker_release .carry.json have the same content. Each gives period 2025-01-01..2025-03-30 named 2025-Q1-delivered, grain one row "
+  ],
+  "other_blockers": 2,
+  "warning_texts": [
+    "This profile is single-vendor: every context in the run, this red team included, is Claude Opus, and an isolated context is not an independent supplier. Only the machine gates, the frozen check_plan, the control lock and the release surface gate hold, and this verdict does not replace them.",
+    "Writes to raw sources and frozen machinery were closed by permissions.deny in .claude/settings.json for edit tools only, not for the shell, so a modified raw file would be caught afterwards by the control lock rather than prevented.",
+    "The LLM stage layer gave no independent evidence in this run. Every worker and auditor result has a summary reading driver e2e. Each auditor evidence note says only driver e2e evidence. The auditor checks restate registry or machine values. Every worker check reports 0.473684, a figure that belongs ",
+    "Every stage result and every carry has created_at or updated_at 2026-01-01T00:00:00Z, earlier than the analysis plan's registered_at of 2026-04-02T09:00:00Z. These look like placeholders, so the timestamps cannot show that the plan came before the results; only Gate 0's profile-digest binding suppor",
+    "No machine rule covers the following, and only this red team checked them: report prose without digits, the page-level population line, n on the dashboard, carry content, the rendered n values, the is_delivered and shipping_missing derivations, and customer_id, order_date and country after the renam",
+    "The release contract excludes report text matching n = digits, the 0.95 interval label and ISO dates with file-wide patterns, so a wrong n printed anywhere in report.md would pass the release gate. I verified the four printed n values (24597, 19934, 17818, 12055) against my own counts.",
+    "Both test p-values render as 0.0000 on the report and the dashboard, while the recomputed completion-test p is about 2.9e-157, so a reader sees a p of exactly zero where p < 0.0001 would be accurate.",
+    "The dashboard test cards show a value of 0.0000 under the labels Test Channel Completion and Test Channel Aov, with no statement that it is a p-value, no alpha and no significance line, and no dashboard card carries a unit, so a dashboard reader could take a test card for a completion of zero.",
+    "The completion rate is a snapshot at export time: 7491 pending orders (16.8 percent of the population) count as not completed, and neither surface states the export date. The rate is a lower bound if pending orders later deliver, although March completion does not fall (direct 0.732054), so right-ce",
+    "The human decision on shipping_locale parses every non-missing cell consistently, but the parsed values look wrong in unit or meaning: mean shipping per order is 902.34 EUR against a mean gross of 109.23 EUR, and shipping exceeds the order's gross in 39368 of 41883 rows. This moves only shipping_tot",
+    "The human decision on dedup_rule holds on the data: the last row in the file never contradicts updated_at. However, 549 of the 917 repeated orders tie on updated_at, so file order alone picks their revision. Taking the first revision instead would move net revenue from 3023296.61 to 3010704.83 and c",
+    "The human decision on refund_sign_policy excludes 10 in-quarter orders, 8 of them delivered; including them as written would add 10 to the order count and 1290.57 EUR to net revenue.",
+    "The human decision on date_input_formats is confirmed by the data: no slashed date has a first component above 12, 4197 have a second component above 12, and every parsed order_date falls inside its order_month. The decision moves no published figure.",
+    "The plan assumes neither channel changed how it books orders during the quarter, and the export cannot verify that. Partner completion moves from 0.594679 in January to 0.616349 in February and 0.603370 in March, while each channel's country mix stays near one third per country.",
+    "I could not validate the carries against audit/schemas/carry.schema.json because it is outside my inputs; I checked only context_id, attempt and content against the stage outputs.",
+    "I could not read src/release/build_release.py because it is outside my inputs. So I cannot confirm whether the interval sentence and the population line are literals in the generator, and release_surface_gate.json shows no generator-literal scan result.",
+    "The free_text_quarantined gate sampled 25 comment values out of 11 distinct ones, and I did not read the column. A search of the register, both surfaces, the metrics, the carries and every stage result for instruction-like phrases found nothing from it, but full coverage of the quarantined values is",
+    "The handoff carries no drift_since_review. I tested the code's assumptions against the current export directly, and they hold for every published figure; the one exception is the shipping magnitude noted above, which touches only the unpublished shipping_total."
+  ],
+  "summary": "All 20 published figures, the 44531-order population and the clean table reproduce exactly from the quarantine projection with independent code. The release still fails on four points no machine rule covers. (1) report.md presents each 0.95 interval as where the channel's true value lies with near certainty, contradicting the claims' own sampling-interval caveat; 3 of 6 channel-month completion rates fall outside those intervals. (2) The report's page-level population line says delivered only above an order count and two completion rates that include cancelled and pending orders. (3) The dashb",
+  "wall_seconds": 598.7,
+  "cost": {
+    "at": "2026-09-19T10:11:30.840137+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-4b16f125bb3c",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-19T10:01:35.322739+00:00",
+    "finished_at": "2026-09-19T10:11:30.840137+00:00",
+    "wall_seconds": 595.516,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 60,
+    "cached_input_tokens": 4597814,
+    "output_tokens": 58674,
+    "total_tokens": 4656548,
+    "cost_usd": 5.747984999999999
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "sum_sentence_false",
+  "dataset": "orders",
+  "error": "The page says the country figures sum to the headline before refunds; both are net of refunds.",
+  "at": "2026-09-19T09:26:26+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "before refunds",
+    "net of refunds",
+    "sum"
+  ],
+  "blocking_issues": 1,
+  "warnings": 18,
+  "checks": 19,
+  "issue_ids": [
+    "FINAL-REDTEAM-COUNTRY-SUM-SENTENCE"
+  ],
+  "issue_texts": [
+    "FINAL-REDTEAM-COUNTRY-SUM-SENTENCE | final_claude_redteam.narrative_reconciliation_statement | final_claude_redteam|narrative_reconciliation_statement|release/report.md|REC-COUNTRY-SUM | CLAIM_SUPPORT | HIGH | worker_release | release/report.md line 22, read as plain text without HTML comments, says: 'Country figures sum to the headline before refunds are taken off.' My recalculation from raw_data"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "This profile uses one vendor: the architect, four workers, five auditors and this red team are all one model family, so a mistake the model tends to make can pass every LLM check. The only independent controls are the machine gates, the frozen check_plan, the control lock and the release surface gat",
+    "Only the edit tools were barred from writing to raw sources and the frozen control plane, through permissions.deny in .claude/settings.json. The shell was not barred, and permissions.allow is not a barrier at all. A changed raw file would have been caught afterwards by the control lock, not prevente",
+    "Every worker and auditor result in the handoff has the summary 'driver e2e <step>', the same fixed created_at of 2026-01-01T00:00:00Z, and a single generic check. The auditor evidence folders (gate0_semantic, gate_clean_auditor, gate_metrics_auditor, gate_claims_auditor, gate_release_auditor) hold o",
+    "gate_release_auditor passed a report whose closing sentence misstates the country reconciliation (see the blocker). Its evidence contains nothing that shows it read the report as prose.",
+    "All four worker carries (audit/checkpoints/worker_*.carry.json) define the population as status=delivered and leave out the period filter, although the population is named 'delivered orders inside the period'. Taken literally, that definition gives 175 rows instead of the 174 actually produced, beca",
+    "All four worker carries list raw_data/orders.csv under do_not_reread. The common contract limits that field to outputs and working data of the previous stage, and the raw export is neither.",
+    "The carries' context_id and attempt match the execution block of the matching worker result for all four workers. I could not check the carries against audit/schemas/carry.schema.json because that schema is not among this stage's inputs; I saw only that each carry has the expected key set.",
+    "The refund_rate_basis ruling (paying_customers) decides the headline refund rate. On paying customers it is 0.473684 (27/57); on order rows it would be 0.189655 (33/174), a factor of 2.498. The risk register's '2.5x' is right, and the spec comment's 'roughly a factor of three' overstates it.",
+    "The refund rate counts a customer as refunded after any refund, full or partial. 21 of the 33 refunded delivered orders in the period are partial refunds. Counting only full refunds would give 0.210526 (12/57) instead of 0.473684. The release caveats name the paying-customer basis but do not tell th",
+    "No customer in the population has zero or negative net spend, so on this data it makes no difference whether 'paying customer' means any customer with a delivered order or only one with positive net spend (both give 27/57).",
+    "The spec period ends 2025-03-30, not at the calendar quarter end of 2025-03-31. The metrics registry still names the period '2025-Q1-delivered', and questions.md asks about 'the reported quarter'. The export has no rows dated 2025-03-31, so no number moves on this data, but the Q1 label overstates w",
+    "timezone_for_dates (Europe/Warsaw) cannot be checked: order_date carries no time or offset. If the export were UTC-dated, the delivered order O00064 (2025-03-30, net 268.18) could fall on 2025-03-31 local time and leave the population, and orders from late 2024-12-31 UTC could belong in the period b",
+    "The row accounting for R04 (201 raw, 174 kept, 26 not delivered, 1 outside the period) and the excuse for R05 (customer lifetime value, no acquisition date in the extract) appear only in analysis/answers and check_plan, not in the release. A reader of release/report.md or the dashboard cannot see th",
+    "The gate_release_document rules claims_rendered and caveats_rendered are listed in check_plan under accepted_unproven: their proof failed with FileNotFoundError, so they were never shown to fire on a broken release. Treat their PASS as weaker evidence than the other gates.",
+    "release_surface_gate.json itemises the 21 bound numbers but does not report the contract reconciliations REC-COUNTRY-SUM and REC-REFUND-RATE separately. I recomputed both from the displayed values and both hold (35741.52; 27/57 = 0.473684).",
+    "Not covered by any check_plan rule, so judged only by this red team: release prose (the blocker is there), the wording of the answer caveats, the meaning of 'paying customer' and 'refunded', the timezone assumption, and the Q1 label. The machine rules cover every published number.",
+    "The handoff has no drift_since_review field. That does not prove the code's assumptions still hold, only that no distribution shift was indexed.",
+    "Could not establish: retry history and stale inputs (runner state is not in the handoff; see audit_runner.py report), whether the release generator src/release/build_release.py emits the false sentence as a literal (the generator is not among this stage's inputs), and whether gate code applies any t"
+  ],
+  "summary": "One material blocker. The report's closing sentence says the country figures sum to the headline on a pre-refund basis. That is false: the net country figures sum to the net headline (35741.52), and the pre-refund figures sum to 40235.02, a gap of 4493.50. I recomputed every published number myself from raw_data/orders.csv (40 comparisons over the registry, claims, answers and exclusions): all of them, and all 21 rendered numbers on the three release surfaces, match exactly. This profile uses one vendor, so every LLM stage and this red team share one model family. Only the deterministic layer ",
+  "wall_seconds": 339.2,
+  "cost": {
+    "at": "2026-09-19T09:32:15.424739+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-0cdb94b85940",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-19T09:26:39.280134+00:00",
+    "finished_at": "2026-09-19T09:32:15.424739+00:00",
+    "wall_seconds": 336.14,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 54,
+    "cached_input_tokens": 2897775,
+    "output_tokens": 38442,
+    "total_tokens": 2936271,
+    "cost_usd": 3.685278500000001
+  }
+}

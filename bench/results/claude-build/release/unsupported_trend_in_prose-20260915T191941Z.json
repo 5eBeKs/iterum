@@ -1,0 +1,62 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "unsupported_trend_in_prose",
+  "error": "The page says revenue grew through the quarter; no monthly figure exists in the audit.",
+  "at": "2026-09-15T19:15:46+00:00",
+  "max_v2_revision": "1d34cf0",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "grew|growth|trend|strongest month|March",
+    "unsupported|no (metric|claim|figure)"
+  ],
+  "blocking_issues": 1,
+  "warnings": 6,
+  "checks": 23,
+  "issue_ids": [
+    "REL-AUD-UNSUPPORTED-TREND"
+  ],
+  "warning_texts": [
+    "release/report.md line 24 publishes a quarter-long revenue trend and names March the strongest month, but no metric or claim breaks revenue down by month, so a reader gets a finding nobody computed.",
+    "Any month ranking on this population would compare unequal spans, because the spec's period ends 2025-03-30 and March in the data is one day short.",
+    "The check plan has no deterministic rule over digit-free prose on the release surfaces: gate_release_machine only binds numbers, and gate_release_document only checks that registered claims and caveats appear, so both gates passed a sentence that no rule could have caught.",
+    "claims_rendered and caveats_rendered, the only two rules of gate_release_document, are listed under accepted_unproven in audit/check_plan.json, so their PASS has never been shown to fail on a broken release.",
+    "release/report.md line 11 shows the refund-rate numerator and denominator as a bare fraction without saying they count customers; only the caveat line above it tells the reader the basis is paying customers.",
+    "release/report.md country lines 15, 17 and 19 carry no currency unit; EUR appears only on the headline line and in the dashboard card labels."
+  ],
+  "summary": "All 21 shown numbers on the three release surfaces match the registry exactly, the country figures sum to net revenue (35741.52), the refund rate is 27/57 = 0.473684 on paying customers, and every caveat is visible. The report still fails: release/report.md line 24 states a month-by-month revenue trend and names March the strongest month, and no metric, claim or answer supports it.",
+  "wall_seconds": 232.2,
+  "cost": {
+    "at": "2026-09-15T19:19:40.726789+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-b0dc8f415661",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-15T19:15:50.947677+00:00",
+    "finished_at": "2026-09-15T19:19:40.726789+00:00",
+    "wall_seconds": 229.781,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 226,
+    "cached_input_tokens": 557833,
+    "output_tokens": 20606,
+    "total_tokens": 578665,
+    "cost_usd": 1.450972
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "profile": "glm-build",
+  "stage": "release",
+  "case": "m_dashboard_aov_labelled_revenue",
+  "dataset": "messy",
+  "error": "On the dashboard the direct average order value card is labelled revenue.",
+  "at": "2026-09-19T07:21:28+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "Revenue Direct",
+    "label",
+    "aov|average order"
+  ],
+  "blocking_issues": 3,
+  "warnings": 3,
+  "checks": 11,
+  "issue_ids": [
+    "RELEASE-AOV-LABELLED-REVENUE",
+    "RELEASE-DASHBOARD-ESTIMATES-MISS-N-AND-LEVEL",
+    "RELEASE-AOV-CAVEATS-MISSING"
+  ],
+  "issue_texts": [
+    "RELEASE-AOV-LABELLED-REVENUE | gate_release_auditor.dashboard_label_matches_claim_id | gate_release_auditor|dashboard_label_matches_claim_id|release/dashboard_data.json|$.cards[4].label | VISUALIZATION | HIGH | worker_release | release/dashboard_data.json $.cards[4]: claim_id CLM-AOV-DIRECT, label 'Revenue Direct', value 110.64 EUR (an average order value). The generator rule (src/release/build_re",
+    "RELEASE-DASHBOARD-ESTIMATES-MISS-N-AND-LEVEL | gate_release_auditor.dashboard_estimates_show_n_and_level | gate_release_auditor|dashboard_estimates_show_n_and_level|release/dashboard_data.json|cards[CLM-COMPLETION-*,CLM-AOV-*] | RELEASE_INTEGRITY | MEDIUM | worker_release | release/dashboard_data.json cards for CLM-COMPLETION-DIRECT, CLM-COMPLETION-PARTNER, CLM-AOV-DIRECT, CLM-AOV-PARTNER carry va",
+    "RELEASE-AOV-CAVEATS-MISSING | gate_release_auditor.aov_caveats_present | gate_release_auditor|aov_caveats_present|analysis/claim_register.json|CLM-AOV-DIRECT,CLM-AOV-PARTNER | CLAIM_SUPPORT | MEDIUM | worker_analysis | analysis/claim_register.json caveats of CLM-AOV-DIRECT and CLM-AOV-PARTNER contain only 'one quarter of orders in this channel' and the sampling-interval caveat; neither 'net of ref"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "release/report.md line 3 states one global population 'delivered only', which is wrong for the orders count on line 9 (population of CLM-ORDERS is all orders in the quarter, not delivered only); the orders card's own caveats are correct, so this is a header wording fault, not a number fault.",
+    "The machine surface gate (audit/results/gate_release_machine/evidence/release_surface_gate.json) checked 60 numbers for binding but had no rule for card labels, n beside estimates, or level labels; the two dashboard findings above were covered by no machine check, so its PASS on those spots is silen",
+    "The gate_release_document gate recorded caveats_rendered PASS for every claim on both surfaces, but that rule can only check the caveats the register carries; the missing AOV caveats were invisible to it by construction."
+  ],
+  "summary": "Every number on all three release surfaces (report.md 20, dashboard_data.json 20, release_number_manifest.json 20) was extracted, bound to claim_id+role, and independently recomputed from the metrics/claim registries with registry formatting: all 60 reproduce exactly, component sums (1971306.75+1051989.86=3023296.61; 24597+19934=44531), ratio identities (0.724397, 0.604746, 110.64, 87.27), effect identity (0.119652) and interval containment all PASS. Three release failures remain: (1) dashboard card for CLM-AOV-DIRECT is labelled 'Revenue Direct' — an AOV shown as Revenue, and a label that doe",
+  "wall_seconds": 297.6,
+  "cost": {
+    "at": "2026-09-19T07:26:29.334446+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-c42b0a57f05a",
+    "agent_role": "glm-audit-release",
+    "started_at": "2026-09-19T07:21:35.940047+00:00",
+    "finished_at": "2026-09-19T07:26:29.334446+00:00",
+    "wall_seconds": 293.39,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 93007,
+    "cached_input_tokens": 941184,
+    "output_tokens": 7989,
+    "total_tokens": 1045816,
+    "cost_usd": 0.028803341999999996
+  }
+}

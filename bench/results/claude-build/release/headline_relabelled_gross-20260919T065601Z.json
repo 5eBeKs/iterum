@@ -1,0 +1,70 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "headline_relabelled_gross",
+  "dataset": "orders",
+  "error": "The page calls net revenue 'Gross revenue'; the number is net of refunds.",
+  "at": "2026-09-19T06:53:38+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "gross",
+    "label",
+    "net revenue"
+  ],
+  "blocking_issues": 2,
+  "warnings": 6,
+  "checks": 14,
+  "issue_ids": [
+    "REL-HEADLINE-LABEL-GROSS",
+    "REL-REPORT-NOT-FROM-GENERATOR"
+  ],
+  "issue_texts": [
+    "REL-HEADLINE-LABEL-GROSS | gate_release_auditor.headline_label_matches_metric | gate_release_auditor|headline_label_matches_metric|release/report.md|CLM-NET-REVENUE | VISUALIZATION | CRITICAL | worker_release | The visible text on release/report.md line 7 labels the value bound to CLM-NET-REVENUE:value (metric net_revenue = SUM(gross) - SUM(refund) = 35741.52) as 'Gross revenue, EUR'. From metrics",
+    "REL-REPORT-NOT-FROM-GENERATOR | gate_release_auditor.report_reproducible_from_generator | gate_release_auditor|report_reproducible_from_generator|release/report.md|headline | RELEASE_INTEGRITY | HIGH | worker_release | The template at src/release/build_release.py line 50 writes the headline label as 'Net revenue, EUR', but release/report.md line 7 reads 'Gross revenue, EUR'. The published surface "
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The published report calls its headline 35,741.52 'Gross revenue'; a reader would take the quarter's net-of-refunds revenue for gross sales and understate refunds by 4,493.50 EUR.",
+    "gate_release_machine passed 21 of 21 numbers because it checks only number binding and formatting; it cannot see that the label beside a correctly bound number names a different metric.",
+    "gate_release_document's claims_rendered and caveats_rendered passed this report because the headline's caveats are present; neither rule checks that the label agrees with the caveat or with the metric.",
+    "release_surface_contract.json has label_requirements only for the three country claims; nothing requires the CLM-NET-REVENUE label to say net, which is how this passed both machine gates.",
+    "release_surface_contract.json declares the reconciliations REC-COUNTRY-SUM and REC-REFUND-RATE, but gate_release_machine's evidence records no result for either; this auditor recomputed both and they hold.",
+    "check_plan.json lists gate_release_document's claims_rendered and caveats_rendered under accepted_unproven because the plan-proof run failed with FileNotFoundError, so neither rule was shown to fire on a broken release."
+  ],
+  "summary": "The numbers are right but the report headline has the wrong label. All 21 rendered numbers across report.md, dashboard_data.json and release_number_manifest.json are bound to a claim and match an independent re-render of the claim register. The reconciliations hold: the country figures sum to 35741.52, and 27/57 = 0.473684. The blocker is on release/report.md line 7, which labels the net_revenue figure 35,741.52 as 'Gross revenue, EUR'. Gross for this population is 40235.02. The line also contradicts its own caveat 'net of refunds', the dashboard card 'Net revenue (EUR)', and the generator src",
+  "wall_seconds": 137.7,
+  "cost": {
+    "at": "2026-09-19T06:55:59.503041+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-b0dc8f415661",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-19T06:53:45.069017+00:00",
+    "finished_at": "2026-09-19T06:55:59.503041+00:00",
+    "wall_seconds": 134.437,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 24,
+    "cached_input_tokens": 781762,
+    "output_tokens": 15177,
+    "total_tokens": 796963,
+    "cost_usd": 1.432652
+  }
+}

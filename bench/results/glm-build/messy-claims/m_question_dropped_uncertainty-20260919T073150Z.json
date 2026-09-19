@@ -1,0 +1,53 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "m_question_dropped_uncertainty",
+  "dataset": "messy",
+  "error": "R03 is restated without the half of the brief that asks how precisely each rate is known.",
+  "at": "2026-09-19T07:29:49+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "missed",
+  "matched_signals": [],
+  "blocking_issues": 0,
+  "warnings": 0,
+  "checks": 16,
+  "issue_ids": [],
+  "issue_texts": [],
+  "other_blockers": 0,
+  "warning_texts": [],
+  "summary": "All 8 claims independently recomputed from the quarantine projection quarantine/orders.csv (45917 rows, 45000 distinct orders, dedup last-revision, exclusions 459 outside quarter + 10 negative refunds -> population 44531): every claim value, CI bound, n, statistic, effect and p matches the registry within tolerance. Claim->metric->source chain byte-consistent; R03/R04 hypothesis fields match the frozen analysis plan; R05 publishes no number and excuses shipping_total by name. Sign of the channel effect persists in all 3 country strata and all 3 months (no Simpson). No quarantined comment phras",
+  "wall_seconds": 112.2,
+  "cost": {
+    "at": "2026-09-19T07:31:49.111418+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-6e8174f21672",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-19T07:30:01.038430+00:00",
+    "finished_at": "2026-09-19T07:31:49.109407+00:00",
+    "wall_seconds": 108.078,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 77113,
+    "cached_input_tokens": 595520,
+    "output_tokens": 6054,
+    "total_tokens": 679473,
+    "cost_usd": 0.019711529999999998
+  }
+}

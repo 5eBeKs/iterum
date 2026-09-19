@@ -1,0 +1,77 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "headline_relabelled_gross",
+  "dataset": "orders",
+  "error": "The page calls net revenue 'Gross revenue'; the number is net of refunds.",
+  "at": "2026-09-19T08:07:08+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "gross",
+    "label",
+    "net revenue"
+  ],
+  "blocking_issues": 2,
+  "warnings": 8,
+  "checks": 11,
+  "issue_ids": [
+    "FINAL-HEADLINE-LABEL-GROSS-FOR-NET",
+    "FINAL-REPORT-NOT-REPRODUCIBLE-FROM-GENERATOR"
+  ],
+  "issue_texts": [
+    "FINAL-HEADLINE-LABEL-GROSS-FOR-NET | gate_release_document.headline_label_matches_claim_semantics | gate_release_document|headline_label_says_gross_for_net_claim|release/report.md|CLM-NET-REVENUE | CLAIM_SUPPORT | CRITICAL | worker_release | release/report.md line 7 reads 'Gross revenue, EUR: <!-- claim:CLM-NET-REVENUE:value --> 35,741.52' while the anchored claim's metric net_revenue is SUM(gross",
+    "FINAL-REPORT-NOT-REPRODUCIBLE-FROM-GENERATOR | gate_release_machine.surface_reproducible_from_declared_generator | gate_release_machine|surface_not_reproducible_from_declared_generator|release/report.md|src/release/build_release.py | RELEASE_INTEGRITY | HIGH | worker_release | audit/results/final/evidence/diff_generator.py copied the declared generator src/release/build_release.py (named in audit/"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "check_plan.json records gate_release_document.claims_rendered and caveats_rendered under accepted_unproven (the breaker proof died on a FileNotFoundError inside the proof harness's temp dir); both rules ran and passed on the live run, but the plan itself states neither was ever proven to fire on a b",
+    "No deterministic rule binds the headline label: label_requirements in release_surface_contract.json cover only CLM-NET-PL/DE/CZ country codes, so the 'Gross revenue' mislabel passed every machine gate; this coverage gap is what let blocker FINAL-HEADLINE-LABEL-GROSS-FOR-NET through and is worth clos",
+    "The sibling stage auditors (gate0_semantic, gate_clean_auditor, gate_metrics_auditor, gate_claims_auditor, gate_release_auditor) carry only stub evidence notes ('driver e2e evidence'); their PASSes were used as an evidence map only, and this verdict rests on the machine gates plus my own recomputati",
+    "Model identity is unverifiable in this CLI: no output event names a model, so 'executed on openrouter/z-ai/glm-5.3-flash' for every stage, including this one, is confirmed by nothing except each stage's own execution.model self-report (the four worker results carry the path with a bench suffix); MOD",
+    "The three RESOLVED decisions look right on the data: the paying_customers basis gives 27/57 = 0.473684 while the order-rows basis would give 33/174 = 0.189655 (audit/results/final/evidence/refund_rate_bases.py), net-of-refunds recognition is applied in every published figure, and order_date is a pla",
+    "drift_since_review is absent from the handoff, so code-versus-current-data drift could not be checked from an index; the full recalculation from raw data covers the published numbers themselves, but no statement here proves the stages' code assumptions were checked against a drift index.",
+    "audit/decisions/ holds no ruling files and the handoff lists no rulings, so beyond the three RESOLVED entries in human_decisions.yaml there was no human decision journal to apply; the four worker results record no disclosures and no warnings.",
+    "gate_metrics_machine/evidence/unchecked.json flags excluded_order_rows and excluded_outside_period as not directly recomputed; both are pinned transitively by the component_sum rules (201 = 174 + 26 + 1 and 27 = 26 + 1) and my recalculation confirms both counts, so this is residual, not a finding."
+  ],
+  "summary": "Independent recalculation from raw_data/orders.csv reproduces all 11 registry metrics, all 5 claims and every machine-gate comparison exactly (201 raw rows = 174 population + 26 not delivered + 1 outside period; gross 40,235.02 - refunds 4,493.50 = net 35,741.52 EUR; refund rate 27/57 = 0.473684 on the ruled paying_customers basis; country components sum to the headline). The release fails on its headline: release/report.md line 7 presents the NET figure 35,741.52 EUR under the label 'Gross revenue, EUR' (gross is 40,235.02 EUR), contradicting the claim CLM-NET-REVENUE it anchors, its own 'net",
+  "wall_seconds": 1013.2,
+  "cost": {
+    "at": "2026-09-19T08:24:10.192857+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-e8e99bd9d8dd",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-19T08:07:21.138659+00:00",
+    "finished_at": "2026-09-19T08:24:10.188848+00:00",
+    "wall_seconds": 1009.047,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 88554,
+    "cached_input_tokens": 1787520,
+    "output_tokens": 10304,
+    "total_tokens": 1903056,
+    "cost_usd": 0.04830252000000001
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "m_dashboard_aov_labelled_revenue",
+  "dataset": "messy",
+  "error": "On the dashboard the direct average order value card is labelled revenue.",
+  "at": "2026-09-19T10:21:19+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "Revenue Direct",
+    "label",
+    "aov|average order"
+  ],
+  "blocking_issues": 7,
+  "warnings": 6,
+  "checks": 30,
+  "issue_ids": [
+    "REL-AUD-001",
+    "REL-AUD-002",
+    "REL-AUD-003",
+    "REL-AUD-004",
+    "REL-AUD-005",
+    "REL-AUD-006",
+    "REL-AUD-007"
+  ],
+  "issue_texts": [
+    "REL-AUD-001 | gate_release_auditor.label_matches_claim_metric | gate_release_auditor|label_matches_claim_metric|release/dashboard_data.json|$.cards[4].label | VISUALIZATION | HIGH | worker_release | release/dashboard_data.json $.cards[4] carries claim_id CLM-AOV-DIRECT (metric aov_direct, unit EUR, average net value of one delivered direct order) with value 110.64, but its label is 'Revenue Direct",
+    "REL-AUD-002 | gate_release_auditor.surface_reproducible_from_generator | gate_release_auditor|surface_reproducible_from_generator|release/dashboard_data.json|all | RELEASE_INTEGRITY | HIGH | worker_release | evidence/release_audit.py loads src/release/build_release.py with its three output paths redirected to evidence/generator_replay/ and runs it over the current claim register. report.md and rel",
+    "REL-AUD-003 | gate_release_auditor.estimate_card_shows_n_and_level | gate_release_auditor|estimate_card_shows_n_and_level|release/dashboard_data.json|estimate_cards | VISUALIZATION | MEDIUM | worker_release | The four estimate cards in release/dashboard_data.json ($.cards[2..5]: CLM-COMPLETION-DIRECT, CLM-COMPLETION-PARTNER, CLM-AOV-DIRECT, CLM-AOV-PARTNER) carry value, ci_low and ci_high but no n",
+    "REL-AUD-004 | gate_release_auditor.card_carries_population_period | gate_release_auditor|card_carries_population_period|release/dashboard_data.json|cards | VISUALIZATION | MEDIUM | worker_release | None of the 8 cards in release/dashboard_data.json carries a population or a period. The period exists only once at top level ($.period), and populations are not on the surface at all. So the completion",
+    "REL-AUD-005 | gate_release_auditor.population_beside_figure | gate_release_auditor|population_beside_figure|release/report.md|line3 | RELEASE_INTEGRITY | MEDIUM | worker_release | release/report.md line 3 states a single page-wide population: CLM-NET-REVENUE's 'orders placed inside the quarter, one row per order, delivered only' (build_release.py line 86 takes the revenue claim's population for th",
+    "REL-AUD-006 | gate_release_auditor.aov_caveats_net_and_delivered | gate_release_auditor|aov_caveats_net_and_delivered|analysis/claim_register.json|CLM-AOV | CLAIM_SUPPORT | MEDIUM | worker_analysis | The dataset addition to this stage requires 'net of refunds' and 'delivered orders only' beside revenue and AOV. Beside AOV, neither appears on report.md (lines 19 and 21) or on the dashboard ($.cards",
+    "REL-AUD-007 | gate_release_auditor.test_card_identifies_p | gate_release_auditor|test_card_identifies_p|release/dashboard_data.json|test_cards | VISUALIZATION | MEDIUM | worker_release | release/dashboard_data.json $.cards[6] and $.cards[7] show 'Test Channel Completion' / 'Test Channel Aov' with value '0.0000'. Nothing on these cards says the value is a p. Nor do they show the hypothesis id, the "
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "Both machine gates of this stage check numbers and caveat strings only. The release_surface_contract declares reconciliations, card_caveat_requirements and visual_evidence as empty. So card labels, per-card population, period, n and level, and the page-level population line are checked by no determi",
+    "audit/check_plan.json caveats_declared requires only channel-population and the sampling-interval caveat for the two AOV claims, while the dataset's release requirements also ask for 'net of refunds' and 'delivered orders only'. The plan cannot catch the AOV caveat gap on a future run either.",
+    "The release_surface_gate evidence shows no generator literal scan. An AST scan of src/release/build_release.py finds only the structural literals 0, 1 and 2 (return code, Decimal(1), parents[2], indent=2) and no business figure. parents[2] and indent=2 are not in the contract's generator_literal_exc",
+    "Both test p-values render as '0.0000' at the registry's 4 display digits, although the recomputed two-proportion p is about 3e-157. A reader can take '0.0000' as a p of exactly zero; '< 0.0001' would be accurate.",
+    "report.md prints n without thousands separators (n = 24597) while the headline count uses them (44,531), and it labels the AOV bullets 'aov direct' and 'aov partner' without spelling out average order value.",
+    "The Welch statistic and Cohen's d can only be checked approximately from the published AOV intervals, which are rounded to 0.01: they back out to t = 42.62 and d = 0.4854 against the registered 42.699880 and 0.486900, consistent within that rounding. An exact check needs the per-order values, which "
+  ],
+  "summary": "All 60 rendered numbers across report.md, dashboard_data.json and the manifest are bound, exact and reproduce from the registry (net revenue 3023296.61 = 1971306.75 + 1051989.86; orders 44531 = 24597 + 19934; Wilson bounds, z = 26.718455 and effect 0.119652 recomputed exactly). The release still fails on what the reader sees around those numbers: the dashboard card for CLM-AOV-DIRECT is labelled 'Revenue Direct', a hand edit that the committed generator does not produce; dashboard estimate cards carry no n and no level, no card carries its population or period, and test cards do not say their ",
+  "wall_seconds": 331.1,
+  "cost": {
+    "at": "2026-09-19T10:26:54.100364+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-1ec424ea468d",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-19T10:21:26.091483+00:00",
+    "finished_at": "2026-09-19T10:26:54.100364+00:00",
+    "wall_seconds": 328.0,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 42,
+    "cached_input_tokens": 2220696,
+    "output_tokens": 32837,
+    "total_tokens": 2253575,
+    "cost_usd": 3.1111835000000005
+  }
+}

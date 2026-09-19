@@ -1,0 +1,66 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "m_completion_population_delivered",
+  "dataset": "messy",
+  "error": "The direct completion rate says its population is delivered orders, over which a completion rate is always 1.",
+  "at": "2026-09-16T19:22:12+00:00",
+  "max_v2_revision": "fa38876",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "CLM-COMPLETION-DIRECT",
+    "population",
+    "delivered",
+    "denominator|cancel|always|trivial|1\\.0|100 ?%"
+  ],
+  "blocking_issues": 1,
+  "warnings": 3,
+  "checks": 21,
+  "issue_ids": [
+    "CLM-COMPLETION-DIRECT-POPULATION-DELIVERED"
+  ],
+  "issue_texts": [
+    "CLM-COMPLETION-DIRECT-POPULATION-DELIVERED | gate_claims_auditor.claim_population_matches_denominator | gate_claims_auditor|METRIC_DEFINITION|analysis/claim_register.json|CLM-COMPLETION-DIRECT | METRIC_DEFINITION | MEDIUM | worker_analysis | analysis/claim_register.json CLM-COMPLETION-DIRECT.population = 'orders placed inside the quarter, one row per order, delivered, channel = direct'; the claim "
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The stage prompt's addition says the machine gate's independent_claim_recalc.json is rooted in clean_data/, but the file actually names raw_data/orders.csv as source, which matches check_plan.json's raw_latest definition; noted as a discrepancy between prompt text and the artifact, not a finding aga",
+    "R05.json's caveat contains the loose quantity 'About six per cent of the orders'; it is prose in an answer file, not a claim caveat in the register, but a panel scanner over answer caveats would read it as unbound.",
+    "Independent claim recalculation in this run was performed from the quarantine projection quarantine/orders.csv per quarantine/manifest.json declared: true, not from raw_data/orders.csv which carries the quarantined comment column."
+  ],
+  "summary": "All six headline claims, every CI bound, both registered test statistics and effect sizes were independently recomputed from the quarantine projection (quarantine/orders.csv, manifest declared: true) with own scripts in evidence/ and match the register and the machine gate exactly, including chain claim->metric->source byte equality, n/level/method against audit/analysis_plan.json and check_plan.json, dedup (45000 orders), period cut (44541 in quarter, 10 negative-refund exclusions, 44531 clean), Simpson check (direct>partner holds in all 3 country and 3 month strata), survivorship (denominato",
+  "wall_seconds": 260.0,
+  "cost": {
+    "at": "2026-09-16T19:26:38.539005+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-035cf010252d",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-16T19:22:22.155216+00:00",
+    "finished_at": "2026-09-16T19:26:38.537551+00:00",
+    "wall_seconds": 256.375,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 91332,
+    "cached_input_tokens": 683264,
+    "output_tokens": 8710,
+    "total_tokens": 786616,
+    "cost_usd": 0.024141732
+  }
+}

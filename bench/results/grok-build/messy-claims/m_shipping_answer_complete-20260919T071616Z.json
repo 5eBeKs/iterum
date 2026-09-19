@@ -1,0 +1,64 @@
+{
+  "profile": "grok-build",
+  "stage": "claims",
+  "case": "m_shipping_answer_complete",
+  "dataset": "messy",
+  "error": "The answer to R05 calls the shipping total complete; about six per cent of its cells are blank, NaN or inf.",
+  "at": "2026-09-19T07:05:17+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R05|shipping",
+    "readable|blank|NaN|\\binf\\b|six per ?cent|6 ?%|unknown amount|underst|complete"
+  ],
+  "blocking_issues": 1,
+  "warnings": 3,
+  "checks": 38,
+  "issue_ids": [
+    "R05-SHIPPING-COMPLETE-FALSE"
+  ],
+  "issue_texts": [
+    "R05-SHIPPING-COMPLETE-FALSE | gate_claims_auditor.r05_shipping_total_excused | gate_claims_auditor|r05_shipping_complete|analysis/answers/R05.json|shipping_total | CLAIM_SUPPORT | CRITICAL | worker_analysis | analysis/answers/R05.json caveats[0] states every shipping cell was readable and the total is complete and left out only for brevity. Independent parse of quarantine/orders.csv after latest-r"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "CLM-AOV-DIRECT and CLM-AOV-PARTNER are computed on delivered orders net of refunds, and their population fields say delivered, but their caveats do not name net of refunds in words; caveats_declared did not require that topic on those two claims.",
+    "CLM-TEST-CHANNEL-AOV population string does not name the delivered-only filter; n_per_group is 17818 and 12055, which match delivered counts, not the full channel denominators 24597 and 19934.",
+    "gate_claims_machine questions_are_answered.R05 passed on the presence of analysis/answers/R05.json; it does not read whether the caveat matches the shipping_total excuse. That gap is the finding above, not a machine disagreement."
+  ],
+  "summary": "Independent recalc from quarantine/orders.csv matches all eight registered claims and both tests. R05 is the blocker: it names shipping_total and publishes no claim, but its caveat says every shipping cell was readable and the total is complete and omitted only for brevity. The same population has 2648 of 44531 rows with an unreadable shipping cell (rate 0.059464); audit_spec.yaml sets shipping_total publish never, and the check-plan excuse says the sum understates by an unknown amount. The rest of the register, answers R01-R04, populations, periods, and both registered hypotheses hold.",
+  "wall_seconds": 651.4,
+  "cost": {
+    "at": "2026-09-19T07:16:15.450351+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-0528dac4204a",
+    "agent_role": "grok-audit-claims",
+    "started_at": "2026-09-19T07:05:27.276900+00:00",
+    "finished_at": "2026-09-19T07:16:15.450351+00:00",
+    "wall_seconds": 648.171,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 332294,
+    "cached_input_tokens": 2682240,
+    "output_tokens": 37670,
+    "total_tokens": 3052204,
+    "cost_usd": 0.75878752
+  }
+}

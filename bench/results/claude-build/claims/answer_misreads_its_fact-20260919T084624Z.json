@@ -1,0 +1,67 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "answer_misreads_its_fact",
+  "dataset": "orders",
+  "error": "The answer to R02 calls a 47% refund rate low, fewer than one order in ten.",
+  "at": "2026-09-19T08:44:15+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R02",
+    "one order in ten",
+    "\\blow\\b",
+    "0\\.47|47 ?%"
+  ],
+  "blocking_issues": 1,
+  "warnings": 4,
+  "checks": 13,
+  "issue_ids": [
+    "CLAIMS-R02-CAVEAT-MISREADS-FACT"
+  ],
+  "issue_texts": [
+    "CLAIMS-R02-CAVEAT-MISREADS-FACT | gate_claims_auditor.answer_interpretation.R02 | gate_claims_auditor|answer_interpretation|analysis/answers/R02.json|R02.caveats | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R02.json caveats[1] calls the refund rate low at 0.47 and states that fewer than one order in ten is refunded. evidence/recalc.py over raw_data/orders.csv: CLM-REFUND-RATE = 27 r"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "analysis/answers/R02.json carries a free-text figure, a rounded 0.47 plus an order-level share, with no claim_id or registry binding; if the release stage renders answer caveats, that sentence would reach readers as an unverified number.",
+    "No deterministic rule in audit/check_plan.json reads the caveat text of analysis/answers/*.json (caveats_declared covers claim_register only, questions_are_answered checks fields and the R04 counts), so every answer sentence is checked only by this auditor.",
+    "The period is named 2025-Q1-delivered in metrics while audit_spec ends it on 2025-03-30, not 2025-03-31; the raw export has no row dated 2025-03-31, so no published figure changes, but a reader of 'the quarter' may assume the calendar quarter.",
+    "47 of the 57 paying customers have more than one order in the population, so the customer-basis refund rate (0.473684) and an order-row reading (0.189655) differ by a factor of about 2.5; any text that restates the rate must name its basis."
+  ],
+  "summary": "All five registered claims (net revenue 35741.52, refund rate 0.473684 = 27/57 paying customers, PL/DE/CZ 11181.67/11032.61/13527.24) and the R04 row accounting (201 = 174 + 26 + 1) reproduce exactly from raw_data/orders.csv, and the machine recalc is rooted in raw only. One blocker: the R02 answer's caveat misreads its own fact, calling the 0.47 customer-basis rate low and restating it as fewer than one order in ten refunded, while the rate is nearly one customer in two and the order-row share recomputed from raw is 0.189655.",
+  "wall_seconds": 124.7,
+  "cost": {
+    "at": "2026-09-19T08:46:23.457860+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-f58036111c74",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-19T08:44:21.782798+00:00",
+    "finished_at": "2026-09-19T08:46:23.457860+00:00",
+    "wall_seconds": 121.671,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 28,
+    "cached_input_tokens": 1071127,
+    "output_tokens": 13338,
+    "total_tokens": 1084493,
+    "cost_usd": 1.643812
+  }
+}

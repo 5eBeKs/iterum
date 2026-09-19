@@ -1,0 +1,86 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "m_dedup_rule_misstated",
+  "dataset": "messy",
+  "error": "The answer to R02 says the first revision of an order is kept; the spec and the clean stage keep the last.",
+  "at": "2026-09-16T18:39:30+00:00",
+  "max_v2_revision": "fa38876",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "first revision",
+    "last revision|latest|latest_revision_wins|dedup_rule"
+  ],
+  "blocking_issues": 6,
+  "warnings": 10,
+  "checks": 14,
+  "issue_ids": [
+    "FINAL-R02-DEDUP-RULE-MISSTATED",
+    "FINAL-REPORT-POPULATION-DELIVERED-ONLY",
+    "FINAL-CARRY-WORKER-CLEAN",
+    "FINAL-CARRY-WORKER-METRICS",
+    "FINAL-CARRY-WORKER-ANALYSIS",
+    "FINAL-CARRY-WORKER-RELEASE"
+  ],
+  "issue_texts": [
+    "FINAL-R02-DEDUP-RULE-MISSTATED | final_claude_redteam.dedup_rule_stated_as_applied | final_claude_redteam|dedup_rule_stated_as_applied|analysis/answers/R02.json|caveats | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R02.json caveats[0] tells the reader that the export's first revision of each order is kept, and attributes this to dedup_rule in audit_spec.yaml. audit_spec.yaml line 43 ",
+    "FINAL-REPORT-POPULATION-DELIVERED-ONLY | final_claude_redteam.rendered_population_matches_claims | final_claude_redteam|rendered_population_matches_claims|release/report.md|population_header | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3, read as text without the HTML comments, sets the population of the whole report to orders in the quarter, one row per order, delivered on",
+    "FINAL-CARRY-WORKER-CLEAN | final_claude_redteam.carry_matches_stage_output | final_claude_redteam|carry_matches_stage_output|audit/checkpoints/worker_clean.carry.json|grain_period_population | OTHER | MEDIUM | worker_clean | audit/checkpoints/worker_clean.carry.json matches carry.schema.json structurally, and its context_id cc-worker_clean-a1-c0adf4877022 and attempt 1 equal audit/results/worker_c",
+    "FINAL-CARRY-WORKER-METRICS | final_claude_redteam.carry_matches_stage_output | final_claude_redteam|carry_matches_stage_output|audit/checkpoints/worker_metrics.carry.json|grain_period_population | OTHER | MEDIUM | worker_metrics | audit/checkpoints/worker_metrics.carry.json has a valid structure, and cc-worker_metrics-a1-943a8acdf87c with attempt 1 equals the worker_metrics result execution. Its c",
+    "FINAL-CARRY-WORKER-ANALYSIS | final_claude_redteam.carry_matches_stage_output | final_claude_redteam|carry_matches_stage_output|audit/checkpoints/worker_analysis.carry.json|grain_period_population | OTHER | MEDIUM | worker_analysis | audit/checkpoints/worker_analysis.carry.json has a valid structure, and cc-worker_analysis-a1-3a61091afed3 with attempt 1 equals the worker_analysis result execution.",
+    "FINAL-CARRY-WORKER-RELEASE | final_claude_redteam.carry_matches_stage_output | final_claude_redteam|carry_matches_stage_output|audit/checkpoints/worker_release.carry.json|grain_period_population | OTHER | MEDIUM | worker_release | audit/checkpoints/worker_release.carry.json has a valid structure, and cc-worker_release-a1-8238f2b4c86b with attempt 1 equals the worker_release result execution. Its c"
+  ],
+  "other_blockers": 5,
+  "warning_texts": [
+    "Placeholder stage evidence. All four worker results and the results of gate0_semantic and gate_release_auditor carry a driver placeholder summary and one check that reports 0.473684 as independently recomputed. That value matches no metric, claim, count or bound in this audit. Their evidence notes (",
+    "Coverage outside check_plan.json, checked here by hand. Answer files beyond question and facts: the R02 caveat is a blocker; the R03/R04 test statistics were recomputed and match (pooled z 26.718455, difference 0.119652, Welch t 42.699880, pooled-SD Cohen's d 0.486900), with method, alpha 0.05 and b",
+    "Hypothesis tests exist only in analysis/answers/R03.json and R04.json. The claim register has no kind: test claim, so hypotheses_registered, multiplicity, effect_floor and power_declared evaluated 'no test claim' and never saw them. Both tests are registered in analysis_plan.json with matching metho",
+    "Assumption dedup_rule (RESOLVED, latest revision wins): the data supports it. In all 917 repeated orders the later row has the latest updated_at. In 6 of the 126 orders whose status changes, both rows have the same updated_at, so for those orders only the file order (the last row, as the spec says) ",
+    "Assumption refund_sign_policy (RESOLVED, exclude negative refunds): it removes 10 orders in the quarter (8 delivered, 2 pending; 9 direct, 1 partner). Kept, they would make CLM-ORDERS 44,541 instead of 44,531 and add 1,290.57 to net revenue at their recorded refunds, or 967.93 with refunds treated a",
+    "Completion-rate semantics: following the spec formula, pending orders count as not completed. At export, 3,457 direct orders (14.05%) and 4,034 partner orders (20.24%) were pending, and the share is steady across the three months, so it is not an effect of how recent the export is. Counting only res",
+    "Interval versus movement: monthly partner completion is 0.594679, 0.616349 and 0.603370, a range of 0.0217, wider than the quarterly Wilson interval (0.597939 to 0.611512, width 0.0136). Direct is 0.721782, 0.719305 and 0.732054. Country shares per channel stay near one third each month. The samplin",
+    "Shipping: I recomputed shipping_total independently and it equals the registry value of 37,792,722.50. Among the quarter's latest revisions, 13,544 cells use a decimal comma, 3,607 carry a EUR suffix, and 2,648 (5.95%) cannot be read (1,778 blank, 869 NaN, 1 inf). The metric is correctly left unpubl",
+    "Assumption date_input_formats (RESOLVED, slashed dates are month-first): the data supports it. All 6,661 slashed dates agree with order_month when read month-first; only 227 would agree read day-first, and 2,350 are valid both ways. No ISO8601 timestamp changes calendar date in Europe/Warsaw. order_",
+    "Units and estimate rendering: the AOV lines in release/report.md (18 and 20) and the AOV dashboard cards show no EUR unit. The estimate cards in release/dashboard_data.json show no n, although the release block of audit_spec.yaml says in a comment that an estimate always appears with its interval an"
+  ],
+  "summary": "FAIL on 3 separate problems, filed as 6 blockers. The figures are correct: all 14 figures and bounds on report.md, dashboard_data.json and release_number_manifest.json match an independent recompute from quarantine/orders.csv under the declared rule that the latest revision wins (917 repeated orders; the last row always has the latest updated_at; the clean table keeps the last row in all 126 orders whose status changes). The machine release gate covers every file under release/. The defects are in what a reader or the next stage is told. (1) analysis/answers/R02.json says the first revision is",
+  "wall_seconds": 712.2,
+  "cost": {
+    "at": "2026-09-16T18:51:40.584196+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-62b781008144",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-16T18:39:50.887012+00:00",
+    "finished_at": "2026-09-16T18:51:40.584196+00:00",
+    "wall_seconds": 709.687,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 68,
+    "cached_input_tokens": 5025552,
+    "output_tokens": 69833,
+    "total_tokens": 5095453,
+    "cost_usd": 6.0847745
+  }
+}

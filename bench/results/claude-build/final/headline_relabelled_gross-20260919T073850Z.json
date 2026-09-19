@@ -1,0 +1,84 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "headline_relabelled_gross",
+  "dataset": "orders",
+  "error": "The page calls net revenue 'Gross revenue'; the number is net of refunds.",
+  "at": "2026-09-19T07:32:14+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "gross",
+    "label",
+    "net revenue"
+  ],
+  "blocking_issues": 1,
+  "warnings": 17,
+  "checks": 26,
+  "issue_ids": [
+    "FINAL-HEADLINE-LABELLED-GROSS"
+  ],
+  "issue_texts": [
+    "FINAL-HEADLINE-LABELLED-GROSS | final_claude_redteam.headline_label_semantics | final_claude_redteam|headline_label_semantics|release/report.md|CLM-NET-REVENUE | RELEASE_INTEGRITY | CRITICAL | worker_release | release/report.md line 7, read as text without HTML comments, says 'Gross revenue, EUR: 35,741.52'. The number is bound to CLM-NET-REVENUE (metric net_revenue, formula SUM(gross_amount) - SU"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "This profile is single-vendor on purpose: the architect, all workers, all auditors and this red team are the same model family (claude-opus-5). An isolated context is not an independent vendor, and a mistake the model is prone to can pass on both sides of every check. The layers that actually hold a",
+    "Writes over raw_data/ and the frozen machinery were closed only by permissions.deny in .claude/settings.json, and that applies to edit tools, not the shell; permissions.allow is not a barrier at all. A changed raw file would be caught after the fact by the control lock on the next runner command, no",
+    "No machine rule compares a surface label with the metric it shows. release_surface_contract.json has label_requirements only for the three country claims and none for CLM-NET-REVENUE or CLM-REFUND-RATE. That is why release_surface_gate (21 of 21 numbers bound), gate_release_document (15 checks) and ",
+    "All four worker results and all five LLM auditor results (gate0_semantic, gate_clean_auditor, gate_metrics_auditor, gate_claims_auditor, gate_release_auditor) are placeholders. Each has summary 'driver e2e <step>' and created_at 2026-01-01T00:00:00Z, and each auditor's evidence/notes.json holds only",
+    "check_plan.json lists gate_release_document.claims_rendered and caveats_rendered under accepted_unproven because the plan proof failed on them with FileNotFoundError, so neither rule was ever shown to fire on a broken release. gate0_machine plan_proven.proof reports '0 accepted unproven'. The two re",
+    "excluded_outside_period (1) and excluded_order_rows (27) are not recomputed from source by any machine rule (gate_metrics_machine/evidence/unchecked.json); two component sums pin them. My own recount from raw confirms both: the single outside-period row is O00201, delivered on 2025-04-01, gross 999.",
+    "The period assumption looks the most fragile. The spec ends the period on 2025-03-30, while the metrics call it '2025-Q1-delivered' and questions.md asks about 'the reported quarter'. If that means calendar Q1, the end date should be 2025-03-31. No row in this export is dated 2025-03-31, so nothing ",
+    "refund_rate_basis = paying_customers is the ruling that moves a published number the most. On the same population it gives 27/57 = 0.473684. Order rows would give 33/174 = 0.189655, and refunded EUR over gross would give 0.111681. The caveat states the basis, but a reader who sees 'Refund rate 0.473",
+    "revenue_recognition = net_of_refunds keeps 12 fully refunded delivered orders in the population at net 0 (O00008, O00010, O00033, O00037, O00053, O00073, O00105, O00128, O00129, O00152, O00159, O00174). If a fully refunded delivery is not a sale, population_order_rows in R04 would fall from 174 to 1",
+    "The timezone_for_dates = Europe/Warsaw ruling cannot be checked or applied: order_date is a date without a time, so the data cannot say whether the source wrote local or UTC dates. The boundary rows are O00008, O00082 and O00198 on 2025-01-01 and O00064 on 2025-03-30 (net 0.00, 174.34, 16.43 and 268",
+    "All four worker carries are one identical template. Each defines the population as 'status=delivered' with no period filter (the period appears only under periods), and none lists 'gross is not net' among its pitfalls, which is exactly the trap the release stage then fell into. The carries pass carr",
+    "metrics/calculated_metrics.json stores the gross total 40,235.02 in the 'numerator' field of the net_revenue record, with a null denominator. No rule checks that field and nothing renders it today, but any surface that ever renders the net_revenue numerator role would print gross under the net claim",
+    "A reader of the release never sees the R04 row accounting: 27 of 201 rows excluded, 26 not delivered (16 cancelled, 10 pending) and 1 dated after the period. Nor are they told that R05 (customer lifetime value) was left unanswered on purpose. Both appear only in analysis/answers/R04.json and in the ",
+    "The report sentence 'Country figures sum to the headline; both are net of refunds' is unanchored prose that no rule checks. The sum is true (11,181.67 + 11,032.61 + 13,527.24 = 35,741.52), but the sentence contradicts the headline's own label.",
+    "What I could not establish: I did not read src/release/build_release.py because it is outside my inputs, and release_surface_gate.json records no result from a generator-literal scan. So I have not verified the rule that no business number is a literal in the release generator, or where the 'Gross r",
+    "What I could not establish: none of the worker results has a disclosures field and all their warnings are empty, so no self-reported deviation was available to assess. Because the results are placeholders, that absence does not prove no deviation happened.",
+    "What I could not establish: the handoff has no rulings, audit/decisions/ does not exist, and there is no drift_since_review field. There is therefore no post-Gate-0 ruling to check, and the missing drift field does not prove the code's assumptions hold on this export. Retry history and runner state "
+  ],
+  "summary": "FAIL on one material blocker. The report headline labels the net figure 35,741.52 as 'Gross revenue, EUR'. Gross revenue for the same population is 40,235.02, and the dashboard labels the same claim 'Net revenue (EUR)'. This breaks the spec's semantic trap (gross is not net) and the resolved revenue_recognition ruling (net_of_refunds) where the reader sees them. My own code (audit/results/final/evidence/redteam_recalc.py) recomputed every other release number from raw_data/orders.csv and all of them match: 201 raw rows, 174 in the population, 26 not delivered, 1 outside the period, net 35,741.",
+  "wall_seconds": 385.8,
+  "cost": {
+    "at": "2026-09-19T07:38:48.679011+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-0cdb94b85940",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-19T07:32:26.150062+00:00",
+    "finished_at": "2026-09-19T07:38:48.679011+00:00",
+    "wall_seconds": 382.515,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 54,
+    "cached_input_tokens": 3060154,
+    "output_tokens": 43421,
+    "total_tokens": 3103629,
+    "cost_usd": 4.088001500000001
+  }
+}

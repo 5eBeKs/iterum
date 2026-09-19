@@ -1,0 +1,53 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "value_hardcoded_in_code",
+  "error": "The analysis code writes the headline as a literal instead of reading the metrics registry; the number happens to be right.",
+  "at": "2026-09-15T18:17:11+00:00",
+  "max_v2_revision": "d6a41ff",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "PASS",
+  "stop_code": null,
+  "outcome": "missed",
+  "matched_signals": [],
+  "blocking_issues": 0,
+  "warnings": 2,
+  "checks": 10,
+  "issue_ids": [],
+  "warning_texts": [
+    "audit/check_plan.json records two gate_release_document checks (claims_rendered, caveats_rendered) as accepted_unproven after FileNotFoundError during plan proof; release-stage rendering of claims and caveats therefore rests on those gates firing in the real run and is not independently proven by th",
+    "Every number the claims machine gate recomputed is covered by my own check, so no coverage gap remains for this stage; row-accounting counts were recomputed only by gate_metrics_machine, not by this stage's gate, but I verified them independently from raw."
+  ],
+  "summary": "All five claims independently recomputed from raw_data/orders.csv match the claim register and the machine gate exactly (net 35741.52 EUR; refund rate 27/57 = 0.473684 paying customers; PL 11181.67, DE 11032.61, CZ 13527.24; row accounting 201 = 174 + 26 + 1). Populations, periods and the paying_customers basis in caveats verified; machine recalc is rooted only in raw_data/orders.csv.",
+  "wall_seconds": 90.1,
+  "cost": {
+    "at": "2026-09-15T18:18:43.916940+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-ec9958f6d482",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-15T18:17:17.558920+00:00",
+    "finished_at": "2026-09-15T18:18:43.915434+00:00",
+    "wall_seconds": 86.359,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 53912,
+    "cached_input_tokens": 232960,
+    "output_tokens": 3427,
+    "total_tokens": 290993,
+    "cost_usd": 0.00856805
+  }
+}

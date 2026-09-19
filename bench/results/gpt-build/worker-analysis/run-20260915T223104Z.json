@@ -1,0 +1,38 @@
+{
+  "profile": "gpt-build",
+  "stage": "analysis",
+  "worker": "worker_analysis",
+  "kind": "worker",
+  "at": "2026-09-15T22:26:00+00:00",
+  "max_v2_revision": "7e1d71f",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "summary": "Built five metric-backed point-estimate claims and four required answer files; the frozen R05 excuse remains unanswered by design, and all 41 claims-machine checks pass.",
+  "wall_seconds": 303.3,
+  "cost": {
+    "at": "2026-09-15T22:31:03.313099+00:00",
+    "launcher": "codex_headless_launcher",
+    "step": "worker_analysis",
+    "attempt": 1,
+    "context_id": "ctx-worker_analysis-a1-932a7ffe06cc",
+    "agent_role": "gpt-worker",
+    "started_at": "2026-09-15T22:26:02.460306+00:00",
+    "finished_at": "2026-09-15T22:31:03.313099+00:00",
+    "wall_seconds": 300.859,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "gpt-5.6-sol",
+    "model_used": null,
+    "input_tokens": 1867448,
+    "cached_input_tokens": null,
+    "output_tokens": 12499,
+    "total_tokens": 1879947,
+    "cost_usd": null
+  },
+  "outcome": "not_verified",
+  "machine": {
+    "gates": {},
+    "machine_caught": false
+  },
+  "fingerprints": []
+}

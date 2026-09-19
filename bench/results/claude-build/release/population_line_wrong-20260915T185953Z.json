@@ -1,0 +1,62 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "population_line_wrong",
+  "error": "The page's population line says all orders; every figure is over delivered orders.",
+  "at": "2026-09-15T18:56:38+00:00",
+  "max_v2_revision": "1d34cf0",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "all orders"
+  ],
+  "blocking_issues": 1,
+  "warnings": 6,
+  "checks": 15,
+  "issue_ids": [
+    "REL-POPULATION-LINE-WRONG"
+  ],
+  "warning_texts": [
+    "release/report.md line 3 states a population that includes all order statuses, which contradicts the report title, the claim register and audit_spec; a reader of that line would take the net revenue as covering cancelled and pending orders.",
+    "No deterministic rule in audit/check_plan.json checks the report title, the population statement or the period label, and the ISO period is excluded from surface binding in both report.md and dashboard_data.json, so this defect passed both release gates and only auditor judgment catches it.",
+    "audit/check_plan.json lists both gate_release_document rules (claims_rendered, caveats_rendered) under accepted_unproven because their proof run failed on a missing file, so the document gate's 15 PASS results were never shown to fire on a broken release.",
+    "audit_spec.yaml sets the period end to 2025-03-30 while calling it the reported quarter, and metrics/calculated_metrics.json names it 2025-Q1-delivered; the release follows the spec, but a human should confirm the end date is not meant to be 2025-03-31.",
+    "release/dashboard_data.json carries no population statement at all, only the period and per-card caveats, so the dashboard's population comes only from the 'delivered orders' caveat strings.",
+    "report.md line 11 shows the refund-rate numerator and denominator as '27 of 57' without naming the unit in that sentence; the caveat on line 10 names paying customers."
+  ],
+  "summary": "All 21 shown numbers match the registry after independent recomputation and exact formatting. That covers the country sum, net = gross - refunds, the refund rate 27/57 and row accounting 201 = 174 + 26 + 1. But release/report.md line 3 tells the reader the population is all orders inside the period, while the spec population is delivered orders inside the period. No machine rule reads that line.",
+  "wall_seconds": 190.9,
+  "cost": {
+    "at": "2026-09-15T18:59:52.202004+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-b0dc8f415661",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-15T18:56:44.002980+00:00",
+    "finished_at": "2026-09-15T18:59:52.202004+00:00",
+    "wall_seconds": 188.187,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 290,
+    "cached_input_tokens": 671659,
+    "output_tokens": 16223,
+    "total_tokens": 688172,
+    "cost_usd": 1.334676
+  }
+}

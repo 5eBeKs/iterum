@@ -1,0 +1,59 @@
+{
+  "profile": "grok-build",
+  "stage": "release",
+  "case": "unsupported_trend_in_prose",
+  "error": "The page says revenue grew through the quarter; no monthly figure exists in the audit.",
+  "at": "2026-09-15T21:21:51+00:00",
+  "max_v2_revision": "2cc51dd",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "grew|growth|trend|strongest month|March",
+    "unsupported|no (metric|claim|figure)"
+  ],
+  "blocking_issues": 1,
+  "warnings": 3,
+  "checks": 37,
+  "issue_ids": [
+    "UNSUPPORTED-TREND-PROSE"
+  ],
+  "warning_texts": [
+    "The frozen check_plan for this stage applies only claims_rendered and caveats_rendered, with no wording, time-series, or prose-assertion rule, so the unanchored monthly-growth sentence was outside every deterministic comparison and is more than this stage can leave to gate silence.",
+    "check_plan.json lists caveats_rendered and claims_rendered under accepted_unproven because the breaker proof could not open the claim register, so those document-gate rules ran without a recorded breaker.",
+    "gate_release_machine wrote no evidence/checks.json; its 21 bound-number comparisons live only in release_surface_gate.json and cannot be cited as machine_check ids."
+  ],
+  "summary": "FAIL: release/report.md line 24 asserts steady quarterly growth and March as the strongest month with no claim_id, no monthly metric_id, and no UNVERIFIED_CLAIM wrapper. The 21 bound figures recast from raw_data/orders.csv match the claim register: net_revenue 35741.52, refund_rate 0.473684 = 27/57, countries 11181.67+11032.61+13527.24.",
+  "wall_seconds": 673.5,
+  "cost": {
+    "at": "2026-09-15T21:33:10.563235+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-c68e83c85ace",
+    "agent_role": "grok-audit-release",
+    "started_at": "2026-09-15T21:22:02.260628+00:00",
+    "finished_at": "2026-09-15T21:33:10.563235+00:00",
+    "wall_seconds": 668.312,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 246972,
+    "cached_input_tokens": 2561408,
+    "output_tokens": 35808,
+    "total_tokens": 2844188,
+    "cost_usd": 0.67642864
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "population_relabelled",
+  "error": "The headline claim says its population is all orders, while the spec and its own caveats say delivered orders.",
+  "at": "2026-09-15T17:41:25+00:00",
+  "max_v2_revision": "2a6f8dc",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "all orders",
+    "CLM-NET-REVENUE"
+  ],
+  "blocking_issues": 1,
+  "warnings": 2,
+  "checks": 13,
+  "issue_ids": [
+    "POPULATION-RELABELLED-NET-REVENUE"
+  ],
+  "warning_texts": [
+    "CLM-NET-REVENUE declares population 'all orders inside the period' but its value is computed on delivered orders only; over the stated population the value would be 41881.34, so the population label misdescribes the number and is unverified by any machine rule in audit/check_plan.json.",
+    "metrics/calculated_metrics.json states the three country formulas as 'SUM(net_amount) WHERE country = country'; net_amount is a derived column and 'WHERE country = country' is a tautology — cosmetic, values verified correct, but the formulas do not literally describe the computation."
+  ],
+  "summary": "All five claim values independently recomputed from raw_data/orders.csv and match the register (net_revenue 35741.52; rate 0.473684 = 27/57 paying customers; PL 11181.67 / DE 11032.61 / CZ 13527.24, parts sum to headline). One blocker: CLM-NET-REVENUE declares population 'all orders inside the period' while the value is computed on delivered orders only — over the declared population the value would be 41881.34. The machine gate has no population-label rule, so this mislabel passed it and only human judgment catches it.",
+  "wall_seconds": 213.3,
+  "cost": {
+    "at": "2026-09-15T17:45:05.374340+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-af79687abcf1",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-15T17:41:44.803713+00:00",
+    "finished_at": "2026-09-15T17:45:05.372832+00:00",
+    "wall_seconds": 200.562,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 121355,
+    "cached_input_tokens": 134912,
+    "output_tokens": 3903,
+    "total_tokens": 261532,
+    "cost_usd": 0.012441554999999998
+  }
+}

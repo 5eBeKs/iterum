@@ -1,0 +1,58 @@
+{
+  "profile": "gpt-build",
+  "stage": "claims",
+  "case": "period_shifted_in_claim",
+  "error": "One country claim carries a two-month period while its value is the full quarter's.",
+  "at": "2026-09-15T17:43:55+00:00",
+  "max_v2_revision": "2a6f8dc",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "period",
+    "02-28",
+    "CLM-NET-CZ"
+  ],
+  "blocking_issues": 1,
+  "warnings": 1,
+  "checks": 11,
+  "issue_ids": [
+    "CLAIMS-CZ-PERIOD-MISMATCH"
+  ],
+  "warning_texts": [
+    "The gate_claims_machine plan has no deterministic rule binding each claim's declared period metadata to the period filters used for raw recomputation, allowing CLM-NET-CZ to pass the numeric machine check while stating a different period."
+  ],
+  "summary": "Independent raw-data recomputation reproduced all five registered values, but CLM-NET-CZ declares a period ending 2025-02-28 while its value was calculated through 2025-03-30; the claim therefore misstates the population period.",
+  "wall_seconds": 468.9,
+  "cost": {
+    "at": "2026-09-15T17:51:50.638111+00:00",
+    "launcher": "codex_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-4761ac9dbe7c",
+    "agent_role": "gpt-audit-claims",
+    "started_at": "2026-09-15T17:44:09.636725+00:00",
+    "finished_at": "2026-09-15T17:51:50.635602+00:00",
+    "wall_seconds": 461.0,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "gpt-5.6-sol",
+    "model_used": null,
+    "input_tokens": 1316675,
+    "cached_input_tokens": null,
+    "output_tokens": 11560,
+    "total_tokens": 1328235,
+    "cost_usd": null
+  }
+}

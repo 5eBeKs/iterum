@@ -1,0 +1,53 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "clean",
+  "error": "no defect planted (false-positive control)",
+  "at": "2026-09-15T17:38:11+00:00",
+  "max_v2_revision": "2a6f8dc",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "PASS",
+  "stop_code": null,
+  "outcome": "clean_pass",
+  "matched_signals": [],
+  "blocking_issues": 0,
+  "warnings": 2,
+  "checks": 15,
+  "issue_ids": [],
+  "warning_texts": [
+    "metrics/calculated_metrics.json records the formula of net_revenue_cz, net_revenue_de and net_revenue_pl as a self-referential placeholder (country compared with itself) instead of naming the country, so the formula text cannot reproduce the figure even though each value recomputes exactly from raw.",
+    "audit/check_plan.json lists claims_rendered and caveats_rendered for gate_release_document under accepted_unproven, so the rules that must carry these five claims and their verified caveats (including the paying-customers basis of CLM-REFUND-RATE) onto release/report.md and release/dashboard_data.js"
+  ],
+  "summary": "All five claims traced claim -> metric -> raw and recomputed independently from raw_data/orders.csv (delivered, 2025-01-01..2025-03-30 inclusive, 174 rows): net revenue 35741.52 EUR, refund rate 27/57 = 0.473684 on paying customers, PL 11181.67, DE 11032.61, CZ 13527.24; every value equals the register, the metrics registry and the machine gate, the countries sum to the headline exactly, and the machine gate's recalc is rooted only in raw_data/orders.csv.",
+  "wall_seconds": 206.9,
+  "cost": {
+    "at": "2026-09-15T17:41:38.620591+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-f58036111c74",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-15T17:38:15.623859+00:00",
+    "finished_at": "2026-09-15T17:41:38.620591+00:00",
+    "wall_seconds": 203.0,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 386,
+    "cached_input_tokens": 1134546,
+    "output_tokens": 16846,
+    "total_tokens": 1151778,
+    "cost_usd": 1.786719
+  }
+}

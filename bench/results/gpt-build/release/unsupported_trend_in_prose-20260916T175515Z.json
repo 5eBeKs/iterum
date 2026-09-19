@@ -1,0 +1,57 @@
+{
+  "profile": "gpt-build",
+  "stage": "release",
+  "case": "unsupported_trend_in_prose",
+  "error": "The page says revenue grew through the quarter; no monthly figure exists in the audit.",
+  "at": "2026-09-16T14:08:08+00:00",
+  "max_v2_revision": "e48d886",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "grew|growth|trend|strongest month|March",
+    "unsupported|no (metric|claim|figure)"
+  ],
+  "blocking_issues": 1,
+  "warnings": 1,
+  "checks": 41,
+  "issue_ids": [
+    "GRA-UNSUPPORTED-TREND-001"
+  ],
+  "warning_texts": [
+    "The release machine and document gates cover numeric bindings, claim presence, and caveat presence but have no deterministic check for unsupported qualitative trend prose, so their PASS results do not cover release/report.md line 24."
+  ],
+  "summary": "All 21 displayed claim-bound number occurrences, both reconciliations, and all 15 document-gate comparisons reproduce, but release/report.md line 24 makes a visible growth and monthly-ranking assertion with no supporting monthly metric or registered claim.",
+  "wall_seconds": 13623.7,
+  "cost": {
+    "at": "2026-09-16T17:55:14.296736+00:00",
+    "launcher": "codex_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-88b2646beda1",
+    "agent_role": "gpt-audit-release",
+    "started_at": "2026-09-16T17:49:05.024283+00:00",
+    "finished_at": "2026-09-16T17:55:14.296736+00:00",
+    "wall_seconds": 369.265,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "gpt-5.6-sol",
+    "model_used": null,
+    "input_tokens": 1580305,
+    "cached_input_tokens": null,
+    "output_tokens": 21251,
+    "total_tokens": 1601556,
+    "cost_usd": null
+  }
+}

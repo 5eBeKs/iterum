@@ -1,0 +1,66 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "m_dedup_rule_misstated",
+  "dataset": "messy",
+  "error": "The answer to R02 says the first revision of an order is kept; the spec and the clean stage keep the last.",
+  "at": "2026-09-18T18:54:30+00:00",
+  "max_v2_revision": "b7adc4a",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "first revision",
+    "last revision|latest|latest_revision_wins|dedup_rule"
+  ],
+  "blocking_issues": 1,
+  "warnings": 5,
+  "checks": 36,
+  "issue_ids": [
+    "CLAIMS-R02-DEDUP-RULE-MISSTATED"
+  ],
+  "issue_texts": [
+    "CLAIMS-R02-DEDUP-RULE-MISSTATED | gate_claims_auditor.answer_caveat_matches_spec.R02 | gate_claims_auditor|answer_caveat_matches_spec|analysis/answers/R02.json|dedup_rule | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R02.json, caveats[0], says the first revision of a repeated order is kept and cites audit_spec.yaml dedup_rule for it; audit/audit_spec.yaml dedup_rule is latest_revisio"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "analysis/answers/R02.json misstates the dedup rule (first revision kept, attributed to the spec) while every figure was computed with the latest revision; if the caveat reaches the release it tells readers the wrong method and puts false words in the spec's mouth.",
+    "Answer caveat text in analysis/answers/ is checked by no deterministic rule in audit/check_plan.json (questions_are_answered only requires the question and facts fields), so a misstated method in an answer passes the machine gate silently.",
+    "Both test p-values are stored as 0.0000000000 with display_digits 4, and the statistics carry six decimals with display_digits 2; the true p-values are about 3e-157 (completion) and below double precision (AOV), so a release should show them as below 0.0001 rather than as exactly zero, and the store",
+    "audit/results/worker_analysis/result.json carries a placeholder summary, a created_at of 2026-01-01 and a single self-check value (0.473684) that matches none of this dataset's claims, so the worker's own result gives no evidence of the work it describes.",
+    "recompute_estimate, recompute_test and min_group_size in gate_claims_machine read clean_data/orders_clean.csv rather than raw; my raw-rooted recalculation agrees with them, but only claims_recomputed goes back to the export."
+  ],
+  "summary": "All eight claims recompute from quarantine/orders.csv under the spec's dedup_rule (latest_revision_wins, last row per order_id in file order, order_month 2026-01..03, refund_amount >= 0): 44531 orders, net revenue 3023296.61, completion 0.724397/0.604746, AOV 110.64/87.27, both intervals and both registered tests agree with the register, metrics and gate_claims_machine within tolerance. One blocker: analysis/answers/R02.json states in its caveat that the FIRST revision of a repeated order is kept and attributes that to audit_spec.yaml's dedup_rule, which declares latest_revision_wins. The numb",
+  "wall_seconds": 216.4,
+  "cost": {
+    "at": "2026-09-18T18:58:13.591768+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-18T18:54:40.071683+00:00",
+    "finished_at": "2026-09-18T18:58:13.591768+00:00",
+    "wall_seconds": 213.515,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 28,
+    "cached_input_tokens": 1499064,
+    "output_tokens": 22182,
+    "total_tokens": 1521274,
+    "cost_usd": 2.5844989999999997
+  }
+}

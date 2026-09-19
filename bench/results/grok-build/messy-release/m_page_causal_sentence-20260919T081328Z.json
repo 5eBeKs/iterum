@@ -1,0 +1,67 @@
+{
+  "profile": "grok-build",
+  "stage": "release",
+  "case": "m_page_causal_sentence",
+  "dataset": "messy",
+  "error": "The page explains the smaller partner baskets by bargain hunters, which nothing in the audit measures.",
+  "at": "2026-09-19T07:59:35+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "caus|explan|unsupported|no (evidence|metric|claim)"
+  ],
+  "blocking_issues": 2,
+  "warnings": 5,
+  "checks": 72,
+  "issue_ids": [
+    "REL-UNREGISTERED-CAUSAL-PROSE",
+    "REL-PAGE-POPULATION-DELIVERED-ONLY"
+  ],
+  "issue_texts": [
+    "REL-UNREGISTERED-CAUSAL-PROSE | gate_release_auditor.unregistered_causal_prose | gate_release_auditor|unregistered_causal_prose|release/report.md|partner-aov | CLAIM_SUPPORT | CRITICAL | worker_release | release/report.md line 32 is an unregistered causal sentence about why partner baskets are smaller. It is not in src/release/build_release.py, has no claim_id, and is stronger than CLM-TEST-CHANNE",
+    "REL-PAGE-POPULATION-DELIVERED-ONLY | gate_release_auditor.page_population_delivered_only | gate_release_auditor|page_population_delivered_only|release/report.md|completion | VISUALIZATION | HIGH | worker_release | release/report.md line 3: Population: orders placed inside the quarter, one row per order, delivered only. That string is CLM-NET-REVENUE.population. Completion rates CLM-COMPLETION-DIRE"
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "Dashboard estimate cards carry ci_low and ci_high but not n, while report.md prints n for all four estimates.",
+    "AOV dashboard cards omit net of refunds and delivered orders only; those phrases appear on the revenue card and the report header, not on the AOV cards themselves.",
+    "Document-gate wording_matches_claims returned PASS for WORDING-01 only; the unregistered causal sentence on report.md line 32 uses a construction outside the WORDING-02 dictionary, so that gate's silence is not approval.",
+    "audit/check_plan.json has no gate_release_machine section and this stage's machine evidence is release_surface_gate.json, not checks.json recompute_*, claims_recomputed, component_sum or column_identity, so numeric machine_check citations are null.",
+    "Dashboard period lives only at $.period, not on each card; population is absent from dashboard cards."
+  ],
+  "summary": "FAIL: release/report.md line 32 adds an unregistered causal sentence about partner baskets that no CLM-TEST-* or design claim supports (document-gate wording_matches_claims still PASS on WORDING-01). Separately, line 3 labels the whole page delivered-only, which is the revenue population and misstates the completion-rate denominator. Bound numbers match the claim register: net_revenue 3023296.61, orders 44531, four estimates with both bounds and n on the report, both tests with effect/statistic/p. shipping_total is unpublished. Machine surface gate bound 60/60 figures and did not skip a surfac",
+  "wall_seconds": 828.5,
+  "cost": {
+    "at": "2026-09-19T08:13:27.077689+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-e707fe3a1660",
+    "agent_role": "grok-audit-release",
+    "started_at": "2026-09-19T07:59:41.756122+00:00",
+    "finished_at": "2026-09-19T08:13:27.077689+00:00",
+    "wall_seconds": 825.328,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 135670,
+    "cached_input_tokens": 2114816,
+    "output_tokens": 44800,
+    "total_tokens": 2295286,
+    "cost_usd": 0.54316632
+  }
+}

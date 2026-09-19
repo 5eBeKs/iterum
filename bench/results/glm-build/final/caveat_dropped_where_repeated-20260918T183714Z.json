@@ -1,0 +1,80 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "caveat_dropped_where_repeated",
+  "dataset": "orders",
+  "error": "The headline's caveat line no longer says net of refunds; only a sentence about the country table still does.",
+  "at": "2026-09-18T18:21:12+00:00",
+  "max_v2_revision": "b7adc4a",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "net of refunds.{0,160}(headline|CLM-NET-REVENUE|net revenue)",
+    "(headline|CLM-NET-REVENUE|net revenue).{0,160}net of refunds",
+    "caveat.{0,80}(missing|dropped|lost|absent|omitted|removed)"
+  ],
+  "blocking_issues": 2,
+  "warnings": 11,
+  "checks": 12,
+  "issue_ids": [
+    "FINAL-RT-001-CAVEAT-DROPPED-REPORT-HEADLINE",
+    "FINAL-RT-002-REPORT-NOT-REPRODUCIBLE-FROM-GENERATOR"
+  ],
+  "issue_texts": [
+    "FINAL-RT-001-CAVEAT-DROPPED-REPORT-HEADLINE | final_redteam.caveats_rendered_per_card | final_glm_redteam|caveats_rendered|release/report.md|CLM-NET-REVENUE | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 8, the caveat line of the CLM-NET-REVENUE card, reads 'delivered orders only; period boundaries are inclusive on both ends.' while analysis/claim_register.json declares three",
+    "FINAL-RT-002-REPORT-NOT-REPRODUCIBLE-FROM-GENERATOR | final_redteam.release_artifact_matches_generator | final_glm_redteam|release_artifact_matches_generator|release/report.md|CLM-NET-REVENUE | RELEASE_INTEGRITY | MEDIUM | worker_release | src/release/build_release.py (declared generator in release_surface_contract.json generator_sources) emits the headline caveat line as '; '.join(revenue['caveat"
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "Machine layer false assurance: gate_release_document recorded caveats_rendered PASS for CLM-NET-REVENUE on release/report.md while the card-level caveat was dropped, because the rule matches caveats across the whole file ('net of refunds' survives under other cards and the closing sentence); the sam",
+    "All number-level deterministic layers held and my independent recalculation from raw agrees exactly: net revenue 35741.52 (gross 40235.02 - refunds 4493.50), refund total 4493.50, refund rate 27/57 = 0.473684 on the paying_customers basis, country figures 11181.67/11032.61/13527.24 summing to the he",
+    "Model identity in this profile is self-attestation only: no CLI output event names the model, so every stage's execution.model (mine: openrouter/z-ai/glm-5.3-flash per handoff; worker stages self-report openrouter/z-ai/glm-5.3-flash-fake) is a stage's word about itself and nothing measurable confirm",
+    "No audit/decisions/*.json exists and handoff rulings are empty; the three RESOLVED entries in human_decisions.yaml are all applied and visible: paying_customers basis in the refund-rate caveat and R02, net-of-refunds on the dashboard cards, Europe/Warsaw used as a plain local date with no shifting; ",
+    "No assumption in the run looks wrong against the data: refund basis, inclusive boundaries, delivered-only population and net-of-refunds recognition all reproduce from raw; the only place a ruling loses visibility to the reader is the dropped headline caveat in report.md (blocking issue above).",
+    "Carry continuity holds: all four worker carry files exist, are schema-shaped, and their context_id/attempt match the execution blocks of their worker results (worker_clean a1-b55a09190427, worker_metrics a1-cc7d40b52e8e, worker_analysis a1-e0c4a6362c09, worker_release a1-14bc42e8e430); carried facts",
+    "analysis_plan.json pre-registers nothing (hypotheses empty, declared legal): the claim register contains only FACT claims, no test, no kind:test, and no significance or confirmation language anywhere a reader can see (scan in render_check_output.json).",
+    "quarantine/manifest.json declares false: no free-text column was removed, raw_data/orders.csv was read as-is and contains only typed columns; raw_data/questions.md is dataset documentation of the question ids and carries no text instructing the reader of the file; no prompt-injection phrasing found ",
+    "All four worker results carry empty disclosures and warnings (the synthetic driver results have no disclosures field at all), so nothing was self-reported that changes any number; retry history and stale inputs are not checked here - that is the human's task in audit_runner.py report, per the stage ",
+    "Not verifiable in this run: which model actually produced any stage output (self-attestation only, per launcher Capabilities), that the two accepted_unproven plan-proof rules fire on a broken dataset (their prove run failed on a missing sandbox file), and byte-reproduction of report.md by executing ",
+    "drift_since_review is absent from the handoff, so there is no index of shifted columns to test; the assumptions behind the release code (refund basis, boundaries, row accounting) were instead verified directly against the current raw data."
+  ],
+  "summary": "Every published number reproduces exactly from raw under my own code (net revenue 35741.52 = 40235.02-4493.50; refund rate 27/57 = 0.473684 on the paying_customers basis; countries 11181.67+11032.61+13527.24 = 35741.52; row accounting 201 = 174+26+1 with the 2025-04-01 boundary order excluded; clean-table identity and refund flag clean; all claims FACT, no unregistered tests, no significance language). One material blocker: release/report.md drops the declared caveat 'net of refunds' from the CLM-NET-REVENUE headline card - the claim register declares it first, dashboard_data.json renders all ",
+  "wall_seconds": 952.9,
+  "cost": {
+    "at": "2026-09-18T18:37:12.830781+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-ca76f86bc68e",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-18T18:21:23.666538+00:00",
+    "finished_at": "2026-09-18T18:37:12.827328+00:00",
+    "wall_seconds": 949.172,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 105795,
+    "cached_input_tokens": 1347392,
+    "output_tokens": 11878,
+    "total_tokens": 1487548,
+    "cost_usd": 0.044159106000000004
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "profile": "gpt-build",
+  "stage": "release",
+  "case": "headline_relabelled_gross",
+  "error": "The page calls net revenue 'Gross revenue'; the number is net of refunds.",
+  "at": "2026-09-15T18:32:52+00:00",
+  "max_v2_revision": "1d34cf0",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "gross",
+    "label",
+    "net revenue"
+  ],
+  "blocking_issues": 1,
+  "warnings": 2,
+  "checks": 44,
+  "issue_ids": [
+    "REL-AUD-HEADLINE-LABEL"
+  ],
+  "warning_texts": [
+    "audit/check_plan.json has no deterministic rule for reader-facing label semantics, which allowed the net-versus-gross contradiction in release/report.md line 7 to pass both machine gates.",
+    "audit/results/gate_release_machine/evidence/release_surface_gate.json records 21 numeric bindings without per-comparison check_id values, so the independently reproduced number checks use machine_check null as required for unindexed comparisons."
+  ],
+  "summary": "All 21 rendered business-number instances, formatting, caveats, the country sum, and the refund-rate ratio reconcile, but report.md mislabels the net-revenue headline as gross revenue.",
+  "wall_seconds": 378.0,
+  "cost": {
+    "at": "2026-09-15T18:39:14.337340+00:00",
+    "launcher": "codex_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-803ac78cd63a",
+    "agent_role": "gpt-audit-release",
+    "started_at": "2026-09-15T18:32:59.160577+00:00",
+    "finished_at": "2026-09-15T18:39:14.334820+00:00",
+    "wall_seconds": 375.172,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "gpt-5.6-sol",
+    "model_used": null,
+    "input_tokens": 1418994,
+    "cached_input_tokens": null,
+    "output_tokens": 16167,
+    "total_tokens": 1435161,
+    "cost_usd": null
+  }
+}

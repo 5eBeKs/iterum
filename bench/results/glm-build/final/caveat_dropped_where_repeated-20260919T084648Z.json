@@ -1,0 +1,76 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "caveat_dropped_where_repeated",
+  "dataset": "orders",
+  "error": "The headline's caveat line no longer says net of refunds; only a sentence about the country table still does.",
+  "at": "2026-09-19T08:24:30+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "net of refunds.{0,160}(headline|CLM-NET-REVENUE|net revenue)",
+    "(headline|CLM-NET-REVENUE|net revenue).{0,160}net of refunds",
+    "caveat.{0,80}(missing|dropped|lost|absent|omitted|removed)"
+  ],
+  "blocking_issues": 1,
+  "warnings": 9,
+  "checks": 10,
+  "issue_ids": [
+    "REPORT-HEADLINE-CAVEAT-DROPPED"
+  ],
+  "issue_texts": [
+    "REPORT-HEADLINE-CAVEAT-DROPPED | gate_release_document.caveats_rendered | gate_release_document|caveats_rendered|release/report.md|CLM-NET-REVENUE.headline_card | RELEASE_INTEGRITY | HIGH | worker_release | audit/results/final/evidence/final_recalc.py -> final_recalc_result.json (checks 'card_local_caveats.all_complete' and 'report.md == generator(register)'; cross-check audit/results/final/eviden"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The machine layer cannot see the card-local caveat drop: caveats_rendered searches each caveat anywhere in the surface's visible text, so a caveat printed under the country cards satisfies the check for the headline card, and audit/check_plan.json accepted_unproven records show both release-document",
+    "gate0_machine's plan_proven check recorded '0 accepted unproven' while the frozen audit/check_plan.json handed to me lists 2 accepted_unproven entries; I did not audit the freeze hashes (the runner's job), but the two frozen inputs I received disagree on that count.",
+    "release/report.md line 22 says 'Country figures sum to the headline; both are net of refunds', but three countries are listed, so the quantifier 'both' is wrong on the primary surface.",
+    "Every worker and stage-auditor result in this run is a driver e2e stub: model self-reported as 'openrouter/z-ai/glm-5.3-flash-fake', created_at 2026-01-01T00:00:00Z, one spot-check each, empty warnings and disclosures, so the chain of PASS records carries no audit weight; the numbers stand on the fr",
+    "MODEL_MISMATCH is unverifiable in this profile: no CLI output event names a model, so every execution.model line, including this gate's own, is a stage's self-report and nothing else.",
+    "The three RESOLVED decisions in audit/human_decisions.yaml (refund_rate_basis=paying_customers, revenue_recognition=net_of_refunds, timezone_for_dates=Europe/Warsaw) are applied as declared and none is contradicted by the data; no audit/decisions/ files exist and handoff rulings are empty.",
+    "The metrics registry names its period '2025-Q1-delivered' while the declared period ends 2025-03-30; the raw file holds no order dated 2025-03-31, so no number moves on this data.",
+    "handoff carries no drift_since_review, so no drift was checked; absence of the field is not evidence that stage assumptions hold.",
+    "What I could not verify: runner state (journal, launches, the reaudit_worker_release packet, hash ledgers), audit/AUDIT_REPORT.md, audit/plan_proof.json, and the clean/metrics/analysis generator sources -- all outside my declared input paths."
+  ],
+  "summary": "Independent recalc from raw_data/orders.csv confirms every published number: 201 raw rows = 174 delivered in period + 26 not delivered (16 cancelled, 10 pending) + 1 outside period (O00201, 2025-04-01); net revenue 35741.52 EUR (gross 40235.02 - refunds 4493.50); refund rate 27/57 paying customers = 0.473684 (three independent methods agree); country split CZ 13527.24 / DE 11032.61 / PL 11181.67 sums to the headline; all 21 rendered numbers exact and claim-bound. FAIL on one material blocker: release/report.md's headline card for CLM-NET-REVENUE drops the register-declared caveat 'net of refun",
+  "wall_seconds": 1327.5,
+  "cost": {
+    "at": "2026-09-19T08:46:46.788719+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-7cd90cf9bf9e",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-19T08:24:43.383490+00:00",
+    "finished_at": "2026-09-19T08:46:46.780618+00:00",
+    "wall_seconds": 1323.407,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 182414,
+    "cached_input_tokens": 2331584,
+    "output_tokens": 17951,
+    "total_tokens": 2565286,
+    "cost_usd": 0.073806672
+  }
+}

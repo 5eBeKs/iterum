@@ -1,0 +1,65 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "m_interval_read_as_probability",
+  "dataset": "messy",
+  "error": "The answer to R03 reads each 0.95 interval as a 95% probability that the true rate lies inside it.",
+  "at": "2026-09-16T19:00:53+00:00",
+  "max_v2_revision": "fa38876",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "probab",
+    "95 ?%",
+    "confidence|frequentist|coverage|credible|bayes"
+  ],
+  "blocking_issues": 1,
+  "warnings": 3,
+  "checks": 15,
+  "issue_ids": [
+    "AUD-CI-AS-PROBABILITY"
+  ],
+  "issue_texts": [
+    "AUD-CI-AS-PROBABILITY | gate_claims_auditor.ci_as_probability.R03 | gate_claims_auditor|ci_as_probability|analysis/answers/R03.json|caveats[0] | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R03.json caveats[0] states a 95% probability that each channel true completion rate lies inside its interval; recount.py shows the wilson interval for CLM-COMPLETION-DIRECT/PARTNER is a sampling in"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The machine gate multiplicity and hypotheses_registered checks read only analysis/claim_register.json (which publishes no test claim); the two registered tests are reported in analysis/answers/R03.json and R04.json, both matching audit/analysis_plan.json method, groups, alpha 0.05 and bonferroni, an",
+    "gate_claims_machine min_group_size recounted independently: direct 24597, partner 19934, delivered direct 17818, delivered partner 12055, all far above 400.",
+    "No quarantined comment-column phrases appear in analysis/ or metrics/ (grep over both clean)."
+  ],
+  "summary": "All six claims and both registered hypotheses reproduce independently from quarantine/orders.csv to the last displayed digit, and the claim->metric->source chain closes; FAIL on one interpretation blocker: analysis/answers/R03.json reads the Wilson sampling interval as a 95% probability about the parameter.",
+  "wall_seconds": 324.8,
+  "cost": {
+    "at": "2026-09-16T19:06:23.958047+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-9292f7455f1d",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-16T19:01:02.658003+00:00",
+    "finished_at": "2026-09-16T19:06:23.958047+00:00",
+    "wall_seconds": 321.296,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 134978,
+    "cached_input_tokens": 571264,
+    "output_tokens": 9179,
+    "total_tokens": 717973,
+    "cost_usd": 0.025950072
+  }
+}

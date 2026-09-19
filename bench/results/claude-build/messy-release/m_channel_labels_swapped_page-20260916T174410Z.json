@@ -1,0 +1,78 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "m_channel_labels_swapped_page",
+  "dataset": "messy",
+  "error": "On the page the direct and partner completion lines carry each other's labels; the figures and anchors are untouched.",
+  "at": "2026-09-16T17:39:53+00:00",
+  "max_v2_revision": "fa38876",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "label",
+    "swap|transpos|mislabel",
+    "direct|partner"
+  ],
+  "blocking_issues": 6,
+  "warnings": 6,
+  "checks": 14,
+  "issue_ids": [
+    "REL-LABEL-CHANNEL-SWAP-REPORT",
+    "REL-POPULATION-REPORT",
+    "REL-POPULATION-DASHBOARD",
+    "REL-ESTIMATE-N-DASHBOARD",
+    "REL-UNITS-MISSING",
+    "REL-AOV-CAVEATS"
+  ],
+  "issue_texts": [
+    "REL-LABEL-CHANNEL-SWAP-REPORT | gate_release_auditor.label_matches_bound_claim | gate_release_auditor|label_matches_bound_claim|release/report.md|completion_by_channel | VISUALIZATION | CRITICAL | worker_release | release/report.md line 14: the visible label names partner, but the anchor, value, ci_low, ci_high and n (24597) are all CLM-COMPLETION-DIRECT (population 'channel = direct'). Line 16: t",
+    "REL-POPULATION-REPORT | gate_release_auditor.population_beside_number | gate_release_auditor|population_beside_number|release/report.md|page_population | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3 gives one population for the whole page and restricts it to delivered orders. No bullet on lines 7-21 states its own population or period. In the register, CLM-ORDERS has popula",
+    "REL-POPULATION-DASHBOARD | gate_release_auditor.population_beside_number | gate_release_auditor|population_beside_number|release/dashboard_data.json|cards | RELEASE_INTEGRITY | MEDIUM | worker_release | release/dashboard_data.json cards[0..5] carry claim_id, label, value(s) and caveats, but no population and no period. The period exists only as top-level $.period. | population and period on the sa",
+    "REL-ESTIMATE-N-DASHBOARD | gate_release_auditor.estimate_rendering | gate_release_auditor|estimate_rendering|release/dashboard_data.json|estimate_cards | VISUALIZATION | MEDIUM | worker_release | release/dashboard_data.json cards[2..5] (CLM-COMPLETION-*, CLM-AOV-*) have value, ci_low and ci_high, but no n and no interval level. audit_spec.yaml release.estimate_rendering says an estimate is always ",
+    "REL-UNITS-MISSING | gate_release_auditor.unit_beside_number | gate_release_auditor|unit_beside_number|release|money_figures | VISUALIZATION | LOW | worker_release | release/report.md lines 18 and 20 show AOV values and bounds with no currency; line 7 shows EUR only in the label. release/dashboard_data.json has no unit on any card, including Net Revenue and both AOV cards. The label 'Aov' is an abb",
+    "REL-AOV-CAVEATS | gate_release_auditor.aov_caveats | gate_release_auditor|aov_caveats|analysis/claim_register.json|CLM-AOV | CLAIM_SUPPORT | MEDIUM | worker_analysis | CLM-AOV-DIRECT and CLM-AOV-PARTNER in analysis/claim_register.json list only the channel-population and sampling-interval caveats. As a result, report.md lines 19 and 21 and dashboard cards[4..5] do not say that AOV is net of refund"
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "The release gates check numbers, not meaning. release_surface_gate binds a number to a claim through its hidden HTML-comment anchor and never compares the visible label with the claim's population, so it certified the swapped completion labels as 42/42 bound. gate_release_document only checks that c",
+    "In audit/release_surface_contract.json, reconciliations and card_caveat_requirements are both empty. The identities (net revenue = sum of channel net; orders = sum of channel denominators; completion numerator = AOV denominator) hold by my recount, but no machine rule checks them.",
+    "Neither gate for this stage wrote an indexable recompute comparison (gate_release_machine has no evidence/checks.json; gate_release_document's checks.json has no recompute_*, claims_recomputed, component_sum or column_identity rows). My checks therefore carry machine_check null.",
+    "Report and dashboard disagree on which channel has the higher completion rate. Any reader who compares the two surfaces gets conflicting answers to R03.",
+    "Because the report has one page-level population line, lines 7-21 carry no per-item period. The dashboard puts the period only at the top level.",
+    "The text exclusion 'n = [0-9]+' in the release contract hides n from binding. On report.md lines 14 and 16, n is correct for the claim it is anchored to but sits under the wrong channel label, and no rule sees this."
+  ],
+  "summary": "FAIL. Every number on both pages matches the registry and my own recount (net revenue 3023296.61 = 1971306.75 + 1051989.86; orders 44531 = 24597 + 19934; both Wilson intervals recomputed exactly). But release/report.md lines 14 and 16 put the direct completion estimate (0.724397, its interval and n = 24597) under the label 'completion partner', and the partner estimate under 'completion direct'. A reader of the report gets the channel comparison backwards, and the report contradicts dashboard_data.json, which labels the same claims correctly. gate_release_machine marked all six numbers as 'bou",
+  "wall_seconds": 252.6,
+  "cost": {
+    "at": "2026-09-16T17:44:09.429331+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-1ec424ea468d",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-16T17:39:59.412544+00:00",
+    "finished_at": "2026-09-16T17:44:09.429331+00:00",
+    "wall_seconds": 250.015,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 30,
+    "cached_input_tokens": 1303165,
+    "output_tokens": 25656,
+    "total_tokens": 1328851,
+    "cost_usd": 2.1510965
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "period_shifted_in_claim",
+  "dataset": "orders",
+  "error": "One country claim carries a two-month period while its value is the full quarter's.",
+  "at": "2026-09-19T06:36:22+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "period",
+    "02-28",
+    "CLM-NET-CZ"
+  ],
+  "blocking_issues": 1,
+  "warnings": 2,
+  "checks": 11,
+  "issue_ids": [
+    "CLM-NET-CZ-PERIOD-MISMATCH"
+  ],
+  "issue_texts": [
+    "CLM-NET-CZ-PERIOD-MISMATCH | gate_claims_auditor.claim_period_matches_computation | gate_claims_auditor|claim_period_mismatch|analysis/claim_register.json|CLM-NET-CZ | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/claim_register.json CLM-NET-CZ declares period '2025-01-01..2025-02-28' with value 13527.24. My recalc from raw_data/orders.csv (audit/results/gate_claims_auditor/evidence/recount.py"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "audit/check_plan.json freezes the CLM-NET-CZ where-clause as full Q1, so no gate compares the register's declared period against the computation; the period field of every claim is unverified by machine rules and only checked here by this auditor.",
+    "No prompt-injection text was found in raw_data/questions.md, analysis/claim_register.json or the analysis answers; the only 'skip' hit in questions.md is the legitimate sentence about skipped questions."
+  ],
+  "summary": "Independent recalc of all five claims from raw_data/orders.csv confirms four values (net_revenue 35741.52, refund_rate 27/57=0.473684, PL 11181.67, DE 11032.61, row accounting 201=174+26+1, components sum to headline). CLM-NET-CZ is a blocker: the register declares period 2025-01-01..2025-02-28, but the published value 13527.24 was computed over the full Q1 period (2025-01-01..2025-03-30); over the declared Feb-only period the recalc gives 9248.36. The machine gate's frozen where-clause uses full Q1 for every claim, so its claims_recomputed check never tested the period the register declares.",
+  "wall_seconds": 279.9,
+  "cost": {
+    "at": "2026-09-19T06:41:07.654041+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-2b6d15f205db",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-19T06:36:34.406602+00:00",
+    "finished_at": "2026-09-19T06:41:07.650075+00:00",
+    "wall_seconds": 273.25,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 49886,
+    "cached_input_tokens": 355776,
+    "output_tokens": 4565,
+    "total_tokens": 412507,
+    "cost_usd": 0.012947208000000002
+  }
+}

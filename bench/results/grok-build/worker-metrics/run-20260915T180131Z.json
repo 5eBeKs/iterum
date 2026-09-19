@@ -1,0 +1,44 @@
+{
+  "profile": "grok-build",
+  "stage": "metrics",
+  "worker": "worker_metrics",
+  "kind": "worker",
+  "at": "2026-09-15T17:47:37+00:00",
+  "max_v2_revision": "2a6f8dc",
+  "verdict": "PASS",
+  "stop_code": null,
+  "summary": "Calculated net_revenue, refund_amount_total, refund_rate on paying_customers, net_revenue by country, and R04 row accounting from clean_data and audit_spec.yaml. Country components sum to net_revenue; refund_rate denominator is 57 distinct customers.",
+  "wall_seconds": 828.6,
+  "cost": {
+    "at": "2026-09-15T18:01:25.276293+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "worker_metrics",
+    "attempt": 1,
+    "context_id": "ctx-worker_clean-a1-592005e89e11",
+    "agent_role": "grok-worker",
+    "started_at": "2026-09-15T17:47:43.503034+00:00",
+    "finished_at": "2026-09-15T18:01:25.276293+00:00",
+    "wall_seconds": 821.765,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 388250,
+    "cached_input_tokens": 1855744,
+    "output_tokens": 40602,
+    "total_tokens": 2284596,
+    "cost_usd": 0.66231456
+  },
+  "machine": {
+    "gates": {
+      "gate_metrics_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "outcome": "gate_pass",
+  "fingerprints": []
+}

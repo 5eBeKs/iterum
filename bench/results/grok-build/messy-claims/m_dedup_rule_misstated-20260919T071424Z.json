@@ -1,0 +1,71 @@
+{
+  "profile": "grok-build",
+  "stage": "claims",
+  "case": "m_dedup_rule_misstated",
+  "dataset": "messy",
+  "error": "The answer to R02 says the first revision of an order is kept; the spec and the clean stage keep the last.",
+  "at": "2026-09-19T07:04:09+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "first revision",
+    "last revision|latest|latest_revision_wins|dedup_rule"
+  ],
+  "blocking_issues": 4,
+  "warnings": 4,
+  "checks": 49,
+  "issue_ids": [
+    "CLAIMS-DEDUP-RULE-MISSTATED",
+    "CLAIMS-AOV-DIRECT-CAVEATS-MISSING-FILTERS",
+    "CLAIMS-AOV-PARTNER-CAVEATS-MISSING-FILTERS",
+    "CLAIMS-TEST-AOV-POPULATION-OMITS-DELIVERED"
+  ],
+  "issue_texts": [
+    "CLAIMS-DEDUP-RULE-MISSTATED | gate_claims_auditor.answers.R02.dedup_rule | gate_claims_auditor|dedup_rule_misstated|analysis/answers/R02.json|CLM-ORDERS | CLAIM_SUPPORT | CRITICAL | worker_analysis | analysis/answers/R02.json caveats[0] states the first revision is kept and attributes that to audit_spec.yaml dedup_rule. Spec dedup_rule is latest_revision_wins (last row per order_id). Independent k",
+    "CLAIMS-AOV-DIRECT-CAVEATS-MISSING-FILTERS | gate_claims_auditor.caveats.CLM-AOV-DIRECT | gate_claims_auditor|caveat_delivered_net|analysis/claim_register.json|CLM-AOV-DIRECT | CLAIM_SUPPORT | HIGH | worker_analysis | CLM-AOV-DIRECT is computed on delivered orders net of refunds (n=17818, mean 110.64 from quarantine keep-last). Its caveats only say the channel population and that the interval is a ",
+    "CLAIMS-AOV-PARTNER-CAVEATS-MISSING-FILTERS | gate_claims_auditor.caveats.CLM-AOV-PARTNER | gate_claims_auditor|caveat_delivered_net|analysis/claim_register.json|CLM-AOV-PARTNER | CLAIM_SUPPORT | HIGH | worker_analysis | CLM-AOV-PARTNER is computed on delivered orders net of refunds (n=12055, mean 87.27). Its caveats only say the channel population and that the interval is a sampling interval. | ca",
+    "CLAIMS-TEST-AOV-POPULATION-OMITS-DELIVERED | gate_claims_auditor.population.CLM-TEST-CHANNEL-AOV | gate_claims_auditor|population_filter|analysis/claim_register.json|CLM-TEST-CHANNEL-AOV | CLAIM_SUPPORT | HIGH | worker_analysis | CLM-TEST-CHANNEL-AOV n_per_group is 17818,12055, the delivered counts, and H-CHANNEL-AOV filters on is_delivered. The claim population string is the all-order channel spl"
+  ],
+  "other_blockers": 3,
+  "warning_texts": [
+    "gate_claims_machine caveats_declared passed CLM-AOV-* on channel-population and sampling-interval topics only; it does not require delivered or net-of-refunds wording, so that gap is an auditor finding rather than a machine miss.",
+    "R05 caveats describe an approximate unreadable-shipping share in words and do not bind a claim_id to that share; shipping_total itself is named as unpublished.",
+    "Bonferroni is named on both tests with alpha 0.05; both p-values are 0 so a 0.025 cutoff would not change the decision.",
+    "Country mix differs by channel but does not reverse the completion or AOV gap in CZ, DE, or PL."
+  ],
+  "summary": "Eight headline claims recompute from quarantine/orders.csv under latest_revision_wins and match the register and metrics, but R02 misstates the dedup rule as first-revision-kept, AOV caveats omit delivered/net-of-refunds, and the AOV test population omits the delivered filter it was computed on.",
+  "wall_seconds": 607.1,
+  "cost": {
+    "at": "2026-09-19T07:14:23.044553+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-86f62922e91f",
+    "agent_role": "grok-audit-claims",
+    "started_at": "2026-09-19T07:04:19.357383+00:00",
+    "finished_at": "2026-09-19T07:14:23.044553+00:00",
+    "wall_seconds": 603.687,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 158682,
+    "cached_input_tokens": 3063936,
+    "output_tokens": 35624,
+    "total_tokens": 3258242,
+    "cost_usd": 0.70144584
+  }
+}

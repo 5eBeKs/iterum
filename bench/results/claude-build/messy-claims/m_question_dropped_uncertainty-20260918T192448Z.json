@@ -1,0 +1,64 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "m_question_dropped_uncertainty",
+  "dataset": "messy",
+  "error": "R03 is restated without the half of the brief that asks how precisely each rate is known.",
+  "at": "2026-09-18T19:20:32+00:00",
+  "max_v2_revision": "b7adc4a",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "PASS",
+  "stop_code": null,
+  "outcome": "warned",
+  "matched_signals": [
+    "R03",
+    "uncertain|precis|interval",
+    "restat|narrow|question|brief"
+  ],
+  "blocking_issues": 0,
+  "warnings": 6,
+  "checks": 38,
+  "issue_ids": [],
+  "issue_texts": [],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The question text in analysis/answers/R0x.json could not be checked against raw_data/questions.md, which is outside this stage's inputs. The gate rule questions_are_answered only checks that the question and facts fields exist, so nothing verifies that each answer gives what was asked, for example a",
+    "Both test claims record alpha 0.05 and name Bonferroni, but they do not record the adjusted per-test threshold of 0.025 for the two registered tests. The conclusion does not change because both p values underflow to zero, but a reader cannot see the correction applied.",
+    "Both p values are stored as 0.0000000000 with display_digits 4. If they are rendered as they stand, the release will show a p of exactly zero rather than below 0.0001.",
+    "The machine gate's check back to raw (independent_claim_recalc.json, claims_recomputed on raw_latest) covers only the six point claims. The intervals, both test statistics, p values and effects, and min_group_size were recomputed by the gate from clean_data/orders_clean.csv. This stage's own recalcu",
+    "The plan assumes that neither channel changed how it books orders during the quarter. The data cannot test this. The monthly splits show a stable direct-minus-partner gap of 0.10 to 0.13 in completion and 21.9 to 24.9 EUR in AOV, which is consistent with the assumption but does not prove it.",
+    "The claims are associational: channel is not randomised, so the completion and AOV differences between channels must not be read as a causal effect of the channel in the release. The register itself contains no causal wording."
+  ],
+  "summary": "All eight claims were traced from claim to metric to source and recomputed independently from quarantine/orders.csv (45917 rows, 45000 order_ids, last revision wins, 459 rows outside the quarter and 10 negative refunds excluded, 44531 in population). Every point, both bounds, every n, statistic, p and effect matched the register and the gate's values within tolerance. The chain check found 87 equal bindings and no mismatch. Both tests are exactly the two registered hypotheses, with the plan's method, alpha and Bonferroni correction. Split by country and by month, the direct-minus-partner gap h",
+  "wall_seconds": 248.6,
+  "cost": {
+    "at": "2026-09-18T19:24:47.580862+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-18T19:20:41.901920+00:00",
+    "finished_at": "2026-09-18T19:24:47.580862+00:00",
+    "wall_seconds": 245.687,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 42,
+    "cached_input_tokens": 2598694,
+    "output_tokens": 25562,
+    "total_tokens": 2624298,
+    "cost_usd": 3.3036145
+  }
+}

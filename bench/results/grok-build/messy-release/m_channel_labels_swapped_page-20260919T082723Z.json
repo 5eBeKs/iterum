@@ -1,0 +1,68 @@
+{
+  "profile": "grok-build",
+  "stage": "release",
+  "case": "m_channel_labels_swapped_page",
+  "dataset": "messy",
+  "error": "On the page the direct and partner completion lines carry each other's labels; the figures and anchors are untouched.",
+  "at": "2026-09-19T08:13:30+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "label",
+    "swap|transpos|mislabel",
+    "direct|partner"
+  ],
+  "blocking_issues": 2,
+  "warnings": 4,
+  "checks": 58,
+  "issue_ids": [
+    "RELEASE-VISIBLE-LABEL-CLM-COMPLETION-DIRECT",
+    "RELEASE-VISIBLE-LABEL-CLM-COMPLETION-PARTNER"
+  ],
+  "issue_texts": [
+    "RELEASE-VISIBLE-LABEL-CLM-COMPLETION-DIRECT | gate_release_auditor.visible_label_matches_claim.CLM-COMPLETION-DIRECT | gate_release_auditor|visible_label_matches_claim|release/report.md|CLM-COMPLETION-DIRECT | VISUALIZATION | CRITICAL | worker_release | release/report.md line 14: visible word partner sits beside <!-- claim:CLM-COMPLETION-DIRECT:value --> 0.724397 (ci 0.718779 to 0.729946, n = 2459",
+    "RELEASE-VISIBLE-LABEL-CLM-COMPLETION-PARTNER | gate_release_auditor.visible_label_matches_claim.CLM-COMPLETION-PARTNER | gate_release_auditor|visible_label_matches_claim|release/report.md|CLM-COMPLETION-PARTNER | VISUALIZATION | CRITICAL | worker_release | release/report.md line 16: visible word direct sits beside <!-- claim:CLM-COMPLETION-PARTNER:value --> 0.604746 (ci 0.597939 to 0.611512, n = 1"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The report header copies the net-revenue population, including delivered only, over the whole page, while CLM-ORDERS is 44531 orders of every status and each completion rate uses every order in the channel as its denominator.",
+    "Dashboard estimate cards carry ci_low and ci_high but have no n field and no 0.95 interval caption; both n and the caption are visible on release/report.md.",
+    "AOV cards show the register caveats only; they do not repeat net of refunds or delivered orders only, which the addition asked to sit on revenue and AOV.",
+    "gate_release_machine/evidence/checks.json is absent; that gate wrote release_surface_gate.json and PASSed 60 bound numbers. gate_release_document/evidence/checks.json has 28 PASS rows for claims_rendered, caveats_rendered, wording_matches_claims and free_text_quarantined, and none of those rules ins"
+  ],
+  "summary": "Release numbers recast from clean_data/orders_clean.csv and from metric numerators/denominators match the claim register (net revenue 3023296.61, orders 44531, completion direct 0.724397, completion partner 0.604746, AOV direct 110.64, AOV partner 87.27). Visible channel words on release/report.md are swapped for the two completion estimates: the reader sees partner next to CLM-COMPLETION-DIRECT 0.724397 and direct next to CLM-COMPLETION-PARTNER 0.604746. Dashboard labels and HTML claim comments are the other way around. The machine number-binding gate and the document gate both PASSed because",
+  "wall_seconds": 827.7,
+  "cost": {
+    "at": "2026-09-19T08:27:21.700799+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-9d3aa683bf26",
+    "agent_role": "grok-audit-release",
+    "started_at": "2026-09-19T08:13:37.151149+00:00",
+    "finished_at": "2026-09-19T08:27:21.700799+00:00",
+    "wall_seconds": 824.546,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 151592,
+    "cached_input_tokens": 3025536,
+    "output_tokens": 47647,
+    "total_tokens": 3224775,
+    "cost_usd": 0.71462356
+  }
+}

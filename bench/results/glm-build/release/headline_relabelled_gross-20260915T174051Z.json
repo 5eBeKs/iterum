@@ -1,0 +1,59 @@
+{
+  "profile": "glm-build",
+  "stage": "release",
+  "case": "headline_relabelled_gross",
+  "error": "The page calls net revenue 'Gross revenue'; the number is net of refunds.",
+  "at": "2026-09-15T17:37:14+00:00",
+  "max_v2_revision": "2a6f8dc",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "gross",
+    "label",
+    "net revenue"
+  ],
+  "blocking_issues": 1,
+  "warnings": 2,
+  "checks": 18,
+  "issue_ids": [
+    "RELEASE-HEADLINE-LABELLED-GROSS"
+  ],
+  "warning_texts": [
+    "The report headline label 'Gross revenue' contradicts the dashboard label 'Net revenue' for the same claim value 35,741.52, so a report-only reader takes the net figure for gross.",
+    "gate_release_machine left its evidence as release_surface_gate.json without per-comparison check_ids in a checks.json, so no machine_check address could be cited for the numeric recomputes; every gate_release_document comparison (claims_rendered, caveats_rendered on both surfaces) was independently "
+  ],
+  "summary": "All 21 displayed numbers (7 claims x 3 surfaces) recompute exactly from raw_data/orders.csv to the register with declared display_digits; caveats and the paying-customers wording are shown beside every number; no UNVERIFIED_CLAIM markers; no business-number literals in the generator. One blocker: release/report.md labels the net_revenue value 35,741.52 as 'Gross revenue, EUR' while the true gross is 40,235.02 and dashboard_data.json labels the same claim 'Net revenue (EUR)' - a reader is misinformed about what the headline number is.",
+  "wall_seconds": 212.0,
+  "cost": {
+    "at": "2026-09-15T17:40:48.383684+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-a6294f191d92",
+    "agent_role": "glm-audit-release",
+    "started_at": "2026-09-15T17:37:22.096486+00:00",
+    "finished_at": "2026-09-15T17:40:48.382111+00:00",
+    "wall_seconds": 206.282,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 41074,
+    "cached_input_tokens": 262848,
+    "output_tokens": 5299,
+    "total_tokens": 311517,
+    "cost_usd": 0.008922020000000001
+  }
+}

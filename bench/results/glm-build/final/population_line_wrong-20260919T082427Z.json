@@ -1,0 +1,73 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "population_line_wrong",
+  "dataset": "orders",
+  "error": "The page's population line says all orders; every figure is over delivered orders.",
+  "at": "2026-09-19T08:13:59+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "all orders"
+  ],
+  "blocking_issues": 1,
+  "warnings": 7,
+  "checks": 11,
+  "issue_ids": [
+    "FINAL-POP-LINE-001"
+  ],
+  "issue_texts": [
+    "FINAL-POP-LINE-001 | final_redteam.population_line_matches_register | final_glm_redteam|population_line_mismatch|release/report.md|report_population_line | CLAIM_SUPPORT | HIGH | worker_release | release/report.md line 3 says 'Population: all orders inside the period.' while audit/audit_spec.yaml population.name and analysis/claim_register.json CLM-NET-REVENUE.population say 'delivered orders insi"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "check_plan.json accepted_unproven records that claims_rendered and caveats_rendered were never proven to fire on a broken dataset, and both passed over a report whose population line contradicts the register: no deterministic rule covers free-text population statements on a release surface, so gate ",
+    "release/report.md (mtime 2026-09-19T08:13:58Z) is ~1.5 h newer than dashboard_data.json, release_number_manifest.json and analysis/claim_register.json (06:34:15-24Z), so the shipped report is not from the same generation pass as the other surfaces and does not match what src/release/build_release.py",
+    "gate_release_document and gate_release_machine attested report.md at 2026-09-19T08:14:01Z, after the rewrite, and passed anyway, and the model gate_release_auditor passed it too; the report as shipped was never correctly attested by any check.",
+    "Stage-reported models are self-reports: worker and gate result.json files carry execution.model 'openrouter/z-ai/glm-5.3-flash-fake' with created_at '2026-01-01T00:00:00Z' (harness stubs), and no CLI output names a model, so nothing inside the run confirms which model answered.",
+    "audit/results/worker_*/result.json contain no disclosures and no warnings, so no stage self-reported any deviation from its prompt; nothing found there changes the numbers.",
+    "audit/decisions/ does not exist and the handoff lists no rulings; the three RESOLVED entries in human_decisions.yaml are all declared in audit_spec.yaml and are applied where claimed (rate on paying_customers, headline net of refunds, dates as local Europe/Warsaw); none looks wrong on the data, and ",
+    "Runner state, retry history and stale-input checks belong to the human in audit_runner.py report; I did not check them and claim nothing about them."
+  ],
+  "summary": "Independent recount from raw_data/orders.csv confirms every published figure exactly (net 35741.52; PL/DE/CZ 11181.67/11032.61/13527.24; refund rate 27/57 = 0.473684 on the paying_customers basis; row accounting 201 = 174 + 26 + 1; inclusive boundaries enforced). One material blocker: release/report.md line 3 states 'Population: all orders inside the period.' while the spec, the claim register, the report's own caveats and the carry chain all say delivered orders only; no machine rule covers that free-text line, so both release gates passed over it after the report was rewritten at 2026-09-19T",
+  "wall_seconds": 618.7,
+  "cost": {
+    "at": "2026-09-19T08:24:25.878165+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-65a84dedd71b",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-19T08:14:11.198082+00:00",
+    "finished_at": "2026-09-19T08:24:25.872613+00:00",
+    "wall_seconds": 614.672,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 99984,
+    "cached_input_tokens": 1811328,
+    "output_tokens": 12031,
+    "total_tokens": 1942088,
+    "cost_usd": 0.05083586400000001
+  }
+}

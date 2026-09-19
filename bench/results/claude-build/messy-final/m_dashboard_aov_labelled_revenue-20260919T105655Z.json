@@ -1,0 +1,95 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "m_dashboard_aov_labelled_revenue",
+  "dataset": "messy",
+  "error": "On the dashboard the direct average order value card is labelled revenue.",
+  "at": "2026-09-19T10:43:53+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "Revenue Direct",
+    "label",
+    "aov|average order"
+  ],
+  "blocking_issues": 6,
+  "warnings": 18,
+  "checks": 54,
+  "issue_ids": [
+    "FINAL-DASH-AOV-LABELLED-REVENUE",
+    "FINAL-REPORT-POPULATION-DELIVERED-ONLY",
+    "FINAL-CARRY-CONTRADICTS-WORKER-CLEAN",
+    "FINAL-CARRY-CONTRADICTS-WORKER-METRICS",
+    "FINAL-CARRY-CONTRADICTS-WORKER-ANALYSIS",
+    "FINAL-CARRY-CONTRADICTS-WORKER-RELEASE"
+  ],
+  "issue_texts": [
+    "FINAL-DASH-AOV-LABELLED-REVENUE | final_redteam.dashboard_label_matches_claim | final_claude_redteam|dashboard_label_matches_claim|release/dashboard_data.json|CLM-AOV-DIRECT | VISUALIZATION | HIGH | worker_release | release/dashboard_data.json $.cards[4] carries claim CLM-AOV-DIRECT (metric aov_direct, unit EUR, the average net value of a delivered direct order) under the label 'Revenue Direct', w",
+    "FINAL-REPORT-POPULATION-DELIVERED-ONLY | final_redteam.report_population_matches_claims | final_claude_redteam|population_statement|release/report.md|page | CLAIM_SUPPORT | HIGH | worker_release | release/report.md line 3, read as text, gives the whole page the population 'orders placed inside the quarter, one row per order, delivered only' (src/release/build_release.py line 86 prints CLM-NET-REVE",
+    "FINAL-CARRY-CONTRADICTS-WORKER-CLEAN | final_redteam.carry_consistent_with_stage_output | final_claude_redteam|carry_facts_match_outputs|audit/checkpoints/worker_clean.carry.json|period_grain_population | OTHER | MEDIUM | worker_clean | audit/checkpoints/worker_clean.carry.json passes carry.schema.json and its context_id and attempt match execution in audit/results/worker_clean/result.json, but it",
+    "FINAL-CARRY-CONTRADICTS-WORKER-METRICS | final_redteam.carry_consistent_with_stage_output | final_claude_redteam|carry_facts_match_outputs|audit/checkpoints/worker_metrics.carry.json|period_grain_population | OTHER | MEDIUM | worker_metrics | audit/checkpoints/worker_metrics.carry.json is schema-valid with matching context_id and attempt, and is identical to the worker_clean carry apart from step_",
+    "FINAL-CARRY-CONTRADICTS-WORKER-ANALYSIS | final_redteam.carry_consistent_with_stage_output | final_claude_redteam|carry_facts_match_outputs|audit/checkpoints/worker_analysis.carry.json|period_grain_population | OTHER | MEDIUM | worker_analysis | audit/checkpoints/worker_analysis.carry.json is schema-valid with matching context_id and attempt and repeats the same 2025 period, delivered-only grain a",
+    "FINAL-CARRY-CONTRADICTS-WORKER-RELEASE | final_redteam.carry_consistent_with_stage_output | final_claude_redteam|carry_facts_match_outputs|audit/checkpoints/worker_release.carry.json|period_grain_population | OTHER | MEDIUM | worker_release | audit/checkpoints/worker_release.carry.json is schema-valid with matching context_id and attempt and repeats the same 2025 period, delivered-only grain and p"
+  ],
+  "other_blockers": 4,
+  "warning_texts": [
+    "This profile is single-vendor: the architect, every worker, every auditor and this red team are the same Opus model family, so this verdict is not an independent review, the chain of agent PASSes is exactly what should not be trusted, and the only layer that genuinely holds is the deterministic one ",
+    "Writes over raw sources and frozen machinery were closed only by permissions.deny for edit tools, not for the shell, and permissions.allow is no barrier at all, so a changed raw file would have been caught after the fact by the control lock rather than prevented.",
+    "Every worker result and the gate0_semantic, gate_clean_auditor, gate_metrics_auditor, gate_claims_auditor and gate_release_auditor results carry a summary of the form 'driver e2e <step>' and created_at 2026-01-01T00:00:00Z, which predates the analysis plan's registration (2026-04-02) and this run, a",
+    "The dashboard's four estimate cards show both bounds but not n, although the dataset addition and the spec comment on release require n beside every estimate; I did not block on it because the report prints n beside each estimate and the frozen release contract gives the JSON surface neither a rende",
+    "Each dashboard test card shows its p as the card's main value, 0.0000, under a label that does not say p ('Test Channel Completion', 'Test Channel Aov'), so a reader of the card alone can take it for a zero difference, while the effects (0.1197 and d = 0.4869) sit in secondary fields; the report ord",
+    "The report prints both p values as 0.0000, which reads as p equal to zero; the recomputed values are below 1e-10 and would read correctly as p < 0.0001.",
+    "The completion rate counts the 7,491 pending orders as not completed, as the spec formula requires, but the published channel gap of 0.1197 falls to 0.0847 if pending orders are left out of the denominator and to 0.0578 if every pending order later delivers; pending is steady across months (about 14",
+    "Of the five RESOLVED readings in human_decisions.yaml none looks wrong on the data: in all 917 repeated orders the last row is also the latest updated_at, and keeping the last revision (126 revisions move an order from pending or cancelled to delivered) moves net revenue by +12,591.78 against the fi",
+    "The refund_sign_policy excludes 10 in-quarter orders (8 delivered, 9 direct); kept with a zero refund they would add 967.93 to net revenue and one order each to a few counts, so this decision barely moves any published figure.",
+    "shipping_total, 37,792,722.50 over 41,883 readable cells with 2,648 unreadable ones treated as zero, reproduces exactly under my own locale parse (a blind separator strip would give 1,248,402,183.11), and it is correctly unpublished, but the report never tells its reader that shipping was computed a",
+    "No deterministic rule in check_plan.json reads dashboard labels, the report's prose population statement, whether dashboard estimates carry n, or the renamed columns customer_id, order_date and country; I checked the renamed columns row by row against my own derivation from the quarantine projection",
+    "claims_recomputed goes back to raw only for the six point values; interval bounds, test statistics and effect sizes are recomputed from the clean table the pipeline built and would share a cleaning error, so my recalculation from the quarantine projection is the only check of those from source, and ",
+    "free_text_quarantined.values compares only a sample of 25 comment values, and the comment column is quarantined from me as well, so I could not check it directly; a scan of the release, the registries, the answers, the stage results and the carries for instruction-shaped wording found nothing, and t",
+    "The handoff carries no drift_since_review, which does not prove the stage code's assumptions hold on this export; I checked the notations directly instead (four date notations in the population: 24,542 ISO, 8,909 dotted, 6,661 slashed, 4,419 ISO-8601, none shifted by the Europe/Warsaw conversion; sh",
+    "There are no rulings in audit/decisions/ for this run and no worker disclosed any deviation (their results have no disclosures and empty warnings), so there was no decision or deviation to trace, and that silence cannot be verified from the files.",
+    "I could not establish that the export holds every order that happened, only that it matches the client system's own export log (45,917 rows, 45,000 orders, gross 5,013,381.55), and I did not and cannot assess retry history or stale inputs, which only audit_runner.py report shows.",
+    "Net revenue is gross minus recorded refunds on delivered orders only (3,301,050.99 gross less 277,754.38 refunds), not cash received, excluding shipping and pending orders; the claim's caveats say net of refunds and delivered only, which is adequate for that figure.",
+    "Country mix is stable in every channel-month (each country between 32 and 35 per cent), so the sampling-interval caveat is not hiding a material mix shift this quarter."
+  ],
+  "summary": "Every published figure reproduces from the quarantine projection with independent code (44,531 orders, net revenue 3,023,296.61, both completion rates and Wilson bounds, both AOVs and Student bounds, both registered tests), and the clean table matches an independent derivation on every column of every order. The release still fails on what the reader is told: the dashboard card for CLM-AOV-DIRECT is labelled 'Revenue Direct', an edit made after generation that no gate reads, and the report's page-level population line says 'delivered only' above an order count and completion rates that include",
+  "wall_seconds": 773.2,
+  "cost": {
+    "at": "2026-09-19T10:56:54.612211+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-4b16f125bb3c",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-19T10:44:04.512483+00:00",
+    "finished_at": "2026-09-19T10:56:54.612211+00:00",
+    "wall_seconds": 770.094,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 76,
+    "cached_input_tokens": 6427340,
+    "output_tokens": 82565,
+    "total_tokens": 6509981,
+    "cost_usd": 7.609275500000001
+  }
+}

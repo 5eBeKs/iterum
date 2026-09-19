@@ -1,0 +1,55 @@
+{
+  "profile": "grok-build",
+  "stage": "release",
+  "case": "clean",
+  "error": "no defect planted (false-positive control)",
+  "at": "2026-09-15T19:51:16+00:00",
+  "max_v2_revision": "bc6f71b",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "PASS",
+  "stop_code": null,
+  "outcome": "clean_pass",
+  "matched_signals": [],
+  "blocking_issues": 0,
+  "warnings": 4,
+  "checks": 48,
+  "issue_ids": [],
+  "warning_texts": [
+    "audit/check_plan.json accepted_unproven lists gate_release_document caveats_rendered and claims_rendered because plan-prove could not open analysis/claim_register.json in a temporary directory; the live document gate still ran both rules on this project and passed.",
+    "release/release_number_manifest.json binds each rendered figure with claim_id and claim_role but does not carry population, period, or caveats on the same object; those sit on release/report.md and release/dashboard_data.json.",
+    "gate_release_machine wrote evidence/release_surface_gate.json and no evidence/checks.json rows named recompute_*, claims_recomputed, component_sum, or column_identity, so this stage has no such runner-bound comparisons; displayed figures were recomputed against the claim register and metrics instead",
+    "Dashboard cards do not repeat the report sentence that country components sum to the headline; the three country values and the headline are on the same cards list and do sum."
+  ],
+  "summary": "All 21 displayed business numbers on release/report.md, release/dashboard_data.json, and release/release_number_manifest.json are bound to a local claim_id and role, match analysis/claim_register.json and metrics/calculated_metrics.json within unit tolerance and display_digits, country components 11181.67+11032.61+13527.24=35741.52, and refund rate 27/57=0.473684. Document-gate claims_rendered and caveats_rendered comparisons were recomputed as present. No UNVERIFIED_CLAIM markers, no skipped surfaces, no empty metric_ids.",
+  "wall_seconds": 673.3,
+  "cost": {
+    "at": "2026-09-15T20:02:31.226266+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-ff5a7ed02d52",
+    "agent_role": "grok-audit-release",
+    "started_at": "2026-09-15T19:51:20.434274+00:00",
+    "finished_at": "2026-09-15T20:02:31.226266+00:00",
+    "wall_seconds": 670.796,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 424408,
+    "cached_input_tokens": 1778048,
+    "output_tokens": 37082,
+    "total_tokens": 2239538,
+    "cost_usd": 0.66651288
+  }
+}

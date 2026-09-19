@@ -1,0 +1,78 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "m_page_interval_certainty",
+  "dataset": "messy",
+  "error": "The page says each interval is where the true value lies with near certainty.",
+  "at": "2026-09-19T09:52:20+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "certaint|true value",
+    "sampling interval|interval"
+  ],
+  "blocking_issues": 6,
+  "warnings": 7,
+  "checks": 19,
+  "issue_ids": [
+    "REL-INTERVAL-CERTAINTY",
+    "REL-SURFACE-NOT-GENERATED",
+    "REL-PAGE-POPULATION-DELIVERED",
+    "REL-DASH-ESTIMATE-N-LEVEL",
+    "REL-CARD-POPULATION-PERIOD",
+    "REL-AOV-CAVEATS"
+  ],
+  "issue_texts": [
+    "REL-INTERVAL-CERTAINTY | gate_release_auditor.interval_wording | gate_release_auditor|interval_wording|release/report.md|by_channel | CLAIM_SUPPORT | CRITICAL | worker_release | release/report.md line 23, the sentence directly under the four channel estimates, says the interval beside each figure is where the true value of the channel lies, with near certainty. The claims carry level 0.95 (audit/a",
+    "REL-SURFACE-NOT-GENERATED | gate_release_auditor.surface_matches_generator | gate_release_auditor|surface_matches_generator|release/report.md|by_channel_footnote | RELEASE_INTEGRITY | HIGH | worker_release | src/release/build_release.py lines 103-106 write a sentence ending 'is the sampling interval and nothing else' after the channel list. release/report.md line 23 has a different sentence in tha",
+    "REL-PAGE-POPULATION-DELIVERED | gate_release_auditor.population_per_figure | gate_release_auditor|population_per_figure|release/report.md|page_population_line | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3 is the page's only population statement, and it says delivered only. build_release.py line 86 takes it from CLM-NET-REVENUE.population and prints it for the whole page. C",
+    "REL-DASH-ESTIMATE-N-LEVEL | gate_release_auditor.estimate_rendering | gate_release_auditor|estimate_rendering|release/dashboard_data.json|estimate_cards | VISUALIZATION | HIGH | worker_release | release/dashboard_data.json cards[2..5] (CLM-COMPLETION-DIRECT/PARTNER, CLM-AOV-DIRECT/PARTNER) have only claim_id, label, value, ci_low, ci_high, caveats and _claim_roles. evidence/recheck_release_output.",
+    "REL-CARD-POPULATION-PERIOD | gate_release_auditor.population_period_on_card | gate_release_auditor|population_period_on_card|release/dashboard_data.json|all_cards | VISUALIZATION | MEDIUM | worker_release | release/dashboard_data.json: none of the 8 cards has a population or period field (scans.dashboard_cards_with_population_or_period = []). The period is only at $.period, and no claim population",
+    "REL-AOV-CAVEATS | gate_release_auditor.aov_caveats | gate_release_auditor|aov_caveats|analysis/claim_register.json|CLM-AOV | CLAIM_SUPPORT | MEDIUM | worker_analysis | CLM-AOV-DIRECT and CLM-AOV-PARTNER caveats in analysis/claim_register.json are only 'one quarter of orders in this channel' and the sampling-interval caveat. release/report.md lines 19 and 21 and dashboard cards[4], [5] therefore sh"
+  ],
+  "other_blockers": 2,
+  "warning_texts": [
+    "Gate discrepancy: gate_release_document wording_matches_claims passed report.md although line 23 claims near-certainty about the true channel value; the rule only examined the word 'significant' beside the two test claims, so interval wording is unchecked by any machine rule.",
+    "Gate discrepancy: gate_release_document caveats_rendered passed every AOV card and line, correctly against the register, but the register itself lacks the net-of-refunds and delivered-only caveats the dataset requires for AOV, and check_plan caveats_declared does not require them for CLM-AOV-*.",
+    "release_surface_contract.json declares no reconciliations, no card_caveat_requirements and no visual_evidence, so per-card population, period, n and level are checked by no machine rule; everything in that area rests on this audit alone.",
+    "Both registered tests display p as 0.0000 (four digits from a register value of 0.0000000000); the recomputed two-proportion p is about 2.9e-157, and a reader may take 0.0000 as p equal to zero, so '< 0.0001' would read more honestly.",
+    "src/release/build_release.py comparison() labels a test significant when p is below the plan's unadjusted alpha 0.05, while it prints 'bonferroni correction' beside it; the Bonferroni threshold for two hypotheses is 0.025. Both p values are far below either, so the page is right today, but the rule ",
+    "The dashboard test cards show p, effect and statistic without hypothesis id, method, alpha or correction; only the direction caveat accompanies them.",
+    "The completion caveat 'one quarter of orders in this channel' is the only hint on the page that the denominator is every order in the channel; it does not name cancelled and pending orders."
+  ],
+  "summary": "All 60 rendered numbers on report.md, dashboard_data.json and the manifest match the claim register and my own recomputation from metric components (Wilson bounds, AOV points and Student bounds, z statistic, reconciliation identities). The release still fails on what surrounds the numbers: report.md line 23 says each interval is where the true channel value lies 'with near certainty', which overstates a 0.95 sampling interval and was not produced by the generator (the generator writes a different sentence there); the page-level population line applies 'delivered only' to every figure, includin",
+  "wall_seconds": 237.5,
+  "cost": {
+    "at": "2026-09-19T09:56:21.441810+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-1ec424ea468d",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-19T09:52:27.016224+00:00",
+    "finished_at": "2026-09-19T09:56:21.441810+00:00",
+    "wall_seconds": 234.422,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 30,
+    "cached_input_tokens": 1390776,
+    "output_tokens": 24045,
+    "total_tokens": 1414851,
+    "cost_usd": 2.403052
+  }
+}

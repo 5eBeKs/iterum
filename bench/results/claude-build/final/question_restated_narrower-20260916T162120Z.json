@@ -1,0 +1,83 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "question_restated_narrower",
+  "dataset": "orders",
+  "error": "R02 is restated without the half that asks on which basis the rate is taken.",
+  "at": "2026-09-16T16:12:41+00:00",
+  "max_v2_revision": "e48d886",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R02",
+    "basis",
+    "restat|narrow|half|question"
+  ],
+  "blocking_issues": 1,
+  "warnings": 15,
+  "checks": 20,
+  "issue_ids": [
+    "FINAL-ANSWER-R02-QUESTION-NARROWED"
+  ],
+  "issue_texts": [
+    "FINAL-ANSWER-R02-QUESTION-NARROWED | final_claude_redteam.answer_question_matches_mandate | final_claude_redteam|answer_question_matches_mandate|analysis/answers/R02.json|R02 | CLAIM_SUPPORT | MEDIUM | worker_analysis | raw_data/questions.md R02 has two asks: the refund rate, and which basis it uses (order rows or paying customers). The `question` field of analysis/answers/R02.json keeps only the "
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "analysis/answers/R01.json also shortens R01, dropping 'over delivered orders inside the period', and has no caveats; under the spec's definition net revenue already means delivered orders inside the period, so the meaning holds, but the same worker_analysis retry should restore the full wording.",
+    "Assumption that looks wrong: audit_spec.yaml ends the period on 2025-03-30, while R01 and clean_data/exclusions.json speak of the reported quarter, which ends 2025-03-31; the export has no order dated 2025-03-31, so net_revenue 35741.52 and the 174-row population do not change here, but the next exp",
+    "Assumption refund_rate_basis=paying_customers flags a customer as refunded if any order had any refund: 25 of the 27 such customers also had orders with no refund, and 21 of the 33 refunded orders were partial refunds; this puts the published rate 0.473684 (27/57) at 2.5 times the order-row rate 0.1",
+    "The audit_spec.yaml comment says the two refund-rate bases differ by roughly a factor of three; the data gives 2.497609, which matches the risk register's 2.5x, not the spec comment.",
+    "Assumption revenue_recognition=net_of_refunds subtracts 4493.50 EUR of refunds attached to in-period orders (12 of them full refunds) from gross 40235.02 to get net_revenue 35741.52; the export has no refund date, so refunds issued after the period on Q1 orders are counted in Q1 and cannot be checke",
+    "Assumption timezone_for_dates=Europe/Warsaw changes no number, because order_date is a date with no time.",
+    "A reader of release/report.md or release/dashboard_data.json cannot see R04's row accounting (27 excluded: 26 not delivered, 1 outside the period; it is only in analysis/answers/R04.json), nor that R05 lifetime value was declined (the reason is only in check_plan.json).",
+    "release/report.md line 11 shows 'Numerator: 27 of 57' without saying what is counted; only the caveat above it says the denominator is paying customers, and no label rule covers this line.",
+    "check_plan.json lists gate_release_document claims_rendered and caveats_rendered under accepted_unproven after the proof run failed with FileNotFoundError, so those two rules were never shown to catch a break; gate0_machine's plan_proven reports 0 accepted unproven, which does not match. I checked c",
+    "Every worker and LLM auditor result.json in scope is placeholder output: the summary is 'driver e2e <step>', created_at is 2026-01-01T00:00:00Z, and the stock check expects 0.473684 even in worker_clean and worker_release, which never compute that value.",
+    "gate_metrics_auditor and gate_claims_auditor describe their checks as recomputed independently from the very registry under review (metrics/calculated_metrics.json and analysis/claim_register.json), so no LLM stage produced independent evidence; only the machine gates and this red team recomputed fr",
+    "All four worker carries are identical templates whose population definition is 'status=delivered' with no period; the period is in the separate `periods` field and nothing contradicts the outputs, but the carries hold no facts specific to any stage.",
+    "No deterministic rule checked: the question text in answer files, the R01–R03 answer values (I found them correct), the report sentence that country figures sum to the headline (it is true), the unit on the numerator/denominator line, or the period end date itself.",
+    "In metrics/calculated_metrics.json, net_revenue carries a `numerator` of 40235.02, which is population gross; no claim renders it, but it is a gross figure stored under the net metric that the gross-is-not-net trap exists to protect.",
+    "release_surface_gate.json, the only release-gate evidence I was given, has no section showing the ban on number literals in src/release/build_release.py was checked, and src/release is outside my inputs, so that rule is not evidenced here."
+  ],
+  "summary": "FAIL on one material finding: analysis/answers/R02.json writes down a narrower question than raw_data/questions.md asks. R02 asks for the refund rate AND which basis it uses (order rows or paying customers); the answer file writes down only 'the refund rate'. The basis now lives only in a free-text caveat and in the claim's population string. The answer files are the only record of which questions were covered, and no gate compares their question text with questions.md. Every figure checks out: I recomputed from raw_data/orders.csv (156 comparisons in evidence/redteam_recalc.py, 0 mismatches):",
+  "wall_seconds": 502.5,
+  "cost": {
+    "at": "2026-09-16T16:21:18.904483+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-d423fa05b27b",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-16T16:12:58.873620+00:00",
+    "finished_at": "2026-09-16T16:21:18.904483+00:00",
+    "wall_seconds": 500.016,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 46,
+    "cached_input_tokens": 2482085,
+    "output_tokens": 55282,
+    "total_tokens": 2537413,
+    "cost_usd": 4.0440285000000005
+  },
+  "rescored_at": "2026-09-16T20:47:27+00:00"
+}

@@ -1,0 +1,77 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "m_channel_labels_swapped_page",
+  "dataset": "messy",
+  "error": "On the page the direct and partner completion lines carry each other's labels; the figures and anchors are untouched.",
+  "at": "2026-09-19T10:16:58+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "label",
+    "swap|transpos|mislabel",
+    "direct|partner"
+  ],
+  "blocking_issues": 5,
+  "warnings": 7,
+  "checks": 15,
+  "issue_ids": [
+    "REL-AUD-LABEL-SWAP",
+    "REL-AUD-PAGE-POPULATION",
+    "REL-AUD-CARD-CONTEXT",
+    "REL-AUD-DASH-ESTIMATE-N-LEVEL",
+    "REL-AUD-AOV-CAVEATS"
+  ],
+  "issue_texts": [
+    "REL-AUD-LABEL-SWAP | gate_release_auditor.label_matches_claim | gate_release_auditor|label_matches_claim|release/report.md|completion_by_channel | VISUALIZATION | CRITICAL | worker_release | release/report.md line 14: the visible label 'completion partner' precedes numbers anchored to CLM-COMPLETION-DIRECT (0.724397, 0.718779..0.729946, n = 24597). Line 16: the label 'completion direct' precedes n",
+    "REL-AUD-PAGE-POPULATION | gate_release_auditor.population_matches_claim | gate_release_auditor|population_matches_claim|release/report.md|page_population | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3 sets one population for the whole page, and that population ends in 'delivered only'. That text is CLM-NET-REVENUE's population. CLM-ORDERS has the population 'orders placed i",
+    "REL-AUD-CARD-CONTEXT | gate_release_auditor.card_context | gate_release_auditor|card_context|release/report.md+release/dashboard_data.json|all_cards | VISUALIZATION | MEDIUM | worker_release | evidence/recheck.py found the following. report_card_period_present is false for all 8 claims: the period 2026-01-01..2026-03-31 appears only in the H1 title on line 1. The claim's own population (for exampl",
+    "REL-AUD-DASH-ESTIMATE-N-LEVEL | gate_release_auditor.estimate_n_and_level | gate_release_auditor|estimate_n_and_level|release/dashboard_data.json|estimate_cards | VISUALIZATION | MEDIUM | worker_release | release/dashboard_data.json cards[2..5] (CLM-COMPLETION-DIRECT/PARTNER, CLM-AOV-DIRECT/PARTNER) carry value, ci_low and ci_high, but no n and no interval level (evidence/recheck.py dashboard_card",
+    "REL-AUD-AOV-CAVEATS | gate_release_auditor.estimate_caveats | gate_release_auditor|estimate_caveats|analysis/claim_register.json|CLM-AOV | CLAIM_SUPPORT | MEDIUM | worker_analysis | The dataset addition requires 'net of refunds' and 'delivered orders only' beside revenue and AOV. The AOV entries in release/report.md (lines 18-21) and dashboard_data.json cards[4..5] carry only 'one quarter of order"
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "Both release gates passed a page whose completion labels are swapped: release_surface_gate binds each number to its claim through the hidden anchor comment, and claims_rendered only asks whether the claim is present, so no deterministic rule in audit/check_plan.json ever compares a visible label wit",
+    "The check plan has no deterministic rule over visible labels, card-level population and period, units, or n and level on the dashboard, so for those items this auditor's reading is the only check, and all four failed here.",
+    "The p values of both registered tests are shown as 0.0000, which a reader can take for an exact zero; the register's display_digits of 4 allows this, but a rendering such as below 0.0001 would say what is known.",
+    "The per-channel caveat 'one quarter of orders in this channel' can be read as 25 per cent of the channel's orders rather than one calendar quarter, and for the AOV estimates the population is delivered orders only, not all orders in the channel.",
+    "The rendered n beside each estimate is exempt from binding by the release_surface_contract text_exclusions; I checked all four by hand against the claims (24597, 19934, 17818, 12055) and they match, but no machine rule ties the printed n to the claim.",
+    "The release generator src/release/build_release.py is outside this stage's inputs and release_surface_gate.json records no generator scan, so the absence of business-number literals in the generator was not verified by this audit.",
+    "Welch t and Cohen's d for H-CHANNEL-AOV could be recomputed only approximately, by backing standard errors out of the two-decimal intervals (t about 42.62 against 42.70 registered, d about 0.485 against 0.4869); the difference fits the rounding of the bounds, but it is not a check within tolerance."
+  ],
+  "summary": "All 20 anchored numbers on report.md (and the 40 on dashboard_data.json and the manifest) match the claim register exactly, and the registry reconciles (net revenue = sum of channel AOV numerators 3023296.61; orders = 24597 + 19934 = 44531; Wilson bounds, rates, z and effect recompute). The release still fails: report.md lines 14 and 16 print the direct completion estimate under the label 'completion partner' and the partner estimate under 'completion direct', so the reader sees the opposite of the registered finding; the page-wide population line calls every figure 'delivered only', which is ",
+  "wall_seconds": 255.6,
+  "cost": {
+    "at": "2026-09-19T10:21:17.379195+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-1ec424ea468d",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-19T10:17:04.843917+00:00",
+    "finished_at": "2026-09-19T10:21:17.379195+00:00",
+    "wall_seconds": 252.531,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 28,
+    "cached_input_tokens": 1214048,
+    "output_tokens": 24552,
+    "total_tokens": 1238628,
+    "cost_usd": 2.2650235
+  }
+}

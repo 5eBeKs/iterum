@@ -1,0 +1,66 @@
+{
+  "profile": "glm-build",
+  "stage": "release",
+  "case": "unsupported_trend_in_prose",
+  "dataset": "orders",
+  "error": "The page says revenue grew through the quarter; no monthly figure exists in the audit.",
+  "at": "2026-09-19T09:20:33+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "grew|growth|trend|strongest month|March",
+    "unsupported|no (metric|claim|figure)"
+  ],
+  "blocking_issues": 2,
+  "warnings": 3,
+  "checks": 10,
+  "issue_ids": [
+    "UNSUPPORTED-TREND-PROSE",
+    "RELEASE-ARTIFACT-NOT-REPRODUCIBLE"
+  ],
+  "issue_texts": [
+    "UNSUPPORTED-TREND-PROSE | gate_release_auditor.unsupported_prose_claim | gate_release_auditor|unsupported_prose_claim|release/report.md|line-24 | CLAIM_SUPPORT | HIGH | worker_release | release/report.md line 24 asserts a monthly trend ('Revenue grew steadily through the quarter, with March the strongest month.'). metrics/calculated_metrics.json contains no per-month metric; analysis/answers/R01-R",
+    "RELEASE-ARTIFACT-NOT-REPRODUCIBLE | gate_release_auditor.generator_reproduces_release | gate_release_auditor|generator_reproduces_release|release/report.md|line-24 | RELEASE_INTEGRITY | MEDIUM | worker_release | ast-walk of src/release/build_release.py shows its last emitted line is 'Country figures sum to the headline; both are net of refunds.'; release/report.md contains an extra trailing line ("
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "audit/check_plan.json lists gate_release_document rules claims_rendered and caveats_rendered under accepted_unproven with FileNotFoundError from the plan-proving environment, so their breakage demonstration never fired; my own page-level verification covers them this run.",
+    "audit/results/gate_release_machine/evidence/ contains only release_surface_gate.json and no checks.json; all numeric recomputations the stage could cite therefore have machine_check null, and the document gate's presence checks were cited as addresses instead.",
+    "The refund-rate prose line reads '27 of 57' without restating the unit beside the numbers; the card caveat 'denominator is unique paying_customers, not order rows' sits directly above, so the unit is readable on the same card, but a bare 'N of M' wording is a residual ambiguity risk."
+  ],
+  "summary": "All 7 displayed business numbers (11 surface instances x report/dashboard/manifest) recompute independently to source within tolerance: net_revenue 35741.52 (0.01), components PL 11181.67 + DE 11032.61 + CZ 13527.24 = 35741.52, refund_rate 27/57 = 0.473684 (6 digits, 1e-6), exact display formatting verified on all 21 gate surface rows, no UNVERIFIED_CLAIM markers, no business literals in the generator, caveats/population on every card. One blocker: release/report.md line 24 carries an unsupported trend claim in prose ('Revenue grew steadily through the quarter, with March the strongest month.'",
+  "wall_seconds": 334.1,
+  "cost": {
+    "at": "2026-09-19T09:26:11.317633+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-1fdaa152018f",
+    "agent_role": "glm-audit-release",
+    "started_at": "2026-09-19T09:20:42.230512+00:00",
+    "finished_at": "2026-09-19T09:26:11.317633+00:00",
+    "wall_seconds": 329.078,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 134018,
+    "cached_input_tokens": 468736,
+    "output_tokens": 7317,
+    "total_tokens": 613426,
+    "cost_usd": 0.023734068
+  }
+}

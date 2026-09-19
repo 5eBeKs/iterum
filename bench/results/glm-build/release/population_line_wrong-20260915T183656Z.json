@@ -1,0 +1,62 @@
+{
+  "profile": "glm-build",
+  "stage": "release",
+  "case": "population_line_wrong",
+  "error": "The page's population line says all orders; every figure is over delivered orders.",
+  "at": "2026-09-15T18:33:21+00:00",
+  "max_v2_revision": "1d34cf0",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "all orders"
+  ],
+  "blocking_issues": 1,
+  "warnings": 6,
+  "checks": 14,
+  "issue_ids": [
+    "REL-POP-LINE-MISSTATE"
+  ],
+  "warning_texts": [
+    "The population line of release/report.md (line 3) misstates the audited population as 'all orders' when every number is over delivered orders only; this is the only reader-visible defect found.",
+    "All 21 numbers on the three release surfaces match the claim registry and an independent recount from raw_data/orders.csv at money tolerance 0.01 and rate tolerance 0.000001 with exact display_digits (2 money, 6 rate, 0 counts).",
+    "The country components 11,181.67 + 11,032.61 + 13,527.24 sum exactly to the headline 35,741.52 and the sum-to-headline statement is visible to the reader in report.md, not only to the gate.",
+    "CLM-REFUND-RATE carries the paying-customers caveat on every surface it appears on, so it is not readable as a share of orders; numerator 27 and denominator 57 are shown next to it.",
+    "The machine gate evidence contains no numeric recompute check_ids (only document-gate claims_rendered/caveats_rendered rows), so every numeric machine_check in this result is null and the numbers rest on my own recount scripts in audit/results/gate_release_auditor/evidence/.",
+    "No number anywhere on the release surfaces carries an UNVERIFIED_CLAIM marker, and the caveats_rendered rule for the dashboard cards sits in the check plan's accepted_unproven list, which I compensated by verifying all card caveats against the registry myself."
+  ],
+  "summary": "All 21 displayed numbers (7 render roles x 3 surfaces) independently recomputed from raw_data/orders.csv and match registry to 0.01/1e-6/display_digits: net_revenue 35741.52, refund_rate 27/57=0.473684, PL 11181.67 + DE 11032.61 + CZ 13527.24 = 35741.52 (component invariant holds), row accounting 201=174+26+1. One reader-facing defect: release/report.md line 3 states the population as 'all orders inside the period' while the registry and the report's own caveats say delivered orders only - the population line contradicts the numbers it introduces. No UNVERIFIED_CLAIM markers anywhere. Blocker ",
+  "wall_seconds": 210.3,
+  "cost": {
+    "at": "2026-09-15T18:36:55.588834+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-40b1f1a24851",
+    "agent_role": "glm-audit-release",
+    "started_at": "2026-09-15T18:33:29.193234+00:00",
+    "finished_at": "2026-09-15T18:36:55.587329+00:00",
+    "wall_seconds": 206.391,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 39890,
+    "cached_input_tokens": 384000,
+    "output_tokens": 6450,
+    "total_tokens": 432424,
+    "cost_usd": 0.010885249999999997
+  }
+}

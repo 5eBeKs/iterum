@@ -1,0 +1,57 @@
+{
+  "profile": "gpt-build",
+  "stage": "claims",
+  "case": "unsupported_trend_in_caveat",
+  "error": "A caveat asserts growth against a previous quarter no metric computes.",
+  "at": "2026-09-16T08:35:18+00:00",
+  "max_v2_revision": "7e1d71f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "12 ?%",
+    "trend|growth|grew|unsupported|no metric"
+  ],
+  "blocking_issues": 1,
+  "warnings": 1,
+  "checks": 9,
+  "issue_ids": [
+    "CLAIMS-UNSUPPORTED-TREND-001"
+  ],
+  "warning_texts": [
+    "audit/check_plan.json gate_claims_machine.caveats_declared requires specified population topics but does not reject additional unsupported factual assertions, allowing the prior-quarter comparison in analysis/claim_register.json to pass the machine gate."
+  ],
+  "summary": "All five registered point estimates independently reproduce from raw_data/orders.csv with the declared populations, period, and paying-customer denominator, but CLM-NET-REVENUE also carries an unsupported 12% prior-quarter growth assertion; the extract has no prior-quarter rows and no registered metric supports that comparison.",
+  "wall_seconds": 340.7,
+  "cost": {
+    "at": "2026-09-16T08:41:01.163863+00:00",
+    "launcher": "codex_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-c3f70d9632ee",
+    "agent_role": "gpt-audit-claims",
+    "started_at": "2026-09-16T08:35:22.876972+00:00",
+    "finished_at": "2026-09-16T08:41:01.163340+00:00",
+    "wall_seconds": 338.282,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "gpt-5.6-sol",
+    "model_used": null,
+    "input_tokens": 1683120,
+    "cached_input_tokens": null,
+    "output_tokens": 14171,
+    "total_tokens": 1697291,
+    "cost_usd": null
+  }
+}

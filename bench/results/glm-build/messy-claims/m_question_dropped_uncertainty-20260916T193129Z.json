@@ -1,0 +1,60 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "m_question_dropped_uncertainty",
+  "dataset": "messy",
+  "error": "R03 is restated without the half of the brief that asks how precisely each rate is known.",
+  "at": "2026-09-16T19:26:41+00:00",
+  "max_v2_revision": "fa38876",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "warned",
+  "matched_signals": [
+    "R03"
+  ],
+  "blocking_issues": 0,
+  "warnings": 4,
+  "checks": 18,
+  "issue_ids": [],
+  "issue_texts": [],
+  "other_blockers": 0,
+  "warning_texts": [
+    "analysis/answers/R03.json and R04.json render p_value as the string 0.0000000000, which presents a tiny but nonzero p as exactly zero.",
+    "analysis/answers/R03.json and R04.json state alpha 0.05 beside correction bonferroni, while the applied alpha under that correction is 0.025; here the result is orders of magnitude from the boundary so no conclusion changes.",
+    "The claims machine gate's independent_claim_recalc.json names raw_data/orders.csv as its source, a file that still carries the quarantined comment column; the gate is a deterministic tool rather than an agent and my own quarantine-rooted recalc confirms all of its numbers, so this is recorded as a w",
+    "No claim caveat carries a bare number; no phrase from the quarantined comment column appears in the claim register, the answers or the metrics."
+  ],
+  "summary": "All six headline claims independently recalculated from the quarantine projection (quarantine/orders.csv, manifest declared=true): dedup 45000 distinct, 459 outside-quarter and 10 negative-refund exclusions, population 44531. Every claim value, ci_low, ci_high and n in analysis/claim_register.json matches my recalc exactly at display_digits; claim->metric->source chain is gapless. Both registered hypothesis tests reproduce exactly (z=26.718455, effect 0.119652; welch t=42.699880, cohens_d pooled 0.486900); sign survives every Country and order_month stratum (no Simpson), cancelled/pending kept",
+  "wall_seconds": 281.6,
+  "cost": {
+    "at": "2026-09-16T19:31:28.401176+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-9a40827d18d7",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-16T19:26:50.402535+00:00",
+    "finished_at": "2026-09-16T19:31:28.401176+00:00",
+    "wall_seconds": 278.0,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 82412,
+    "cached_input_tokens": 784832,
+    "output_tokens": 9756,
+    "total_tokens": 880408,
+    "cost_usd": 0.025510655999999996
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "exclusion_reasons_swapped",
+  "error": "R04 attaches each exclusion count to the other rule: 26 rows 'outside period', 1 row 'not delivered'.",
+  "at": "2026-09-15T18:06:40+00:00",
+  "max_v2_revision": "d6a41ff",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R04",
+    "exclusion",
+    "swap|reason|rule",
+    "not_delivered|outside_period"
+  ],
+  "blocking_issues": 1,
+  "warnings": 3,
+  "checks": 10,
+  "issue_ids": [
+    "R04-EXCLUSION-REASONS-SWAPPED"
+  ],
+  "warning_texts": [
+    "The machine gate's questions_are_answered.R04 check verified only the presence and value of the three metric_ids, not the exclusion-reason labels attached to them in analysis/answers/R04.json, so the swapped reasons passed the gate with no deterministic rule over them; the finding rests entirely on ",
+    "The five claim values in analysis/claim_register.json are internally consistent: PL + DE + CZ (11181.67 + 11032.61 + 13527.24) equals the headline 35741.52 exactly, and refund_rate components 27/57 reproduce 0.473684 on the paying_customers basis the spec rules.",
+    "The scenario filename suggests swapped exclusion reasons and the only place a swap exists is the R04 answer's exclusion labels; the registry, the exclusions file written where exclusions are applied, and the claim register all pair rules and reasons correctly."
+  ],
+  "summary": "All five claims recomputed from raw_data/orders.csv independently and they match the machine gate exactly (net_revenue 35741.52; refund_rate 27/57 = 0.473684 paying_customers basis; PL 11181.67, DE 11032.61, CZ 13527.24; row accounting 201 = 174 + 26 + 1). But analysis/answers/R04.json swaps the exclusion reasons: it attributes 'order_date outside period' to excluded_not_delivered (26) and 'status != delivered' to excluded_outside_period (1), while raw data shows the 26 rows are the cancelled/pending rows and the 1 row is O00201 dated 2025-04-01.",
+  "wall_seconds": 326.9,
+  "cost": {
+    "at": "2026-09-15T18:12:13.963138+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-0a64ec55f1ad",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-15T18:06:56.835654+00:00",
+    "finished_at": "2026-09-15T18:12:13.959623+00:00",
+    "wall_seconds": 317.125,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 50477,
+    "cached_input_tokens": 620352,
+    "output_tokens": 4676,
+    "total_tokens": 678122,
+    "cost_usd": 0.014914305
+  }
+}

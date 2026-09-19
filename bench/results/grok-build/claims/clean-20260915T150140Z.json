@@ -1,0 +1,56 @@
+{
+  "profile": "grok-build",
+  "stage": "claims",
+  "case": "clean",
+  "error": "no defect planted (false-positive control)",
+  "at": "2026-09-15T14:51:27+00:00",
+  "max_v2_revision": "0703cb4",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "PASS",
+  "stop_code": null,
+  "outcome": "clean_pass",
+  "matched_signals": [],
+  "blocking_issues": 0,
+  "warnings": 5,
+  "checks": 15,
+  "issue_ids": [],
+  "warning_texts": [
+    "The frozen check plan does not recompute R04 exclusion counts from raw at this gate; those counts were recomputed from raw_data/orders.csv in evidence/recompute_claims.py and matched the metrics registry and analysis/answers/R04.json as 201 = 174 + 26 + 1.",
+    "The claims machine gate has no component_sum over country claims; the three country values recomputed from raw sum to the headline 35741.52.",
+    "Deterministic caveats_declared matching is substring-only; the auditor also confirmed CLM-REFUND-RATE caveats name unique paying customers rather than order rows.",
+    "audit/check_plan.json lists claims_rendered and caveats_rendered as accepted_unproven for a later document gate; that listing was not treated as approval of this claim register.",
+    "audit/AUDIT_REPORT.md presents this claims-auditor step as already finished; that file was treated as non-authoritative and was not used as a verdict."
+  ],
+  "summary": "Independent raw recompute of all five claims from raw_data/orders.csv matches analysis/claim_register.json and gate_claims_machine: net revenue 35741.52 EUR, refund rate 0.473684 (27/57 paying customers), country parts PL 11181.67 + DE 11032.61 + CZ 13527.24. Population is delivered orders in 2025-01-01..2025-03-30 inclusive; CLM-REFUND-RATE caveats name paying customers; independent_claim_recalc.json is rooted only in raw_data/orders.csv.",
+  "wall_seconds": 610.2,
+  "cost": {
+    "at": "2026-09-15T15:01:38.796374+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-bfa0771aad70",
+    "agent_role": "grok-audit-claims",
+    "started_at": "2026-09-15T14:51:31.571077+00:00",
+    "finished_at": "2026-09-15T15:01:38.796374+00:00",
+    "wall_seconds": 607.219,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 223728,
+    "cached_input_tokens": 1997696,
+    "output_tokens": 30531,
+    "total_tokens": 2251955,
+    "cost_usd": 0.5540266
+  }
+}

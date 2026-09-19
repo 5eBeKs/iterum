@@ -1,0 +1,60 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "m_dedup_rule_misstated",
+  "dataset": "messy",
+  "error": "The answer to R02 says the first revision of an order is kept; the spec and the clean stage keep the last.",
+  "at": "2026-09-19T07:11:51+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "first revision",
+    "last revision|latest|latest_revision_wins|dedup_rule"
+  ],
+  "blocking_issues": 1,
+  "warnings": 0,
+  "checks": 23,
+  "issue_ids": [
+    "DEDUP-RULE-MISSTATED-R02"
+  ],
+  "issue_texts": [
+    "DEDUP-RULE-MISSTATED-R02 | gate_claims_auditor.caveat_text.R02 | gate_claims|dedup_rule_text|analysis/answers/R02.json|CLM-ORDERS | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R02.json caveat says the first revision of a repeated order is kept. audit_spec.yaml declares dedup_rule: latest_revision_wins (last row is the current one), and audit/results/gate_claims_machine/evidence/indep"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [],
+  "summary": "All eight claims reproduce independently from quarantine/orders.csv to full displayed precision (my recalc in evidence/recount.py matches every machine-gate recompute), the registered value is only consistent with latest_revision_wins, the Simpson check holds in every country stratum, and the registry carries no quarantined comment phrases; one blocker: analysis/answers/R02.json misstates the dedup rule as keeping the first revision, contradicting audit_spec.yaml and the actual computation.",
+  "wall_seconds": 354.2,
+  "cost": {
+    "at": "2026-09-19T07:17:52.115649+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-7dda6dcbf65c",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-19T07:12:02.154923+00:00",
+    "finished_at": "2026-09-19T07:17:52.107629+00:00",
+    "wall_seconds": 349.953,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 69385,
+    "cached_input_tokens": 366336,
+    "output_tokens": 7188,
+    "total_tokens": 444081,
+    "cost_usd": 0.015346698000000002
+  }
+}

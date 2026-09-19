@@ -1,0 +1,96 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "m_page_no_uncertainty",
+  "dataset": "messy",
+  "error": "The page says the channel figures are measured over every order and carry no uncertainty, beside their intervals.",
+  "at": "2026-09-19T08:27:08+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "no uncertainty|every order",
+    "interval|estimate|sampl"
+  ],
+  "blocking_issues": 7,
+  "warnings": 18,
+  "checks": 19,
+  "issue_ids": [
+    "FINAL-PAGE-NO-UNCERTAINTY",
+    "FINAL-PAGE-POPULATION-DELIVERED-ONLY",
+    "FINAL-DASHBOARD-ESTIMATE-N",
+    "FINAL-CARRY-WORKER-CLEAN",
+    "FINAL-CARRY-WORKER-METRICS",
+    "FINAL-CARRY-WORKER-ANALYSIS",
+    "FINAL-CARRY-WORKER-RELEASE"
+  ],
+  "issue_texts": [
+    "FINAL-PAGE-NO-UNCERTAINTY | final_claude_redteam.estimate_uncertainty_wording | final_claude_redteam|estimate_uncertainty_wording|release/report.md|by_channel | CLAIM_SUPPORT | HIGH | worker_release | release/report.md line 23, read as text: the paragraph under 'By channel' tells the reader that each channel figure is measured over every order of the quarter and therefore carries no uncertainty. T",
+    "FINAL-PAGE-POPULATION-DELIVERED-ONLY | final_claude_redteam.card_population | final_claude_redteam|card_population|release/report.md|page_header | CLAIM_SUPPORT | HIGH | worker_release | release/report.md line 3 scopes the whole page to orders inside the quarter, one row per order, delivered only. That population is right for CLM-NET-REVENUE and the AOV claims. It is wrong for CLM-ORDERS, whose re",
+    "FINAL-DASHBOARD-ESTIMATE-N | final_claude_redteam.estimate_n_rendered | final_claude_redteam|estimate_n_rendered|release/dashboard_data.json|estimate_cards | VISUALIZATION | MEDIUM | worker_release | In release/dashboard_data.json, $.cards[2] through $.cards[5] (CLM-COMPLETION-DIRECT, CLM-COMPLETION-PARTNER, CLM-AOV-DIRECT, CLM-AOV-PARTNER) carry value, ci_low and ci_high but no n. The report show",
+    "FINAL-CARRY-WORKER-CLEAN | final_claude_redteam.carry_continuity | final_claude_redteam|carry_continuity|audit/checkpoints/worker_clean.carry.json|facts | OTHER | MEDIUM | worker_clean | audit/checkpoints/worker_clean.carry.json: context_id and attempt match the execution block of audit/results/worker_clean/result.json. Its facts contradict what the stage produced. The period is 2025-01-01..2025-0",
+    "FINAL-CARRY-WORKER-METRICS | final_claude_redteam.carry_continuity | final_claude_redteam|carry_continuity|audit/checkpoints/worker_metrics.carry.json|facts | OTHER | MEDIUM | worker_metrics | audit/checkpoints/worker_metrics.carry.json: context_id and attempt match audit/results/worker_metrics/result.json. The facts are identical to the worker_clean carry: a 2025-01-01..2025-03-30 period and a st",
+    "FINAL-CARRY-WORKER-ANALYSIS | final_claude_redteam.carry_continuity | final_claude_redteam|carry_continuity|audit/checkpoints/worker_analysis.carry.json|facts | OTHER | MEDIUM | worker_analysis | audit/checkpoints/worker_analysis.carry.json: context_id and attempt match audit/results/worker_analysis/result.json. The facts are the same boilerplate: a 2025 period and a status=delivered population. a",
+    "FINAL-CARRY-WORKER-RELEASE | final_claude_redteam.carry_continuity | final_claude_redteam|carry_continuity|audit/checkpoints/worker_release.carry.json|facts | OTHER | MEDIUM | worker_release | audit/checkpoints/worker_release.carry.json: context_id and attempt match audit/results/worker_release/result.json. The facts are the same 2025-01-01..2025-03-30 period and status=delivered population. The r"
+  ],
+  "other_blockers": 5,
+  "warning_texts": [
+    "This run is single-vendor. Every context (architect, workers, auditors and this red team) is claude-opus-5, so a model-level blind spot repeats on both sides of every check. The only independent layer is the deterministic one (machine gates, frozen check_plan, control lock, release surface gate), an",
+    "All five auditor results (gate0_semantic, gate_clean_auditor, gate_metrics_auditor, gate_claims_auditor, gate_release_auditor) are 'driver e2e' placeholders. Their evidence notes contain no calculation, and their checks either echo machine-gate values or carry a placeholder 0.473684 unrelated to thi",
+    "All four worker results are 'driver e2e' placeholders: a placeholder 0.473684 check, empty warnings, no disclosures field, and created_at 2026-01-01T00:00:00Z, which is before the analysis plan was registered (2026-04-02). No stage self-reported a deviation, and none of their timestamps is a clock r",
+    "The page sentence denying uncertainty and the delivered-only population line passed every machine rule. Wording on the release surfaces that carries no digits is checked by no deterministic rule, beyond WORDING-01 on 'significant' and the free-text quarantine.",
+    "dedup_rule latest_revision_wins holds on the data: 917 orders repeat once, each repeat is the next row, the last row is never older by updated_at, and all 126 status changes run toward delivered. However, 549 of the 917 pairs tie on updated_at (6 of them change status), so file order alone decides t",
+    "The completion rate counts 7,491 pending orders as not completed: 3,457 direct (14.1%) and 4,034 partner (20.2%), with no rise in March. It is a status snapshot at export time, not a final outcome, and the page does not say so. With pending set aside, direct would read 0.842857 and partner 0.758176,",
+    "shipping_total (37,792,722.50 EUR, correctly unpublished) implies about 902 EUR of shipping per readable order, against a mean delivered net value of about 101 EUR. The locale reading itself is right: stripping every separator would give 1,248,402,183.11. The magnitude suggests the column may not be",
+    "Neither release surface mentions shipping, so R05's answer (the figure was computed, understates itself by an unknown amount, and is deliberately withheld) reaches no reader of the release.",
+    "Both registered p-values are rendered as 0.0000 on both surfaces, which reads as p = 0. The true values are about 3e-157 for the completion test and smaller for the AOV test, so '< 0.0001' would be accurate.",
+    "The caveat 'one quarter of orders in this channel' can be read as 25% of the channel's orders rather than the orders of one calendar quarter.",
+    "The AOV lines and cards never say they cover delivered orders only, although the register populations do. The only place a reader could learn it is a page header that is wrong for the other figures.",
+    "The generator src/release/build_release.py is outside my inputs. I could not check it for business literals or find where the no-uncertainty sentence and the population line are produced, and the release surface gate evidence lists rendered numbers but no generator scan result.",
+    "audit/schemas/carry.schema.json is outside my inputs, so I did not verify schema conformance of the four carries. I verified only that they are present and that context_id and attempt match each result.",
+    "check_plan leaves customer_id, order_date and country (renamed columns) under no values_preserved rule. I checked all three against the quarantine projection for all 44,531 orders and found no mismatch, but no deterministic gate holds them.",
+    "The release contract declares no reconciliations and no card_caveat_requirements, so component-to-headline consistency and per-card caveats are checked by nothing. By hand, channel n 24,597 + 19,934 = 44,531 and AOV numerators 1,971,306.75 + 1,051,989.86 = 3,023,296.61, both of which reconcile.",
+    "free_text_quarantined.values compared a sample of 25 quarantined values. My search for instruction-like wording across the register, surfaces, metrics, clean table, stage results and carries found nothing, but I did not and may not read the comment values, so the check is not exhaustive.",
+    "The handoff carries no drift_since_review, which does not prove the assumptions hold. Tested directly: all 6,852 slashed dates agree with order_month when read month-first (only 231 would day-first); no ISO-8601 'Z' date moves to another day in Europe/Warsaw; 11 negative-refund rows exclude 10 in-qu",
+    "No audit/decisions/*.json exists and the handoff rulings list is empty, so no published figure rests on a human ruling beyond the five RESOLVED keys in audit/human_decisions.yaml. Of those, only dedup and the pending-in-denominator reading move published numbers, as quantified above."
+  ],
+  "summary": "Every published number checks out: my own recalculation from the quarantine projection reproduces all 20 rendered values, the 4 estimate intervals, both registered tests and the clean table column for column. The release still fails on what it tells the reader. report.md line 23 says the channel figures carry no uncertainty, under four figures the register declares as 0.95 estimates. report.md line 3 scopes the whole page to delivered orders, which is false for the 44,531 order count and for both completion rates. The dashboard's estimate cards omit n. All four worker carries state a 2025 peri",
+  "wall_seconds": 628.3,
+  "cost": {
+    "at": "2026-09-19T08:37:45.178305+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-4b16f125bb3c",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-19T08:27:19.974492+00:00",
+    "finished_at": "2026-09-19T08:37:45.178305+00:00",
+    "wall_seconds": 625.203,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 74,
+    "cached_input_tokens": 5180651,
+    "output_tokens": 62511,
+    "total_tokens": 5243236,
+    "cost_usd": 6.0539645
+  }
+}

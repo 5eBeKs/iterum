@@ -1,0 +1,88 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "m_channel_labels_swapped_page",
+  "dataset": "messy",
+  "error": "On the page the direct and partner completion lines carry each other's labels; the figures and anchors are untouched.",
+  "at": "2026-09-19T08:17:48+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "label",
+    "swap|transpos|mislabel",
+    "direct|partner"
+  ],
+  "blocking_issues": 3,
+  "warnings": 17,
+  "checks": 20,
+  "issue_ids": [
+    "FINAL-REPORT-CHANNEL-LABELS-SWAPPED",
+    "FINAL-REPORT-PAGE-POPULATION-DELIVERED-ONLY",
+    "FINAL-DASHBOARD-ESTIMATE-N-MISSING"
+  ],
+  "issue_texts": [
+    "FINAL-REPORT-CHANNEL-LABELS-SWAPPED | final_claude_redteam.surface_label_matches_claim | final_claude_redteam|surface_label_matches_claim|release/report.md|completion_by_channel | RELEASE_INTEGRITY | CRITICAL | worker_release | release/report.md line 14 reads to a reader as 'completion partner: 0.724397 (0.95 interval 0.718779 to 0.729946, n = 24597)', but every figure on it is anchored to CLM-COM",
+    "FINAL-REPORT-PAGE-POPULATION-DELIVERED-ONLY | final_claude_redteam.card_local_population | final_claude_redteam|card_local_population|release/report.md|page_population | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3, the only population statement on the page, says the population is orders placed inside the quarter, one row per order, delivered only. It is CLM-NET-REVENUE's p",
+    "FINAL-DASHBOARD-ESTIMATE-N-MISSING | final_claude_redteam.estimate_rendered_with_n | final_claude_redteam|estimate_rendered_with_n|release/dashboard_data.json|estimate_cards | RELEASE_INTEGRITY | MEDIUM | worker_release | release/dashboard_data.json cards[2..5] (CLM-COMPLETION-DIRECT, CLM-COMPLETION-PARTNER, CLM-AOV-DIRECT, CLM-AOV-PARTNER) carry value, ci_low and ci_high but no n field, so the da"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "This profile is single-vendor by design: the architect, the workers, the five auditors and this red team are all Claude Opus contexts, an isolated context is not an independent vendor, and a mistake the model tends toward repeats on both sides of every check; the only independent layer is the determ",
+    "Write protection over raw sources and frozen machinery came from permissions.deny in .claude/settings.json, which covers edit tools, not the shell; a modified raw file is caught after the fact by the control lock on each runner command, not prevented.",
+    "The deterministic release layer binds figures to claims by anchor and checks presence, caveats and significance wording, but no rule in check_plan binds the words around a figure (channel label, metric label, page population) to the claim; that is how the channel-label swap and the delivered-only he",
+    "The five auditor results (gate0_semantic, gate_clean_auditor, gate_metrics_auditor, gate_claims_auditor, gate_release_auditor) are placeholder 'driver e2e' results dated 2026-01-01 with empty warnings: two carry a single check of 0.473684, a number that belongs to nothing in this audit, and the othe",
+    "The four worker results are also placeholders (summary 'driver e2e', one 0.473684 check, no disclosures field, empty warnings), so there is no self-report of deviations to assess and nothing establishes that the stages kept to their prompts.",
+    "All four worker carries (worker_clean, worker_metrics, worker_analysis, worker_release) are identical, and their facts contradict what the stages produced: period 2025-01-01..2025-03-30 against the audited 2026-01-01..2026-03-31, grain and population 'delivered orders only' against a clean table hol",
+    "A retry of worker_release will read audit/checkpoints/worker_analysis.carry.json, whose population ('delivered orders only') and period (2025) are false; the population on the page must come from each claim's own population field in analysis/claim_register.json, not from that carry.",
+    "shipping_total 37,792,722.50 EUR reproduces exactly (2,648 of 44,531 in-quarter cells unreadable: 1,778 blank, 869 NaN, 1 inf, matching the spec's 'about six in a hundred'), but it averages about 902 EUR per readable order against a delivered AOV near 100 EUR, so the column's unit or currency looks ",
+    "The completion definition in audit_spec.yaml counts pending orders as not completed; pending is flat across months (direct 13.4-14.6%, partner 19.2-20.8%), so it is not quarter-end lag, but if pending means 'not yet resolved' then completion is 0.842857 direct and 0.758176 partner instead of 0.72439",
+    "Of the RESOLVED decisions in audit/human_decisions.yaml, none looks wrong on this export: dedup_rule holds (file order and updated_at agree on 917 of 917 repeated orders; 126 changed status between revisions; first-revision would give net revenue 3,010,704.83 and no dedup 3,082,640.62 against 3,023,",
+    "The p values are shown as '0.0000' on report.md and dashboard_data.json, which reads as a p of zero; '< 0.0001' is what the figure supports.",
+    "The AOV lines' caveat says 'orders in this channel', but the AOV population is delivered orders only; once the page-level header is corrected, the AOV figures need their own delivered-only statement where they are shown.",
+    "Dashboard cards carry no population and no per-card period (only a top-level period), so a dashboard reader cannot tell which figures are delivered-only and which include every status.",
+    "values_preserved has no column mapping, so customer_id, order_date and country are checked by no machine rule; I compared them row by row against the quarantine projection (0 mismatches, and no ISO-8601 timestamp changes date under Europe/Warsaw), which closes that gap for this export only.",
+    "Not established by me: raw_data/orders.csv itself (kept out by the quarantine; the projection's 45,917 rows, 45,000 distinct orders and 5,013,381.55 gross equal gate0's control totals); the comment column's content; validation of the carries against audit/schemas/carry.schema.json (outside my inputs",
+    "The handoff has no drift_since_review field, and its absence does not prove the stage code's assumptions hold; I re-derived those assumptions (dedup order, date notation, separator locale, refund sign, timezone) on the current export and found they hold.",
+    "There is no decisions journal (audit/decisions is absent and the handoff's rulings list is empty), so no human ruling was there to verify as applied."
+  ],
+  "summary": "FAIL on three release-surface blockers, all owned by worker_release; every number is right. Independent stdlib recompute from quarantine/orders.csv reproduces all 19 registry metrics, all 8 claims (incl. Wilson/Student bounds, pooled z, Welch t, Cohen's d and every n) and the clean table row for row (44,531 rows, 0 mismatches on 12 columns). The report is wrong where no gate looks: release/report.md prints the direct-channel completion figures (CLM-COMPLETION-DIRECT, 0.724397) under the words 'completion partner' and the partner figures (0.604746) under 'completion direct', which inverts R03 a",
+  "wall_seconds": 546.7,
+  "cost": {
+    "at": "2026-09-19T08:27:04.794003+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-4b16f125bb3c",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-19T08:18:01.436418+00:00",
+    "finished_at": "2026-09-19T08:27:04.794003+00:00",
+    "wall_seconds": 543.359,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 66,
+    "cached_input_tokens": 4319150,
+    "output_tokens": 53525,
+    "total_tokens": 4372741,
+    "cost_usd": 5.133873000000001
+  }
+}

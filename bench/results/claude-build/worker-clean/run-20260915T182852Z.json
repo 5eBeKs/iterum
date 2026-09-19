@@ -1,0 +1,44 @@
+{
+  "profile": "claude-build",
+  "stage": "clean",
+  "worker": "worker_clean",
+  "kind": "worker",
+  "at": "2026-09-15T18:25:15+00:00",
+  "max_v2_revision": "1d34cf0",
+  "verdict": "PASS",
+  "stop_code": null,
+  "summary": "clean_data/orders_clean.csv holds 174 of 201 raw orders (delivered, order_date 2025-01-01..2025-03-30 inclusive); 26 rows excluded as status != delivered and 1 as order_date outside period, recorded in clean_data/exclusions.json. build_clean.py now reads every contract value from audit_spec.yaml; 8 unit tests and gate_clean_machine (9 checks) pass.",
+  "wall_seconds": 214.8,
+  "cost": {
+    "at": "2026-09-15T18:28:49.947183+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "worker_clean",
+    "attempt": 1,
+    "context_id": "cc-worker_clean-a1-53943e3b1602",
+    "agent_role": "claude-worker",
+    "started_at": "2026-09-15T18:25:18.801816+00:00",
+    "finished_at": "2026-09-15T18:28:49.947183+00:00",
+    "wall_seconds": 211.14,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 418,
+    "cached_input_tokens": 1125383,
+    "output_tokens": 18336,
+    "total_tokens": 1144137,
+    "cost_usd": 1.7377715000000002
+  },
+  "machine": {
+    "gates": {
+      "gate_clean_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "outcome": "gate_pass",
+  "fingerprints": []
+}

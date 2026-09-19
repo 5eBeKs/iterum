@@ -1,0 +1,79 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "caveat_dropped_where_repeated",
+  "dataset": "orders",
+  "error": "The headline's caveat line no longer says net of refunds; only a sentence about the country table still does.",
+  "at": "2026-09-19T07:41:54+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "net of refunds.{0,160}(headline|CLM-NET-REVENUE|net revenue)",
+    "(headline|CLM-NET-REVENUE|net revenue).{0,160}net of refunds"
+  ],
+  "blocking_issues": 1,
+  "warnings": 13,
+  "checks": 17,
+  "issue_ids": [
+    "FINAL-REPORT-HEADLINE-CAVEAT-NET-OF-REFUNDS"
+  ],
+  "issue_texts": [
+    "FINAL-REPORT-HEADLINE-CAVEAT-NET-OF-REFUNDS | final_claude_redteam.card_local_caveats | final_claude_redteam|card_local_caveats|release/report.md|CLM-NET-REVENUE | RELEASE_INTEGRITY | MEDIUM | worker_release | release/report.md line 7 renders CLM-NET-REVENUE 35,741.52, and its caveat line 8 reads only 'delivered orders only; period boundaries are inclusive on both ends'. analysis/claim_register.js"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "This profile is deliberately single-vendor. The architect, four workers, five auditors and this red team are all the same Claude Opus model family, and an isolated context is not an independent vendor. A mistake the model is prone to can pass on both sides of every check. The only independent assura",
+    "Writes over raw_data and the frozen machinery were blocked for edit tools only, by permissions.deny in .claude/settings.json. The shell was never blocked, and permissions.allow is not a barrier at all. A changed raw file would be caught after the fact by the control lock on the next runner command, ",
+    "No deterministic rule in this run checks card-local caveats. gate_release_document caveats_rendered passed CLM-NET-REVENUE on release/report.md even though the headline's own caveat line lacks net-of-refunds; it evidently accepts the phrase from other claims' lines on the same surface. check_plan li",
+    "Every LLM result in this run carries a 'driver e2e' summary and a placeholder created_at of 2026-01-01T00:00:00Z. That covers the four workers, gate0_semantic and the four stage auditors. Their evidence notes files contain no computation, and each has a generic 'recomputed' check whose expected and ",
+    "The refund rate counts a customer as refunded when any refund_amount is above 0, and 21 of the 33 refunded delivered in-period orders are partial refunds (for example O00109: 13.08 of 26.15). If 'refunded' meant fully refunded, CLM-REFUND-RATE would be 12/57 = 0.210526 instead of 27/57 = 0.473684. T",
+    "The spec period ends 2025-03-30, not the calendar quarter end of 2025-03-31, yet R01, the exclusion reason 'outside the reported quarter' and the registry period name 2025-Q1-delivered all call it the quarter. This extract has no order dated 2025-03-31, so no number moves here. On any export with 31",
+    "The extract has no refund date, so net_of_refunds deducts every refund against its order's date. A refund issued after 2025-03-30 on a Q1 order is deducted from the Q1 net revenue of 35,741.52; a refund issued in Q1 on an earlier order is not. I could not establish how much of the 4,493.50 refund to",
+    "timezone_for_dates Europe/Warsaw cannot be exercised on this extract because order_date has no time or offset. If the source system writes dates in UTC rather than Warsaw local time, the boundary rows are the ones that could move: O00008, O00082 and O00198 (2025-01-01), O00064 (2025-03-30) and O0020",
+    "Apart from step_id and context_id, all four worker carries are identical. Their populations.definition says only status=delivered, without the period (the period is carried separately under periods), and none records per-claim caveats, so nothing in the carry chain would have kept the headline's net",
+    "The release surface gate evidence lists all 21 displayed numbers as bound across the three contracted surfaces, with no row cap, magnitude filter or blanket UNVERIFIED_CLAIM marker. It records no outcome for the contract reconciliations REC-COUNTRY-SUM and REC-REFUND-RATE, and none for the generator",
+    "Could not establish, and left for a human: whether the release generator src/release/build_release.py contains business-number literals (src/ is outside my inputs); whether the four worker carries pass audit/schemas/carry.schema.json (the schema is outside my inputs, so I checked context_id, attempt",
+    "In metrics/calculated_metrics.json, net_revenue has a field named numerator holding 40235.02, which is the gross sum rather than a numerator. It is not rendered anywhere, but a later stage reading it by name could misuse it.",
+    "The handoff has no drift_since_review. That does not prove the stage code's assumptions hold on this export, but I found no stage assumption contradicted by the current data."
+  ],
+  "summary": "FAIL on one blocker. My own recomputation from raw_data/orders.csv reproduces every published figure exactly: 174 delivered in-period orders; net revenue 35,741.52 EUR = PL 11,181.67 + DE 11,032.61 + CZ 13,527.24; refund rate 27/57 = 0.473684 on the paying_customers basis; row accounting 201 = 174 + 26 + 1. That is 78 of 79 cross-checks across clean data, metrics, claims, answers and all three release surfaces. The blocker: in release/report.md the net-revenue headline's own caveat line drops 'net of refunds'. The claim register declares that caveat and the dashboard card shows it. The phrase ",
+  "wall_seconds": 353.7,
+  "cost": {
+    "at": "2026-09-19T07:47:55.719005+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-0cdb94b85940",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-19T07:42:05.186048+00:00",
+    "finished_at": "2026-09-19T07:47:55.719005+00:00",
+    "wall_seconds": 350.531,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 52,
+    "cached_input_tokens": 2553261,
+    "output_tokens": 39010,
+    "total_tokens": 2592323,
+    "cost_usd": 3.5149375000000003
+  }
+}

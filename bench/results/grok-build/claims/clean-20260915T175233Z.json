@@ -1,0 +1,53 @@
+{
+  "profile": "grok-build",
+  "stage": "claims",
+  "case": "clean",
+  "error": "no defect planted (false-positive control)",
+  "at": "2026-09-15T17:43:28+00:00",
+  "max_v2_revision": "2a6f8dc",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "PASS",
+  "stop_code": null,
+  "outcome": "clean_pass",
+  "matched_signals": [],
+  "blocking_issues": 0,
+  "warnings": 2,
+  "checks": 20,
+  "issue_ids": [],
+  "warning_texts": [
+    "This gate's check_plan does not recompute R04 row accounting or the country-claim identity from source; both were recounted from raw_data/orders.csv and match (201 = 174 + 26 + 1, and 11181.67 + 11032.61 + 13527.24 = 35741.52).",
+    "Net revenue through 2025-03-31 equals the published headline because the export has no 2025-03-31 row; the register still declares 2025-03-30 as the spec requires, and dropping delivered order O00064 on 2025-03-30 changes net revenue to 35473.34, so the inclusive end bound is the one actually used."
+  ],
+  "summary": "Independent raw recalc from raw_data/orders.csv matches all five claims: net revenue 35741.52 EUR, refund rate 0.473684 on 27/57 paying customers, and country nets PL 11181.67 + DE 11032.61 + CZ 13527.24. Populations and the inclusive 2025-01-01..2025-03-30 period are the ones actually used; independent_claim_recalc.json is rooted only in raw_data/orders.csv; R01-R04 answers match and R05 is excused.",
+  "wall_seconds": 538.6,
+  "cost": {
+    "at": "2026-09-15T17:52:30.273343+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-d203107ef808",
+    "agent_role": "grok-audit-claims",
+    "started_at": "2026-09-15T17:43:39.359333+00:00",
+    "finished_at": "2026-09-15T17:52:30.273343+00:00",
+    "wall_seconds": 530.922,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 542246,
+    "cached_input_tokens": 918272,
+    "output_tokens": 27308,
+    "total_tokens": 1487826,
+    "cost_usd": 0.58054184
+  }
+}

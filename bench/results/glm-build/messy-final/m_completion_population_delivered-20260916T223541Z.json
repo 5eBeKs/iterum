@@ -1,0 +1,81 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "m_completion_population_delivered",
+  "dataset": "messy",
+  "error": "The direct completion rate says its population is delivered orders, over which a completion rate is always 1.",
+  "at": "2026-09-16T21:52:28+00:00",
+  "max_v2_revision": "fa38876",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "CLM-COMPLETION-DIRECT",
+    "population",
+    "delivered",
+    "denominator|cancel|always|trivial|1\\.0|100 ?%"
+  ],
+  "blocking_issues": 2,
+  "warnings": 11,
+  "checks": 15,
+  "issue_ids": [
+    "GLMRT-COMPL-POP-REGISTER",
+    "GLMRT-COMPL-POP-SURFACE"
+  ],
+  "issue_texts": [
+    "GLMRT-COMPL-POP-REGISTER | final_redteam.claim_population_contradicts_n | final_glm_redteam|population_declared_delivered|analysis/claim_register.json|CLM-COMPLETION-DIRECT | METRIC_DEFINITION | HIGH | worker_analysis | analysis/claim_register.json, claim CLM-COMPLETION-DIRECT: population 'orders placed inside the quarter, one row per order, delivered, channel = direct' with n = 24597. Independent",
+    "GLMRT-COMPL-POP-SURFACE | final_redteam.page_population_contradicts_cards | final_glm_redteam|page_population_contradicts_cards|release/report.md|line-3-population | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3: 'Population: orders placed inside the quarter, one row per order, delivered only.' - rendered by src/release/build_release.py line 62 (f\"Population: {revenue['popul"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "Every worker and gate-auditor result in this run (worker_*, gate0_semantic, gate_clean/metrics/claims/release_auditor) is a bench stub: model 'openrouter/z-ai/glm-5.3-flash-fake', a single recomputed check of 0.473684 that matches nothing in this dataset, created_at 2026-01-01 - these PASSes carry n",
+    "The wording gate (gate_release_document wording_matches_claims) is vacuous here: its evidence says no word of its dictionary appears on any surface, so no wording was compared - which is the hole the population fault walked through untouched by any deterministic rule.",
+    "All four worker carry files (audit/checkpoints/*.carry.json) describe a period '2025-Q1-delivered' (2025-01-01..2025-03-30) and a 'refund rate per paying customer' that exist nowhere in this dataset's artifacts; they contradict the spec period 2026-01-01..2026-03-31 and look like fixture noise, and ",
+    "MODEL_MISMATCH is unverifiable in this CLI: no output event names the model, so 'this run executed on openrouter/z-ai/glm-5.3-flash' is confirmed by nothing except each stage's own self-report, and my own report is no exception (recorded in the launcher Capabilities).",
+    "This profile is deliberately single-vendor: architect, four workers, five auditors and this gate are one model family, so the chain of PASSes is not independent review; the deterministic layer (frozen check plan, machine gates, release surface gate) plus this stage's own recalc is all the verdict ac",
+    "Hypothesis results (two_proportion_z 26.718455, Welch t 42.699880, both p numerically zero, Cohen d 0.486900) are published only in analysis/answers/R03.json and R04.json, never on a release surface - by the register's documented design (a kind:test claim cannot pass the claims gate today), so a rea",
+    "shipping_total 37792722.50 stays unpublished by name and correctly absent from all surfaces: 2648 of 44531 in-population orders (5.9 percent) have blank/NaN/inf shipping cells treated as zero, so the sum understates itself by an unbounded amount; the raw column census (29237 plain incl. 3704 EUR-suf",
+    "values_preserved machine-checks only the five columns whose names survive the rename; customer_id, order_date and country are checked by no rule, so I checked all 44531 clean rows against quarantine myself: full equality holds, including the four date notations parsed independently (25326 plain ISO,",
+    "The release contract excludes 'n = [0-9]+' and '0.95 interval' from render-role binding by design; I verified each printed n against its claim's own n and the level against the frozen plan's 0.95 - both hold, and min_group_size 400 is satisfied by the smallest published n (12055).",
+    "None of the five RESOLVED human decisions looks wrong on the data, and none moves a number incorrectly; the strongest direct evidence is the 0 month-mismatch result for the month-first slashed-date decision over all 45917 rows - a day-first reading would have disagreed with order_month on part of th",
+    "What I could not establish: I did not read raw_data/orders.csv (the comment column is quarantined from me by design), so the free-text-leak check rests on the machine gate's value-level sample plus my instruction-phrase sweep over release surfaces, register, answers, metrics and the clean table (0 h"
+  ],
+  "summary": "Independent recalc (own code, from quarantine, not stage code) confirms every published number: population arithmetic 45917 raw rows = 45000 orders - 459 outside quarter - 10 negative-refund = 44531 = clean table = orders card; net revenue 3023296.61 = 1971306.75 + 1051989.86; Wilson/Student intervals reproduce the gate's full-precision bounds (z=1.9599639845400545, t(df=17817)=1.9600971399297502); all 42 rendered strings reproduce from my formatter; denominators keep cancelled+pending (direct 24597 = 17818+3322+3457, partner 19934 = 12055+3845+4034); both frozen-plan tests executed as registe",
+  "wall_seconds": 2573.4,
+  "cost": {
+    "at": "2026-09-16T22:35:39.784437+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-6f4fe12ba8a6",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-16T21:52:49.831441+00:00",
+    "finished_at": "2026-09-16T22:35:39.779891+00:00",
+    "wall_seconds": 2569.954,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 411444,
+    "cached_input_tokens": 4022080,
+    "output_tokens": 30447,
+    "total_tokens": 4496972,
+    "cost_usd": 0.12855989999999998
+  }
+}

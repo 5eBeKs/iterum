@@ -1,0 +1,74 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "m_dashboard_aov_labelled_revenue",
+  "dataset": "messy",
+  "error": "On the dashboard the direct average order value card is labelled revenue.",
+  "at": "2026-09-19T07:26:08+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "Revenue Direct",
+    "label",
+    "aov|average order"
+  ],
+  "blocking_issues": 4,
+  "warnings": 6,
+  "checks": 19,
+  "issue_ids": [
+    "REL-AUD-DASH-AOV-LABEL",
+    "REL-AUD-REPORT-POPULATION-LINE",
+    "REL-AUD-AOV-CAVEATS",
+    "REL-AUD-DASH-ESTIMATE-CONTEXT"
+  ],
+  "issue_texts": [
+    "REL-AUD-DASH-AOV-LABEL | gate_release_auditor.dashboard_label_matches_metric | gate_release_auditor|label_matches_metric|release/dashboard_data.json|CLM-AOV-DIRECT | VISUALIZATION | HIGH | worker_release | release/dashboard_data.json $.cards[4].label is 'Revenue Direct', but the card carries CLM-AOV-DIRECT, whose metric_ids are aov_direct (formula SUM(net_amount)/COUNT(orders) WHERE delivered), wi",
+    "REL-AUD-REPORT-POPULATION-LINE | gate_release_auditor.population_beside_each_figure | gate_release_auditor|population_beside_figure|release/report.md|page_population_line | VISUALIZATION | HIGH | worker_release | release/report.md line 3 gives one population for the whole page: orders placed inside the quarter, one row per order, 'delivered only'. The generator copies it from CLM-NET-REVENUE.popul",
+    "REL-AUD-AOV-CAVEATS | gate_release_auditor.aov_caveats_rendered | gate_release_auditor|caveat_beside_figure|analysis/claim_register.json|CLM-AOV-net_of_refunds_delivered_only | CLAIM_SUPPORT | MEDIUM | worker_analysis | The CLM-AOV-DIRECT and CLM-AOV-PARTNER caveats in analysis/claim_register.json are only 'one quarter of orders in this channel' and the sampling-interval sentence. So report.md lin",
+    "REL-AUD-DASH-ESTIMATE-CONTEXT | gate_release_auditor.dashboard_estimate_n_level_population | gate_release_auditor|estimate_rendering|release/dashboard_data.json|estimate_cards | VISUALIZATION | MEDIUM | worker_release | release/dashboard_data.json cards 2-5 (CLM-COMPLETION-DIRECT/PARTNER, CLM-AOV-DIRECT/PARTNER) carry value, ci_low and ci_high. None carries n (claims give 24597, 19934, 17818, 1205"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "Both release gates passed release/dashboard_data.json even though the direct AOV card is labelled as revenue: release_surface_gate checks numbers and their bindings only, and gate_release_document checks caveat text only, so no machine rule reads card labels.",
+    "audit/release_surface_contract.json declares reconciliations, card_caveat_requirements and visual_evidence as empty lists, and gate_release_document runs claims_rendered only over report.md. So the dashboard's labels, per-card population, n and level, and every cross-figure identity, are checked by ",
+    "gate_release_document's caveats_rendered passed both AOV claims on both surfaces because the frozen check plan requires only the channel-population and sampling-interval topics for AOV. The 'net of refunds' and 'delivered orders only' caveats the release addition asks for were never a machine requir",
+    "Both p values are shown as 0.0000 on the report and dashboard, which reads as a p of exactly zero. The recomputed two-sided p for the completion z test is about 3e-157, so a display such as '< 0.0001' would state it honestly.",
+    "The dashboard's two test cards show p, effect and statistic with no hypothesis id, method, alpha or correction, so a dashboard reader cannot tell which registered comparison the figures belong to.",
+    "The Welch t and Cohen's d for H-CHANNEL-AOV could only be checked approximately from the rounded Student intervals (42.62 vs registry 42.70; 0.4854 vs 0.4869); the gap is consistent with cent rounding, but an exact check needs the clean table, which is outside this stage's inputs."
+  ],
+  "summary": "All 60 rendered numbers across report.md, dashboard_data.json and the manifest trace exactly to their claim, role and display_digits, and every reconciliation identity holds when recomputed from the registries (orders 24597+19934=44531; net revenue = AOV numerators 1971306.75+1051989.86=3023296.61; Wilson bounds and the z statistic reproduce exactly). The release still fails on what the reader sees. (1) The dashboard card for CLM-AOV-DIRECT is labelled 'Revenue Direct', so an average order value of 110.64 EUR reads as channel revenue. The generator's own rule gives 'Aov Direct', which means th",
+  "wall_seconds": 231.2,
+  "cost": {
+    "at": "2026-09-19T07:30:03.149340+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-1ec424ea468d",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-19T07:26:15.531904+00:00",
+    "finished_at": "2026-09-19T07:30:03.149340+00:00",
+    "wall_seconds": 227.625,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 26,
+    "cached_input_tokens": 1176753,
+    "output_tokens": 23533,
+    "total_tokens": 1200312,
+    "cost_usd": 2.265864
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "population_line_wrong",
+  "dataset": "orders",
+  "error": "The page's population line says all orders; every figure is over delivered orders.",
+  "at": "2026-09-16T16:28:02+00:00",
+  "max_v2_revision": "05bbc25",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "all orders"
+  ],
+  "blocking_issues": 1,
+  "warnings": 10,
+  "checks": 31,
+  "issue_ids": [
+    "FINAL-RELEASE-POPULATION-STATEMENT"
+  ],
+  "issue_texts": [
+    "FINAL-RELEASE-POPULATION-STATEMENT | final_claude_redteam.release_population_statement | final_claude_redteam|release_population_statement|release/report.md|population | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3, read as text without HTML comments, gives the population as all orders inside the period. audit/audit_spec.yaml population.name is delivered orders inside the p"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "No rule in audit/check_plan.json reads the prose of release/report.md (title, population statement, closing sentence) or the population and period text fields of analysis/claim_register.json and metrics/calculated_metrics.json, so the one defect in this release sat wholly outside machine coverage an",
+    "audit/check_plan.json lists claims_rendered and caveats_rendered on gate_release_document as accepted_unproven because the proof harness crashed with a missing-file error, so those two release rules were never shown to fire on a broken release, yet gate0_machine plan_proven reports zero accepted-unp",
+    "The five LLM auditor results (gate0_semantic, gate_clean_auditor, gate_metrics_auditor, gate_claims_auditor, gate_release_auditor) have one-line evidence notes with no recomputation, placeholder summaries and a created_at of 2026-01-01T00:00:00Z that predates this run's dispatch, so their PASS verdi",
+    "All four worker results carry the same placeholder shape: a single check claiming to have recomputed the refund rate 0.473684 (including worker_clean, which computes no rate), no disclosures field, only src/ scripts listed as artifacts, and created_at 2026-01-01T00:00:00Z, so nothing in them describ",
+    "The four worker carries pass the carry schema and their context_id and attempt match each stage's execution block, but they are identical apart from step_id and context_id, record no stage-specific fact (not worker_clean's 26 not-delivered and 1 outside-period exclusions, not the is_refunded flag, n",
+    "The spec's period ends 2025-03-30 while the spec's own exclusion reason and the metrics period name call it the reported quarter and 2025-Q1, whose calendar end is 2025-03-31; this export has no row dated 2025-03-31, so the 174 rows and 35,741.52 EUR do not move today, but the risk register's 2025-0",
+    "refund_rate_basis=paying_customers is the ruling that moves the most visible number: on this data the published rate is 0.473684 (27 of 57 customers) against 0.189655 (33 of 174 delivered rows) on order rows, a 2.50x gap rather than the roughly threefold gap the spec comment asserts, and 21 of the 3",
+    "revenue_recognition=net_of_refunds deducts refunds in the period of the order_date because the export has no refund date, so any refund issued after the quarter on a Q1 order still lowers Q1 net revenue; the published 35,741.52 EUR is 4,493.50 EUR below gross 40,235.02 EUR and neither release surfac",
+    "timezone_for_dates is recorded as RESOLVED (Europe/Warsaw), but order_date carries no time or offset, so the ruling has nothing to act on, moves no number and does not appear on either release surface; it is effectively not applicable rather than resolved.",
+    "metrics/calculated_metrics.json stores the gross sum 40235.02 in the numerator field of net_revenue without saying it is gross; it is shown on no surface, but a later stage reading numerator as a component of the net figure would take gross for net."
+  ],
+  "summary": "FAIL on one material release defect: release/report.md line 3 states the population as all orders inside the period, while audit_spec.yaml, the claim register, the metrics registry, the report's own title and caveats, and the worker_release carry all say delivered orders inside the period; read literally that frame covers 200 rows and 41,881.34 EUR, not the 174 rows behind the published 35,741.52 EUR. Every number is right: net revenue 35741.52, refund rate 0.473684 (27/57), PL 11181.67, DE 11032.61, CZ 13527.24 and the row accounting 201 = 174 + 26 + 1 were recomputed from raw_data/orders.csv",
+  "wall_seconds": 371.2,
+  "cost": {
+    "at": "2026-09-16T16:34:21.062218+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-0cdb94b85940",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-16T16:28:12.428951+00:00",
+    "finished_at": "2026-09-16T16:34:21.062218+00:00",
+    "wall_seconds": 368.641,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 66,
+    "cached_input_tokens": 3849577,
+    "output_tokens": 42360,
+    "total_tokens": 3892003,
+    "cost_usd": 4.624445500000001
+  },
+  "rescored_at": "2026-09-16T20:47:27+00:00"
+}

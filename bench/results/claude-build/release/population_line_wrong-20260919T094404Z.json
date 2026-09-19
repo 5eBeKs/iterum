@@ -1,0 +1,66 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "population_line_wrong",
+  "dataset": "orders",
+  "error": "The page's population line says all orders; every figure is over delivered orders.",
+  "at": "2026-09-19T09:41:39+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "all orders"
+  ],
+  "blocking_issues": 1,
+  "warnings": 5,
+  "checks": 27,
+  "issue_ids": [
+    "REL-AUD-POPULATION-LINE"
+  ],
+  "issue_texts": [
+    "REL-AUD-POPULATION-LINE | gate_release_auditor.population_statement | gate_release_auditor|population_statement|release/report.md|report_header | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3 is the only population statement on the page. It says the population is all orders inside the period and does not name the delivered-status filter (evidence/release_recheck.json, text_f"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "release/report.md line 3 gives the population as all orders inside the period, but the spec, the title and the claim caveats all say delivered orders only. A reader could take net revenue and the refund-rate denominator as covering cancelled and pending orders.",
+    "Neither release gate reads free text outside the claim anchors: gate_release_document checks only that each claim and its caveats are present, and the surface gate checks only numbers. A wrong population, period or basis sentence elsewhere on the page therefore passes both gates.",
+    "This step could not verify the release generator literal scan (src/release/build_release.py): the file is outside the input globs, and release_surface_gate.json records no generator-literal result. Nothing in this step's evidence shows that no business number is hard-coded in the generator.",
+    "The refund-rate line 'Numerator: 27 of 57' does not name its unit next to the numbers. The paying-customer basis is stated only in the caveat line above, and there in the snake_case token 'paying_customers' rather than in plain words.",
+    "The report states neither the timezone ruling (Europe/Warsaw) nor the net_of_refunds recognition ruling as a ruling. Only the 'net of refunds' caveat is shown."
+  ],
+  "summary": "All 21 rendered numbers on the three release surfaces match the claim register and display_digits exactly. The country sum (35741.52), the refund-rate ratio (27/57 = 0.473684) and the row accounting (174+26+1 = 201) reconcile. One blocker remains: report.md line 3 tells the reader the population is 'all orders inside the period'. The spec population is delivered orders only, and the report's own title and card caveats say the same, so the page contradicts itself, and neither machine gate checks that line. The release generator literal scan was not checked, because src/release/** is outside thi",
+  "wall_seconds": 139.9,
+  "cost": {
+    "at": "2026-09-19T09:44:03.205980+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-b0dc8f415661",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-19T09:41:46.450358+00:00",
+    "finished_at": "2026-09-19T09:44:03.205980+00:00",
+    "wall_seconds": 136.75,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 26,
+    "cached_input_tokens": 838431,
+    "output_tokens": 15821,
+    "total_tokens": 854278,
+    "cost_usd": 1.4550375000000002
+  }
+}

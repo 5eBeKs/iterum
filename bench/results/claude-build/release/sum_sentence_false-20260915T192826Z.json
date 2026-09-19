@@ -1,0 +1,63 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "sum_sentence_false",
+  "error": "The page says the country figures sum to the headline before refunds; both are net of refunds.",
+  "at": "2026-09-15T19:23:54+00:00",
+  "max_v2_revision": "1d34cf0",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "before refunds",
+    "net of refunds",
+    "sum"
+  ],
+  "blocking_issues": 1,
+  "warnings": 6,
+  "checks": 27,
+  "issue_ids": [
+    "REL-AUD-COUNTRY-SUM-SENTENCE-FALSE"
+  ],
+  "warning_texts": [
+    "release/report.md line 22 says the country figures add up to the headline before refunds, but per the registry they add up to net revenue after refunds (35741.52); the pre-refund total is 40235.02, so the only reader-visible reconciliation sentence contradicts the 'net of refunds' caveat under each ",
+    "Both release gates passed with that false sentence on the page, because audit/check_plan.json has no rule that reads prose assertions in the report, only anchored numbers, claim presence and caveat strings.",
+    "Neither release gate records a numeric recompute in its checks.json: gate_release_machine has only release_surface_gate.json (registry-equality binding), and gate_release_document has presence checks only, so this auditor's recompute is the only arithmetic check at the release stage.",
+    "release/dashboard_data.json shows the three country cards and the headline card but says nothing about them reconciling, so a dashboard reader can't see that they add up to the headline.",
+    "In release/report.md line 11 the refund-rate numerator and denominator are shown as a bare '27 of 57' with no unit; that they count paying customers is stated only in the caveat line above.",
+    "metrics/calculated_metrics.json names the period '2025-Q1-delivered' while the period frozen in audit_spec.yaml ends on 2025-03-30, not 2025-03-31, so any label calling it the quarter implies a day the population excludes."
+  ],
+  "summary": "All 21 rendered numbers on report.md, dashboard_data.json and the manifest match the registry at their display precision, country figures sum to net_revenue (35741.52), refund_rate recomputes as 27/57 = 0.473684, caveats are visible and no UNVERIFIED_CLAIM marker exists; but release/report.md line 22 tells the reader the country figures add up to the headline before refunds, which is false (before refunds the total is 40235.02), so the one reader-visible statement of the reconciliation contradicts the numbers and caveats beside it.",
+  "wall_seconds": 263.2,
+  "cost": {
+    "at": "2026-09-15T19:28:23.776026+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-b0dc8f415661",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-15T19:24:06.064339+00:00",
+    "finished_at": "2026-09-15T19:28:23.776026+00:00",
+    "wall_seconds": 257.703,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 258,
+    "cached_input_tokens": 615644,
+    "output_tokens": 22450,
+    "total_tokens": 638352,
+    "cost_usd": 1.499357
+  }
+}

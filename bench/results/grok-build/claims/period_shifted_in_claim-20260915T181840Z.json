@@ -1,0 +1,60 @@
+{
+  "profile": "grok-build",
+  "stage": "claims",
+  "case": "period_shifted_in_claim",
+  "error": "One country claim carries a two-month period while its value is the full quarter's.",
+  "at": "2026-09-15T18:10:55+00:00",
+  "max_v2_revision": "d6a41ff",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "period",
+    "02-28",
+    "CLM-NET-CZ"
+  ],
+  "blocking_issues": 1,
+  "warnings": 3,
+  "checks": 23,
+  "issue_ids": [
+    "CLM-NET-CZ-PERIOD-SHIFTED"
+  ],
+  "warning_texts": [
+    "The claims machine gate recomputes CLM-NET-CZ with check_plan order_date between 2025-01-01 and 2025-03-30 and never reads the claim period field, so its PASS does not certify that field.",
+    "audit/check_plan.json has no deterministic rule that a claim period must equal the spec population window, so that field is only judged here.",
+    "analysis/answers/R03.json treats CLM-NET-CZ as a country component of headline net revenue, which is numerically true only on the spec window, not on the period the claim declares."
+  ],
+  "summary": "CLM-NET-CZ publishes 13527.24, which is delivered CZ net on the spec window 2025-01-01..2025-03-30, but its period field is 2025-01-01..2025-02-28; independent raw recalc of that declared window is 9248.36. The other four claims match spec period and spec-window raw recalc; the claims machine gate never reads claim.period.",
+  "wall_seconds": 455.1,
+  "cost": {
+    "at": "2026-09-15T18:18:39.715370+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-01bb98709072",
+    "agent_role": "grok-audit-claims",
+    "started_at": "2026-09-15T18:11:11.162838+00:00",
+    "finished_at": "2026-09-15T18:18:39.715370+00:00",
+    "wall_seconds": 448.547,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 114271,
+    "cached_input_tokens": 1745920,
+    "output_tokens": 27301,
+    "total_tokens": 1887492,
+    "cost_usd": 0.43020472
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "sum_sentence_false",
+  "dataset": "orders",
+  "error": "The page says the country figures sum to the headline before refunds; both are net of refunds.",
+  "at": "2026-09-19T06:57:12+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "before refunds",
+    "net of refunds",
+    "sum"
+  ],
+  "blocking_issues": 2,
+  "warnings": 5,
+  "checks": 16,
+  "issue_ids": [
+    "REL-AUD-001",
+    "REL-AUD-002"
+  ],
+  "issue_texts": [
+    "REL-AUD-001 | gate_release_auditor.reconciliation_statement_true | gate_release_auditor|reconciliation_statement_true|release/report.md|REC-COUNTRY-SUM | CLAIM_SUPPORT | HIGH | worker_release | release/report.md line 22 (the sentence under 'Net revenue by country') says the country figures reconcile to the headline on a pre-refund basis. evidence/recompute_release.json: net PL+DE+CZ = 35741.52 = n",
+    "REL-AUD-002 | gate_release_auditor.generator_reproduces_surface | gate_release_auditor|generator_reproduces_surface|release/report.md|generator_output | RELEASE_INTEGRITY | HIGH | worker_release | evidence/regenerate_release.py ran the frozen src/release/build_release.py with its three output paths redirected to evidence/regenerated/, then diffed each output against release/. dashboard_data.json a"
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "Both release gates passed a report that carries a false reconciliation sentence: gate_release_machine binds numbers only and gate_release_document checks only that claims and caveats are present, so no deterministic rule covers prose assertions or whether the surfaces match the generator's output.",
+    "audit/check_plan.json lists both gate_release_document rules (claims_rendered, caveats_rendered) under accepted_unproven, because the plan proof failed with a FileNotFoundError, so those two gates were never shown to fire on a broken release.",
+    "release_surface_contract.json declares reconciliations REC-COUNTRY-SUM and REC-REFUND-RATE, but gate_release_machine's evidence records no per-reconciliation result, so its PASS does not show that either identity was evaluated; I verified both independently and both hold (35,741.52; 27/57 = 0.473684",
+    "dashboard_data.json keeps the period only as a top-level field and not on each card, so a card rendered on its own shows 'delivered orders inside the period' without saying which period; card_caveat_requirements in the release contract is empty and does not require it.",
+    "Read on the order-row basis, the refund rate would be 33/174 = 0.189655 instead of the 0.473684 published on the paying-customer basis; the page states the paying_customers denominator next to the figure on both surfaces, and that line needs to stay there."
+  ],
+  "summary": "All 21 rendered numbers on release/report.md, release/dashboard_data.json and release/release_number_manifest.json match my independent recompute from raw_data/orders.csv exactly (net revenue 35,741.52; refund rate 0.473684 = 27/57 paying customers; PL 11,181.67, DE 11,032.61, CZ 13,527.24; country sum = headline). Two blockers remain. First, report.md line 22 states a reconciliation that is false: it says the country figures sum to the headline before refunds are taken off. The country figures are net and sum to the net headline 35,741.52; the pre-refund total would be 40,235.02. Second, the ",
+  "wall_seconds": 174.9,
+  "cost": {
+    "at": "2026-09-19T07:00:10.855777+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-b0dc8f415661",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-19T06:57:19.156057+00:00",
+    "finished_at": "2026-09-19T07:00:10.855777+00:00",
+    "wall_seconds": 171.703,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 38,
+    "cached_input_tokens": 1393949,
+    "output_tokens": 18418,
+    "total_tokens": 1412405,
+    "cost_usd": 1.9040960000000005
+  }
+}

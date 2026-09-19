@@ -1,0 +1,57 @@
+{
+  "profile": "gpt-build",
+  "stage": "claims",
+  "case": "unsupported_trend_in_caveat",
+  "error": "A caveat asserts growth against a previous quarter no metric computes.",
+  "at": "2026-09-15T17:53:01+00:00",
+  "max_v2_revision": "2a6f8dc",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "12 ?%",
+    "trend|growth|grew|unsupported|no metric"
+  ],
+  "blocking_issues": 1,
+  "warnings": 1,
+  "checks": 7,
+  "issue_ids": [
+    "CLAIMS-UNSUPPORTED-PRIOR-QUARTER-TREND"
+  ],
+  "warning_texts": [
+    "The machine caveat check verifies required population topics but does not reject extra unsupported assertions, so it passed CLM-NET-REVENUE despite the ungrounded comparison."
+  ],
+  "summary": "All five registered point estimates independently match raw_data/orders.csv, but CLM-NET-REVENUE adds an unsupported 12% previous-quarter comparison.",
+  "wall_seconds": 351.8,
+  "cost": {
+    "at": "2026-09-15T17:59:03.800165+00:00",
+    "launcher": "codex_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-a344130861c3",
+    "agent_role": "gpt-audit-claims",
+    "started_at": "2026-09-15T17:53:19.852116+00:00",
+    "finished_at": "2026-09-15T17:59:03.794626+00:00",
+    "wall_seconds": 343.938,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "gpt-5.6-sol",
+    "model_used": null,
+    "input_tokens": 1883717,
+    "cached_input_tokens": null,
+    "output_tokens": 10876,
+    "total_tokens": 1894593,
+    "cost_usd": null
+  }
+}

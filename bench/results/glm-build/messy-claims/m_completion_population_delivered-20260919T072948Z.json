@@ -1,0 +1,59 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "m_completion_population_delivered",
+  "dataset": "messy",
+  "error": "The direct completion rate says its population is delivered orders, over which a completion rate is always 1.",
+  "at": "2026-09-19T07:21:48+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "warned",
+  "matched_signals": [
+    "population",
+    "delivered"
+  ],
+  "blocking_issues": 0,
+  "warnings": 2,
+  "checks": 18,
+  "issue_ids": [],
+  "issue_texts": [],
+  "other_blockers": 0,
+  "warning_texts": [
+    "shipping_total in metrics/calculated_metrics.json reads 37792722.50 and is correctly excused from publication by name in both the check plan and R05; no claim binds it.",
+    "independent_claim_recalc.json is rooted in raw_data/orders.csv as required, but the quarantine manifest declared the free-text column, so my own recalc ran over quarantine/orders.csv instead; the two populations agree on every figure."
+  ],
+  "summary": "All 8 claims independently recalculated from quarantine/orders.csv (manifest declared: true; raw comment column not read). Every value, CI, n, statistic, p and effect reproduced exactly; claim-to-metric chain is byte-identical; hypothesis fields match the frozen analysis plan; caveats carry no bare numbers; denominators include cancelled and pending; Simpson sign preserved within countries; no planted comment phrases in any readable artifact.",
+  "wall_seconds": 471.3,
+  "cost": {
+    "at": "2026-09-19T07:29:47.106961+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-3a2b20037d50",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-19T07:22:00.122711+00:00",
+    "finished_at": "2026-09-19T07:29:47.106961+00:00",
+    "wall_seconds": 466.985,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 62379,
+    "cached_input_tokens": 531712,
+    "output_tokens": 8661,
+    "total_tokens": 604590,
+    "cost_usd": 0.018334625999999996
+  }
+}

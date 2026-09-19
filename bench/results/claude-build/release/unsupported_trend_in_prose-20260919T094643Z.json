@@ -1,0 +1,66 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "unsupported_trend_in_prose",
+  "dataset": "orders",
+  "error": "The page says revenue grew through the quarter; no monthly figure exists in the audit.",
+  "at": "2026-09-19T09:44:06+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "grew|growth|trend|strongest month|March",
+    "unsupported|no (metric|claim|figure)"
+  ],
+  "blocking_issues": 2,
+  "warnings": 3,
+  "checks": 14,
+  "issue_ids": [
+    "REL-AUD-UNSUPPORTED-TREND",
+    "REL-AUD-REPORT-NOT-GENERATED"
+  ],
+  "issue_texts": [
+    "REL-AUD-UNSUPPORTED-TREND | gate_release_auditor.no_unsupported_claims | gate_release_auditor|no_unsupported_claims|release/report.md|monthly_trend_prose | CLAIM_SUPPORT | HIGH | worker_release | release/report.md line 24 claims revenue grew steadily through the quarter and names March as the strongest month. The line has no claim anchor. No monthly metric exists in metrics/calculated_metrics.json",
+    "REL-AUD-REPORT-NOT-GENERATED | gate_release_auditor.generator_reproduces_surface | gate_release_auditor|generator_reproduces_surface|release/report.md|full_file | RELEASE_INTEGRITY | HIGH | worker_release | I ran the frozen src/release/build_release.py against a copy of analysis/claim_register.json in a scratch directory (evidence/recompute_release.py, generator_reproduces). dashboard_data.json an"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "release/report.md line 24 prints a monthly revenue trend and a strongest month with no claim behind them; the direction matches raw net amounts today, but nothing in the pipeline would catch it once it stops being true.",
+    "No deterministic rule in audit/check_plan.json inspects release prose for unregistered assertions: release_surface_gate only sees numbers, and claims_rendered/caveats_rendered only confirm that registered claims and caveats are present, so a digit-free analytical sentence passes every machine gate.",
+    "gate_release_document's claims_rendered and caveats_rendered are both listed under accepted_unproven in audit/check_plan.json because prove_plan failed to run them (FileNotFoundError), so those two rules were never shown to fire on a broken release."
+  ],
+  "summary": "All 7 numbers on report.md and every value on the dashboard and manifest check out: each is bound to its claim and role, matches display_digits, and agrees with my own recompute from raw_data (net revenue 35741.52, PL/DE/CZ summing to it, refund rate 27/57 = 0.473684 on paying customers). Every figure has its caveats on the same card. The release still fails. report.md line 24 makes a month-over-month revenue trend claim that has no claim_id, no metric, no question and no caveats behind it, and the frozen generator src/release/build_release.py does not emit that line, so the published report.m",
+  "wall_seconds": 152.7,
+  "cost": {
+    "at": "2026-09-19T09:46:42.494215+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-b0dc8f415661",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-19T09:44:12.974997+00:00",
+    "finished_at": "2026-09-19T09:46:42.494215+00:00",
+    "wall_seconds": 149.531,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 36,
+    "cached_input_tokens": 1265829,
+    "output_tokens": 15902,
+    "total_tokens": 1281767,
+    "cost_usd": 1.6932885000000004
+  }
+}

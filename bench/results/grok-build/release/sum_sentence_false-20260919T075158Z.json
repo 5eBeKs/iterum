@@ -1,0 +1,66 @@
+{
+  "profile": "grok-build",
+  "stage": "release",
+  "case": "sum_sentence_false",
+  "dataset": "orders",
+  "error": "The page says the country figures sum to the headline before refunds; both are net of refunds.",
+  "at": "2026-09-19T07:39:44+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "before refunds",
+    "net of refunds",
+    "sum"
+  ],
+  "blocking_issues": 1,
+  "warnings": 4,
+  "checks": 39,
+  "issue_ids": [
+    "REL-COUNTRY-SUM-SENTENCE"
+  ],
+  "issue_texts": [
+    "REL-COUNTRY-SUM-SENTENCE | gate_release_auditor.country_sum_sentence | gate_release_auditor|country_sum_identity|release/report.md|REC-COUNTRY-SUM | RELEASE_INTEGRITY | CRITICAL | worker_release | release/report.md line 22, visible to the reader, states that country figures sum to the headline before refunds are taken off. Independent recompute: PL+DE+CZ = 35741.52 = net_revenue, and gross-before-"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The frozen check plan for this stage has no deterministic rule for the country-sum identity sentence; gate_release_machine binds rendered numbers and gate_release_document only runs claims_rendered and caveats_rendered, so the false sentence had no machine comparison.",
+    "claims_rendered and caveats_rendered are listed under accepted_unproven in audit/check_plan.json because the Gate 0 prove-plan sandbox lacked analysis/claim_register.json; those rules still ran at this stage and passed, but they do not cover prose identities.",
+    "release/dashboard_data.json shows the four money cards and does not state that the country cards sum to headline net_revenue; a reader of the dashboard is not told the identity, true or false.",
+    "src/release/build_release.py currently emits the true identity sentence, so the published report.md is not the generator's current output."
+  ],
+  "summary": "Displayed numbers match the claim register and an independent raw recompute (net_revenue 35741.52, PL 11181.67, DE 11032.61, CZ 13527.24, refund rate 0.473684 = 27/57 paying customers). Country components sum to headline net_revenue, not to gross 40235.02. release/report.md nevertheless tells the reader that country figures sum to the headline before refunds. That visible identity is false. Machine and document gates both PASS because they do not check the sentence. No surface was skipped. No UNVERIFIED_CLAIM. Caveats sit on the same cards, including paying_customers on the refund-rate card.",
+  "wall_seconds": 728.7,
+  "cost": {
+    "at": "2026-09-19T07:51:57.325628+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-50e2139f4848",
+    "agent_role": "grok-audit-release",
+    "started_at": "2026-09-19T07:39:51.675416+00:00",
+    "finished_at": "2026-09-19T07:51:57.325628+00:00",
+    "wall_seconds": 725.656,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 267644,
+    "cached_input_tokens": 2424064,
+    "output_tokens": 41838,
+    "total_tokens": 2733546,
+    "cost_usd": 0.67943832
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "population_relabelled",
+  "error": "The headline claim says its population is all orders, while the spec and its own caveats say delivered orders.",
+  "at": "2026-09-15T17:45:33+00:00",
+  "max_v2_revision": "2a6f8dc",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "all orders",
+    "CLM-NET-REVENUE"
+  ],
+  "blocking_issues": 1,
+  "warnings": 2,
+  "checks": 14,
+  "issue_ids": [
+    "CLAIMS-AUD-POPULATION-LABEL-NET-REVENUE"
+  ],
+  "warning_texts": [
+    "No rule in audit/check_plan.json compares a claim's declared population field with the population it is computed on: claims_recomputed hardcodes the delivered filter in the plan and caveats_declared only searches caveat text, so gate_claims_machine passed CLM-NET-REVENUE while its population label d",
+    "CLM-NET-REVENUE is internally inconsistent: its population field says all orders inside the period while its caveats say delivered orders only, so a release that renders both would tell the reader two different populations for one figure."
+  ],
+  "summary": "All five claim values recompute exactly from raw_data/orders.csv and agree with the metrics registry and gate_claims_machine, whose recalc is rooted only in raw_data/. But CLM-NET-REVENUE declares its population as all orders inside the period, while it is computed on delivered orders only (the all-orders reading gives 41881.34, not 35741.52), which contradicts its own metric and caveats. Blocker for worker_analysis.",
+  "wall_seconds": 193.2,
+  "cost": {
+    "at": "2026-09-15T17:48:53.000181+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-f58036111c74",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-15T17:45:46.832135+00:00",
+    "finished_at": "2026-09-15T17:48:53.000181+00:00",
+    "wall_seconds": 186.172,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 290,
+    "cached_input_tokens": 800825,
+    "output_tokens": 13296,
+    "total_tokens": 814411,
+    "cost_usd": 1.4241809999999997
+  }
+}

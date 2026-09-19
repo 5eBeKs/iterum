@@ -1,0 +1,55 @@
+{
+  "profile": "glm-build",
+  "stage": "release",
+  "case": "population_line_wrong",
+  "error": "The page's population line says all orders; every figure is over delivered orders.",
+  "at": "2026-09-15T18:30:42+00:00",
+  "max_v2_revision": "1d34cf0",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "all orders"
+  ],
+  "blocking_issues": 1,
+  "warnings": 0,
+  "checks": 14,
+  "issue_ids": [
+    "REL-POP-LINE-WRONG"
+  ],
+  "warning_texts": [],
+  "summary": "All 7 claim values on report.md and dashboard_data.json (21 bound numbers incl. manifest) recompute exactly from raw_data/orders.csv: net 35741.52, PL/DE/CZ 11181.67/11032.61/13527.24 sum to headline, refund rate 27/57=0.473684 with paying-customer caveat present. But release/report.md line 3 states the population as 'all orders inside the period' while the spec, the claim register and the same card's caveats say 'delivered orders inside the period' - a reader-visible population misstatement.",
+  "wall_seconds": 142.1,
+  "cost": {
+    "at": "2026-09-15T18:33:07.897684+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-b5a760660121",
+    "agent_role": "glm-audit-release",
+    "started_at": "2026-09-15T18:30:49.323885+00:00",
+    "finished_at": "2026-09-15T18:33:07.895685+00:00",
+    "wall_seconds": 138.578,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 31098,
+    "cached_input_tokens": 253184,
+    "output_tokens": 4771,
+    "total_tokens": 290361,
+    "cost_usd": 0.007666610000000001
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "m_completion_population_delivered",
+  "dataset": "messy",
+  "error": "The direct completion rate says its population is delivered orders, over which a completion rate is always 1.",
+  "at": "2026-09-18T19:15:48+00:00",
+  "max_v2_revision": "b7adc4a",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "CLM-COMPLETION-DIRECT",
+    "population",
+    "delivered",
+    "denominator|cancel|always|trivial|1\\.0|100 ?%"
+  ],
+  "blocking_issues": 2,
+  "warnings": 5,
+  "checks": 48,
+  "issue_ids": [
+    "CLAIMS-AUD-COMPLETION-DIRECT-POPULATION",
+    "CLAIMS-AUD-AOV-CAVEATS-POPULATION"
+  ],
+  "issue_texts": [
+    "CLAIMS-AUD-COMPLETION-DIRECT-POPULATION | gate_claims_auditor.population.CLM-COMPLETION-DIRECT | gate_claims_auditor|claim_population_matches_metric|analysis/claim_register.json|CLM-COMPLETION-DIRECT | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/claim_register.json claim CLM-COMPLETION-DIRECT field population names a delivered-only population. metrics/calculated_metrics.json completion_rate_",
+    "CLAIMS-AUD-AOV-CAVEATS-POPULATION | gate_claims_auditor.caveats.CLM-AOV | gate_claims_auditor|caveats_state_population|analysis/claim_register.json|CLM-AOV-* | CLAIM_SUPPORT | MEDIUM | worker_analysis | analysis/claim_register.json: in CLM-AOV-DIRECT and CLM-AOV-PARTNER, caveats has two entries, a channel-population note and a sampling-interval note. Neither says that the average covers delivered "
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "Both test claims store p as 0.0000000000 with display_digits 4, so a surface would show p = 0.0000. The recomputed p for completion is about 2.9e-157, and for AOV it is below double precision at t = 42.7. The release should render it as p < 0.0001 rather than as a literal zero.",
+    "Both test claims record alpha 0.05 with correction bonferroni, but the per-test threshold 0.025 is not stated anywhere. The conclusion is unaffected because both p values are far below it.",
+    "No machine rule compares a claim's population text with its metric's population, and caveats_declared does not require delivered-only or net-of-refunds topics for the AOV claims. Both defects in this result sit in that uncovered space. Population and caveat wording is checked only by this auditor's ",
+    "The plan assumption that neither channel changed how it books orders during the quarter cannot be tested from the export. The monthly breakdown shows a stable direct-minus-partner completion gap (0.103 to 0.129), which is consistent with it but does not prove it.",
+    "The channel difference is not a mix effect. Channel shares are near-equal across PL, DE and CZ, and in every country and every month direct keeps the higher completion (+0.108 to +0.130) and the higher AOV (+21.92 to +24.92 EUR). Both tests remain observational comparisons, not causal effects of cha"
+  ],
+  "summary": "All 8 claims recompute independently from quarantine/orders.csv (dedup last revision, Q1 by order_month, refund >= 0) to exactly the registered values: 44531 orders, 3023296.61 EUR net revenue, completion 0.724397/0.604746 with Wilson bounds, AOV 110.64/87.27 with Student bounds, z = 26.718455 and d = 0.486900 for the proportion diff and Welch t = 42.699880. All 106 claim->metric->plan field comparisons are byte-equal, and both tests match the frozen plan. The step fails on claim text, not numbers. CLM-COMPLETION-DIRECT gives its population as delivered orders, although the value, n = 24597 an",
+  "wall_seconds": 274.2,
+  "cost": {
+    "at": "2026-09-18T19:20:29.788175+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-18T19:15:58.514724+00:00",
+    "finished_at": "2026-09-18T19:20:29.788175+00:00",
+    "wall_seconds": 271.265,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 30,
+    "cached_input_tokens": 1669833,
+    "output_tokens": 29170,
+    "total_tokens": 1699033,
+    "cost_usd": 2.9192539999999996
+  }
+}

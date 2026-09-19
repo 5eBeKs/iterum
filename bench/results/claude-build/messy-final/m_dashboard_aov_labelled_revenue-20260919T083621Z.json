@@ -1,0 +1,94 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "m_dashboard_aov_labelled_revenue",
+  "dataset": "messy",
+  "error": "On the dashboard the direct average order value card is labelled revenue.",
+  "at": "2026-09-19T08:25:54+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "Revenue Direct",
+    "label",
+    "aov|average order"
+  ],
+  "blocking_issues": 4,
+  "warnings": 21,
+  "checks": 22,
+  "issue_ids": [
+    "RT-DASH-AOV-LABELLED-REVENUE",
+    "RT-REPORT-POPULATION-DELIVERED-ONLY",
+    "RT-DASH-ESTIMATE-N-MISSING",
+    "RT-CARRY-CONTRADICTS-OUTPUT"
+  ],
+  "issue_texts": [
+    "RT-DASH-AOV-LABELLED-REVENUE | final_redteam.card_label_matches_claim | final_claude_redteam|card_label_matches_claim|release/dashboard_data.json|CLM-AOV-DIRECT | VISUALIZATION | HIGH | worker_release | release/dashboard_data.json $.cards[4] has label 'Revenue Direct' and value 110.64 for CLM-AOV-DIRECT. The claim's derivation calls it 'the average order value for the direct channel', its metric a",
+    "RT-REPORT-POPULATION-DELIVERED-ONLY | final_redteam.page_population_matches_claims | final_claude_redteam|page_population_matches_claims|release/report.md|population_header | RELEASE_INTEGRITY | MEDIUM | worker_release | In the reader view of release/report.md (HTML comments removed, saved as audit/results/final/evidence/report_reader_view.md), line 3 reads 'Population: orders placed inside the qu",
+    "RT-DASH-ESTIMATE-N-MISSING | final_redteam.estimate_rendered_with_n | final_claude_redteam|estimate_rendered_with_n|release/dashboard_data.json|estimate_cards | RELEASE_INTEGRITY | MEDIUM | worker_release | In release/dashboard_data.json, $.cards[2] to $.cards[5] (CLM-COMPLETION-DIRECT, CLM-COMPLETION-PARTNER, CLM-AOV-DIRECT, CLM-AOV-PARTNER) each show the point and both bounds but no n. The claim",
+    "RT-CARRY-CONTRADICTS-OUTPUT | final_redteam.carry_matches_stage_output | final_claude_redteam|carry_matches_stage_output|audit/checkpoints|worker_carries | OTHER | MEDIUM | worker_clean | The four carries, audit/checkpoints/worker_clean.carry.json, worker_metrics.carry.json, worker_analysis.carry.json and worker_release.carry.json, are identical. Each states the period '2025-Q1-delivered' from 202"
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "This profile is single-vendor: the architect, four workers, five auditors and this red team all ran as claude-opus-5, so a bias this model family shares is reproduced on both sides of every check. The only independent layer is deterministic (machine gates, frozen check_plan, control lock, release su",
+    "Edit and Write tools were blocked from writing over raw sources and frozen machinery by permissions.deny in .claude/settings.json; the shell was not blocked, and permissions.allow is no barrier at all, so a modified raw file would be caught by the control lock after the fact, not prevented.",
+    "Every intermediate LLM stage result is a placeholder, so no LLM PASS before this step carries evidence. The four workers, gate0_semantic and the four gate auditors have summaries of the form 'driver e2e <step>' and the identical created_at 2026-01-01T00:00:00Z. The workers, gate0_semantic and the re",
+    "The release auditor's only check is that 0.473684 placeholder, and the dashboard's labels, estimate n and page prose are covered by no machine rule, so the three release blockers here passed every earlier gate with no one looking at them.",
+    "No worker result.json has a disclosures field and none lists warnings, so step 8's review of self-reported deviations had nothing to evaluate, and an unreported deviation cannot be told apart from none.",
+    "audit/decisions/ does not exist and the handoff's rulings list is empty, so no published number rests on a recorded human ruling beyond the five RESOLVED entries in audit/human_decisions.yaml.",
+    "refund_sign_policy is the resolved assumption that looks least certain. It drops 10 in-quarter orders (8 delivered, 2 pending; 9 direct, 1 partner) whose refunds total -381.46 EUR. If the sign is an export flip rather than a fault, CLM-NET-REVENUE would be 3,023,941.90 instead of 3,023,296.61 (+645.",
+    "dedup_rule holds on this export. 917 orders appear twice, and in every case the last row carries the latest updated_at; only status differs between revisions (126 orders). Keeping the first revision would have published net revenue of 3,010,704.83, and counting every row would have published 45,438 ",
+    "date_input_formats holds. In all 6,661 slashed dates in the population, the month-first reading agrees with order_month, while a day-first reading would move 2,350 of them. No ISO-8601 Z timestamp crosses a Europe/Warsaw calendar day, and order_date feeds no published number.",
+    "shipping_total, excused from publication by name, reproduces at 37,792,722.50 EUR under the declared locale, with 2,648 unreadable cells (1,778 blank, 870 NaN or inf) counted as zero; stripping separators naively would give 1,248,402,183.11. Its magnitude, roughly 850 EUR per order against order val",
+    "The dashboard test cards 'Test Channel Completion' and 'Test Channel Aov' show 0.0000 as their headline value without saying it is a p-value, and the report and dashboard print p as 0.0000 rather than as below 0.0001.",
+    "The caveat 'one quarter of orders in this channel' and the report sentence 'Each channel figure is an estimate from one quarter of orders' read naturally as a 25 per cent sample. They mean one calendar quarter, which is the whole population of the quarter, so the published intervals treat a census a",
+    "On the dashboard, the AOV cards state their population only as 'orders in this channel' and never say delivered orders only. caveats_declared does not require that topic for AOV claims, so the card-local population is understated with no rule able to see it.",
+    "check_plan covers none of these: card labels, the report's page-level prose, n on the dashboard, and the is_delivered flag against status. values_preserved also skips customer_id, order_date and country. I checked each of the columns myself (0 mismatches over 44,531 rows), but the labels and prose r",
+    "I could not validate the carries against audit/schemas/carry.schema.json because the schema is outside this stage's inputs. Structure and context_id/attempt were checked; schema conformance was not.",
+    "I could not read src/release/build_release.py or src/analysis, because they are outside this stage's inputs, so I cannot say whether the 'Revenue Direct' label is a literal override in the generator. release_surface_gate.json also shows no generator-literal scan section beside its 60 bound numbers.",
+    "I could not read raw_data/questions.md, so I have not checked that analysis/answers/R01 to R05 answer the questions as the client worded them. Their values do match the claim register exactly.",
+    "The handoff has no drift_since_review field. That absence does not prove the code's assumptions hold, which is why the dedup, date, shipping and refund assumptions were retested on the current export (warnings above).",
+    "Channel completion and AOV are stable month to month (direct completion 0.719 to 0.732, partner 0.595 to 0.616, country shares between 0.32 and 0.35 in every channel-month), but the registered assumption that neither channel changed how it books orders during the quarter cannot be established from t",
+    "Net revenue is a snapshot, not final revenue or cash: it counts delivered orders net of refunds known at export time and excludes the value of 7,491 pending orders. The spec does not say whether gross_amount includes VAT or shipping.",
+    "I did not open raw_data/orders.csv, so I cannot see the comment column. Searches of release, analysis, metrics, clean data, carries and stage results found no instruction-like phrasing, but a paraphrase of a quarantined sentence would not be detectable by me, and the machine free-text check samples "
+  ],
+  "summary": "Every published figure reproduces from the quarantine projection with my own code (53 registry comparisons, 60 rendered numbers, 0 differences): 44,531 orders, net revenue 3,023,296.61 EUR, completion 0.724397 direct / 0.604746 partner with Wilson bounds, AOV 110.64 / 87.27 EUR with Student bounds, and both registered tests. The release still fails on what the words around those numbers say: (1) the dashboard card for CLM-AOV-DIRECT is labelled 'Revenue Direct', so a 110.64 EUR average per delivered order reads as the direct channel's revenue, which is actually 1,971,306.75 EUR; (2) the report",
+  "wall_seconds": 617.8,
+  "cost": {
+    "at": "2026-09-19T08:36:20.311236+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-4b16f125bb3c",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-19T08:26:05.797005+00:00",
+    "finished_at": "2026-09-19T08:36:20.311236+00:00",
+    "wall_seconds": 614.516,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 72,
+    "cached_input_tokens": 5498496,
+    "output_tokens": 62297,
+    "total_tokens": 5560865,
+    "cost_usd": 6.330001
+  }
+}

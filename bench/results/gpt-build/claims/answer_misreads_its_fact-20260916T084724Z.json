@@ -1,0 +1,59 @@
+{
+  "profile": "gpt-build",
+  "stage": "claims",
+  "case": "answer_misreads_its_fact",
+  "error": "The answer to R02 calls a 47% refund rate low, fewer than one order in ten.",
+  "at": "2026-09-16T08:41:13+00:00",
+  "max_v2_revision": "7e1d71f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R02",
+    "one order in ten",
+    "\\blow\\b",
+    "0\\.47|47 ?%"
+  ],
+  "blocking_issues": 1,
+  "warnings": 1,
+  "checks": 10,
+  "issue_ids": [
+    "CLAIMS-R02-BASIS-CONCLUSION"
+  ],
+  "warning_texts": [
+    "The machine check questions_are_answered.R02 establishes that an answer file exists but does not validate the semantic truth of its qualitative caveats; this allowed the contradictory conclusion to pass the machine gate."
+  ],
+  "summary": "All five registered claim values independently match the raw export and the claims-machine comparisons, but R02 materially misinterprets the refund-rate fact: 0.473684 is 27 of 57 paying customers, not fewer than one in ten orders.",
+  "wall_seconds": 368.1,
+  "cost": {
+    "at": "2026-09-16T08:47:23.683615+00:00",
+    "launcher": "codex_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-9f5c1a1d41bb",
+    "agent_role": "gpt-audit-claims",
+    "started_at": "2026-09-16T08:41:17.979257+00:00",
+    "finished_at": "2026-09-16T08:47:23.682083+00:00",
+    "wall_seconds": 365.703,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "gpt-5.6-sol",
+    "model_used": null,
+    "input_tokens": 1885301,
+    "cached_input_tokens": null,
+    "output_tokens": 14920,
+    "total_tokens": 1900221,
+    "cost_usd": null
+  }
+}

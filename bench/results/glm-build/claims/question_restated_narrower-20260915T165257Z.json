@@ -1,0 +1,58 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "question_restated_narrower",
+  "error": "R02 is restated without the half that asks on which basis the rate is taken.",
+  "at": "2026-09-15T16:50:02+00:00",
+  "max_v2_revision": "0703cb4",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "PASS",
+  "stop_code": null,
+  "outcome": "warned",
+  "matched_signals": [
+    "R02",
+    "basis",
+    "restat|narrow|half|question"
+  ],
+  "blocking_issues": 0,
+  "warnings": 3,
+  "checks": 43,
+  "issue_ids": [],
+  "warning_texts": [
+    "The question restatements in analysis/answers/R01.json ('net revenue for the reported quarter') and R02.json ('the refund rate') are narrower than the questions in raw_data/questions.md, dropping the population qualifier and the basis question respectively, but every dropped element is carried by th",
+    "gate_claims_machine result.json summary says '39 checks' and checks.json holds exactly 39; consistent.",
+    "check_plan.json accepted_unproven lists two gate_release_document checks that failed to prove for a missing-file reason on a temp path; that is a plan-provenance record, not a claims-stage defect, but the release-stage auditor should re-run them."
+  ],
+  "summary": "All 5 claims recounted independently from raw_data/orders.csv and match the register; all 39 gate_claims_machine comparisons independently reproduced; recalc rooted only in raw sources; populations and periods as declared; row accounting 201=174+26+1 holds.",
+  "wall_seconds": 171.0,
+  "cost": {
+    "at": "2026-09-15T16:52:56.482920+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-64c34967b981",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-15T16:50:09.389877+00:00",
+    "finished_at": "2026-09-15T16:52:56.482920+00:00",
+    "wall_seconds": 167.093,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 105795,
+    "cached_input_tokens": 548224,
+    "output_tokens": 5225,
+    "total_tokens": 661720,
+    "cost_usd": 0.018129485
+  }
+}

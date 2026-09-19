@@ -1,0 +1,73 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "question_restated_narrower",
+  "dataset": "orders",
+  "error": "R02 is restated without the half that asks on which basis the rate is taken.",
+  "at": "2026-09-16T18:02:54+00:00",
+  "max_v2_revision": "fa38876",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "PASS",
+  "stop_code": null,
+  "outcome": "warned",
+  "matched_signals": [
+    "basis",
+    "restat|narrow|half|question"
+  ],
+  "blocking_issues": 0,
+  "warnings": 11,
+  "checks": 12,
+  "issue_ids": [],
+  "issue_texts": [],
+  "other_blockers": 0,
+  "warning_texts": [
+    "Single-vendor run: every context (architect, four workers, five auditors, this final gate) is the same GLM family through the same CLI, so the chain of PASSes is not independent review; the verdict rests on the deterministic layer - machine gates, frozen check_plan, control lock, permission map, rel",
+    "No CLI output event names the model, so MODEL_MISMATCH is unverifiable in this profile and every execution.model field including mine is a stage's self-report; the four worker results and the stage-auditor evidence here self-report model openrouter/z-ai/glm-5.3-flash-fake with created_at 2026-01-01T",
+    "The stage-auditor steps (gate0_semantic, gate_clean_auditor, gate_metrics_auditor, gate_claims_auditor, gate_release_auditor) contain no reasoning at all - their evidence files say only 'driver e2e evidence' - so in this run the only independent verification of the numbers is the machine layer plus ",
+    "The refund-rate ruling is doing real work rather than confirming the data: on these rows the pinned paying-customers basis gives 0.473684 while the order-rows basis gives 0.189655 (27 of 57 customers vs 33 of 174 rows), and the data alone cannot prefer either, so the published headline rate is the h",
+    "Two gate_release_document rules (claims_rendered, caveats_rendered) are declared accepted_unproven in the frozen check_plan because the prove sandbox lacked analysis/claim_register.json, so their negative side was never demonstrated on a broken dataset in this run; both rules ran post-lock and passe",
+    "gate0_machine's plan_proven evidence line says '0 accepted unproven' while the frozen check_plan declares 2 accepted_unproven entries for gate_release_document; audit/plan_proof.json is not among my inputs, so I could not reconcile the two accountings.",
+    "All four worker carries list raw_data/orders.csv in do_not_reread, although it is a raw source and not that stage's output; the contract reserves that field for previous-stage outputs and only the audit/** rejection is enforced, so the shape slipped through - it moved no number, and final recomputes",
+    "Reader-visible wording in release/report.md: 'Country figures sum to the headline; both are net of refunds' says 'both' while three country figures are shown.",
+    "refund_amount_total (4493.50 EUR) is computed but deliberately absent from every release surface (excused by name in the check plan), and the R04 counts 201/174/26/27/1 appear only in analysis/answers/R04.json, not on any release surface - both verified, both consistent with the excusals declared in",
+    "Assumptions checked against the data: revenue_recognition net_of_refunds moves the headline from gross 40235.02 to net 35741.52 and is correctly applied; timezone Europe/Warsaw moves nothing because order_date is a plain local date with no timestamps; refund_rate_basis is the only assumption that ch",
+    "Unchecked because the files are not among my declared inputs: audit/plan_proof.json, audit/AUDIT_REPORT.md, tests/, runner state, control-lock digest and retry history - the human reads the last four in audit_runner.py report."
+  ],
+  "summary": "Independent end-to-end recalculation from raw_data/orders.csv with my own code (audit/results/final/evidence/recalc.py, 125 checks, 0 failed): population 174 of 201 raw rows (26 not-delivered + 1 outside-period, 2025-04-01 order O00201 correctly excluded, both inclusive boundary dates 2025-01-01/2025-03-30 kept); net_revenue 35741.52 EUR (gross 40235.02 - refunds 4493.50); refund_rate 27/57 paying customers = 0.473684 (order-rows basis would give 33/174 = 0.189655, confirming the basis ruling is what separates them); country components CZ 13527.24 + DE 11032.61 + PL 11181.67 sum exactly to the",
+  "wall_seconds": 980.9,
+  "cost": {
+    "at": "2026-09-16T18:19:29.278954+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-d81d0b2b4829",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-16T18:03:11.773558+00:00",
+    "finished_at": "2026-09-16T18:19:29.274430+00:00",
+    "wall_seconds": 977.516,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 254275,
+    "cached_input_tokens": 2461312,
+    "output_tokens": 15768,
+    "total_tokens": 2749956,
+    "cost_usd": 0.07755786599999999
+  }
+}

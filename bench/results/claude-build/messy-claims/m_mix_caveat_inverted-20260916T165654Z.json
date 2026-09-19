@@ -1,0 +1,71 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "m_mix_caveat_inverted",
+  "dataset": "messy",
+  "error": "The partner completion rate's caveat says its interval also covers a change in the channel's country mix.",
+  "at": "2026-09-16T16:53:41+00:00",
+  "max_v2_revision": "05bbc25",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "mix of countries|country mix",
+    "also covers|covers a channel",
+    "CLM-COMPLETION-PARTNER"
+  ],
+  "blocking_issues": 1,
+  "warnings": 9,
+  "checks": 26,
+  "issue_ids": [
+    "CLAIMS-CAVEAT-INVERTED-COMPLETION-PARTNER"
+  ],
+  "issue_texts": [
+    "CLAIMS-CAVEAT-INVERTED-COMPLETION-PARTNER | gate_claims_auditor.caveat_semantics | gate_claims_auditor|caveat_semantics|analysis/claim_register.json|CLM-COMPLETION-PARTNER | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/claim_register.json, claims[CLM-COMPLETION-PARTNER].caveats[1]: after the required topic phrase, the sentence continues by saying the interval also covers a channel whose count"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The machine rule caveats_declared matches caveat topics by substring, so a caveat that keeps the required phrase and then negates it passes; the inverted CLM-COMPLETION-PARTNER caveat is exactly that case and only this auditor's reading caught it.",
+    "The stage prompt says quarantine/ is not an input of this step, but the runner handoff input_globs include quarantine/**/*; I recomputed from quarantine/orders.csv (comment column removed per quarantine/manifest.json) and did not open raw_data/ or clean_data/.",
+    "The stage prompt expects independent_claim_recalc.json to be rooted in clean_data/, but it lists raw_data/orders.csv as the source for all six claims, consistent with check_plan claims_recomputed reading raw_latest; it is not rooted in analysis/ or release/, so this is not a self-check and not a fin",
+    "audit/prompts/COMMON_CONTRACT.md and audit/human_decisions.yaml are not in this step's allowed input paths; I used the common contract text embedded in the stage prompt and did not read human_decisions.yaml.",
+    "Commands run: python audit/results/gate_claims_auditor/evidence/recompute_claims.py (read quarantine/orders.csv, metrics/calculated_metrics.json, analysis/claim_register.json, analysis/answers/*.json, audit/analysis_plan.json, gate_claims_machine evidence/checks.json; wrote evidence/recompute_output",
+    "Student t quantiles were computed with a fourth-order Cornish-Fisher expansion because scipy could not be probed; at df above 12000 its error is far below the 0.01 EUR tolerance, and the resulting bounds match the gate to 1e-7.",
+    "Deduplication by file order (last row wins) and by latest updated_at give the identical 44531-order population, so the dedup rule is not sensitive to which reading of latest_revision_wins is used.",
+    "No deterministic rule checks the R03 and R04 test statistics, effect sizes or the R05 note; I recomputed the z statistic, Welch t and Cohen's d and they match, and R05 names shipping_total with no claim, so this unchecked surface is small enough for the stage to carry.",
+    "The CLM-COMPLETION-* caveats do not say in words that cancelled and pending orders are in the denominator; the population and n (24597 = 17818 delivered + 3322 cancelled + 3457 pending; 19934 = 12055 + 3845 + 4034) show they are, and no caveat topic requires it, so this is a note, not a blocker."
+  ],
+  "summary": "All six claims, their intervals, n, level and method reproduce exactly from the quarantine projection (44531 orders after last-revision dedup and 10 negative-refund exclusions) and agree with the metrics registry and every claims_recomputed / recompute_estimate / min_group_size comparison. One blocker: the sampling-interval caveat on CLM-COMPLETION-PARTNER has been inverted and now asserts that the interval covers a changing country mix, which the spec forbids; caveats_declared passed it because it matches the topic by substring only.",
+  "wall_seconds": 186.3,
+  "cost": {
+    "at": "2026-09-16T16:56:53.105591+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-16T16:53:49.424240+00:00",
+    "finished_at": "2026-09-16T16:56:53.105591+00:00",
+    "wall_seconds": 183.688,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 30,
+    "cached_input_tokens": 1493692,
+    "output_tokens": 18911,
+    "total_tokens": 1512633,
+    "cost_usd": 2.1914689999999997
+  }
+}

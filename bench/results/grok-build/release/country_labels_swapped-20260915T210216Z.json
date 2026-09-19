@@ -1,0 +1,62 @@
+{
+  "profile": "grok-build",
+  "stage": "release",
+  "case": "country_labels_swapped",
+  "error": "On the dashboard the PL and DE cards carry each other's labels; values and claim ids are untouched.",
+  "at": "2026-09-15T20:51:59+00:00",
+  "max_v2_revision": "06eb683",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "label",
+    "swap",
+    "\\bPL\\b.*\\bDE\\b|\\bDE\\b.*\\bPL\\b",
+    "dashboard"
+  ],
+  "blocking_issues": 1,
+  "warnings": 4,
+  "checks": 49,
+  "issue_ids": [
+    "REL-COUNTRY-LABELS-SWAPPED"
+  ],
+  "warning_texts": [
+    "audit/check_plan.json lists gate_release_document claims_rendered and caveats_rendered as accepted_unproven because prove-plan could not open analysis/claim_register.json; those rules ran this time and passed, but they were not shown to fail on a broken fixture at Gate 0.",
+    "The frozen check plan has no deterministic rule that a dashboard card label must name the same country as the claim_id on that card, so machine silence on labels is not approval.",
+    "gate_release_machine bound all 21 displayed numbers to claim_id and role with 0 issues; that PASS does not compare dashboard labels to country, and it does not contradict the swapped PL/DE labels.",
+    "gate_release_machine wrote evidence/release_surface_gate.json and no checks.json, so this stage has no recompute_*, claims_recomputed, component_sum, or column_identity comparison; document-gate checks.json only has claims_rendered and caveats_rendered."
+  ],
+  "summary": "21 displayed numbers on report.md, dashboard_data.json and the manifest match claim_register/calculated_metrics including display_digits; country components 11181.67+11032.61+13527.24=35741.52 and 27/57=0.473684. Dashboard cards swap the PL and DE labels on the correctly bound values, so a reader attributes 11181.67 to DE and 11032.61 to PL.",
+  "wall_seconds": 608.5,
+  "cost": {
+    "at": "2026-09-15T21:02:14.852427+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-37b714cb82eb",
+    "agent_role": "grok-audit-release",
+    "started_at": "2026-09-15T20:52:11.423309+00:00",
+    "finished_at": "2026-09-15T21:02:14.852427+00:00",
+    "wall_seconds": 603.421,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 301539,
+    "cached_input_tokens": 1658624,
+    "output_tokens": 32868,
+    "total_tokens": 1993031,
+    "cost_usd": 0.55406332
+  }
+}

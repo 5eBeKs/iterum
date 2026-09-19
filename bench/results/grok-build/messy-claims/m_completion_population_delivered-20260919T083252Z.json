@@ -1,0 +1,74 @@
+{
+  "profile": "grok-build",
+  "stage": "claims",
+  "case": "m_completion_population_delivered",
+  "dataset": "messy",
+  "error": "The direct completion rate says its population is delivered orders, over which a completion rate is always 1.",
+  "at": "2026-09-19T08:18:58+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "CLM-COMPLETION-DIRECT",
+    "population",
+    "delivered",
+    "denominator|cancel|always|trivial|1\\.0|100 ?%"
+  ],
+  "blocking_issues": 4,
+  "warnings": 5,
+  "checks": 60,
+  "issue_ids": [
+    "CLM-COMPLETION-DIRECT-POPULATION-DELIVERED",
+    "CLM-AOV-DIRECT-CAVEATS-MISSING",
+    "CLM-AOV-PARTNER-CAVEATS-MISSING",
+    "CLM-TEST-CHANNEL-AOV-POPULATION-OMITS-DELIVERED"
+  ],
+  "issue_texts": [
+    "CLM-COMPLETION-DIRECT-POPULATION-DELIVERED | gate_claims_auditor.population.CLM-COMPLETION-DIRECT | gate_claims_auditor|population_mismatch|analysis/claim_register.json|CLM-COMPLETION-DIRECT | CLAIM_SUPPORT | CRITICAL | worker_analysis | analysis/claim_register.json CLM-COMPLETION-DIRECT.population inserts delivered, but claim n=24597 and value 0.724397 are 17818 delivered over 24597 direct rows f",
+    "CLM-AOV-DIRECT-CAVEATS-MISSING | gate_claims_auditor.caveats.CLM-AOV-DIRECT | gate_claims_auditor|caveats_missing|analysis/claim_register.json|CLM-AOV-DIRECT | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/claim_register.json CLM-AOV-DIRECT is computed on delivered net_amount (n=17818) but caveats are only the quarter and the sampling-interval sentence. They do not say delivered only or net of",
+    "CLM-AOV-PARTNER-CAVEATS-MISSING | gate_claims_auditor.caveats.CLM-AOV-PARTNER | gate_claims_auditor|caveats_missing|analysis/claim_register.json|CLM-AOV-PARTNER | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/claim_register.json CLM-AOV-PARTNER is computed on delivered net_amount (n=12055) but caveats are only the quarter and the sampling-interval sentence. They do not say delivered only or ne",
+    "CLM-TEST-CHANNEL-AOV-POPULATION-OMITS-DELIVERED | gate_claims_auditor.population.CLM-TEST-CHANNEL-AOV | gate_claims_auditor|population_mismatch|analysis/claim_register.json|CLM-TEST-CHANNEL-AOV | CLAIM_SUPPORT | HIGH | worker_analysis | CLM-TEST-CHANNEL-AOV.n_per_group is [17818, 12055], the delivered counts, and audit/analysis_plan.json H-CHANNEL-AOV filters on is_delivered. The population string"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "CLM-COMPLETION-PARTNER population correctly names the whole partner channel, but its caveats never say cancelled and pending stay in the denominator.",
+    "analysis/answers/R05.json caveats contain an unbound percentage about unreadable shipping cells; the panel scanner will treat that as a figure without a claim_id.",
+    "R03 and R04 hypothesis objects name method, alpha, correction and n_per_group but do not list the plan group names direct and partner.",
+    "Claim n fields are JSON numbers while metrics n fields are strings; the counts match (24597, 19934, 17818, 12055) against min_group_size.",
+    "gate_claims_machine does not check population strings, so claims_recomputed passed on arithmetic while CLM-COMPLETION-DIRECT still names the wrong population."
+  ],
+  "summary": "Arithmetic of all eight claims matches an independent quarantine recalc (orders 44531, net revenue 3023296.61 EUR, completion 0.724397 / 0.604746, AOV 110.64 / 87.27). FAIL because CLM-COMPLETION-DIRECT names a delivered-only population while its n=24597 and rate 17818/24597 use every direct status; CLM-AOV-DIRECT and CLM-AOV-PARTNER caveats omit delivered and net of refunds; CLM-TEST-CHANNEL-AOV population omits the delivered filter the Welch test used.",
+  "wall_seconds": 825.9,
+  "cost": {
+    "at": "2026-09-19T08:32:51.341635+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-8764561632d1",
+    "agent_role": "grok-audit-claims",
+    "started_at": "2026-09-19T08:19:08.565171+00:00",
+    "finished_at": "2026-09-19T08:32:51.341635+00:00",
+    "wall_seconds": 822.781,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 259694,
+    "cached_input_tokens": 2967552,
+    "output_tokens": 42931,
+    "total_tokens": 3270177,
+    "cost_usd": 0.768655
+  }
+}

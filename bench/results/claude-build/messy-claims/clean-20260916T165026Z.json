@@ -1,0 +1,69 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "clean",
+  "dataset": "messy",
+  "error": "no defect planted (false-positive control)",
+  "at": "2026-09-16T16:46:28+00:00",
+  "max_v2_revision": "05bbc25",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "clean_blocked",
+  "matched_signals": [],
+  "blocking_issues": 2,
+  "warnings": 9,
+  "checks": 38,
+  "issue_ids": [
+    "CLAIMS-AUD-AOV-CAVEAT-DIRECT",
+    "CLAIMS-AUD-AOV-CAVEAT-PARTNER"
+  ],
+  "issue_texts": [
+    "CLAIMS-AUD-AOV-CAVEAT-DIRECT | gate_claims_auditor.caveat_wording.CLM-AOV-DIRECT | gate_claims_auditor|caveat_wording|analysis/claim_register.json|CLM-AOV-DIRECT | CLAIM_SUPPORT | MEDIUM | worker_analysis | analysis/claim_register.json, claim CLM-AOV-DIRECT, caveats[]: neither caveat mentions delivered orders or refunds (evidence/chain_checks.json caveats.CLM-AOV-DIRECT.missing_phrases). Only the ",
+    "CLAIMS-AUD-AOV-CAVEAT-PARTNER | gate_claims_auditor.caveat_wording.CLM-AOV-PARTNER | gate_claims_auditor|caveat_wording|analysis/claim_register.json|CLM-AOV-PARTNER | CLAIM_SUPPORT | MEDIUM | worker_analysis | analysis/claim_register.json, claim CLM-AOV-PARTNER, caveats[]: neither caveat mentions delivered orders or refunds (evidence/chain_checks.json caveats.CLM-AOV-PARTNER.missing_phrases). The "
+  ],
+  "other_blockers": 2,
+  "warning_texts": [
+    "The stage prompt says independent_claim_recalc.json is rooted in clean_data in this dataset, but that file lists raw_data/orders.csv as the source path for all six claims, and check_plan.json confirms claims_recomputed reads the raw_latest source. The recalculation is not rooted in analysis/ or rele",
+    "The stage prompt says quarantine/ is not an input of this step, but the handoff input_globs list quarantine/**/*, so I read quarantine/orders.csv (no free-text column; the recompute script asserts that) as my independent source and used quarantine/manifest.json only to confirm the column was removed",
+    "Commands not named in the stage prompt: a head -c 600 on quarantine/orders.csv to read its header, a date -u to read the clock, and three evidence scripts run as files: recompute_claims.py and chain_checks.py, which wrote only recompute_claims.json and chain_checks.json in this step's evidence direc",
+    "scipy is not importable here, so the Student t quantile in recompute_claims.py comes from a Cornish-Fisher expansion. At df above 12000 it reproduces the gate's unrounded AOV bounds to all ten printed significant figures.",
+    "The handoff's instructions field describes orchestrator actions (plan-spawn, Task dispatch, record-spawn, register-context). This stage context is the dispatched auditor, so it did not perform them.",
+    "R03 and R04 carry test statistics, effect sizes and p values without a claim_id. They recompute exactly (evidence/chain_checks.json hypotheses.R03_recomputed and R04_recomputed), but no machine rule checks them, and they must not reach a release surface as unbound numbers.",
+    "R03 and R04 hypothesis blocks have no explicit groups field. The groups are implied by n_per_group in the plan's order (direct first), which matches the recomputed group sizes.",
+    "Claim n is a JSON integer while metric n is a string. The values are equal; only the type differs.",
+    "Parts of this stage that no deterministic rule covers and only this audit checked: caveat wording beyond the caveats_declared topics, the R03/R04 statistics, the byte-level claim-to-metric identity of ci bounds and n, and whether any free-text-column content reached the register. None of these is mo"
+  ],
+  "summary": "All six claims, every interval bound and every n recompute exactly from quarantine/orders.csv and agree byte for byte with metrics/calculated_metrics.json and with the claims_recomputed, recompute_estimate and min_group_size comparisons of gate_claims_machine. The R03/R04 test statistics and effects also recompute exactly. One defect the machine gate cannot see: CLM-AOV-DIRECT and CLM-AOV-PARTNER never say in their caveats that the figure covers delivered orders only and is net of refunds, and their channel caveat reads as if it covered every order in the channel.",
+  "wall_seconds": 232.4,
+  "cost": {
+    "at": "2026-09-16T16:50:25.346973+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-16T16:46:35.520160+00:00",
+    "finished_at": "2026-09-16T16:50:25.346973+00:00",
+    "wall_seconds": 229.828,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 38,
+    "cached_input_tokens": 2108279,
+    "output_tokens": 24673,
+    "total_tokens": 2132990,
+    "cost_usd": 2.736418
+  }
+}

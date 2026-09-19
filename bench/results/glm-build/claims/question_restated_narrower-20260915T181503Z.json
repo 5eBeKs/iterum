@@ -1,0 +1,54 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "question_restated_narrower",
+  "error": "R02 is restated without the half that asks on which basis the rate is taken.",
+  "at": "2026-09-15T18:12:40+00:00",
+  "max_v2_revision": "d6a41ff",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "warned",
+  "matched_signals": [
+    "restat|narrow|half|question"
+  ],
+  "blocking_issues": 0,
+  "warnings": 1,
+  "checks": 11,
+  "issue_ids": [],
+  "warning_texts": [
+    "The R01 answer file (analysis/answers/R01.json) restates its question as 'net revenue for the reported quarter' and drops the population qualifier 'over delivered orders inside the period' that raw_data/questions.md asked; the underlying claim CLM-NET-REVENUE carries the correct population and cavea"
+  ],
+  "summary": "All five claims and all recomputed numbers of gate_claims_machine were recalculated independently from raw_data/orders.csv and match: net_revenue 35741.52, refund_rate 27/57 paying customers = 0.473684, PL 11181.67, DE 11032.61, CZ 13527.24, row accounting 201=174+26+1. One warning: the R01 answer restates the question without the population qualifier.",
+  "wall_seconds": 133.6,
+  "cost": {
+    "at": "2026-09-15T18:15:01.153588+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-4fa83280c391",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-15T18:12:58.470862+00:00",
+    "finished_at": "2026-09-15T18:15:01.149062+00:00",
+    "wall_seconds": 122.672,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 45719,
+    "cached_input_tokens": 217472,
+    "output_tokens": 4037,
+    "total_tokens": 268057,
+    "cost_usd": 0.007907504999999999
+  }
+}

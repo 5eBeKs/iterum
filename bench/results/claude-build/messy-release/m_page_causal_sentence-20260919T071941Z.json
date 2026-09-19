@@ -1,0 +1,71 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "m_page_causal_sentence",
+  "dataset": "messy",
+  "error": "The page explains the smaller partner baskets by bargain hunters, which nothing in the audit measures.",
+  "at": "2026-09-19T07:16:17+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "caus|explan|unsupported|no (evidence|metric|claim)"
+  ],
+  "blocking_issues": 4,
+  "warnings": 5,
+  "checks": 14,
+  "issue_ids": [
+    "REL-AUD-CAUSAL-SENTENCE",
+    "REL-AUD-POPULATION-MISSTATED",
+    "REL-AUD-AOV-CAVEATS",
+    "REL-AUD-DASHBOARD-ESTIMATES"
+  ],
+  "issue_texts": [
+    "REL-AUD-CAUSAL-SENTENCE | gate_release_auditor.no_unsupported_claims | gate_release_auditor|no_unsupported_claims|release/report.md|causal_sentence | CLAIM_SUPPORT | CRITICAL | worker_release | release/report.md line 32 is a standalone sentence with no claim anchor. It says the partner channel's smaller baskets are caused by the kind of customer that channel attracts. No claim in analysis/claim_re",
+    "REL-AUD-POPULATION-MISSTATED | gate_release_auditor.population_beside_each_number | gate_release_auditor|population_beside_each_number|release/report.md|page_population_line | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3 gives one population for the whole page: orders inside the quarter, one row per order, delivered only. That is CLM-NET-REVENUE's population alone. CLM-ORDE",
+    "REL-AUD-AOV-CAVEATS | gate_release_auditor.aov_caveats_rendered | gate_release_auditor|aov_caveats_rendered|analysis/claim_register.json|CLM-AOV | CLAIM_SUPPORT | HIGH | worker_analysis | The dataset's release-auditor addition requires 'net of refunds' and 'delivered orders only' beside revenue and beside AOV. On release/report.md lines 18-21, and on dashboard_data.json cards[4] and cards[5], the ",
+    "REL-AUD-DASHBOARD-ESTIMATES | gate_release_auditor.estimate_rendering | gate_release_auditor|estimate_rendering|release/dashboard_data.json|estimate_cards | VISUALIZATION | MEDIUM | worker_release | release/dashboard_data.json cards[2]-cards[5] (CLM-COMPLETION-*, CLM-AOV-*) have value, ci_low and ci_high, but no n, no interval level and no population. The period sits only at $.period, and the gate"
+  ],
+  "other_blockers": 2,
+  "warning_texts": [
+    "Neither gate that checks the release reads for causal or explanatory wording. wording_matches_claims checks only 'significant', and the surface gate reads digits only. As a result, a sentence with no number can add an unsupported conclusion and pass every machine check.",
+    "release_surface_contract.json declares empty reconciliations and card_caveat_requirements, so the machine gate enforces no identity and no per-card population. The identities were reconciled here by hand, and they hold.",
+    "The p values of both registered tests are shown as '0.0000', which a reader can take as a probability of exactly zero. '< 0.0001' would state what the registry supports.",
+    "The Welch statistic and Cohen's d for H-CHANNEL-AOV could only be approximated from the published intervals (t about 42.6 against 42.70, d about 0.485 against 0.4869), because the per-order data is outside this step's inputs. They are consistent, but not exactly re-derived.",
+    "The generator literal rule (no business number literal in src/release/**) could not be verified by this auditor. release_surface_gate.json records no generator scan result."
+  ],
+  "summary": "All 60 rendered numbers on report.md, dashboard_data.json and the manifest match the registry at display_digits. The reconciliation identities hold: 24597+19934=44531, and the two AOV numerators sum to net revenue 3023296.61. The Wilson intervals and the z test recompute within tolerance. The release still fails on four blockers. First, report.md line 32 makes a causal claim about the partner channel's customers that no claim supports. Second, the page-level population line says 'delivered only', which is wrong for the order count, the completion rates and the tests. Third, the AOV lines lack ",
+  "wall_seconds": 198.0,
+  "cost": {
+    "at": "2026-09-19T07:19:40.237389+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-1ec424ea468d",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-19T07:16:25.709481+00:00",
+    "finished_at": "2026-09-19T07:19:40.237389+00:00",
+    "wall_seconds": 194.532,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 26,
+    "cached_input_tokens": 1071784,
+    "output_tokens": 19791,
+    "total_tokens": 1091601,
+    "cost_usd": 1.9998255000000003
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "m_interval_read_as_probability",
+  "dataset": "messy",
+  "error": "The answer to R03 reads each 0.95 interval as a 95% probability that the true rate lies inside it.",
+  "at": "2026-09-19T08:33:03+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "probab",
+    "95 ?%",
+    "confidence|frequentist|coverage|credible|bayes"
+  ],
+  "blocking_issues": 5,
+  "warnings": 10,
+  "checks": 15,
+  "issue_ids": [
+    "RT-INTERVAL-AS-PROBABILITY",
+    "RT-CARRY-FACTS-WORKER-CLEAN",
+    "RT-CARRY-FACTS-WORKER-METRICS",
+    "RT-CARRY-FACTS-WORKER-ANALYSIS",
+    "RT-CARRY-FACTS-WORKER-RELEASE"
+  ],
+  "issue_texts": [
+    "RT-INTERVAL-AS-PROBABILITY | redteam.interval_meaning | final_glm_redteam|interval_read_as_probability|analysis/answers/R03.json|caveats | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R03.json line 43 (caveats[0]) asserts 'There is a 95% probability that each channel's true completion rate lies inside its interval.' A frequentist Wilson score interval states no probability about the t",
+    "RT-CARRY-FACTS-WORKER-CLEAN | redteam.carry_facts | final_glm_redteam|carry_facts_contradict_artifacts|audit/checkpoints/worker_clean.carry.json|grain,period,population | SPEC_CONFLICT | MEDIUM | worker_clean | audit/checkpoints/worker_clean.carry.json records period '2025-Q1-delivered' 2025-01-01..2025-03-30 with 'source': 'audit/audit_spec.yaml', population 'delivered orders inside the period' (",
+    "RT-CARRY-FACTS-WORKER-METRICS | redteam.carry_facts | final_glm_redteam|carry_facts_contradict_artifacts|audit/checkpoints/worker_metrics.carry.json|grain,period,population | SPEC_CONFLICT | MEDIUM | worker_metrics | audit/checkpoints/worker_metrics.carry.json records the same contradicting facts (period '2025-Q1-delivered' 2025-01-01..2025-03-30 sourced to audit/audit_spec.yaml, delivered-only po",
+    "RT-CARRY-FACTS-WORKER-ANALYSIS | redteam.carry_facts | final_glm_redteam|carry_facts_contradict_artifacts|audit/checkpoints/worker_analysis.carry.json|grain,period,population | SPEC_CONFLICT | MEDIUM | worker_analysis | audit/checkpoints/worker_analysis.carry.json records the same contradicting facts (period '2025-Q1-delivered' 2025-01-01..2025-03-30 sourced to audit/audit_spec.yaml, delivered-onl",
+    "RT-CARRY-FACTS-WORKER-RELEASE | redteam.carry_facts | final_glm_redteam|carry_facts_contradict_artifacts|audit/checkpoints/worker_release.carry.json|grain,period,population | SPEC_CONFLICT | MEDIUM | worker_release | audit/checkpoints/worker_release.carry.json records the same contradicting facts (period '2025-Q1-delivered' 2025-01-01..2025-03-30 sourced to audit/audit_spec.yaml, delivered-only po"
+  ],
+  "other_blockers": 4,
+  "warning_texts": [
+    "Every stage result except the machine gates is a driver-written stub: the four worker and three auditor results plus gate0_semantic all carry summary 'driver e2e', a single check comparing the constant 0.473684 to itself, created_at 2026-01-01 and model strings with the suffix -fake, so stage-level ",
+    "No output event of this CLI names a model, so the claim that the run ran on openrouter/z-ai/glm-5.3-flash is confirmed by nothing except the stages' own words; the -fake suffix in worker model strings still contains the required substring 'glm' and MODEL_MISMATCH is declared unverifiable in this pro",
+    "The four carry files cite audit/audit_spec.yaml as their source while stating the opposite of what that spec declares, which makes the false citation itself part of the finding.",
+    "Both test p-values render as 0.0000 on the surfaces (display_digits 4), which a reader can mistake for exactly zero; the register stores 0E-10 and '< 0.0001' would be the honest display.",
+    "analysis/answers/R04.json carries no caveat about the interval's meaning at all, unlike R03; the correct caveat lives in the register and on the surfaces, so this is a gap in the answer file only.",
+    "The worker result files contain no disclosures, so no stage self-reported any deviation from its prompt; there was nothing to reconcile against.",
+    "All five RESOLVED human decisions were exercised in my recompute and hold: latest-revision dedup (traced M005391 pending->delivered), month-first slash reading (corroborated by order_month on all 44531 kept rows), space-thousands/comma-decimal shipping locale (0 mismatches), negative-refund exclusio",
+    "What I could not verify: the raw file's bytes (raw_data/orders.csv is outside my inputs under the declared quarantine; raw->quarantine fidelity rests on Gate 0 and the control lock), the release generator source (src/release/build_release.py is outside my inputs; the no-literal rule is attested by t",
+    "shipping_total 37792722.50 is correct arithmetic but economically implausible against a 110.64 EUR average order value; the check plan excuses it from publication by name for exactly this class of reason and my sweep confirms it appears on no surface.",
+    "Two of the three release surfaces' text exclusions (n = patterns, 0.95 interval label) mean the n's and the level beside the intervals are bound by recompute_estimate rather than by render roles; my recompute confirms n = 24597/19934/17818/12055 and level 0.95 against the frozen plan, so the exclusi"
+  ],
+  "summary": "Independent recompute from the quarantine projection reproduces every published number exactly (population 45917 raw rows -> 45000 distinct -> 44531 after the two declared exclusions; net revenue 3023296.61; both completion rates with Wilson 0.95 bounds; both AOVs with Student 0.95 bounds; both registered tests; shipping_total 37792722.50 excused and unpublished; clean table zero mismatches on all 44531 rows; denominator keeps 7167 cancelled and 7491 pending), and the machine release gate bound all 60 surface numbers with no blanket UNVERIFIED_CLAIM marker. Two material findings block: (1) the",
+  "wall_seconds": 1369.3,
+  "cost": {
+    "at": "2026-09-19T08:56:14.089033+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-8927a52d9853",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-19T08:33:28.944535+00:00",
+    "finished_at": "2026-09-19T08:56:14.079369+00:00",
+    "wall_seconds": 1365.14,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 235584,
+    "cached_input_tokens": 3616384,
+    "output_tokens": 20127,
+    "total_tokens": 3897913,
+    "cost_usd": 0.10012087200000003
+  }
+}

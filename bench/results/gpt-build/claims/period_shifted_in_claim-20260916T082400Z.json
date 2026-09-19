@@ -1,0 +1,58 @@
+{
+  "profile": "gpt-build",
+  "stage": "claims",
+  "case": "period_shifted_in_claim",
+  "error": "One country claim carries a two-month period while its value is the full quarter's.",
+  "at": "2026-09-16T08:18:32+00:00",
+  "max_v2_revision": "7e1d71f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "period",
+    "02-28",
+    "CLM-NET-CZ"
+  ],
+  "blocking_issues": 1,
+  "warnings": 1,
+  "checks": 12,
+  "issue_ids": [
+    "CLAIM-PERIOD-CZ-SHIFT"
+  ],
+  "warning_texts": [
+    "The gate_claims_machine claims_recomputed rule uses its own frozen raw-data period but does not compare each claim's period field, so its PASS left the shifted CLM-NET-CZ period metadata unverified."
+  ],
+  "summary": "All five claim values independently reconcile from raw_data/orders.csv to the metric registry and the machine gate on the specification period. CLM-NET-CZ nevertheless declares 2025-01-01..2025-02-28 while its value 13527.24 was computed through 2025-03-30; the raw value for its declared period is 9248.36.",
+  "wall_seconds": 323.8,
+  "cost": {
+    "at": "2026-09-16T08:23:58.932724+00:00",
+    "launcher": "codex_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-2c1328f080af",
+    "agent_role": "gpt-audit-claims",
+    "started_at": "2026-09-16T08:18:37.594758+00:00",
+    "finished_at": "2026-09-16T08:23:58.931415+00:00",
+    "wall_seconds": 321.344,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "gpt-5.6-sol",
+    "model_used": null,
+    "input_tokens": 1761678,
+    "cached_input_tokens": null,
+    "output_tokens": 13725,
+    "total_tokens": 1775403,
+    "cost_usd": null
+  }
+}

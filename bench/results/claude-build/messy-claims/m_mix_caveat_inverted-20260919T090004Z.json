@@ -1,0 +1,73 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "m_mix_caveat_inverted",
+  "dataset": "messy",
+  "error": "The partner completion rate's caveat says its interval also covers a change in the channel's country mix.",
+  "at": "2026-09-19T08:55:24+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "mix of countries|country mix",
+    "also covers|covers a channel",
+    "CLM-COMPLETION-PARTNER"
+  ],
+  "blocking_issues": 3,
+  "warnings": 7,
+  "checks": 50,
+  "issue_ids": [
+    "CLAIMS-CAVEAT-INVERTED-COMPLETION-PARTNER",
+    "CLAIMS-AOV-CAVEATS-MISSING-DELIVERED-NET",
+    "CLAIMS-AOV-TEST-POPULATION-MISSTATED"
+  ],
+  "issue_texts": [
+    "CLAIMS-CAVEAT-INVERTED-COMPLETION-PARTNER | gate_claims_auditor.caveat_meaning.CLM-COMPLETION-PARTNER | gate_claims_auditor|caveat_meaning|analysis/claim_register.json|CLM-COMPLETION-PARTNER | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/claim_register.json, CLM-COMPLETION-PARTNER caveats[1]: the second clause says the Wilson interval also covers a channel whose country mix changes, where the",
+    "CLAIMS-AOV-CAVEATS-MISSING-DELIVERED-NET | gate_claims_auditor.caveat_population_words.CLM-AOV | gate_claims_auditor|caveat_population_words|analysis/claim_register.json|CLM-AOV-DIRECT,CLM-AOV-PARTNER | CLAIM_SUPPORT | MEDIUM | worker_analysis | analysis/claim_register.json, CLM-AOV-DIRECT and CLM-AOV-PARTNER caveats contain only the channel-population and sampling-interval sentences. Neither says",
+    "CLAIMS-AOV-TEST-POPULATION-MISSTATED | gate_claims_auditor.population_matches_computation.CLM-TEST-CHANNEL-AOV | gate_claims_auditor|population_matches_computation|analysis/claim_register.json|CLM-TEST-CHANNEL-AOV | CLAIM_SUPPORT | MEDIUM | worker_analysis | analysis/claim_register.json CLM-TEST-CHANNEL-AOV population reads as all orders in the quarter by channel, and its caveats never mention del"
+  ],
+  "other_blockers": 2,
+  "warning_texts": [
+    "The machine rule caveats_declared matches fixed opening phrases only, so an estimate caveat that begins with the right words and then reverses its meaning passes; the CLM-COMPLETION-PARTNER inversion reached this gate with every machine check green.",
+    "Both test claims store p as 0.0000000000 with display_digits 4, which would render as a p of exactly zero; the release should show it as below 0.0001, since the recomputed p underflows rather than being zero.",
+    "Both test claims record alpha 0.05 with correction bonferroni but never write the per-test threshold of 0.025 that the correction implies; the conclusion is unaffected because both p values are far below it.",
+    "metrics/calculated_metrics.json gives channel_aov_test_p_value, _statistic and _effect the same all-orders population text as the claim; that metric-registry wording belongs to worker_metrics and should be corrected with the claim.",
+    "The completion-rate claims don't say in their caveats that cancelled and pending orders are in the denominator; the data confirm they are (direct 3322 cancelled + 3457 pending in 24597, partner 3845 + 4034 in 19934), so this is a wording gap, not a calculation fault.",
+    "Only claims_recomputed goes back to the raw export (raw_latest); recompute_estimate, recompute_test and min_group_size read clean_data/orders_clean.csv, so the intervals, tests and group sizes stand on the clean table. My recount from the quarantine projection agrees with all of them.",
+    "The plan assumption that neither channel changed how it books orders during the quarter can't be tested from the export; monthly strata are stable (direct minus partner completion 0.127, 0.103, 0.129 by month)."
+  ],
+  "summary": "All eight claims recompute from quarantine/orders.csv (dedup last-row-wins, Q1 by order_month, negative refunds excluded) to the register and the metrics byte for byte, and the claim -> metric -> plan chain closes on 146 field checks. The claims fail on text, not numbers: CLM-COMPLETION-PARTNER's interval caveat is inverted and asserts the interval covers a changing country mix; both CLM-AOV-* claims never say in their caveats that they are delivered-only and net of refunds; and CLM-TEST-CHANNEL-AOV states an all-orders population for a test run on delivered orders only. No confounding by coun",
+  "wall_seconds": 269.8,
+  "cost": {
+    "at": "2026-09-19T09:00:02.701019+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-19T08:55:36.415641+00:00",
+    "finished_at": "2026-09-19T09:00:02.701019+00:00",
+    "wall_seconds": 266.281,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 32,
+    "cached_input_tokens": 1806299,
+    "output_tokens": 29424,
+    "total_tokens": 1835755,
+    "cost_usd": 2.9811645
+  }
+}

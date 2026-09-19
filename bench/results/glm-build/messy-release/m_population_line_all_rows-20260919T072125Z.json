@@ -1,0 +1,66 @@
+{
+  "profile": "glm-build",
+  "stage": "release",
+  "case": "m_population_line_all_rows",
+  "dataset": "messy",
+  "error": "The page's population line says every export row; the figures are over one row per order after deduplication.",
+  "at": "2026-09-19T07:14:38+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "every row|export row|revision|dedup|one row per order"
+  ],
+  "blocking_issues": 2,
+  "warnings": 3,
+  "checks": 15,
+  "issue_ids": [
+    "REL-POPULATION-LINE",
+    "REL-DASH-NO-N"
+  ],
+  "issue_texts": [
+    "REL-POPULATION-LINE | gate_release_auditor.population_header | gate_release_auditor|population_mislabel|release/report.md|line3_header | VISUALIZATION | MEDIUM | worker_release | release/report.md line 3 prints 'Population: every row of the export inside the quarter, delivered only.' (generator src/release/build_release.py uses revenue['population']); false for CLM-ORDERS (registry population has ",
+    "REL-DASH-NO-N | gate_release_auditor.estimate_n_on_dashboard | gate_release_auditor|estimate_missing_n|release/dashboard_data.json|estimate_cards | RELEASE_INTEGRITY | MEDIUM | worker_release | audit/results/gate_release_auditor/evidence/recount.py: dashboard cards 2-5 have value/ci_low/ci_high but no n field; audit/audit_spec.yaml release rule 'An estimate is rendered with its interval and its n "
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "Dashboard cards carry no per-card period; the period sits at $.period beside the cards and each card's caveat says 'one quarter of orders in this channel', so this was accepted as adjacent rather than failed.",
+    "No shown caveat states that the completion-rate denominator is the whole channel including cancelled and pending orders; the gap is in analysis/claim_register.json caveats, which the surfaces render faithfully.",
+    "Welch-t statistic 42.699880, Cohen's d 0.486900 and the student-t AOV interval bounds could not be re-derived from this stage's allowed inputs (they need per-order net_amount spread); they rest on the claims machine gate's independent recalculation named in release_surface_contract.json."
+  ],
+  "summary": "All 20 registry renderings verified against all three surfaces (60 gate rows spot-checked, all bound, exact formatting); component sums, both completion rates, both AOVs, the completion effect and the pooled z statistic, both Wilson intervals and the manifest re-derived independently from the register and metrics components and all agree; quarantine phrases, UNVERIFIED_CLAIM markers, shipping_total and hidden caveats absent; significance wording justified by p<alpha. Two release-surface defects found: the report's population line presents the net-revenue population (delivered only) as the whol",
+  "wall_seconds": 401.5,
+  "cost": {
+    "at": "2026-09-19T07:21:24.032047+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-55f947b8e612",
+    "agent_role": "glm-audit-release",
+    "started_at": "2026-09-19T07:14:46.700942+00:00",
+    "finished_at": "2026-09-19T07:21:24.032047+00:00",
+    "wall_seconds": 397.329,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 93037,
+    "cached_input_tokens": 552256,
+    "output_tokens": 8347,
+    "total_tokens": 661342,
+    "cost_usd": 0.023144238
+  }
+}

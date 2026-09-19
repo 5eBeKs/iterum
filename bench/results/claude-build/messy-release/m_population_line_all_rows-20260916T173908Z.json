@@ -1,0 +1,73 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "m_population_line_all_rows",
+  "dataset": "messy",
+  "error": "The page's population line says every export row; the figures are over one row per order after deduplication.",
+  "at": "2026-09-16T17:34:34+00:00",
+  "max_v2_revision": "920704d",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "every row|export row|revision|dedup|one row per order"
+  ],
+  "blocking_issues": 4,
+  "warnings": 6,
+  "checks": 16,
+  "issue_ids": [
+    "REL-AUD-POPULATION-LINE",
+    "REL-AUD-AOV-CAVEATS",
+    "REL-AUD-DASHBOARD-CARD-CONTEXT",
+    "REL-AUD-REPORT-AOV-UNIT"
+  ],
+  "issue_texts": [
+    "REL-AUD-POPULATION-LINE | gate_release_auditor.population_line_matches_claims | gate_release_auditor|population_line_matches_claims|release/report.md|page_population | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3 (the page-level Population line, the only population statement on the page) compared with the population field of all 6 claims in analysis/claim_register.json and ",
+    "REL-AUD-AOV-CAVEATS | gate_release_auditor.aov_caveats_delivered_net_of_refunds | gate_release_auditor|aov_caveats_delivered_net_of_refunds|analysis/claim_register.json|CLM-AOV | CLAIM_SUPPORT | MEDIUM | worker_analysis | I checked the caveats of CLM-AOV-DIRECT and CLM-AOV-PARTNER in analysis/claim_register.json and the caveat text beside those claims on release/report.md lines 19 and 21 and relea",
+    "REL-AUD-DASHBOARD-CARD-CONTEXT | gate_release_auditor.card_population_n_level_unit | gate_release_auditor|card_population_n_level_unit|release/dashboard_data.json|cards | VISUALIZATION | MEDIUM | worker_release | I listed the keys of all 6 cards in release/dashboard_data.json: claim_id, label, value, _claim_roles, caveats, and ci_low/ci_high on the 4 estimate cards. The stage prompt requires popul",
+    "REL-AUD-REPORT-AOV-UNIT | gate_release_auditor.money_label_has_unit | gate_release_auditor|money_label_has_unit|release/report.md|aov_labels | VISUALIZATION | LOW | worker_release | release/report.md lines 18 and 20 are labelled 'aov direct' and 'aov partner', built by build_release.py line 75 from the claim_id. The claim unit for both is EUR, and line 7 does label net revenue with EUR. | Money fi"
+  ],
+  "other_blockers": 2,
+  "warning_texts": [
+    "No deterministic rule in audit/check_plan.json or audit/release_surface_contract.json checks any of the following on a release surface: population or scope text, labels, units, or per-card context. The contract's card_caveat_requirements, reconciliations and visual_evidence lists are all empty. Both",
+    "check_plan caveats_declared requires only channel-population and sampling-interval caveats for the AOV claims. The release auditor prompt addition also requires net of refunds and delivered orders only. The plan and the prompt disagree, and the gate follows the weaker requirement.",
+    "The machine surface gate's evidence (release_surface_gate.json) says nothing about the scan of generator literals. src/release/build_release.py contains the numeric literals parents[2] (line 21) and indent=2 (lines 102 and 115), which the contract's generator_literal_exclusions do not list. None of ",
+    "gate_release_document free_text_quarantined.values compared a sample of 25 quarantined values only. My own search of report.md and dashboard_data.json found no instruction-like text, no shipping figure and no UNVERIFIED_CLAIM marker.",
+    "The report's channel caveat 'one quarter of orders in this channel' is the only place a reader learns that the completion denominator is the whole channel. It is weak wording, and the population line contradicts it (see REL-AUD-POPULATION-LINE).",
+    "The analysis answers R03 and R04 hold hypothesis results (two_proportion_z, welch_t). The release makes no comparative statement from them, which is correct. If a later version adds one, it must go through a claim."
+  ],
+  "summary": "Every one of the 42 shown numbers on the 3 release surfaces is bound and formatted correctly. I recomputed each figure from the registry components: orders 44531, net revenue 3023296.61, both completion rates with their Wilson bounds, and both AOV points. All of them match, and all the identities hold. The release still fails for 4 reasons. (1) The report's page-level population line says every row of the export inside the quarter, delivered only. That contradicts deduplication and wrongly puts delivered only on the order count and on both completion rates. The line also differs from what src/",
+  "wall_seconds": 269.8,
+  "cost": {
+    "at": "2026-09-16T17:39:07.693733+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-1ec424ea468d",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-16T17:34:40.485990+00:00",
+    "finished_at": "2026-09-16T17:39:07.693733+00:00",
+    "wall_seconds": 267.203,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 26,
+    "cached_input_tokens": 1115080,
+    "output_tokens": 28363,
+    "total_tokens": 1143469,
+    "cost_usd": 2.1665755000000004
+  }
+}

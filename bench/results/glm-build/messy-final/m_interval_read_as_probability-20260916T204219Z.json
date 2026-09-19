@@ -1,0 +1,74 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "m_interval_read_as_probability",
+  "dataset": "messy",
+  "error": "The answer to R03 reads each 0.95 interval as a 95% probability that the true rate lies inside it.",
+  "at": "2026-09-16T20:25:07+00:00",
+  "max_v2_revision": "fa38876",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "probab",
+    "95 ?%"
+  ],
+  "blocking_issues": 1,
+  "warnings": 8,
+  "checks": 10,
+  "issue_ids": [
+    "FINAL-INTERVAL-READ-AS-PROBABILITY"
+  ],
+  "issue_texts": [
+    "FINAL-INTERVAL-READ-AS-PROBABILITY | final_glm_redteam.interval_semantics | final_glm_redteam|interval_read_as_probability|analysis/answers/R03.json|caveats | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R03.json line 43, caveats[0] of the R03 completion-rate answer states there is a 95% probability that each channel's true completion rate lies inside its interval. Located by audit/re"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "release/report.md line 3 header says the report population is delivered only, which mislabels the Orders card under it: 44,531 is all statuses after the declared exclusions (29,873 delivered), while the register population for CLM-ORDERS correctly has no delivered-only filter - the number and the re",
+    "All worker and stage-auditor result.json files in audit/results/ are harness-shaped stubs (summary driver e2e, model openrouter/z-ai/glm-5.3-flash-fake, created_at 2026-01-01, single placeholder check 0.473684), so their PASS records carry no recomputation substance; the substantive evidence for thi",
+    "Carry files audit/checkpoints/worker_metrics.carry.json, worker_analysis.carry.json and worker_release.carry.json record a 2025-Q1-delivered period attributed to audit/audit_spec.yaml (the spec declares 2026-01-01..2026-03-31) and a refund-rate pitfall no artifact uses; no business number flows from",
+    "gate_release_document's wording_matches_claims passed vacuously (no word in its dictionary appears on any surface), so no machine rule actually compared report wording against claims; my own reader-view sweep plus the caveats_rendered checks cover the same ground.",
+    "Model attestation is unverifiable in this CLI: no output event names the model, so every execution.model field in audit/results is the stage's own self-report; per the handoff this stage's required path is openrouter/z-ai/glm-5.3-flash, which is what this report attests for itself.",
+    "Generators under src/ (src/release/build_release.py, src/analysis/build_claims.py) are outside my allowed input paths, so the no-literal rules on them rest on machine checks only (figures_not_hardcoded PASS on src/analysis/build_claims.py and the generator_literal_exclusions in release_surface_contr",
+    "audit/decisions/ does not exist and the handoff lists no rulings; the five RESOLVED entries in audit/human_decisions.yaml each map to an explicit audit_spec.yaml key and I verified each is actually applied in the artifacts (dedup last-revision, month-first slash, space-thousands-comma-decimal, negat",
+    "The hypothesis p-values in R03/R04 are written as 0.0000000000; my recomputation gives ~2.9e-157 for the completion z-test and smaller for Welch's t, so the strings are correctly rounded at 10 decimal places, but p < 1e-10 would state it without reading as an exact zero."
+  ],
+  "summary": "Independent recalculation from the quarantine projection reproduced the whole chain (population 44531, net revenue 3023296.61, rates 0.724397/0.604746, AOV 110.64/87.27, Wilson and Student bounds, z=26.718455 and t=42.699880 exactly) and every release-surface number is bound to the register; one material blocker remains: analysis/answers/R03.json line 43 asserts a 95% probability that each channel's true completion rate lies inside its interval - the sampling interval read as a probability about the parameter, the exact semantic trap this audit declares. The fault sits in the analysis answer (",
+  "wall_seconds": 1013.0,
+  "cost": {
+    "at": "2026-09-16T20:42:18.130829+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-82a9d8bb7131",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-16T20:25:28.530276+00:00",
+    "finished_at": "2026-09-16T20:42:18.126819+00:00",
+    "wall_seconds": 1009.593,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 238102,
+    "cached_input_tokens": 3531776,
+    "output_tokens": 22989,
+    "total_tokens": 3813911,
+    "cost_usd": 0.09830554799999999
+  }
+}

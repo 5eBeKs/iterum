@@ -1,0 +1,73 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "m_dashboard_aov_labelled_revenue",
+  "dataset": "messy",
+  "error": "On the dashboard the direct average order value card is labelled revenue.",
+  "at": "2026-09-19T07:08:12+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "Revenue Direct",
+    "label",
+    "aov|average order"
+  ],
+  "blocking_issues": 4,
+  "warnings": 5,
+  "checks": 19,
+  "issue_ids": [
+    "REL-DASH-AOV-LABELLED-REVENUE",
+    "REL-REPORT-POPULATION-DELIVERED-ONLY",
+    "REL-DASH-ESTIMATE-CONTEXT-MISSING",
+    "REL-AOV-CAVEATS-NET-DELIVERED"
+  ],
+  "issue_texts": [
+    "REL-DASH-AOV-LABELLED-REVENUE | gate_release_auditor.dashboard_label_matches_claim | gate_release_auditor|dashboard_label_matches_claim|release/dashboard_data.json|CLM-AOV-DIRECT | VISUALIZATION | HIGH | worker_release | release/dashboard_data.json $.cards[4]: claim_id CLM-AOV-DIRECT (metric aov_direct, average value of a delivered direct order, 110.64 EUR) carries label 'Revenue Direct'. src/rele",
+    "REL-REPORT-POPULATION-DELIVERED-ONLY | gate_release_auditor.population_beside_number | gate_release_auditor|population_beside_number|release/report.md|page_population_line | RELEASE_INTEGRITY | MEDIUM | worker_release | release/report.md line 3 prints one population for the whole page, 'orders placed inside the quarter, one row per order, delivered only', which is CLM-NET-REVENUE's population (bui",
+    "REL-DASH-ESTIMATE-CONTEXT-MISSING | gate_release_auditor.estimate_context_on_card | gate_release_auditor|estimate_context_on_card|release/dashboard_data.json|estimate_cards | VISUALIZATION | MEDIUM | worker_release | release/dashboard_data.json cards 2-5 (CLM-COMPLETION-DIRECT/PARTNER, CLM-AOV-DIRECT/PARTNER) carry ci_low and ci_high but no n and no interval level; no card carries a population, an",
+    "REL-AOV-CAVEATS-NET-DELIVERED | gate_release_auditor.aov_caveats_beside | gate_release_auditor|aov_caveats_beside|analysis/claim_register.json|CLM-AOV | CLAIM_SUPPORT | MEDIUM | worker_analysis | CLM-AOV-DIRECT and CLM-AOV-PARTNER caveats in analysis/claim_register.json are only the channel-population and sampling-interval sentences; neither 'net of refunds' nor 'delivered orders only' appears in "
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "The dashboard label for CLM-AOV-DIRECT passed both machine gates: neither release_surface_gate nor gate_release_document compares labels with claims, and release_surface_contract.json declares no card_caveat_requirements, reconciliations or visual_evidence, so card labels, per-card population, perio",
+    "Both p-values render as 0.0000 on the report and the dashboard, which reads as exactly zero; the true p is below 0.0001 at z 26.72 and t 42.70.",
+    "On the dashboard the test cards put the p-value under the key 'value' with a label such as 'Test Channel Completion' and nothing marking it as a p, so a reader of the card cannot tell the 0.0000 is a p-value.",
+    "The completion-rate caveat 'one quarter of orders in this channel' is the only statement that the denominator is the whole channel, and on the report it is contradicted by the page-level 'delivered only' population line.",
+    "Welch t and Cohen's d for H-CHANNEL-AOV could only be approximated from the rounded Student intervals (t 42.62 vs 42.70, d 0.4854 vs 0.4869, within 0.3%); an exact recomputation needs the clean table, which is outside this stage's inputs."
+  ],
+  "summary": "All 60 rendered numbers on report.md, dashboard_data.json and the manifest are bound, exact to display_digits and reproduce from registry components (orders 24597+19934=44531, revenue 1971306.75+1051989.86=3023296.61, Wilson bounds, z=26.718455, effect 0.119652). The release still fails on what surrounds the numbers: the dashboard card for CLM-AOV-DIRECT is labelled 'Revenue Direct' (a hand edit the generator cannot produce), the report's single population line says 'delivered only' above the order count and completion rates, the dashboard's estimate cards carry no n, no interval level, no pop",
+  "wall_seconds": 254.8,
+  "cost": {
+    "at": "2026-09-19T07:12:31.683767+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-1ec424ea468d",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-19T07:08:20.241885+00:00",
+    "finished_at": "2026-09-19T07:12:31.683767+00:00",
+    "wall_seconds": 251.453,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 32,
+    "cached_input_tokens": 1523886,
+    "output_tokens": 26443,
+    "total_tokens": 1550361,
+    "cost_usd": 2.499623
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "m_effect_misnamed",
+  "dataset": "messy",
+  "error": "The R04 test calls its effect size a proportion difference; a Welch test on order values reports Cohen's d.",
+  "at": "2026-09-18T19:29:31+00:00",
+  "max_v2_revision": "b7adc4a",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "effect",
+    "cohen|proportion_difference|effect_name|effect size"
+  ],
+  "blocking_issues": 3,
+  "warnings": 6,
+  "checks": 39,
+  "issue_ids": [
+    "CLAIMS-R04-EFFECT-MISNAMED",
+    "CLAIMS-AOV-CAVEATS-POPULATION",
+    "CLAIMS-ANSWERS-HYPOTHESIS-GROUPS"
+  ],
+  "issue_texts": [
+    "CLAIMS-R04-EFFECT-MISNAMED | gate_claims_auditor.effect_name_matches_metric | gate_claims_auditor|effect_name_matches_metric|analysis/answers/R04.json|H-CHANNEL-AOV | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R04.json hypothesis.effect_name is proportion_difference. metrics channel_aov_test_effect has unit cohens_d, and so does CLM-TEST-CHANNEL-AOV render_values.effect. evidence/re",
+    "CLAIMS-AOV-CAVEATS-POPULATION | gate_claims_auditor.caveats_delivered_net_aov | gate_claims_auditor|caveats_delivered_net|analysis/claim_register.json|CLM-AOV | CLAIM_SUPPORT | MEDIUM | worker_analysis | The caveats of CLM-AOV-DIRECT and CLM-AOV-PARTNER in analysis/claim_register.json are 'one quarter of orders in this channel' and the sampling-interval sentence. Neither says the average covers de",
+    "CLAIMS-ANSWERS-HYPOTHESIS-GROUPS | gate_claims_auditor.answers_hypothesis_groups | gate_claims_auditor|hypothesis_groups_declared|analysis/answers|R03-R04 | CLAIM_SUPPORT | LOW | worker_analysis | The hypothesis objects in analysis/answers/R03.json and R04.json carry method, alpha, correction and n_per_group, but have no groups field. audit/analysis_plan.json registers groups [direct, partner] for"
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "The check plan has no rule over the content of analysis/answers beyond whether a question has an answer, so effect_name, the groups and the hypothesis fields are checked only by this auditor. That is where two of the three blockers above sit.",
+    "In gate_claims_machine, only claims_recomputed goes back to raw. recompute_estimate, recompute_test and min_group_size read clean_data/orders_clean.csv, and independent_claim_recalc.json covers only the six point claims, not the two tests. This auditor's recompute from quarantine/orders.csv agrees w",
+    "claims_are_single_assertions reports 'all roles in p' for both test claims, but their statistic and effect roles carry the units statistic, proportion_difference and cohens_d. The rule looks at the unit loosely, and it would not have caught the misnamed effect.",
+    "Both test claims record a family alpha of 0.05 and the name bonferroni, but neither records the adjusted per-test threshold (0.025) or adjusted p values. Applying the correction does not change the conclusion, since both p values are effectively zero (completion z = 26.72, p about 3e-157).",
+    "Both p values are stored as 0.0000000000 with display_digits 4. The release step should show them as below 0.0001 rather than as zero.",
+    "The claim register stores n and n_per_group as JSON integers, while metrics/calculated_metrics.json stores n as strings. The values agree."
+  ],
+  "summary": "All eight claims were recomputed independently from quarantine/orders.csv (45917 rows, 45000 order_ids, last revision kept, 459 outside the quarter and 10 with a negative refund excluded, leaving 44531 orders), and every value, interval, n, statistic, p and effect agrees with the registry and with the gate_claims_machine comparisons. Signs hold in every country and every month, and the channels' country mixes are balanced. Three text faults block the stage, all in worker_analysis: (1) R04 labels the H-CHANNEL-AOV effect as proportion_difference, but it is Cohen's d (0.4869; the raw gap is 23.3",
+  "wall_seconds": 229.3,
+  "cost": {
+    "at": "2026-09-18T19:33:27.900257+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-18T19:29:41.608921+00:00",
+    "finished_at": "2026-09-18T19:33:27.900257+00:00",
+    "wall_seconds": 226.281,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 36,
+    "cached_input_tokens": 2076368,
+    "output_tokens": 24060,
+    "total_tokens": 2100464,
+    "cost_usd": 2.9240074999999996
+  }
+}

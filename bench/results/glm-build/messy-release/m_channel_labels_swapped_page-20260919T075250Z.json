@@ -1,0 +1,65 @@
+{
+  "profile": "glm-build",
+  "stage": "release",
+  "case": "m_channel_labels_swapped_page",
+  "dataset": "messy",
+  "error": "On the page the direct and partner completion lines carry each other's labels; the figures and anchors are untouched.",
+  "at": "2026-09-19T07:48:13+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "label",
+    "swap|transpos|mislabel",
+    "direct|partner"
+  ],
+  "blocking_issues": 1,
+  "warnings": 3,
+  "checks": 13,
+  "issue_ids": [
+    "REL-LABEL-SWAP-CHANNEL"
+  ],
+  "issue_texts": [
+    "REL-LABEL-SWAP-CHANNEL | gate_release_auditor.channel_label_matches_claim | release|channel_label_not_matching_claim|release/report.md|completion_lines_14_16 | VISUALIZATION | HIGH | worker_release | release/report.md line 14: text label 'completion partner:' immediately precedes anchor <!-- claim:CLM-COMPLETION-DIRECT --> rendering 0.724397 (ci 0.718779..0.729946, n=24597), which the claim regist"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The document gate (audit/results/gate_release_document/evidence/checks.json) verified only claims_rendered/caveats_rendered/wording/quarantine; no gate check compared the human-readable channel label beside an estimate anchor to the claim's population, which is how the swap reached Gate 4.",
+    "The report header states the population as 'orders placed inside the quarter, one row per order, delivered only', which is the net-revenue population; the CLM-ORDERS population is not delivered-only (only negative refunds excluded) and the completion denominators include cancelled and pending orders",
+    "Neither gate directory contains recompute/component_sum/column_identity comparisons in its checks.json, so every machine_check on my own recomputations is null; all value-level binding evidence sits in gate_release_machine/evidence/release_surface_gate.json, which I reproduced number-by-number."
+  ],
+  "summary": "Every one of the 60 gate-recorded surface numbers re-derived independently with my own Decimal formatter (20/20 manifest values, 20 report anchors, 20 dashboard cards all exact to display_digits); reconciliation identities hold (24597+19934=44531 orders, 17818/24597=0.724397, 12055/19934=0.604746, aov numerators sum to headline net revenue 3023296.61, test effect 0.119652=rate difference); estimates show point+both bounds+n with n matching the register and '0.95 interval' matching analysis_plan level; no shipping_total, no quarantined comment text, no UNVERIFIED_CLAIM, no hidden-HTML caveats, ",
+  "wall_seconds": 270.8,
+  "cost": {
+    "at": "2026-09-19T07:52:48.625306+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-6049f24692e4",
+    "agent_role": "glm-audit-release",
+    "started_at": "2026-09-19T07:48:22.221415+00:00",
+    "finished_at": "2026-09-19T07:52:48.618885+00:00",
+    "wall_seconds": 266.406,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 49940,
+    "cached_input_tokens": 404224,
+    "output_tokens": 7276,
+    "total_tokens": 464560,
+    "cost_usd": 0.014889432
+  }
+}

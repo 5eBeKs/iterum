@@ -1,0 +1,53 @@
+{
+  "profile": "glm-build",
+  "stage": "release",
+  "case": "clean",
+  "error": "no defect planted (false-positive control)",
+  "at": "2026-09-15T17:34:30+00:00",
+  "max_v2_revision": "2a6f8dc",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "PASS",
+  "stop_code": null,
+  "outcome": "clean_pass",
+  "matched_signals": [],
+  "blocking_issues": 0,
+  "warnings": 2,
+  "checks": 17,
+  "issue_ids": [],
+  "warning_texts": [
+    "audit/check_plan.json marks both gate_release_document rules (claims_rendered, caveats_rendered) as accepted_unproven because the plan harness hit a FileNotFoundError while proving the rule code itself; the rules still ran against the real surfaces and my independent surface reading agrees with ever",
+    "Neither release gate recorded any recompute_*, component_sum or column_identity comparison in its evidence checks.json: the numeric grounding of the release rests on gate_release_machine's per-number binding of shown text to the claim register (release_surface_gate.json), and I recomputed the regist"
+  ],
+  "summary": "Independent recomputation from raw_data/orders.csv confirms all 21 displayed numbers on release/report.md, release/dashboard_data.json and release/release_number_manifest.json are exact to their display_digits (money 0.01, rate 1e-6), anchored to claim_id/role, with caveats shown on the same card; country components sum exactly to the headline; no UNVERIFIED_CLAIM; generator has no business literals.",
+  "wall_seconds": 147.8,
+  "cost": {
+    "at": "2026-09-15T17:37:01.152420+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-d5976dac1d89",
+    "agent_role": "glm-audit-release",
+    "started_at": "2026-09-15T17:34:38.007879+00:00",
+    "finished_at": "2026-09-15T17:37:01.150909+00:00",
+    "wall_seconds": 143.14,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 31109,
+    "cached_input_tokens": 371200,
+    "output_tokens": 6632,
+    "total_tokens": 411027,
+    "cost_usd": 0.010088675
+  }
+}

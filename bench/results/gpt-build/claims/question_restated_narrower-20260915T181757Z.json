@@ -1,0 +1,55 @@
+{
+  "profile": "gpt-build",
+  "stage": "claims",
+  "case": "question_restated_narrower",
+  "error": "R02 is restated without the half that asks on which basis the rate is taken.",
+  "at": "2026-09-15T18:12:19+00:00",
+  "max_v2_revision": "d6a41ff",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "missed",
+  "matched_signals": [],
+  "blocking_issues": 1,
+  "warnings": 2,
+  "checks": 4,
+  "issue_ids": [
+    "GCA-RAW-INPUT-001"
+  ],
+  "warning_texts": [
+    "The attempt input contract also omits audit/human_decisions.yaml even though audit/prompts/AUDITOR_CLAIMS.md requires it to be read before auditing; the resolved values echoed in audit/audit_spec.yaml were not treated as a substitute for reviewing that source.",
+    "The five numerical values in gate_claims_machine evidence remain unverified by this independent auditor; agreement among machine evidence, calculated metrics, and the claim register is not an independent raw-data comparison."
+  ],
+  "summary": "Declared artifacts support the five claim-to-metric links, periods, populations, and paying-customer refund-rate wording, but the mandatory independent raw recalculation is impossible because raw_data/orders.csv is outside this attempt's allowed inputs.",
+  "wall_seconds": 327.9,
+  "cost": {
+    "at": "2026-09-15T18:17:56.420330+00:00",
+    "launcher": "codex_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-046dabbb8433",
+    "agent_role": "gpt-audit-claims",
+    "started_at": "2026-09-15T18:12:34.683517+00:00",
+    "finished_at": "2026-09-15T18:17:56.418337+00:00",
+    "wall_seconds": 321.734,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "gpt-5.6-sol",
+    "model_used": null,
+    "input_tokens": 1272208,
+    "cached_input_tokens": null,
+    "output_tokens": 9729,
+    "total_tokens": 1281937,
+    "cost_usd": null
+  }
+}

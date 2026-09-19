@@ -1,0 +1,75 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "exclusion_reasons_swapped",
+  "dataset": "orders",
+  "error": "R04 attaches each exclusion count to the other rule: 26 rows 'outside period', 1 row 'not delivered'.",
+  "at": "2026-09-16T17:17:19+00:00",
+  "max_v2_revision": "920704d",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R04",
+    "exclusion",
+    "swap|reason|rule",
+    "not_delivered|outside_period"
+  ],
+  "blocking_issues": 1,
+  "warnings": 7,
+  "checks": 8,
+  "issue_ids": [
+    "R04-EXCLUSION-RULES-SWAPPED"
+  ],
+  "issue_texts": [
+    "R04-EXCLUSION-RULES-SWAPPED | gate_claims_machine.questions_are_answered.r04_rule_attribution | gate_claims_machine|questions_are_answered.r04_rule_attribution|analysis/answers/R04.json|row_accounting | METRIC_DEFINITION | HIGH | worker_analysis | analysis/answers/R04.json lines 9-14: fact metric_id=excluded_not_delivered value 26 carries exclusion 'order_date outside period', and fact metric_id=e"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The entire agent-side PASS chain behind this release was written by the e2e harness, not by a model: every worker and stage-auditor result carries model 'openrouter/z-ai/glm-5.3-flash-fake' and 'driver e2e' summaries, so no independent model review occurred anywhere before this gate; what actually h",
+    "No output event of the opencode CLI names the model, so MODEL_MISMATCH is unverifiable in this profile: every execution.model line in every result.json of this run, including mine, is a stage's self-report and nothing else.",
+    "check_plan accepted_unproven records that gate_release_document's claims_rendered and caveats_rendered were accepted without breaker proof (FileNotFoundError during plan proving); both ran and passed on the real surfaces, but no negative test ever demonstrated they fire on broken data.",
+    "The repo's committed audit/AUDIT_REPORT.md describes a different, claude-profile run (stage final_claude_redteam, model column claude-opus-5, release digest 48007d05...); a reader comparing it with this glm run will find the stage table and model column do not match, and its own README says its agen",
+    "gate_metrics_machine never recomputes excluded_order_rows or excluded_outside_period from source (the registry and AUDIT_REPORT 'What was not checked' both say so); until this recalc they rested only on component sums, and my recount now independently pins them at 27 and 1.",
+    "All four worker carry files list raw_data/orders.csv under do_not_reread although a raw source is not a previous stage's output; the four carries are otherwise identical boilerplate and the machine gates read raw regardless, so it had no effect here.",
+    "The three RESOLVED assumptions in human_decisions.yaml (paying_customers basis, net_of_refunds, Europe/Warsaw local date) each move a published number by construction; on this data none looks wrong - the 2025-04-01 delivered row the raw file carries is what proves the inclusive-boundary reading was "
+  ],
+  "summary": "Every published business figure verifies independently from raw (net_revenue 35741.52 EUR, refund total 4493.50, rate 27/57 = 0.473684, PL/DE/CZ components sum to the headline; row accounting 201 = 174 + 26 + 1), but the analysis stage's answer to R04 - the only artifact that carries 'under which of the spec's allowed exclusions' - attributes the two exclusion rules to each other: excluded_not_delivered (26) is labeled 'order_date outside period' and excluded_outside_period (1) is labeled 'status != delivered', the opposite of the raw data, of the metrics registry definitions, of clean_data/ex",
+  "wall_seconds": 679.7,
+  "cost": {
+    "at": "2026-09-16T17:28:53.877345+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-8d0ec2e4f1e3",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-16T17:17:37.730379+00:00",
+    "finished_at": "2026-09-16T17:28:53.870783+00:00",
+    "wall_seconds": 676.14,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 97230,
+    "cached_input_tokens": 1293312,
+    "output_tokens": 7813,
+    "total_tokens": 1411458,
+    "cost_usd": 0.038383416
+  }
+}

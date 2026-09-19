@@ -1,0 +1,76 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "m_effect_misnamed",
+  "dataset": "messy",
+  "error": "The R04 test calls its effect size a proportion difference; a Welch test on order values reports Cohen's d.",
+  "at": "2026-09-19T10:19:45+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "effect",
+    "cohen|proportion_difference|effect_name|effect size"
+  ],
+  "blocking_issues": 2,
+  "warnings": 8,
+  "checks": 13,
+  "issue_ids": [
+    "FINAL-R04-EFFECT-NAME",
+    "FINAL-CARRY-FACTS-MISMATCH"
+  ],
+  "issue_texts": [
+    "FINAL-R04-EFFECT-NAME | final_redteam.effect_name_matches_claim_unit | final_glm_redteam|effect_name_matches_claim_unit|analysis/answers/R04.json|CLM-TEST-CHANNEL-AOV.effect_name | CLAIM_SUPPORT | HIGH | worker_analysis | audit/results/final/evidence/final_checks.py + final_checks.out: register CLM-TEST-CHANNEL-AOV render_values.effect.unit = cohens_d, metrics registry channel_aov_test_effect.unit",
+    "FINAL-CARRY-FACTS-MISMATCH | final_redteam.carry_facts_match_stage_output | final_glm_redteam|carry_facts_match_stage_output|audit/checkpoints/worker_clean.carry.json|period+population+grain | OTHER | HIGH | worker_clean | audit/results/final/evidence/final_checks.py + final_checks.out: all four audit/checkpoints/worker_*.carry.json declare periods [{name: 2025-Q1-delivered, start 2025-01-01, end "
+  ],
+  "other_blockers": 1,
+  "warning_texts": [
+    "Report header renders 'Population: orders placed inside the quarter, one row per order, delivered only.' (the revenue claim's population) as the page-level population while the Orders card directly beneath it counts all statuses, so a headline reader can misread 44,531 as delivered orders; per-claim",
+    "Dashboard estimate cards in release/dashboard_data.json carry the point and both bounds but no n, while the spec's estimate_rendering comment requires an estimate rendered with its interval and its n beside it always; report.md does show n and every n there matches my recount.",
+    "Every worker result.json reports execution.model 'openrouter/z-ai/glm-5.3-flash-fake': the string contains the required lane 'openrouter/z-ai/glm-5.3-flash' but the '-fake' suffix marks the driver-e2e harness, and nothing in this CLI's output can verify any stage's model beyond its own report.",
+    "Carry files could not be validated against audit/schemas/carry.schema.json because that file is not among my declared inputs; identity fields were verified and content checked by contradiction instead.",
+    "No drift_since_review field in the handoff, so the post-review-drift check of stage-prompt item 11 had nothing named to re-test; its absence does not prove the column assumptions hold.",
+    "audit/decisions/ does not exist and the handoff rulings list is empty; all five keys of audit/human_decisions.yaml are RESOLVED and each resolution was verified applied in the data (latest-revision dedup, month-first slashed dates, space-thousands/comma-decimal shipping, negative refunds excluded, c",
+    "Shipping_total 37792722.50 is computed but unpublished by name as the check plan declares, and my own parse reproduces it exactly; it is excused because 2648 of 44531 population cells (blank, NaN, inf) enter as zero, so the figure understates itself by an unbounded amount.",
+    "This profile is deliberately single-vendor, so the chain of PASS results is not cross-vendor review; what actually carried the verification is the deterministic layer (frozen check_plan, machine gates, control lock, release surface gate) plus my independent recomputation, which agreed with it everyw"
+  ],
+  "summary": "All published numbers verified by independent recomputation from the quarantine projection with my own code (population 44531, net_revenue 3023296.61, shipping_total 37792722.50 via an own locale parser, both completion rates, both Wilson intervals, both Student intervals via an own t-quantile, both registered tests; clean-table integrity, control totals against the export log, surface-to-claim binding of all 20 anchors, 60/60 numbers bound by the release gate, 0 UNVERIFIED_CLAIM markers, 2/2 hypotheses registered). Two material blockers: (1) analysis/answers/R04.json names the H-CHANNEL-AOV e",
+  "wall_seconds": 991.2,
+  "cost": {
+    "at": "2026-09-19T10:36:37.183952+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-c012c6fb311b",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-19T10:20:09.930682+00:00",
+    "finished_at": "2026-09-19T10:36:37.183952+00:00",
+    "wall_seconds": 987.25,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 93124,
+    "cached_input_tokens": 2190784,
+    "output_tokens": 14139,
+    "total_tokens": 2326940,
+    "cost_usd": 0.060939072000000004
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "question_restated_narrower",
+  "error": "R02 is restated without the half that asks on which basis the rate is taken.",
+  "at": "2026-09-15T18:15:18+00:00",
+  "max_v2_revision": "d6a41ff",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "PASS",
+  "stop_code": null,
+  "outcome": "warned",
+  "matched_signals": [
+    "restat|narrow|half|question"
+  ],
+  "blocking_issues": 0,
+  "warnings": 2,
+  "checks": 9,
+  "issue_ids": [],
+  "warning_texts": [
+    "analysis/answers/R01.json restates R01 as 'net revenue for the reported quarter', dropping the question's qualifier 'over delivered orders inside the period'; the narrowing is carried without loss because the answer points to CLM-NET-REVENUE, whose own population, period and caveats state the delive",
+    "The gate's questions_are_answered rule binds figures only for R04; R01-R03 answers are checked for question and facts fields but their figures are bound only transitively through the claims they reference, and the R01 restatement above shows that transitive binding is what keeps the population visib"
+  ],
+  "summary": "All five claims recomputed independently from raw_data/orders.csv with own code: net_revenue 35741.52, refund_rate 0.473684 (27/57 unique paying customers), PL 11181.67, DE 11032.61, CZ 13527.24, components sum to headline; row accounting 201=174+26+1 with the sole delivered out-of-period row dated 2025-04-01 (inclusive boundary enforced). Machine gate comparisons match. Warnings recorded for a narrower restatement of R01 in its answer file.",
+  "wall_seconds": 94.5,
+  "cost": {
+    "at": "2026-09-15T18:16:58.161858+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-ebe65ed5adb1",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-15T18:15:30.293681+00:00",
+    "finished_at": "2026-09-15T18:16:58.159858+00:00",
+    "wall_seconds": 87.875,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 56546,
+    "cached_input_tokens": 340544,
+    "output_tokens": 4254,
+    "total_tokens": 403213,
+    "cost_usd": 0.01089636
+  }
+}

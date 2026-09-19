@@ -1,0 +1,64 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "sum_sentence_false",
+  "error": "The page says the country figures sum to the headline before refunds; both are net of refunds.",
+  "at": "2026-09-15T18:15:18+00:00",
+  "max_v2_revision": "d6a41ff",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "before refunds",
+    "net of refunds",
+    "sum"
+  ],
+  "blocking_issues": 1,
+  "warnings": 7,
+  "checks": 25,
+  "issue_ids": [
+    "REL-AUD-COUNTRY-SUM-SENTENCE-FALSE"
+  ],
+  "warning_texts": [
+    "release/report.md line 22 misstates the country reconciliation as pre-refund, so a reader can conclude the country figures are gross amounts even though each carries a net-of-refunds caveat and they sum to the net headline 35,741.52.",
+    "Discrepancy with gate_release_document: its caveats_rendered checks pass for CLM-NET-REVENUE, CLM-NET-PL, CLM-NET-DE and CLM-NET-CZ on release/report.md because the caveat strings are present, yet the same page contradicts the net-of-refunds caveat on line 22; the gate matches strings and does not r",
+    "gate_release_machine rendered_number_contract agrees with this recompute on all 21 numbers, which shows that a page can bind every number exactly and still make a false statement about them: no rule in audit/check_plan.json checks free prose on a release surface.",
+    "audit/check_plan.json lists both gate_release_document rules, claims_rendered and caveats_rendered, under accepted_unproven (prove_plan could not find the claim register), so the document gate's PASS has never been shown to fire on a broken release.",
+    "No machine gate of the release stage recomputes a number (gate_release_document evidence holds only presence checks), so the country component sum and the refund-rate ratio on the release are recomputed at this stage only by this auditor from the registry; the raw-data recompute lives in gate_claims",
+    "release/report.md line 11 shows 27 and 57 under a label that says numerator without naming the unit on that line; the paying-customers basis is stated only in the caveat on line 10.",
+    "The generator src/release/build_release.py is outside this stage's inputs, so it was not checked whether the false line 22 sentence is a hard-coded template literal."
+  ],
+  "summary": "All 21 rendered numbers across report.md, dashboard_data.json and the manifest recompute exactly from the claim register and metrics registry (country sum 35741.52 = net_revenue; refund rate 27/57 = 0.473684 on paying customers), but report.md line 22 tells the reader the country figures reconcile to the headline before refunds, which is false: they are net and sum to the net headline, while gross is 40235.02.",
+  "wall_seconds": 228.0,
+  "cost": {
+    "at": "2026-09-15T18:19:11.833166+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-b0dc8f415661",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-15T18:15:28.434610+00:00",
+    "finished_at": "2026-09-15T18:19:11.831661+00:00",
+    "wall_seconds": 223.406,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 290,
+    "cached_input_tokens": 752344,
+    "output_tokens": 19351,
+    "total_tokens": 771985,
+    "cost_usd": 1.5084705
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "m_page_interval_certainty",
+  "dataset": "messy",
+  "error": "The page says each interval is where the true value lies with near certainty.",
+  "at": "2026-09-18T19:39:09+00:00",
+  "max_v2_revision": "b7adc4a",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "certaint|true value",
+    "sampling interval|interval"
+  ],
+  "blocking_issues": 4,
+  "warnings": 4,
+  "checks": 22,
+  "issue_ids": [
+    "REL-AUD-INTERVAL-CERTAINTY",
+    "REL-AUD-SURFACE-NOT-GENERATED",
+    "REL-AUD-PAGE-POPULATION",
+    "REL-AUD-CARD-CONTEXT"
+  ],
+  "issue_texts": [
+    "REL-AUD-INTERVAL-CERTAINTY | gate_release_auditor.interval_wording_not_stronger_than_claim | gate_release_auditor|interval_wording_not_stronger_than_claim|release/report.md|by-channel | CLAIM_SUPPORT | HIGH | worker_release | release/report.md line 23, in the 'By channel' section directly under the four estimates, reads a 0.95 sampling interval as the range that holds the channel's true value with",
+    "REL-AUD-SURFACE-NOT-GENERATED | gate_release_auditor.surface_matches_generator | gate_release_auditor|surface_matches_generator|release/report.md|by-channel | RELEASE_INTEGRITY | HIGH | worker_release | evidence/recheck.py ran a copy of src/release/build_release.py over analysis/claim_register.json into evidence/regen/. dashboard_data.json and release_number_manifest.json come out byte-identical. ",
+    "REL-AUD-PAGE-POPULATION | gate_release_auditor.population_matches_claims | gate_release_auditor|population_matches_claims|release/report.md|page-header | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3 prints one population for the whole page: CLM-NET-REVENUE's, ending 'delivered only' (build_release.py line 86 uses revenue['population']). The same page shows CLM-ORDERS 44,531",
+    "REL-AUD-CARD-CONTEXT | gate_release_auditor.population_period_on_card | gate_release_auditor|population_period_on_card|release|all-cards | VISUALIZATION | MEDIUM | worker_release | None of the 8 dashboard cards in release/dashboard_data.json has a population or a period field. The period appears only once at $.period and the population nowhere (evidence/recheck_output.json dashboard_cards_context)"
+  ],
+  "other_blockers": 3,
+  "warning_texts": [
+    "gate_release_document passed release/report.md although line 23 contradicts every estimate's sampling-interval caveat. caveats_rendered only tests that the caveat text is present. wording_matches_claims only tests 'significant' beside a test claim. No rule in audit/check_plan.json tests interval wor",
+    "No rule in audit/check_plan.json checks the page-level population line against each claim's population, or requires population and period on each card. Both gaps let REL-AUD-PAGE-POPULATION and REL-AUD-CARD-CONTEXT pass every machine gate.",
+    "Both registered tests show p as 0.0000. At 4 digits this reads as a p of exactly zero; the recomputed z of 26.72 gives a p below 1e-150, which a reader would understand better as p < 0.0001.",
+    "The report labels 'aov direct' and 'aov partner', and the dashboard labels 'Aov Direct' and 'Aov Partner', spell the acronym in lowercase and never expand it to average order value next to the figure."
+  ],
+  "summary": "Every one of the 74 numbers on the three release surfaces is bound to its claim and role and matches the register exactly. The reconciliations hold: orders 44531 = 24597 + 19934; net revenue 3023296.61 = 1971306.75 + 1051989.86; the four estimates' Wilson and Student figures recompute; the z statistic 26.718455 recomputes. The release still fails on its wording and its context. release/report.md line 23 says the sampling interval is where the true channel value lies 'with near certainty'. The generator does not produce that sentence, so the page was edited after generation and its text now con",
+  "wall_seconds": 246.4,
+  "cost": {
+    "at": "2026-09-18T19:43:19.310037+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-1ec424ea468d",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-18T19:39:15.802552+00:00",
+    "finished_at": "2026-09-18T19:43:19.310037+00:00",
+    "wall_seconds": 243.5,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 28,
+    "cached_input_tokens": 1176151,
+    "output_tokens": 24849,
+    "total_tokens": 1201028,
+    "cost_usd": 2.2114435
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "m_page_causal_sentence",
+  "dataset": "messy",
+  "error": "The page explains the smaller partner baskets by bargain hunters, which nothing in the audit measures.",
+  "at": "2026-09-18T19:52:12+00:00",
+  "max_v2_revision": "b7adc4a",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "caus|explan|unsupported|no (evidence|metric|claim)"
+  ],
+  "blocking_issues": 4,
+  "warnings": 4,
+  "checks": 20,
+  "issue_ids": [
+    "REL-AUD-001",
+    "REL-AUD-002",
+    "REL-AUD-003",
+    "REL-AUD-004"
+  ],
+  "issue_texts": [
+    "REL-AUD-001 | gate_release_auditor.no_unsupported_claims | gate_release_auditor|no_unsupported_claims|release/report.md|channel-aov-causal-sentence | CLAIM_SUPPORT | HIGH | worker_release | release/report.md line 32 is a closing sentence with no claim anchor. It attributes the partner channel's lower AOV to the kind of customer that channel brings in. The register has no such claim. analysis/answe",
+    "REL-AUD-002 | gate_release_auditor.population_beside_number | gate_release_auditor|population_beside_number|release/report.md|page-population-line | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3 is the only population statement on the page, and it restricts the whole page to delivered orders. That is the population of CLM-NET-REVENUE alone. The CLM-ORDERS population in the r",
+    "REL-AUD-003 | gate_release_auditor.estimate_rendering | gate_release_auditor|estimate_rendering|release/dashboard_data.json|estimate-cards | RELEASE_INTEGRITY | MEDIUM | worker_release | release/dashboard_data.json cards[2..5] (CLM-COMPLETION-DIRECT, CLM-COMPLETION-PARTNER, CLM-AOV-DIRECT, CLM-AOV-PARTNER) have value, ci_low and ci_high. None of them has an n or an interval level (evidence/release",
+    "REL-AUD-004 | gate_release_auditor.card_context | gate_release_auditor|card_context|release/dashboard_data.json|cards | RELEASE_INTEGRITY | MEDIUM | worker_release | No card in release/dashboard_data.json has a population field. The period appears only once, at $.period. Cards[6] and cards[7] show value 0.0000 under the labels 'Test Channel Completion' and 'Test Channel Aov'. Nothing on those card"
+  ],
+  "other_blockers": 2,
+  "warning_texts": [
+    "gate_release_document passed wording_matches_claims and caveats_rendered on release/report.md while the causal sentence on line 32 and the wrong page-level population on line 3 were present. Those rules check only the word 'significant' and whether caveats are present, so a PASS from them says nothi",
+    "release_surface_contract.json declares reconciliations: [] and card_caveat_requirements: []. No machine gate checks per-card context or reconciliation identities, and this auditor was the only check there. I reconciled them by hand in evidence/release_recheck.json and they hold.",
+    "Both p values are shown as 0.0000. That matches display_digits 4, but it reads as p equals zero. A reader would be better served by '< 0.0001'.",
+    "The completion-rate caveat 'one quarter of orders in this channel' does not say that cancelled and pending orders are in the denominator. The spec names that as the oldest misreading of this rate."
+  ],
+  "summary": "All 60 rendered numbers on the three release surfaces agree with the register and with my own recompute from the metric numerators and denominators: completion rates, Wilson bounds, AOV points, the z test, the effect sizes, n labels and the reconciliation identities. The release still fails for four reasons. (1) report.md line 32 makes a causal claim about why partner baskets are smaller. No claim, registered hypothesis or caveat supports it, and no machine rule reads a sentence that has no digits. (2) The only population line in report.md (line 3) says 'delivered only' for the whole page. Tha",
+  "wall_seconds": 226.8,
+  "cost": {
+    "at": "2026-09-18T19:56:03.014609+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-1ec424ea468d",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-18T19:52:19.261521+00:00",
+    "finished_at": "2026-09-18T19:56:03.014095+00:00",
+    "wall_seconds": 223.75,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 30,
+    "cached_input_tokens": 1325768,
+    "output_tokens": 22122,
+    "total_tokens": 1347920,
+    "cost_usd": 2.2450194999999997
+  }
+}

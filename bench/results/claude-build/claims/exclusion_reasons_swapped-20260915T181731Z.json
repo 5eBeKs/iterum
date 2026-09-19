@@ -1,0 +1,63 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "exclusion_reasons_swapped",
+  "error": "R04 attaches each exclusion count to the other rule: 26 rows 'outside period', 1 row 'not delivered'.",
+  "at": "2026-09-15T18:14:11+00:00",
+  "max_v2_revision": "d6a41ff",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R04",
+    "exclusion",
+    "swap|reason|rule",
+    "not_delivered|outside_period"
+  ],
+  "blocking_issues": 1,
+  "warnings": 5,
+  "checks": 14,
+  "issue_ids": [
+    "CLAIMS-AUDIT-R04-EXCLUSION-LABELS-SWAPPED"
+  ],
+  "warning_texts": [
+    "gate_claims_machine questions_are_answered.R04 compares only the three counts in analysis/answers/R04.json with the registry and never the exclusion rule named beside each count, so an answer with the two rules swapped passed the machine gate; the check plan holds no deterministic rule over that pai",
+    "The free-text caveats in analysis/answers/R02.json, R03.json and R04.json are checked by no rule in audit/check_plan.json; only the auditor reads them (R02 and R03 read correctly, R04 is the blocking issue).",
+    "The CLM-REFUND-RATE render_values numerator (27) and denominator (57) are published figures that gate_claims_machine does not recompute (it recomputes only the ratio); they match a raw recount but rest on auditor judgement alone at this gate.",
+    "metrics/calculated_metrics.json describes net_revenue_cz, net_revenue_de and net_revenue_pl with the formula text 'SUM(net_amount) WHERE country = country', which does not name the country; the values and population fields are correct.",
+    "metrics/calculated_metrics.json gives net_revenue a numerator field of 40235.02, which is the gross sum rather than a ratio numerator, and a release reading that field as a figure would show gross next to a net headline."
+  ],
+  "summary": "All five claims recompute from raw_data/orders.csv exactly (net 35741.52, refund rate 27/57 = 0.473684 on paying customers, PL 11181.67, DE 11032.61, CZ 13527.24), periods, populations and caveats are the ones they were computed on, and the machine recalc is rooted only in raw_data; but analysis/answers/R04.json attaches each exclusion count to the other rule (26 not-delivered rows labelled as outside the period, 1 outside-period row labelled as not delivered), which the machine gate's value-only comparison passed.",
+  "wall_seconds": 190.5,
+  "cost": {
+    "at": "2026-09-15T18:17:30.136128+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-f58036111c74",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-15T18:14:26.062340+00:00",
+    "finished_at": "2026-09-15T18:17:30.136128+00:00",
+    "wall_seconds": 184.078,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 258,
+    "cached_input_tokens": 737335,
+    "output_tokens": 15395,
+    "total_tokens": 752988,
+    "cost_usd": 1.510263
+  }
+}

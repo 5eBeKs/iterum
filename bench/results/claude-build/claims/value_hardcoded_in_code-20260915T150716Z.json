@@ -1,0 +1,64 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "value_hardcoded_in_code",
+  "error": "The analysis code writes the headline as a literal instead of reading the metrics registry; the number happens to be right.",
+  "at": "2026-09-15T15:03:09+00:00",
+  "max_v2_revision": "0703cb4",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "hard-?cod",
+    "literal",
+    "build_claims",
+    "35741\\.52"
+  ],
+  "blocking_issues": 1,
+  "warnings": 6,
+  "checks": 12,
+  "issue_ids": [
+    "CLAIMS-AUD-HEADLINE-VALUE-LITERAL"
+  ],
+  "warning_texts": [
+    "The headline claim value in analysis/claim_register.json was produced by a literal in src/analysis/build_claims.py:53 rather than derived from metrics/calculated_metrics.json; the number is correct against raw today, but its provenance is a copy, not a calculation.",
+    "The frozen check plan has no rule binding a claim value to the metric field its source_value_ref names: claim_refs_resolve proves only that the ref exists, and claims_recomputed proves only that the value matches raw, so a claim hardcoded to a correct number passes every machine check at this gate.",
+    "The CLM-REFUND-RATE render roles numerator 27 and denominator 57 are shown on release surfaces but claims_recomputed binds only the ratio; they were verified here from raw (27 refunded of 57 distinct paying customers in the population) and no machine check at this gate holds them.",
+    "The refund-rate caveat names the basis as the spec token paying_customers ('unique paying_customers, not order rows') rather than plain words; the frozen caveat topic accepts it and the meaning is clear, but a lay reader of the report sees an identifier.",
+    "The metrics period is labelled 2025-Q1-delivered while the spec period ends 2025-03-30, not 2025-03-31; raw_data/orders.csv has no rows dated 2025-03-31, so no figure is affected, but the label overstates the window.",
+    "The basis ruling is material on this data: on order rows the refund rate would be 33/174 = 0.189655 against 0.473684 on paying customers, so any surface that drops the paying-customers caveat changes the meaning by a factor of about 2.5."
+  ],
+  "summary": "All five claims recompute from raw_data/orders.csv to the registered values (net revenue 35741.52, refund rate 27/57 = 0.473684 on paying customers, PL 11181.67, DE 11032.61, CZ 13527.24; countries sum exactly to the headline), populations, periods and caveats are correct, and the machine recalc is rooted only in raw. The gate fails on provenance: src/analysis/build_claims.py line 53 types the headline CLM-NET-REVENUE value as the literal 35741.52 instead of reading metrics.net_revenue.value, so the claim-to-metric link its source_value_ref asserts does not exist in the code that wrote it.",
+  "wall_seconds": 243.7,
+  "cost": {
+    "at": "2026-09-15T15:07:15.523969+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-f58036111c74",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-15T15:03:14.497757+00:00",
+    "finished_at": "2026-09-15T15:07:15.523969+00:00",
+    "wall_seconds": 241.031,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 386,
+    "cached_input_tokens": 1174380,
+    "output_tokens": 19867,
+    "total_tokens": 1194633,
+    "cost_usd": 2.0299050000000003
+  }
+}

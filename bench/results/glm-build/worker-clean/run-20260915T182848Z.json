@@ -1,0 +1,44 @@
+{
+  "profile": "glm-build",
+  "stage": "clean",
+  "worker": "worker_clean",
+  "kind": "worker",
+  "at": "2026-09-15T18:25:07+00:00",
+  "max_v2_revision": "1d34cf0",
+  "verdict": "PASS",
+  "stop_code": null,
+  "summary": "Built clean_data/orders_clean.csv (174 delivered orders, 2025-01-01..2025-03-30 inclusive) and clean_data/exclusions.json (201 raw = 174 + 26 not-delivered + 1 outside period) from raw_data/orders.csv; build_clean.py was made contract-driven (population read from audit/audit_spec.yaml, no hardcoded period/status/exclusions); independent recomputation passed and gate_clean_machine passed 9/9.",
+  "wall_seconds": 218.8,
+  "cost": {
+    "at": "2026-09-15T18:28:45.480611+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "worker_clean",
+    "attempt": 1,
+    "context_id": "ctx-worker_clean-a1-97e9ea01bfad",
+    "agent_role": "glm-worker",
+    "started_at": "2026-09-15T18:25:12.128100+00:00",
+    "finished_at": "2026-09-15T18:28:45.479609+00:00",
+    "wall_seconds": 213.343,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 36246,
+    "cached_input_tokens": 459520,
+    "output_tokens": 6067,
+    "total_tokens": 502788,
+    "cost_usd": 0.011366749999999998
+  },
+  "machine": {
+    "gates": {
+      "gate_clean_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "outcome": "gate_pass",
+  "fingerprints": []
+}

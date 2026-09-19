@@ -1,0 +1,55 @@
+{
+  "profile": "gpt-build",
+  "stage": "release",
+  "case": "population_line_wrong",
+  "error": "The page's population line says all orders; every figure is over delivered orders.",
+  "at": "2026-09-16T13:34:56+00:00",
+  "max_v2_revision": "e48d886",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "population",
+    "all orders"
+  ],
+  "blocking_issues": 1,
+  "warnings": 0,
+  "checks": 47,
+  "issue_ids": [
+    "REL-POPULATION-STATEMENT"
+  ],
+  "warning_texts": [],
+  "summary": "All 21 rendered claim-role numbers, source links, precisions, the country sum, and the refund ratio reconcile, but the reader-visible report population incorrectly includes all in-period orders instead of delivered in-period orders.",
+  "wall_seconds": 381.0,
+  "cost": {
+    "at": "2026-09-16T13:41:20.361743+00:00",
+    "launcher": "codex_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_release_auditor-a1-08913a56e441",
+    "agent_role": "gpt-audit-release",
+    "started_at": "2026-09-16T13:35:01.924008+00:00",
+    "finished_at": "2026-09-16T13:41:20.359214+00:00",
+    "wall_seconds": 378.438,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "gpt-5.6-sol",
+    "model_used": null,
+    "input_tokens": 1490425,
+    "cached_input_tokens": null,
+    "output_tokens": 16542,
+    "total_tokens": 1506967,
+    "cost_usd": null
+  }
+}

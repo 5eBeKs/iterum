@@ -1,0 +1,66 @@
+{
+  "profile": "claude-build",
+  "stage": "claims",
+  "case": "m_effect_misnamed",
+  "dataset": "messy",
+  "error": "The R04 test calls its effect size a proportion difference; a Welch test on order values reports Cohen's d.",
+  "at": "2026-09-19T07:21:53+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "effect",
+    "cohen|proportion_difference|effect_name|effect size"
+  ],
+  "blocking_issues": 1,
+  "warnings": 5,
+  "checks": 53,
+  "issue_ids": [
+    "CLAIMS-AUD-R04-EFFECT-NAME"
+  ],
+  "issue_texts": [
+    "CLAIMS-AUD-R04-EFFECT-NAME | gate_claims_auditor.answers.R04.hypothesis | gate_claims_auditor|answer_effect_name_matches_metric|analysis/answers/R04.json|CLM-TEST-CHANNEL-AOV | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R04.json hypothesis.effect_name is 'proportion_difference' for CLM-TEST-CHANNEL-AOV; metrics/calculated_metrics.json channel_aov_test_effect has unit 'cohens_d' and "
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The two published p values are stored as 0.0000000000 and would render as 0.0000 at display_digits 4; the recomputed p values are about 3e-157 and effectively 0, so the release should state them as below 0.0001 rather than as zero.",
+    "Both test claims carry alpha 0.05 with bonferroni but do not state the corrected per-test threshold 0.025; the conclusions do not change because both p values are far below it.",
+    "The machine gate recomputes the estimates and tests from clean_data/orders_clean.csv, and only the six point claims from raw_latest; this auditor's recalculation from the quarantine projection agrees with all of them.",
+    "No rule in audit/check_plan.json compares the hypothesis block of analysis/answers/*.json with the claim register or the metrics, so the R04 effect-name error passed the machine gate unseen.",
+    "The unpublished shipping_total 37792722.50 reproduces from the quarantine projection with the declared locale, with 2648 in-period orders counted as missing; it stays excused from publication."
+  ],
+  "summary": "All eight claims reproduce from quarantine/orders.csv (last revision per order, Q1 2026 by order_month, negative refunds out): net revenue, order count, both completion rates with Wilson bounds, both AOVs with Student bounds, and both registered tests match the metrics byte for byte and the machine gate within tolerance; populations, caveats, plan fields, strata signs and the raw rooting of claims_recomputed hold. One blocker: analysis/answers/R04.json names the AOV test effect 'proportion_difference' while it is a Cohen's d.",
+  "wall_seconds": 243.5,
+  "cost": {
+    "at": "2026-09-19T07:26:03.851225+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_claims_auditor-a1-9d8afc6c975c",
+    "agent_role": "claude-audit-claims",
+    "started_at": "2026-09-19T07:22:03.756263+00:00",
+    "finished_at": "2026-09-19T07:26:03.851225+00:00",
+    "wall_seconds": 240.094,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 36,
+    "cached_input_tokens": 1922386,
+    "output_tokens": 25830,
+    "total_tokens": 1948252,
+    "cost_usd": 2.8617879999999998
+  }
+}

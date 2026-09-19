@@ -1,0 +1,93 @@
+{
+  "profile": "claude-build",
+  "stage": "final",
+  "case": "m_interval_read_as_probability",
+  "dataset": "messy",
+  "error": "The answer to R03 reads each 0.95 interval as a 95% probability that the true rate lies inside it.",
+  "at": "2026-09-19T07:45:10+00:00",
+  "max_v2_revision": "a3eb90f",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_claude_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "probab",
+    "confidence|frequentist|coverage|credible|bayes"
+  ],
+  "blocking_issues": 4,
+  "warnings": 21,
+  "checks": 20,
+  "issue_ids": [
+    "FINAL-R03-INTERVAL-AS-PROBABILITY",
+    "FINAL-CARRY-CONTRADICTS-OUTPUT",
+    "FINAL-REPORT-POPULATION-DELIVERED-ONLY",
+    "FINAL-DASHBOARD-ESTIMATE-WITHOUT-N"
+  ],
+  "issue_texts": [
+    "FINAL-R03-INTERVAL-AS-PROBABILITY | final_claude_redteam.interval_semantics.R03 | final_claude_redteam|interval_semantics|analysis/answers/R03.json|caveats | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R03.json key caveats[0] answers the question about completion rates 'with their uncertainty'. It tells the reader there is a 95 per cent probability that each channel's true completion",
+    "FINAL-CARRY-CONTRADICTS-OUTPUT | final_claude_redteam.carry_matches_output | final_claude_redteam|carry_matches_output|audit/checkpoints/worker_carry|all_worker_stages | OTHER | MEDIUM | worker_clean | Each carry's context_id and attempt match the execution block of the same stage's result.json (4 of 4). The facts in all four carries (worker_clean, worker_metrics, worker_analysis, worker_release) ",
+    "FINAL-REPORT-POPULATION-DELIVERED-ONLY | final_claude_redteam.surface_population_matches_claims | final_claude_redteam|surface_population_matches_claims|release/report.md|page_population_line | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3, read as text without comments, gives the whole report one population, 'orders placed inside the quarter, one row per order, delivered on",
+    "FINAL-DASHBOARD-ESTIMATE-WITHOUT-N | final_claude_redteam.estimate_rendered_with_n | final_claude_redteam|estimate_rendered_with_n|release/dashboard_data.json|estimate_cards | VISUALIZATION | MEDIUM | worker_release | release/dashboard_data.json cards[2..5] (CLM-COMPLETION-DIRECT, CLM-COMPLETION-PARTNER, CLM-AOV-DIRECT, CLM-AOV-PARTNER) carry value, ci_low and ci_high but no n or sample size, so a"
+  ],
+  "other_blockers": 3,
+  "warning_texts": [
+    "This profile is single-vendor: every context in this run, including this red team, is Claude Opus, and an isolated context is not an independent vendor, so an error the model family is prone to can sit on both sides of every check. The only real hold is the deterministic layer (machine gates, the fr",
+    "Writes over raw sources and frozen machinery were blocked only by permissions.deny in .claude/settings.json, which covers the edit tools and not the shell. A changed raw file would be caught by the control lock after the fact, not prevented.",
+    "Every worker result and every LLM auditor result in this run is a driver stub: summaries read 'driver e2e <step>', created_at is 2026-01-01T00:00:00Z (before this run's dispatch on 2026-09-19), and the auditor evidence files hold only a placeholder note. The chain of intermediate PASS verdicts there",
+    "The self-check in worker_clean, worker_metrics, worker_analysis, worker_release, gate0_semantic and gate_release_auditor reports 0.473684 as 'recomputed', a figure that matches no metric, claim or count in this audit.",
+    "The claims auditor's 'independent' checks name analysis/claim_register.json as their source and the metrics auditor's name metrics/calculated_metrics.json, so they compare each registry with itself. They are not recalculations from data.",
+    "The dedup assumption (latest revision wins, by file position) rests on the least evidence of the five resolved decisions. In 549 of the 917 repeated orders both rows carry the same updated_at, so file position alone picks the winner, and 126 repeated orders change status between revisions. Keeping t",
+    "The refund sign policy excludes 10 in-quarter orders (11 raw rows) as export faults, which the export itself cannot confirm. Keeping them would move orders_in_period from 44,531 to 44,541 and net revenue from 3,023,296.61 to 3,024,587.18.",
+    "The month-first reading of slashed dates agrees with order_month on 6,852 of 6,852 slashed dates, against 231 for a day-first reading, so that decision holds. No ISO-8601 timestamp crosses a date boundary between UTC and Europe/Warsaw, and the period is taken on order_month, so date parsing moves no",
+    "The shipping locale decision holds: no cell has a comma-thousands, dot-decimal shape. 2,648 of 44,531 population orders (5.95 per cent) have a blank, NaN or inf shipping cell, which matches R05's 'about six per cent'. My recalculated shipping_total of 37,792,722.50 matches the registry, and it is co",
+    "The report and dashboard print both test p values as 0.0000. The completion test's two-sided p is about 1e-157, so the display is not wrong at 4 digits, but a reader can take it as exactly zero, and 'p < 0.0001' would be the honest rendering.",
+    "On the dashboard, the two test cards put the p value in the 'value' field under the labels 'Test Channel Completion' and 'Test Channel Aov' with no unit. A dashboard that shows 'value' as the card's headline would print 0.0000 beside a completion label, which reads as no difference between the chann",
+    "The n values printed in report.md are excluded from the release surface gate by the text pattern 'n = [0-9]+', and no rule compares the printed n with the claim's n. I recounted all four from the quarantine projection and they match, but that match rests on this red team alone.",
+    "The dashboard cards carry no card-level population field, only the top-level period and caveats. The Orders card's caveats do not say that cancelled and pending orders are included, so the dashboard shares the population ambiguity of the report's page-level line.",
+    "The check plan's rules cover no part of the answer files beyond the fields 'question' and 'facts', no page-level report text, no n on the dashboard and no carry content. The planted-style defects in this run sit exactly in those places, which is more unchecked surface than a release stage can carry ",
+    "The renamed columns customer_id, order_date and country are checked by no machine rule (values_preserved has no column mapping). I compared them row by row against the quarantine projection and found 0 mismatches in 44,531 rows, and 0 mismatches in shipping_cost and shipping_missing.",
+    "The analysis plan assumes neither channel changed how it books orders during the quarter, which the export cannot test. Partner completion runs 0.594679, 0.616349 and 0.603370 across the three months, with two of the three months outside the quarter's Wilson interval. The quarterly interval says not",
+    "The country mix inside each channel is stable across the three months (each country holds 32 to 35 per cent of its channel in every month), so the 'changing mix' caveat is not triggered by this quarter's data.",
+    "I could not establish the control totals against the client system's export log (raw_data/order_system_export_log.json and the gate0_machine result are outside my inputs). I also could not establish whether the src/ generators contain literals (src/ is outside my inputs; I relied on figures_not_hard",
+    "I could not validate the carries against audit/schemas/carry.schema.json because the schema is outside my input globs. I checked only context_id, attempt and facts.",
+    "The handoff carries no drift_since_review field. Its absence does not prove that the stage code's assumptions hold, so I checked the date notations, the shipping locale and the dedup order against the current export myself (see the warnings above).",
+    "There is no decisions journal: audit/decisions/*.json is absent and the handoff rulings are empty, so no number here rests on a human ruling beyond the five RESOLVED entries in audit/human_decisions.yaml. Retry history and stale inputs are for a human to read in audit_runner.py report; I did not che"
+  ],
+  "summary": "Every published number reproduces from the quarantine projection with my own code, and so does every registry value (19 of 19), the clean table row by row (44531 rows, 0 mismatches, renamed columns included) and the printed n values (4 of 4). The release surface gate covers all 3 surfaces and 60 of 60 numbers, with no UNVERIFIED_CLAIM markers and no truncation. The run still fails on four blockers that no machine rule reads. (1) analysis/answers/R03.json caveats[0] reads the Wilson intervals as a 95 per cent probability that each channel's true completion rate lies inside them. That contradict",
+  "wall_seconds": 566.3,
+  "cost": {
+    "at": "2026-09-19T07:54:58.940110+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "final_claude_redteam",
+    "attempt": 1,
+    "context_id": "cc-final_claude_redteam-a1-62b781008144",
+    "agent_role": "claude-final-redteam",
+    "started_at": "2026-09-19T07:45:35.884591+00:00",
+    "finished_at": "2026-09-19T07:54:58.940110+00:00",
+    "wall_seconds": 563.047,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 66,
+    "cached_input_tokens": 4891107,
+    "output_tokens": 56305,
+    "total_tokens": 4947478,
+    "cost_usd": 5.714235499999999
+  }
+}

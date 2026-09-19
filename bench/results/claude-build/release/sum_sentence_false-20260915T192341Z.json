@@ -1,0 +1,63 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "sum_sentence_false",
+  "error": "The page says the country figures sum to the headline before refunds; both are net of refunds.",
+  "at": "2026-09-15T19:19:52+00:00",
+  "max_v2_revision": "1d34cf0",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "before refunds",
+    "net of refunds",
+    "sum"
+  ],
+  "blocking_issues": 1,
+  "warnings": 6,
+  "checks": 28,
+  "issue_ids": [
+    "REL-AUD-COUNTRY-SUM-SENTENCE-FALSE"
+  ],
+  "warning_texts": [
+    "release/report.md line 22 misstates the country reconciliation as holding before refunds. The three country figures are net of refunds and sum exactly to the net headline 35,741.52, and a reader who trusts the sentence would take the headline for a gross figure.",
+    "No machine rule on this stage reads free prose. gate_release_document only tests that each claim and its caveats appear, and release_surface_gate only binds anchored numbers, so any reconciliation or interpretive sentence on the release is checked by this auditor alone.",
+    "release/dashboard_data.json shows the three country cards and the headline card but states nowhere that the countries add up to the headline, so a dashboard reader gets no visible reconciliation.",
+    "audit/check_plan.json lists both gate_release_document rules (claims_rendered, caveats_rendered) under accepted_unproven because prove_plan hit a FileNotFoundError. The two document checks this stage relies on were never shown to fire on a broken release.",
+    "The refund-rate line 'Numerator: 27 of 57' on release/report.md line 11 carries no unit of its own. A reader learns the counts are paying customers only from the caveat line above it.",
+    "The published period ends 2025-03-30, as audit_spec.yaml defines it, while metrics/calculated_metrics.json names the period 2025-Q1-delivered and analysis/answers/R01.json calls it the reported quarter. Anyone who reads 'Q1' as running to 31 March would misread what the figures cover."
+  ],
+  "summary": "All 21 shown numbers on the three release surfaces match the claim register and the metrics registry to exact display digits. Every caveat is visible outside HTML comments, and no UNVERIFIED_CLAIM marker exists. The reader-visible reconciliation sentence on release/report.md line 22 is false: it says the country figures sum to the headline before refunds are taken off. They actually sum to the net headline 35741.52; before refunds the total is 40235.02, 4493.50 higher. Neither release gate checks this sentence.",
+  "wall_seconds": 224.5,
+  "cost": {
+    "at": "2026-09-15T19:23:39.328154+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-b0dc8f415661",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-15T19:19:57.893030+00:00",
+    "finished_at": "2026-09-15T19:23:39.328154+00:00",
+    "wall_seconds": 221.422,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 322,
+    "cached_input_tokens": 766143,
+    "output_tokens": 19534,
+    "total_tokens": 785999,
+    "cost_usd": 1.4713605
+  }
+}

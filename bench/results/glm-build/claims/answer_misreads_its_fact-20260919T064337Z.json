@@ -1,0 +1,66 @@
+{
+  "profile": "glm-build",
+  "stage": "claims",
+  "case": "answer_misreads_its_fact",
+  "dataset": "orders",
+  "error": "The answer to R02 calls a 47% refund rate low, fewer than one order in ten.",
+  "at": "2026-09-19T06:39:01+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R02",
+    "one order in ten",
+    "\\blow\\b",
+    "0\\.47|47 ?%"
+  ],
+  "blocking_issues": 1,
+  "warnings": 3,
+  "checks": 11,
+  "issue_ids": [
+    "R02-ANSWER-MISREADS-REFUND-RATE"
+  ],
+  "issue_texts": [
+    "R02-ANSWER-MISREADS-REFUND-RATE | gate_claims_auditor.r02_caveat_interpretation | gate_claims_auditor|answer_misreads_published_fact|analysis/answers/R02.json|CLM-REFUND-RATE | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/answers/R02.json line 15: caveat 'At 0.47 the rate is low: fewer than one order in ten is refunded' beside the correct fact 0.473684. My recalc (audit/results/gate_claims_au"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "audit/check_plan.json lists two gate_release_document rules under accepted_unproven with FileNotFoundError reasons from a Temp prove-plan directory; this belongs to a later gate's proof record, not to this stage's claims, but a later stage should confirm the release-document gate actually ran.",
+    "The inferential-claim checklist (plan, confounders, Simpson's paradox, survivorship, multiplicity) is NOT_APPLICABLE: audit/analysis_plan.json registers no hypotheses and all five claims are claim_type FACT point estimates, so no inferential claim exists to check.",
+    "R02's facts and basis statement are correct; the blocker covers only the misreading caveat."
+  ],
+  "summary": "All five claims (net_revenue 35741.52, refund_rate 0.473684 = 27/57 paying customers, PL/DE/CZ components) and the full row accounting (201 = 174 + 26 + 1) reproduce exactly from raw_data/orders.csv with my own recalc, matching every gate_claims_machine comparison. One blocker: analysis/answers/R02.json misreads its own published fact — its caveat says 0.47 means 'fewer than one order in ten is refunded' when 0.473684 is 27 of 57 paying customers (47.4%), and even the order-row basis gives 33/174 (~19%); the answer contradicts the number beside it.",
+  "wall_seconds": 271.5,
+  "cost": {
+    "at": "2026-09-19T06:43:36.011642+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-94c248c31c3d",
+    "agent_role": "glm-audit-claims",
+    "started_at": "2026-09-19T06:39:08.920875+00:00",
+    "finished_at": "2026-09-19T06:43:36.009633+00:00",
+    "wall_seconds": 267.094,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 136019,
+    "cached_input_tokens": 560256,
+    "output_tokens": 6358,
+    "total_tokens": 703820,
+    "cost_usd": 0.024589817999999996
+  }
+}

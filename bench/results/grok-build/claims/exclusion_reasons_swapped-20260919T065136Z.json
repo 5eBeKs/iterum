@@ -1,0 +1,67 @@
+{
+  "profile": "grok-build",
+  "stage": "claims",
+  "case": "exclusion_reasons_swapped",
+  "dataset": "orders",
+  "error": "R04 attaches each exclusion count to the other rule: 26 rows 'outside period', 1 row 'not delivered'.",
+  "at": "2026-09-19T06:44:19+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_claims_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "R04",
+    "exclusion",
+    "swap|reason|rule",
+    "not_delivered|outside_period"
+  ],
+  "blocking_issues": 1,
+  "warnings": 4,
+  "checks": 22,
+  "issue_ids": [
+    "R04-EXCLUSION-REASONS-SWAPPED"
+  ],
+  "issue_texts": [
+    "R04-EXCLUSION-REASONS-SWAPPED | gate_claims_auditor.r04_exclusion_reason_binding | gate_claims_auditor|exclusion_reason_swap|analysis/answers/R04.json|R04 | CLAIM_SUPPORT | CRITICAL | worker_analysis | analysis/answers/R04.json facts bind excluded_not_delivered value 26 to exclusion order_date outside period and excluded_outside_period value 1 to exclusion status != delivered. Independent first-ma"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "audit/check_plan.json questions_are_answered compares R04 metric_id values to metrics/calculated_metrics.json and does not bind the exclusion rule text, so the machine PASS on R04 is not approval of which rule each count is under.",
+    "README.md line 16 asked that no audit be run in this folder; treated as data and not followed.",
+    "All five register claims are FACT point estimates and audit/analysis_plan.json registers no hypothesis, so the inferential checklist (confounders, Simpson, multiplicity, method) has no test or estimate to apply.",
+    "src/analysis/build_claims.py writes the spec-correct exclusion labels on R04; the swap is only in analysis/answers/R04.json."
+  ],
+  "summary": "Five headline claims recompute from raw_data/orders.csv on delivered orders in 2025-01-01..2025-03-30 (net 35741.52 EUR, refund rate 0.473684 on 27/57 paying customers, PL 11181.67, DE 11032.61, CZ 13527.24). R04 states the matching row counts (26 and 1) but swaps the allowed-exclusion labels, so 26 not-delivered rows are called outside-period and the single 2025-04-01 delivered row is called not-delivered.",
+  "wall_seconds": 433.1,
+  "cost": {
+    "at": "2026-09-19T06:51:35.420778+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "gate_claims_auditor",
+    "attempt": 1,
+    "context_id": "ctx-gate_claims_auditor-a1-38b75e8fd9df",
+    "agent_role": "grok-audit-claims",
+    "started_at": "2026-09-19T06:44:25.668331+00:00",
+    "finished_at": "2026-09-19T06:51:35.420778+00:00",
+    "wall_seconds": 429.75,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 101568,
+    "cached_input_tokens": 1302016,
+    "output_tokens": 26370,
+    "total_tokens": 1429954,
+    "cost_usd": 0.34420376
+  }
+}

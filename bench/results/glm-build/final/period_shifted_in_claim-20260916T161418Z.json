@@ -1,0 +1,74 @@
+{
+  "profile": "glm-build",
+  "stage": "final",
+  "case": "period_shifted_in_claim",
+  "dataset": "orders",
+  "error": "One country claim carries a two-month period while its value is the full quarter's.",
+  "at": "2026-09-16T16:05:19+00:00",
+  "max_v2_revision": "e48d886",
+  "planted_in": "claims",
+  "machine": {
+    "gates": {
+      "gate_claims_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 4,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_glm_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "period",
+    "02-28",
+    "CLM-NET-CZ"
+  ],
+  "blocking_issues": 1,
+  "warnings": 6,
+  "checks": 14,
+  "issue_ids": [
+    "CLM-NET-CZ-PERIOD-SHIFTED"
+  ],
+  "issue_texts": [
+    "CLM-NET-CZ-PERIOD-SHIFTED | final_glm_redteam.claim_period_matches_metric_population | final_glm_redteam|claim_period_matches_metric_population|analysis/claim_register.json|CLM-NET-CZ | CLAIM_SUPPORT | HIGH | worker_analysis | analysis/claim_register.json claims[CLM-NET-CZ].period = '2025-01-01..2025-02-28' while metrics/calculated_metrics.json period.end = '2025-03-30' and the same claim's caveat"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "CLM-NET-CZ in analysis/claim_register.json declares period 2025-01-01..2025-02-28 but its figure 13527.24 was computed over 2025-01-01..2025-03-30; the figure itself is right for the window every reader-facing surface shows, so this is a provenance lie in the register, not a wrong number on screen.",
+    "check_plan.json records two accepted_unproven entries for gate_release_document (claims_rendered, caveats_rendered) with prove-time FileNotFoundError reasons, while the gate0_machine result reports 0 accepted unproven; I could not reconcile that accounting from my inputs, both checks passed on the r",
+    "No output event of this CLI names a model, so MODEL_MISMATCH is unverifiable here: execution.model below is my self-report per the handoff requirement (openrouter/z-ai/glm-5.3-flash), and every other stage's model string is that stage's own report - the model line of this run is confirmed by nothing",
+    "What no deterministic rule covered, where my judgment was the only check: the claim register's period fields (fault found there), caveat wording beyond the four declared topics, the answers' free-text caveat sentences, and the carry files' population definitions; everything else in the release path ",
+    "Runner-state matters I did not check and cannot claim: retry history, stale inputs, attempt accounting - those are for a human in audit_runner.py report; the stage result files carry fixture-style created_at values (2026-01-01T00:00:00Z) and 'driver e2e' summaries, which I took as recorded evidence ",
+    "audit/AUDIT_REPORT.md in the tree describes a claude-profile run ('RELEASE LOCKED', final_claude_redteam, model column claude-opus-5) generated at 2026-09-16T11:36, not this glm run; per README.md it comes from the committed e2e harness with faked agent steps, and nothing in my verdict rests on it, "
+  ],
+  "summary": "Independent recomputation from raw_data/orders.csv with my own code confirms every published business number over the spec window (net_revenue 35741.52; refund_amount_total 4493.50; refund_rate 27/57=0.473684 on the paying_customers basis; PL 11181.67 / DE 11032.61 / CZ 13527.24 summing to the headline; row accounting 201=174+26+1; clean table, flags and all 21 rendered bindings correct). One material blocker: analysis/claim_register.json CLM-NET-CZ declares period 2025-01-01..2025-02-28 while its metric net_revenue_cz was computed over the spec window 2025-01-01..2025-03-30 and its value 1352",
+  "wall_seconds": 523.1,
+  "cost": {
+    "at": "2026-09-16T16:14:17.073566+00:00",
+    "launcher": "opencode_headless_launcher",
+    "step": "final_glm_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_glm_redteam-a1-982ee9dcf2c4",
+    "agent_role": "glm-final-redteam",
+    "started_at": "2026-09-16T16:05:37.341605+00:00",
+    "finished_at": "2026-09-16T16:14:17.070058+00:00",
+    "wall_seconds": 519.719,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "openrouter/z-ai/glm-5.3-flash",
+    "model_used": null,
+    "input_tokens": 102050,
+    "cached_input_tokens": 2140928,
+    "output_tokens": 13408,
+    "total_tokens": 2272744,
+    "cost_usd": 0.056651604
+  },
+  "rescored_at": "2026-09-16T20:47:28+00:00"
+}

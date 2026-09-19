@@ -1,0 +1,79 @@
+{
+  "profile": "grok-build",
+  "stage": "final",
+  "case": "caveat_dropped_where_repeated",
+  "dataset": "orders",
+  "error": "The headline's caveat line no longer says net of refunds; only a sentence about the country table still does.",
+  "at": "2026-09-18T18:25:41+00:00",
+  "max_v2_revision": "b7adc4a",
+  "planted_in": "release",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false,
+    "downstream": {
+      "fake_steps": 1,
+      "machine_caught": false
+    }
+  },
+  "auditor": "final_grok_redteam",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "(headline|CLM-NET-REVENUE|net revenue).{0,160}net of refunds"
+  ],
+  "blocking_issues": 1,
+  "warnings": 14,
+  "checks": 30,
+  "issue_ids": [
+    "final-card-local-caveat-CLM-NET-REVENUE"
+  ],
+  "issue_texts": [
+    "final-card-local-caveat-CLM-NET-REVENUE | final.card_local_caveat.CLM-NET-REVENUE | final|card_local_caveat|release/report.md|CLM-NET-REVENUE | RELEASE_INTEGRITY | HIGH | worker_release | audit/results/final/evidence/independent_recalc.json headline_missing_net_of_refunds=true; release/report.md lines 7-8; analysis/claim_register.json CLM-NET-REVENUE caveats; release/dashboard_data.json cards[0].c"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "This run has no cross-vendor review. Prior auditor PASS files are driver e2e stubs (each evidence notes.json says so) and were used only as a map, not as proof.",
+    "audit/release_surface_contract.json card_caveat_requirements is empty, so the machine release gate never required card-local caveats. check_plan caveats_rendered is surface-global: a phrase later on the same page satisfies it. Card-local placement is therefore unguarded by the deterministic layer.",
+    "check_plan accepted_unproven lists gate_release_document caveats_rendered and claims_rendered (breaker FileNotFoundError during plan proof). Those rules ran and reported PASS; their negative side was not proven on this dataset.",
+    "gate_metrics_machine evidence/unchecked.json: excluded_order_rows and excluded_outside_period are not recomputed from source at that gate. Independent raw recalc got 27 and 1, matching the registry; excluded_outside_period is the delivered 2025-04-01 row O00201. The machine layer pins them only thro",
+    "Timezone ruling Europe/Warsaw is not observable on date-only order_date strings. It does not move a published number on this extract. I cannot establish that a timestamped source would stay in the same quarter under that zone.",
+    "handoff has no drift_since_review field. I cannot establish whether cleaning or metric code was written against a different extract.",
+    "Runner retry history and stale-input state are not in handoff and were not inspected.",
+    "Optional input audit/decisions/*.json is absent. The three RESOLVED rulings live in audit/human_decisions.yaml and are declared in audit_spec.yaml. None of them looks misapplied on this extract: refund_rate is 27/57 paying customers, net_revenue is gross minus refunds, dates are used as written.",
+    "README.md line 15 tells the reader not to run an audit in this folder. That was not followed. README.md line 87 asserts the committed pipeline already passes; those numbers were treated as claims, not answers.",
+    "All four worker carries share context_id ctx-worker_clean-a1-3d88429e6792. Pairwise each carry matches its own result.json execution.context_id and attempt, so the stated continuity check holds, but the shared id is a driver fixture, not four distinct worker contexts.",
+    "metrics/calculated_metrics.json country formulas say SUM(net_amount) WHERE country = country. The grouped values still match the independent country sums.",
+    "No headless render of dashboard cards was available. JSON card values and caveats arrays were read as a dashboard would display them; I cannot establish pixel-level layout.",
+    "analysis_plan.json hypotheses is empty. No claim has kind or claim_type test, and release/report.md has no significant/confirmed wording. That gap is closed for tests; it is not closed for card-local caveats, which no check_plan rule evaluates.",
+    "quarantine/manifest.json declared=false; raw_data/orders.csv was read as-is. No free-text instruction was found in the export."
+  ],
+  "summary": "FAIL. This profile is single-vendor Grok: architect, workers, auditors and this red-team are one model family. Isolated context is not an independent vendor, and the chain of PASS results is not proof. What actually holds is the frozen check_plan, the machine gates, the control lock and the release surface gate. There is no permissions file blocking writes to raw sources; a mutated raw file would be caught by the control lock after the fact, not prevented. Independent recalc from raw_data/orders.csv matches the metrics registry and every published claim: net revenue 35741.52 EUR (gross 40235.0",
+  "wall_seconds": 589.8,
+  "cost": {
+    "at": "2026-09-18T18:35:39.015746+00:00",
+    "launcher": "grok_headless_launcher",
+    "step": "final_grok_redteam",
+    "attempt": 1,
+    "context_id": "ctx-final_grok_redteam-a1-e8f8a8b9adbb",
+    "agent_role": "grok-final-redteam",
+    "started_at": "2026-09-18T18:25:52.156939+00:00",
+    "finished_at": "2026-09-18T18:35:39.015139+00:00",
+    "wall_seconds": 586.86,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "grok-4.6-build",
+    "model_used": "grok-4.6-build",
+    "input_tokens": 119302,
+    "cached_input_tokens": 1191808,
+    "output_tokens": 34530,
+    "total_tokens": 1345640,
+    "cost_usd": 0.35417392
+  }
+}

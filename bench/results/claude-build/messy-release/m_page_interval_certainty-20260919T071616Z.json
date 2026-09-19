@@ -1,0 +1,77 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "m_page_interval_certainty",
+  "dataset": "messy",
+  "error": "The page says each interval is where the true value lies with near certainty.",
+  "at": "2026-09-19T07:11:38+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "certaint|true value",
+    "sampling interval|interval"
+  ],
+  "blocking_issues": 6,
+  "warnings": 6,
+  "checks": 20,
+  "issue_ids": [
+    "REL-AUD-INTERVAL-OVERCLAIM",
+    "REL-AUD-REPORT-NOT-GENERATED",
+    "REL-AUD-PAGE-POPULATION",
+    "REL-AUD-POP-PERIOD-NOT-ON-FIGURE",
+    "REL-AUD-DASH-ESTIMATE-N-LEVEL",
+    "REL-AUD-AOV-CAVEATS"
+  ],
+  "issue_texts": [
+    "REL-AUD-INTERVAL-OVERCLAIM | gate_release_auditor.wording_interval_strength | gate_release_auditor|wording_interval_strength|release/report.md|by_channel | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 23 (visible text, under the four channel estimates) tells the reader that the interval beside each figure is where the true channel value lies, with near certainty. The level is",
+    "REL-AUD-REPORT-NOT-GENERATED | gate_release_auditor.report_reproducible_from_generator | gate_release_auditor|report_reproducible_from_generator|release/report.md|surface | RELEASE_INTEGRITY | HIGH | worker_release | evidence/release_audit.py ran src/release/build_release.py with its output paths pointed at evidence/regen/ and diffed the result against release/. dashboard_data.json and release_num",
+    "REL-AUD-PAGE-POPULATION | gate_release_auditor.population_matches_each_figure | gate_release_auditor|population_matches_each_figure|release/report.md|page_population | RELEASE_INTEGRITY | MEDIUM | worker_release | release/report.md line 3 gives a single page-level Population ending in 'delivered only', taken from CLM-NET-REVENUE's population (build_release.py line 86). It sits over CLM-ORDERS (pop",
+    "REL-AUD-POP-PERIOD-NOT-ON-FIGURE | gate_release_auditor.population_period_on_card | gate_release_auditor|population_period_on_card|release|all_figures | RELEASE_INTEGRITY | MEDIUM | worker_release | release/report.md shows the period only in the H1 title (line 1), and no figure line carries its claim's population. In release/dashboard_data.json, no card has a population field, and the period appea",
+    "REL-AUD-DASH-ESTIMATE-N-LEVEL | gate_release_auditor.estimate_n_and_level_shown | gate_release_auditor|estimate_n_and_level_shown|release/dashboard_data.json|estimate_cards | VISUALIZATION | MEDIUM | worker_release | release/dashboard_data.json cards[2..5] (CLM-COMPLETION-DIRECT, CLM-COMPLETION-PARTNER, CLM-AOV-DIRECT, CLM-AOV-PARTNER) carry value, ci_low and ci_high, but no n and no interval leve",
+    "REL-AUD-AOV-CAVEATS | gate_release_auditor.aov_caveats_shown | gate_release_auditor|aov_caveats_shown|analysis/claim_register.json|CLM-AOV | CLAIM_SUPPORT | MEDIUM | worker_analysis | The caveats for CLM-AOV-DIRECT and CLM-AOV-PARTNER in analysis/claim_register.json are only the channel-population caveat and the sampling-interval caveat. So report.md lines 19 and 21 and dashboard cards[4] and card"
+  ],
+  "other_blockers": 2,
+  "warning_texts": [
+    "The AOV lines in release/report.md (lines 18 and 20) show money figures with no currency unit, while net revenue on line 7 is labelled EUR.",
+    "Both p values render as '0.0000' (report lines 27 and 29, dashboard cards 6 and 7). A reader may take that as p = 0, and 'p < 0.0001' would be accurate. The recomputed two-proportion p is about 3e-157.",
+    "gate_release_document passed wording_matches_claims and caveats_rendered on a page whose visible text contradicts the rendered sampling-interval caveat. The wording rule checks only the word 'significant', so any overclaim about intervals, populations or denominators is unchecked by machine.",
+    "Nothing in audit/check_plan.json or audit/release_surface_contract.json checks per-figure population, per-card period, or n and level on dashboard estimate cards (card_caveat_requirements is empty). Four of the six blockers here fall in that unchecked space.",
+    "src/release/build_release.py contains the numeric literals 2 (parents[2] and indent=2) and 0 (return 0), which generator_literal_exclusions does not list. They are structural, not business figures, but the release_surface_gate evidence records no generator scan, so it is not shown that the gate look",
+    "The machine gate's 60 rows are all scale 1 and all 'bound'. I checked every row against the page and the register and found no mismatch, and no number is swallowed by the date, 'n = N' or '0.95 interval' exemptions."
+  ],
+  "summary": "All 60 rendered numbers across report.md, dashboard_data.json and the manifest are bound to the right claim and role and formatted exactly. I recomputed every estimate, interval, test statistic and reconciliation identity from the registered counts and sums, and they agree. The page still fails on its wording. report.md line 23 was edited by hand after generation: the generator's 'sampling interval and nothing else' became a sentence saying the true channel value lies inside the interval with near certainty, which claims more than the interval supports and contradicts the caveat printed on eve",
+  "wall_seconds": 273.2,
+  "cost": {
+    "at": "2026-09-19T07:16:15.415979+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-1ec424ea468d",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-19T07:11:45.409119+00:00",
+    "finished_at": "2026-09-19T07:16:15.415979+00:00",
+    "wall_seconds": 270.015,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 36,
+    "cached_input_tokens": 1705430,
+    "output_tokens": 26805,
+    "total_tokens": 1732271,
+    "cost_usd": 2.601156
+  }
+}

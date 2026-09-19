@@ -1,0 +1,56 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "clean",
+  "error": "no defect planted (false-positive control)",
+  "at": "2026-09-15T17:48:47+00:00",
+  "max_v2_revision": "2a6f8dc",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "PASS",
+  "stop_code": null,
+  "outcome": "clean_pass",
+  "matched_signals": [],
+  "blocking_issues": 0,
+  "warnings": 5,
+  "checks": 34,
+  "issue_ids": [],
+  "warning_texts": [
+    "audit/check_plan.json lists claims_rendered and caveats_rendered for gate_release_document under accepted_unproven, because their plan proof failed with a missing-file error, so that gate's 15 PASS comparisons come from rules never shown to fire; at this stage the only check of rendering and caveats",
+    "No deterministic rule at this stage recomputes a release number from source: gate_release_document only tests presence, and gate_release_machine records binding as a summary without a checks.json. The shown numbers agree with the registry here, but their tie to raw_data rests on gate_claims_machine,",
+    "The rule that the release generator holds no business-number literals rests only on gate_release_machine's zero issue count; its evidence lists no per-generator scan result, and src/release is not among this auditor's inputs, so nothing independent covered that rule here.",
+    "release/report.md line 11 shows the refund-rate numerator and denominator with no unit word; only the caveat line just above says they are paying customers, and it uses the snake_case identifier paying_customers rather than plain words, which is correct but easy to misread.",
+    "In metrics/calculated_metrics.json, net_revenue keeps the gross sum (40235.02) in its numerator field with a null denominator; the release does not show that field, but a later reader of the registry could take it for a ratio component."
+  ],
+  "summary": "All 7 numbers a reader sees in release/report.md trace from the page to a claim, then to calculated_metrics, and match exactly. The same 21 bindings across report, dashboard and manifest were found independently and agree with gate_release_machine. The three country figures sum to the headline 35741.52, and the report says so in visible text. 27/57 = 0.4736842105 rounds to the shown 0.473684 on the paying_customers basis. Gross 40235.02 minus refunds 4493.50 = 35741.52. Row accounting holds: 174+26+1 = 201. Every claim's caveats appear in visible text on both surfaces, no HTML comment carries ",
+  "wall_seconds": 326.1,
+  "cost": {
+    "at": "2026-09-15T17:54:18.613251+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-b0dc8f415661",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-15T17:49:00.804486+00:00",
+    "finished_at": "2026-09-15T17:54:18.613251+00:00",
+    "wall_seconds": 317.812,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 386,
+    "cached_input_tokens": 1003311,
+    "output_tokens": 25235,
+    "total_tokens": 1028932,
+    "cost_usd": 1.805436
+  }
+}

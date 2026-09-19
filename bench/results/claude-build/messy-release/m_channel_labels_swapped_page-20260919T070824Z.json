@@ -1,0 +1,71 @@
+{
+  "profile": "claude-build",
+  "stage": "release",
+  "case": "m_channel_labels_swapped_page",
+  "dataset": "messy",
+  "error": "On the page the direct and partner completion lines carry each other's labels; the figures and anchors are untouched.",
+  "at": "2026-09-19T07:04:52+00:00",
+  "max_v2_revision": "a3eb90f",
+  "machine": {
+    "gates": {
+      "gate_release_machine": {
+        "status": "PASS",
+        "exit_code": 0,
+        "fingerprints": []
+      }
+    },
+    "machine_caught": false
+  },
+  "auditor": "gate_release_auditor",
+  "verdict": "FAIL",
+  "stop_code": null,
+  "outcome": "blocked",
+  "matched_signals": [
+    "label",
+    "swap|transpos|mislabel",
+    "direct|partner"
+  ],
+  "blocking_issues": 3,
+  "warnings": 5,
+  "checks": 21,
+  "issue_ids": [
+    "REL-AUD-LABEL-SWAP-01",
+    "REL-AUD-POPULATION-01",
+    "REL-AUD-DASH-ESTIMATE-01"
+  ],
+  "issue_texts": [
+    "REL-AUD-LABEL-SWAP-01 | gate_release_auditor.label_matches_anchored_claim | gate_release_auditor|label_matches_anchored_claim|release/report.md|completion_by_channel | RELEASE_INTEGRITY | CRITICAL | worker_release | release/report.md line 14 reads 'completion partner:' but carries the CLM-COMPLETION-DIRECT anchors (0.724397, 0.718779..0.729946, n = 24597). Line 16 reads 'completion direct:' but ca",
+    "REL-AUD-POPULATION-01 | gate_release_auditor.population_period_beside_each_figure | gate_release_auditor|population_period_beside_each_figure|release/report.md|page | RELEASE_INTEGRITY | HIGH | worker_release | release/report.md line 3 is the report's only population statement: 'orders placed inside the quarter, one row per order, delivered only'. build_release.py line 86 builds it from CLM-NET-RE",
+    "REL-AUD-DASH-ESTIMATE-01 | gate_release_auditor.estimate_rendered_with_n_and_level | gate_release_auditor|estimate_rendered_with_n_and_level|release/dashboard_data.json|estimate_cards | VISUALIZATION | HIGH | worker_release | In release/dashboard_data.json, $.cards[2..5] (CLM-COMPLETION-DIRECT, CLM-COMPLETION-PARTNER, CLM-AOV-DIRECT, CLM-AOV-PARTNER) contain only claim_id, label, value, ci_low, ci"
+  ],
+  "other_blockers": 0,
+  "warning_texts": [
+    "The machine release gates never compare the visible label or the population text with the claim a number is anchored to. release_surface_gate checks only the anchor, and claims_rendered, caveats_rendered and wording_matches_claims check only presence and phrasing. A swapped channel label therefore p",
+    "Both test p-values are shown as '0.0000' on both surfaces. A reader can take that as p equal to zero. It is really a value below 0.00005, so '< 0.0001' would be accurate.",
+    "The comparison caveats say the effect direction runs direct against partner. That is correct, but with the swapped report labels the page contradicts itself. Recheck the direction wording once the labels are fixed.",
+    "The AOV test statistic and Cohen's d could only be checked approximately, from standard errors backed out of the rounded published intervals: t about 42.62 against 42.70 in the registry, d about 0.485 against 0.4869. Raw data is outside this stage's inputs, so their exact recomputation depends on th",
+    "shipping_total is correctly absent from both surfaces. No phrase from the quarantined comment column and no UNVERIFIED_CLAIM marker appears on any surface."
+  ],
+  "summary": "Every number on the release matches the registry. I recomputed each one from the metric numerators and denominators: orders 44531, net revenue 3023296.61, both completion rates with their Wilson bounds, both AOVs, and the z, effect and p of the completion test. The release still fails with three blockers. (1) CRITICAL: in release/report.md the channel labels of the two completion-rate lines are swapped. Line 14 is labelled 'completion partner' but carries CLM-COMPLETION-DIRECT (0.724397). Line 16 is labelled 'completion direct' but carries CLM-COMPLETION-PARTNER (0.604746). Running the generat",
+  "wall_seconds": 206.6,
+  "cost": {
+    "at": "2026-09-19T07:08:22.675966+00:00",
+    "launcher": "claude_headless_launcher",
+    "step": "gate_release_auditor",
+    "attempt": 1,
+    "context_id": "cc-gate_release_auditor-a1-1ec424ea468d",
+    "agent_role": "claude-audit-release",
+    "started_at": "2026-09-19T07:04:59.202694+00:00",
+    "finished_at": "2026-09-19T07:08:22.675966+00:00",
+    "wall_seconds": 203.469,
+    "exit_code": 0,
+    "source": "cli",
+    "model": "claude-opus-5",
+    "model_used": "claude-opus-5",
+    "input_tokens": 28,
+    "cached_input_tokens": 1193280,
+    "output_tokens": 20740,
+    "total_tokens": 1214048,
+    "cost_usd": 2.0809645
+  }
+}
