@@ -73,14 +73,20 @@ launch as it was recorded.
 
 ## What the reader receives
 
-[`samples/`](samples/) holds what a finished run hands over, from a run over a synthetic demo
-dataset with real model stages:
+[`samples/`](samples/) holds three files from one real run: a synthetic export from an asset
+manager -- 761,005 price rows over four years, the positions of fifteen funds, one reporting date,
+106 published figures. GLM wrote, Grok reviewed; 16 launches, $5.25, sealed on 2026-09-20.
 
+- **the report** -- what was checked;
 - **the client document** -- what was checked and what was found, in the reader's words: every
   number with its status, what the independent review said, which definitions were decided and by
   whom, what was not checked, and whether the export was reconciled with anything outside it;
 - **the receipt** -- the SHA-256 of every file the client was given, one total over them, and the
   head of the run's hash-chained history, written outside the dataset at the moment of the seal.
+
+In this run one question reached a person, one review refused the release, and the carried-forward
+prices are disclosed from the data rather than from the vendor's flag, which undercounts them.
+[`samples/README.md`](samples/README.md) says what each of those was.
 
 ## Checking a receipt yourself
 
