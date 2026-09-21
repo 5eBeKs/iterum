@@ -25,6 +25,13 @@ way clients send files: several date formats, shipping written with spaces,
 commas or a EUR suffix, and a comment column of free text that was kept out of
 the calculation.
 
+The six ties were not planted. The program that generated this file writes each
+re-exported order one to five hours later, but never past 23:00, and copies the
+minutes and seconds. An order last updated at 23 o'clock gets a copy with the
+same time to the second. The program's own comment says the timestamp moves
+forward, and the owner's ruling repeats it. We made the file ourselves and did
+not know; the final review found it.
+
 What the client receives: the report, a document saying what was checked and
 what was found, and a checksum of the files so it is possible to see that the
 document was not changed after it was handed over.

@@ -56,6 +56,13 @@ By the final review's own count, taking the earlier row moves 10 of 12 published
 (delivered orders, minus refunds, excluding shipping) falls from 3,023,296.61
 to 3,022,518.62 euros. A person has to confirm that "lower row in the file" is what they meant when the times matched. Only the final review of the whole run noticed this; no machine check and no stage review did.
 
+The six ties were not planted. The program that generated this file writes each
+re-exported order one to five hours later, but never past 23:00, and copies the
+minutes and seconds. An order last updated at 23 o'clock gets a copy with the
+same time to the second. The program's own comment says the timestamp moves
+forward, and the owner's ruling repeats it. We made the file ourselves and did
+not know; the final review found it.
+
 **Shipping is left off the report.** The column is written several ways, and
 some cells cannot be read. Treating each unreadable cell as zero understates
 the sum by an amount this file cannot bound. So the report does not print it.
