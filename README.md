@@ -73,32 +73,34 @@ launch as it was recorded.
 
 ## What the reader receives
 
-[`samples/`](samples/) holds three files from one real run: a synthetic export from an asset
-manager -- 761,005 price rows over four years, the positions of fifteen funds, one reporting date,
-106 published figures. GLM wrote, Grok reviewed; 16 launches, $5.25, sealed on 2026-09-20.
+[`samples/`](samples/) holds two finished examples. Each one is a report, a
+document for the client, and a way to see that the files were not changed after they were handed over -- for the shop, which ran before receipts existed, a checksum in the run's own record rather than a receipt.
 
-- **the report** -- what was checked;
-- **the client document** -- what was checked and what was found, in the reader's words: every
-  number with its status, what the independent review said, which definitions were decided and by
-  whom, what was not checked, and whether the export was reconciled with anything outside it;
-- **the receipt** -- the SHA-256 of every file the client was given, one total over them, and the
-  head of the run's hash-chained history, written outside the dataset at the moment of the seal.
+- [Online shop](samples/ecommerce-messy/CASE.md) -- a quarterly order export,
+  44,531 orders. Six orders have two versions with the same update time and a
+  different status. The rule "keep the latest" cannot choose. Taking the other
+  version drops net revenue from 3,023,296.61 to 3,022,518.62 euros.
+- [Asset manager](samples/asset-manager/CASE.md) -- four years of prices and
+  the positions of fifteen funds, 106 figures in the report. The price vendor
+  flags stale prices: the flag sits on 40 positions, the prices themselves
+  show 42.
 
-In this run one question reached a person, one review refused the release, and the carried-forward
-prices are disclosed from the data rather than from the vendor's flag, which undercounts them.
-[`samples/README.md`](samples/README.md) says what each of those was.
+The index of both examples is [`samples/README.md`](samples/README.md).
 
 ## Checking a receipt yourself
 
-A receipt proves that the files you hold are the files that were sealed. It does not prove the
-checks were right; that is what the rest of this repository is for.
+A receipt shows one thing: the files you hold are the files that were handed
+over. It does not show that the checks were right: the recount in the document shows the arithmetic, and whether the mandate was read correctly is a person's ruling, recorded with a name.
 
 ```bash
-sha256sum report.md
+sha256sum samples/asset-manager/report.md
 ```
 
-On Windows, `Get-FileHash report.md -Algorithm SHA256`. The digest it prints is the one the receipt
-lists beside that file, or the file is not the one that was sealed.
+On Windows, `Get-FileHash samples/asset-manager/report.md -Algorithm SHA256`.
+The command prints a digest of the file — a short string of its contents. It
+must match the line in the receipt next to the report. If the file was changed
+after it was handed over, the strings differ. For the shop example the digest
+is written on the case page.
 
 ## What Iterum does not claim
 
