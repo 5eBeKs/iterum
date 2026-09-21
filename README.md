@@ -114,3 +114,9 @@ is written on the case page.
   the document says which.
 
 There is no sampling: every row of the export is read, every published number recomputed.
+
+## License
+
+The text and the data in this repository are under [CC BY 4.0](LICENSE): quote them, recount
+them, publish them further, and name Iterum as the source. The checking system is not in this
+repository, and the license does not reach it.
