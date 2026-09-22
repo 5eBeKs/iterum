@@ -1,5 +1,11 @@
 # Six orders where "latest version" cannot be chosen
 
+**Status: one question is open.** The final review asked the owner of the data to confirm which of
+two same-time versions of an order counts, and nobody has confirmed it. The seal certifies the
+figures under the rule recorded before counting. The run's own record lists nothing open, because
+the review wrote this as a warning rather than a question. A ruling would mean a new run and a new
+record, not an edit of this one.
+
 A client needs an online-shop report for the first quarter of 2026 checked
 against the order export it was written from.
 

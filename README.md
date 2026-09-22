@@ -1,16 +1,25 @@
 # Iterum
 
-*Every number in an analytical report, computed again.*
+*Every number of an analytical report, checked against the data it came from.*
 
 [Русская версия](README.ru.md)
 
-Iterum checks an analytical report against the data it was written from. Every figure the
-report prints is recomputed from the raw export by code that never saw how the report's author
-computed it, and compared with what is printed. The words beside the figures -- what a number
+Iterum checks an analytical report against the data it was written from. Every figure the report prints is either recomputed from the raw export by code that never saw how
+the report's author computed it and compared with what is printed, or named in the document as not
+recomputed, with the reason -- the bounds of an estimate's interval, for one, are read by a
+reviewer rather than recomputed. The words beside the figures -- what a number
 counts, over which rows, with which caveats, what it is said to prove -- are read by independent
 model reviewers. What was found is sealed: the reader receives a document saying what was checked
 and what was found, and a receipt with the digest of every file, which anyone can check without
 Iterum.
+
+**For a client.** You send an export and the report written from it. You get a document that puts
+every figure of the agreed list next to its recount -- matched; not matched, with both figures and
+the difference; or not recomputed, and why -- beside the definitions you ruled before any counting,
+and a receipt of the files you were given. Two finished examples: an online shop, where the final
+review found six orders the owner's tie-break rule never covered; an asset manager, where the
+vendor's stale-price flag marks 40 positions and the prices themselves show 42. How to order:
+[`samples/llm.md`](samples/llm.md).
 
 This repository is the evidence: what the checks stop, what they miss, and what that costs. The
 system itself is not published here. Tables and records name it by its working name, MAX v2.
@@ -48,7 +57,10 @@ get wrong.
 | answer | a question of the brief not answered as asked | machine or reviewers |
 
 Of 68 defects, the machine stops 42, two are recorded under a declared threshold, and the model
-reviewers stop the other 24. **No defect in the zoo is stopped by nobody, and none is unmeasured.**
+reviewers stop the other 24. **Among these 68, no defect is stopped by nobody, and none is unmeasured.** That is a statement
+about this corpus, not about every mistake there is: the system's own adversarial probes still
+record open scenarios, among them a person's ruling on one question that can excuse an unverified
+number it says nothing about.
 The one mistake the machine is known to miss -- a caveat dropped from the figure it belongs to,
 on a page that repeats the same words elsewhere -- was shown to three vendors' reviewers, and every
 launch stopped it ([`machine/GAPS.md`](machine/GAPS.md)).
@@ -86,6 +98,9 @@ document for the client, and a way to see that the files were not changed after 
   show 42.
 
 The index of both examples is [`samples/README.md`](samples/README.md).
+The short check of an export whose recount code already exists is in
+[`samples/verify.md`](samples/verify.md). A full review of a new export, the
+profiles that use a model, is in [`samples/llm.md`](samples/llm.md).
 
 ## Checking a receipt yourself
 

@@ -6,6 +6,11 @@ Two finished examples. Each one is an export (the export itself is not in this
 repository), a report written from that export, and a document in which every
 figure in the report is recomputed from the same files. The short case page is
 for someone looking for the first time.
+The short check of an export kind that is already covered is in
+[The verify check](verify.md).
+A full review of a new export is in
+[Profiles that use a model](llm.md).
+Both examples below are a full review.
 
 | Example | What the data was | What turned up |
 |---|---|---|

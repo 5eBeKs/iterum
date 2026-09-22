@@ -1,5 +1,11 @@
 # Online shop: what the client received
 
+**Status: one question is open.** The final review asked the owner of the data to confirm which of
+two same-time versions of an order counts, and nobody has confirmed it. The seal certifies the
+figures under the rule recorded before counting. The run's own record lists nothing open, because
+the review wrote this as a warning rather than a question. A ruling would mean a new run and a new
+record, not an edit of this one.
+
 [Русская версия](README.ru.md)
 
 Short page for a proposal: [CASE.md](CASE.md).
