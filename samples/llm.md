@@ -27,26 +27,20 @@ One item is enough.
 The next period of the same kind, with the same columns and the same answers,
 is not this order. After this order that is a verify check, 1–2 days.
 
-## Which profiles exist
+## Who does the work
 
-The default is grok-glm. Another profile from the table below is used when
-you ask for it before the start. I name the one chosen in the thread.
+One profile, claude-build: Claude Opus 5.5 writes each stage, and separate
+Claude contexts review it, each starting fresh. The recount in the document is
+what speaks for the figures, not the fact that a model reviewed them.
 
-A profile does not make a check right because a model reviewed it: the
-recount in the document is what speaks for the figures.
+On the same messy shop export, four Opus 5.5 runs published the same figures
+to the last digit as the older Opus 5 runs, at a quarter to a fifth of their
+cost.
 
-| Profile | Who writes | Who reviews |
-|---|---|---|
-| grok-glm | GLM | Grok |
-| claude-glm | GLM | Claude |
-| glm-build | GLM | GLM |
+Finished examples, made on profiles since retired; the checks are the same:
 
-Finished examples:
-
-- [Online shop](ecommerce-messy/CASE.md). GLM wrote, Claude reviewed. Profile
-  claude-glm.
-- [Asset manager](asset-manager/CASE.md). GLM wrote, Grok reviewed. Profile
-  grok-glm.
+- [Online shop](ecommerce-messy/CASE.md). GLM wrote, Claude reviewed.
+- [Asset manager](asset-manager/CASE.md). GLM wrote, Grok reviewed.
 
 ## What to send
 
@@ -73,8 +67,7 @@ message.
    answer them. A call is not required.
 
 In this order a model reads the files you send: the layout of the tables and
-the values. The profile names the model vendors who will see the files. The
-document you receive lists them by lane: who wrote and who reviewed. If that
+the values. Of the model vendors, only Anthropic sees them. The document you receive names the model of each stage. If that
 is not acceptable, send a file of the same shape with the values replaced,
 and say so before the start. An anonymized copy is enough to write the code.
 It is not enough to check your real report: that check needs the real

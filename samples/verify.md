@@ -11,11 +11,13 @@ on [Profiles that use a model](llm.md). The shop and the asset manager in this f
 the [fund factsheet](etf-smea/CASE.md) is this check.
 
 
-**On sale for kind 2 and kind 3; kind 1 after its first finished run.** A kind goes on sale when one
+**On sale for kinds 2, 3, 4 and 5; kind 1 after its first finished run.** A kind goes on sale when one
 verify run on it has reached a sealed document. Kind 2 did on a synthetic asset-manager export of
 761,005 price rows: 108 figures, all of them matched, no model, 115 seconds from the first step to
 the seal. Kind 3 did on a real iShares factsheet and the fund's own holdings file
-([the case](etf-smea/CASE.md)). Kind 1 has reviewed code and no finished run yet.
+([the case](etf-smea/CASE.md)). Kinds 4 and 5 did on synthetic exports built to the Shopify
+and Stripe formats: 36 of 36 and 22 of 22 figures matched, no model, under a minute each. Kind 1
+has reviewed code and no finished run yet.
 
 ## When you can buy this check
 
@@ -35,7 +37,8 @@ the first day and do not start counting.
 5. **The list of figures is agreed before any counting.** The list does not
    grow inside the same order after that.
 
-An orders export from a shop is not one of these kinds. Verify is not sold for it.
+A Shopify orders export is kind 4. An orders export from any other shop system is not one of
+these kinds, and verify is not sold for it.
 
 ### Kind 1 and kind 2. An asset manager's positions on one date
 
@@ -77,6 +80,45 @@ The reviewed code counts like this:
 A different header or a different one of these three rules is not this order. A file whose lines
 can no longer be told apart -- the September file carries several currency-forward lines with the
 same ticker and name -- is refused on the first day rather than checked on a guess.
+
+### Kind 4. A Shopify orders export
+
+The CSV that **Orders → Export** writes in the Shopify admin: one row per line item, the admin's
+own column names. Extra columns do no harm; a missing one is refused by name on the first day.
+The reviewed code counts like this:
+
+- a sale is a paid order; cancelled orders and orders tagged `test` or `staff` are left out;
+- net sales are after discount codes and refunds, with VAT, without shipping;
+- a refund counts in its order's month, and for goods only; the refund rate is refunded orders
+  over paid orders;
+- an order's date is its creation time in the shop's own time zone, as the export writes it;
+- a customer is an email address, taken as written; orders without one are left out of the
+  repeat-customer rate;
+- the channel is the `Source` column;
+- two overlapping exports pasted into one file are de-duplicated.
+
+The figures: net and gross sales by month, orders, average order value, refunds and the refund
+rate, the discount share, the top ten products, the repeat-customer rate, sales by channel. A shop
+whose export writes one customer's address in mixed case says so before the start.
+
+### Kind 5. A Stripe balance report
+
+Stripe's **Balance change from activity, itemized** report, with `automatic_payout_id` and the
+customer-facing amount and currency added. The Dashboard's Balance → Export is a different file and
+not this order. The reviewed code counts like this:
+
+- customer payments are the `charge` category, gross before fees;
+- provider fees are processing and service fees; a dispute's fee counts in dispute losses;
+- a refund, a failed payment and a failed refund count in the month they happened;
+- a dispute won later is netted against the loss;
+- a payout is a transfer to your own bank, not a cost, and a failed payout comes back;
+- every payout equals the net of the transactions linked to it;
+- a reserve is money delayed, not money spent;
+- a second currency is its own section, not converted;
+- times are read in Central European time. A business in another time zone is not this order yet.
+
+The figures: gross payments by month, provider fees and the fee rate, refunds, dispute losses, net
+activity, the amount paid out, the bridge from payments to the bank, one line per payout.
 
 ## What to send
 
