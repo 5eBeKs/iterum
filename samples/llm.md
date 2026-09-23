@@ -14,10 +14,8 @@ read the files there.
 
 One item is enough.
 
-- The tables are not one of the two kinds sold on the verify page. A shop's
-  order export is this case: verify is not sold for it. An iShares UCITS
-  holding file is not taken here either, nor as a verify check: it is marked
-  as coming later, until a run has reached a document.
+- The tables are not one of the kinds sold on the verify page. A shop's
+  order export is this case: verify is not sold for it.
 - The columns, the kind of row, or the name of a required column differ from
   a ready kind.
 - You need a rule the ready code does not compute. For an asset manager's
