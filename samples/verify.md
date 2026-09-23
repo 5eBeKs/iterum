@@ -7,20 +7,22 @@ has already been written and reviewed. I run that code on a new export and a
 new report. A language model does not read the files in this order.
 
 A full review of a new export, where a model writes the text and the code, is
-on [Profiles that use a model](llm.md). Both examples in this folder are that
-kind of review, not the short check.
+on [Profiles that use a model](llm.md). The shop and the asset manager in this folder are that kind of review;
+the [fund factsheet](etf-smea/CASE.md) is this check.
 
 
-**Not for sale yet.** No verify check has reached a document on any kind so far. Kinds 1 and 2
-have reviewed code and no finished verify run; the iShares kind stopped one step short of the
-document. Each kind goes on sale after its first finished run.
+**On sale for kind 2 and kind 3; kind 1 after its first finished run.** A kind goes on sale when one
+verify run on it has reached a sealed document. Kind 2 did on a synthetic asset-manager export of
+761,005 price rows: 108 figures, all of them matched, no model, 115 seconds from the first step to
+the seal. Kind 3 did on a real iShares factsheet and the fund's own holdings file
+([the case](etf-smea/CASE.md)). Kind 1 has reviewed code and no finished run yet.
 
 ## When you can buy this check
 
 Every item below. If one of them fails, this is not the order: I say so on
 the first day and do not start counting.
 
-1. **The export is one of the two kinds below.** A different set of columns, a different kind of row, or a
+1. **The export is one of the kinds on sale below.** A different set of columns, a different kind of row, or a
    different name on a required column is not this order.
 2. **Your written answers are the rules this code already computes.** A
    different answer to the same question is different code. That is the page
@@ -33,8 +35,7 @@ the first day and do not start counting.
 5. **The list of figures is agreed before any counting.** The list does not
    grow inside the same order after that.
 
-An orders export from a shop is not one of the two kinds. Verify is not
-sold for it.
+An orders export from a shop is not one of these kinds. Verify is not sold for it.
 
 ### Kind 1 and kind 2. An asset manager's positions on one date
 
@@ -61,13 +62,21 @@ Both kinds count like this:
 
 The two kinds differ by one rule. You name it before the start.
 
-- Kind 1: a bond at the clean price, without accrued interest.
+- Kind 1: a bond at the clean price, without accrued interest. Not for sale yet.
 - Kind 2: a bond at the dirty price, with accrued interest.
 
-### Coming later, not for sale yet
+### Kind 3. An iShares UCITS fund's holdings file
 
-An iShares UCITS fund holding file. A verify check on it cannot be bought
-until one run has reached a document.
+The holdings file as iShares serves it: a preamble, then a header line, one line per holding.
+The reviewed code counts like this:
+
+- the total is securities plus cash, net of short positions;
+- a positive cash amount is an inflow;
+- derivatives enter at their market value.
+
+A different header or a different one of these three rules is not this order. A file whose lines
+can no longer be told apart -- the September file carries several currency-forward lines with the
+same ticker and name -- is refused on the first day rather than checked on a guess.
 
 ## What to send
 
