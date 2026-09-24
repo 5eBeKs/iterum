@@ -4,22 +4,30 @@
 
 [Русская версия](README.ru.md)
 
-Iterum checks an analytical report against the data it was written from. Every figure the report prints is either recomputed from the raw export by code that never saw how
+Iterum checks the figures of an analytical report against the data they came from, and hands
+you a document that says, for every figure, whether it holds.
+
+## What you can order
+
+| You have | You get | Example |
+|---|---|---|
+| A report or a deck with figures, written by an analyst or by an AI, and the export it was written from | Every figure of the agreed list recomputed from the export: it matches; it does not, with both values and the difference; or it cannot be checked, and why. The definitions it rests on, and a sealed receipt | [An AI's sales report](samples/ai-report/CASE.md): 27 of 35 checkable figures right, 8 off through one hidden assumption. [A fund factsheet](samples/etf-smea/CASE.md): its top 10 does not reproduce from the issuer's own holdings |
+| Two files that should agree: orders and payments, a ledger and a bank statement | Every difference with both values and its kind, and a bridge from one total to the other | [A reconciliation protocol](samples/reconciliation/PROTOCOL.md) |
+| A Shopify orders export and a question: how did the quarter go? | A sales report on a fixed menu, every figure recomputed, and the questions only you can answer. Later months are checked by the frozen code, with no model | [A quarter of a Shopify shop](samples/shop-analytics/CASE.md): 36 of 36, and five questions for the owner |
+
+Before any counting you answer a short written list of definitions: what counts as a sale, VAT,
+shipping, which date. No calls. How to order: [the verify check](samples/verify.md) for an export of
+a kind already covered, [the full analysis](samples/llm.md) for a new one.
+
+## How the check works
+
+Every figure the report prints is either recomputed from the raw export by code that never saw how
 the report's author computed it and compared with what is printed, or named in the document as not
 recomputed, with the reason -- the bounds of an estimate's interval, for one, are read by a
-reviewer rather than recomputed. The words beside the figures -- what a number
-counts, over which rows, with which caveats, what it is said to prove -- are read by independent
-model reviewers. What was found is sealed: the reader receives a document saying what was checked
-and what was found, and a receipt with the digest of every file, which anyone can check without
-Iterum.
-
-**For a client.** You send an export and the report written from it. You get a document that puts
-every figure of the agreed list next to its recount -- matched; not matched, with both figures and
-the difference; or not recomputed, and why -- beside the definitions you ruled before any counting,
-and a receipt of the files you were given. Two finished examples: an online shop, where the final
-review found six orders the owner's tie-break rule never covered; an asset manager, where the
-vendor's stale-price flag marks 40 positions and the prices themselves show 42. How to order:
-[`samples/llm.md`](samples/llm.md).
+reviewer rather than recomputed. The words beside the figures -- what a number counts, over which
+rows, with which caveats, what it is said to prove -- are read by independent model reviewers. What
+was found is sealed: the reader receives a document saying what was checked and what was found, and
+a receipt with the digest of every file, which anyone can check without Iterum.
 
 This repository is the evidence: what the checks stop, what they miss, and what that costs. The
 system itself is not published here. Tables and records name it by its working name, MAX v2.

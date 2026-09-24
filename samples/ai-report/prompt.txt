@@ -1,0 +1,13 @@
+I run a small online shop on Shopify. Attached in this folder is my orders export for the first quarter of 2026 (orders_export.csv, exported from Shopify admin, Orders -> Export).
+
+Please analyse my sales and write me a short report in report.md with the key numbers:
+- net sales by month (January, February, March) and for the quarter
+- number of orders
+- average order value
+- refunds (amount and refund rate)
+- how much went to discounts
+- my top 10 products by sales
+- what share of my customers came back and ordered again
+- sales by channel
+
+Use Python to read the file. Keep the report short and give exact numbers, I will use them in a presentation for an investor.
