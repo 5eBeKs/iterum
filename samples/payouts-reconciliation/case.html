@@ -1,0 +1,101 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Sales against payouts</title>
+<style>
+:root { --ink:#17212b; --muted:#5d6b78; --rule:#d5dce3; --panel:#f3f6f8; --accent:#0e6e6a; --bad:#a3342a; }
+@page { size: A4; margin: 14mm 14mm 12mm; }
+* { box-sizing: border-box; }
+body { margin:0; background:#fff; color:var(--ink); font: 10.3pt/1.45 "Segoe UI", Arial, sans-serif; }
+.page { page-break-after: always; } .page:last-child { page-break-after: auto; }
+header { border-bottom:2px solid var(--ink); padding-bottom:6px; margin-bottom:12px; }
+.tag { font-size:8pt; text-transform:uppercase; letter-spacing:.08em; color:var(--accent); font-weight:600; }
+h1 { font-size:19pt; margin:2px 0 2px; letter-spacing:-0.01em; }
+.sub { color:var(--muted); font-size:9.5pt; }
+h2 { font-size:11.5pt; margin:14px 0 6px; }
+p { margin:6px 0; }
+.big { font-size:13pt; font-weight:650; border-left:3px solid var(--accent); padding-left:8px; margin:10px 0; }
+table { width:100%; border-collapse:collapse; font-size:9.3pt; margin:4px 0; }
+th { text-align:left; font-size:8.5pt; color:var(--muted); font-weight:600; border-bottom:1px solid var(--rule); padding:4px 6px; }
+td { border-bottom:1px solid var(--rule); padding:4px 6px; }
+td.n, th.n { text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+td.bad { color:var(--bad); font-weight:600; }
+.grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.box { background:var(--panel); border-radius:6px; padding:10px 12px; }
+.box h3 { margin:0 0 4px; font-size:10.5pt; }
+ul { margin:4px 0 0 18px; padding:0; } li { margin:3px 0; }
+code { font-family: Consolas, monospace; font-size:8.8pt; background:var(--panel); padding:6px 8px; display:block; border-radius:4px; }
+.foot { font-size:8.3pt; color:var(--muted); margin-top:10px; border-top:1px solid var(--rule); padding-top:6px; }
+.kpis { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:8px 0; }
+.kpi { background:var(--panel); border-radius:6px; padding:8px 10px; }
+.k { font-size:8.5pt; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; }
+.kv { font-size:17pt; font-weight:650; font-variant-numeric:tabular-nums; }
+</style></head><body>
+<section class="page">
+<header><div class="tag">Case · reconciliation</div><h1>Shopify sales against Shopify Payments payouts</h1>
+<div class="sub">One month of a synthetic EU shop, in the real Shopify export layouts</div></header>
+<p>The shop sold €529,976 of orders in March. Its Shopify Payments account paid out €244,365 for March.
+Where did the other €285,611 go, and is any of it money that should have arrived and did not?</p>
+<div class="kpis">
+<div class="kpi"><div class="k">Sold in March</div><div class="kv">€529,976</div></div>
+<div class="kpi"><div class="k">Net payout for March</div><div class="kv">€244,365</div></div>
+<div class="kpi"><div class="k">Card orders matched</div><div class="kv">1,439 / 1,444</div></div>
+</div>
+<h2>From March sales to the payout, EUR</h2>
+<table><tr><th></th><th class="n">EUR</th></tr>
+<tr><td>Orders paid in March, all payment methods</td><td class="n">529,975.80</td></tr>
+<tr><td>Paid through PayPal</td><td class="n">−128,380.60</td></tr>
+<tr><td>Paid through Klarna</td><td class="n">−99,928.80</td></tr>
+<tr><td>Paid manually (bank transfer, invoice)</td><td class="n">−18,150.35</td></tr>
+<tr><td>Paid in cash at the till</td><td class="n">−15,710.00</td></tr>
+<tr><td><b>Card orders (Shopify Payments)</b></td><td class="n"><b>267,806.05</b></td></tr>
+<tr><td>Orders paid, no charge</td><td class="n">−376.80</td></tr>
+<tr><td>Charged less than the order</td><td class="n">−17.45</td></tr>
+<tr><td>Charged twice</td><td class="n">+266.00</td></tr>
+<tr><td>Charges with no order</td><td class="n">+258.00</td></tr>
+<tr><td><b>Charges in the payouts file</b></td><td class="n"><b>267,935.80</b></td></tr>
+<tr><td>Refunds: March orders, as recorded in Shopify</td><td class="n">−9,934.50</td></tr>
+<tr><td>Refund larger than Shopify records (#9090)</td><td class="n">−103.95</td></tr>
+<tr><td>Refunds: February orders</td><td class="n">−8,464.41</td></tr>
+<tr><td>Refund of the second charge (#7560)</td><td class="n">−266.00</td></tr>
+<tr><td>Chargeback</td><td class="n">−154.00</td></tr>
+<tr><td>Adjustment</td><td class="n">−23.40</td></tr>
+<tr><td>Card fees</td><td class="n">−4,624.84</td></tr>
+<tr><td><b>Net for March transactions</b></td><td class="n"><b>244,364.70</b></td></tr>
+<tr><td>of which paid out by 31 March</td><td class="n">228,421.57</td></tr>
+<tr><td>of which in transit, paid out in early April</td><td class="n">15,943.13</td></tr>
+</table>
+<div class="foot">Every line is a sum of rows of one of two files: the Shopify orders export and the Shopify
+Payments transactions export for March. The transactions file follows the columns help.shopify.com lists
+for that export; its fees are illustrative.</div>
+</section>
+<section class="page">
+<header><div class="tag">Case · reconciliation</div><h1>What needs a person</h1></header>
+<table><tr><th>What went wrong</th><th>Order</th><th class="n">In Shopify</th><th class="n">In the payouts</th><th class="n">Difference</th></tr>
+<tr><td>Order paid, no charge</td><td>#8935</td><td class="n">337.85</td><td class="n">—</td><td class="n">−337.85</td></tr>
+<tr><td>Order paid, no charge</td><td>#10394</td><td class="n">38.95</td><td class="n">—</td><td class="n">−38.95</td></tr>
+<tr><td>Charged less than the order</td><td>#7596</td><td class="n">42.95</td><td class="n">30.45</td><td class="n">−12.50</td></tr>
+<tr><td>Charged less than the order</td><td>#8345</td><td class="n">52.95</td><td class="n">48.00</td><td class="n">−4.95</td></tr>
+<tr><td>Charged twice, second refunded</td><td>#7560</td><td class="n">266.00</td><td class="n">266.00 + 266.00</td><td class="n">+266.00, then −266.00</td></tr>
+<tr><td>Charge, no order in the export</td><td>#10662</td><td class="n">—</td><td class="n">129.00</td><td class="n">+129.00</td></tr>
+<tr><td>Charge, no order in the export</td><td>#10666</td><td class="n">—</td><td class="n">129.00</td><td class="n">+129.00</td></tr>
+<tr><td>Refund larger than recorded</td><td>#9090</td><td class="n">99.00</td><td class="n">103.95</td><td class="n">+4.95</td></tr>
+<tr><td>Chargeback, order still paid</td><td>#7795</td><td class="n">154.00</td><td class="n">−154.00, fee 15.00</td><td class="n">−169.00</td></tr>
+</table>
+<h2>What the owner learns</h2>
+<ul>
+<li><b>Half of March never passes through this account.</b> €262,170 was paid by PayPal, Klarna, transfer and
+cash, each with its own route to the bank and its own file.</li>
+<li><b>Cards cost 1.73% of what they charged.</b> American Express carried 6.1% of card sales and 10.8% of the fees.</li>
+<li><b>One dispute is not in the shop's books.</b> Order #7795 still reads paid; the card network took back
+€154.00 and €15.00 more.</li>
+</ul>
+<h2>Still open, and why</h2>
+<p>78 March orders carry a refund in Shopify (€7,501.54) with no refund transaction in March. The orders export
+has no refund date, so an April refund cannot be told from a refund made outside Shopify Payments. The April
+transactions file closes it for each order; until then they are listed, not guessed.</p>
+<h2>What the client receives</h2>
+<p>This protocol: every disagreement with both values, grouped by what went wrong; the table from sales to the
+payout; the list of what needs a decision or another file. For a monthly client, the same check every month.</p>
+<div class="foot">Synthetic data. The payouts file was generated from the orders export and given, on purpose,
+the disagreements a real shop's files have; the reconciliation read the two files only. Checked afterwards:
+seven of the eight planted kinds found with the right orders and amounts; the eighth, a refund made outside
+Shopify Payments, is among the 78 open refunds, where the two files put it.</div>
+</section></body></html>
