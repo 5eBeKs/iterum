@@ -1,7 +1,15 @@
-# The price vendor's stale flag is incomplete: 40 against 42
+# Fifteen funds on one date: €13.55 billion, and over a third of it at last prices
 
-An asset manager's report on one date needs to be checked against its own
-export: four years of prices and the positions of fifteen funds.
+An asset manager sends four years of prices and the positions of fifteen funds, and asks what the
+platform holds on 26 June 2026. The report answers in 106 figures: **€13.55 billion** in 2,133
+positions and 669 securities, three quarters of it in equities. And one figure the headline does
+not show: **37.2%** of gross value sits in instruments suspended (14.4%) or delisted (22.8%) on
+that date, carried at their last price. That was the owner's reading, chosen before any figure was
+computed, and it is the first thing a reader of the total needs to know.
+
+## What the check found along the way
+
+The report was written from the export and checked against it.
 
 The export has 761,005 price rows. On the reporting date, 26 June 2026, the
 funds hold 2,133 positions in 669 securities. The report prints 106 figures.

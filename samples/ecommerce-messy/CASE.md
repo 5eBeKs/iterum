@@ -1,4 +1,13 @@
-# Six orders where "latest version" cannot be chosen
+# An online shop's quarter: the partner channel sells smaller and delivers less
+
+An online shop sends its order export for Q1 2026 and asks how the quarter went. The report
+answers: **€3,023,296.61** of net revenue from **44,531** orders. The partner channel brought 45%
+of the orders, but only **60.5%** of them reached delivery, against **72.4%** in the direct channel,
+and a delivered partner order averaged **€87.27** against **€110.64**. The partner channel sells
+smaller baskets and loses more of them on the way. Every one of those figures was recounted from
+the export by separate code.
+
+## What the check found along the way
 
 **Status: one question is open.** The final review asked the owner of the data to confirm which of
 two same-time versions of an order counts, and nobody has confirmed it. The seal certifies the
@@ -6,8 +15,7 @@ figures under the rule recorded before counting. The run's own record lists noth
 the review wrote this as a warning rather than a question. A ruling would mean a new run and a new
 record, not an edit of this one.
 
-A client needs an online-shop report for the first quarter of 2026 checked
-against the order export it was written from.
+The report was written from the order export and checked against it.
 
 The file has 45,917 rows. Some orders appear more than once: each time the
 status changed, a new row with the same order number was appended. After keeping
