@@ -13,7 +13,7 @@ you a document that says, for every figure, whether it holds.
 |---|---|---|
 | A report or a deck with figures, written by an analyst or by an AI, and the export it was written from | Every figure of the agreed list recomputed from the export: it matches; it does not, with both values and the difference; or it cannot be checked, and why. The definitions it rests on, and a sealed receipt | [An AI's sales report](samples/ai-report/CASE.md): 27 of 35 checkable figures right, 8 off through one hidden assumption. [A fund factsheet](samples/etf-smea/CASE.md): its top 10 does not reproduce from the issuer's own holdings |
 | Two files that should agree: orders and payments, a ledger and a bank statement | Every difference with both values and its kind, and a bridge from one total to the other | [A reconciliation protocol](samples/reconciliation/PROTOCOL.md) |
-| A Shopify orders export and a question: how did the quarter go? | A sales report on a fixed menu, every figure recomputed, and the questions only you can answer. Later months are checked by the frozen code, with no model | [A quarter of a Shopify shop](samples/shop-analytics/CASE.md): 36 of 36, and five questions for the owner |
+| An orders or sales export and a question: how did the quarter go? | A sales report on a fixed menu, every figure recomputed, and the questions only you can answer. Later months are checked by the frozen code, with no model | [A quarter of a Shopify shop](samples/shop-analytics/CASE.md): 36 of 36, and five questions for the owner. Shopify is the example, not the limit |
 
 Before any counting you answer a short written list of definitions: what counts as a sale, VAT,
 shipping, which date. No calls. How to order: [the verify check](samples/verify.md) for an export of

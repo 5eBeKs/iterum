@@ -6,6 +6,9 @@ The owner sends the orders export from the Shopify admin (Orders → Export). Th
 for the quarter in which every figure is recounted by separate code. With the report come the
 questions their data cannot answer, asked instead of guessed.
 
+The example is a Shopify export; the same report is made from any orders or sales export with dates,
+amounts and statuses: another shop platform, a marketplace, a CRM.
+
 ## The export and the menu
 
 The export is synthetic but in the real Shopify format: 21,687 rows and 9,659 orders of an EU

@@ -6,6 +6,9 @@ A Shopify shop owner exports the quarter's orders and gives the file to an AI as
 assistant writes Python, reads the file and returns a tidy report with exact figures. The figures
 are going into a presentation for an investor. Are they right?
 
+**Short answer: no.** One silent assumption in the assistant's code put eight of its figures off.
+Nothing in the report shows it; only a recount from the export found it.
+
 ## What we did
 
 We took a Shopify orders export: 21,687 rows and 9,659 orders of an EU outdoor shop in Q1 2026. It
@@ -26,7 +29,7 @@ presentation".
 Then every number of assistant A's report was checked. Code reviewed in advance recounted it from the
 same export, with no model involved, and compared the result with what is printed.
 
-## Assistant A: one silent assumption, five wrong figures
+## Assistant A: one silent assumption, eight wrong figures
 
 The report prints 113 numbers.
 - **35** of them have a definition the checking code computes. **27 match to the cent; 8 do not.**
