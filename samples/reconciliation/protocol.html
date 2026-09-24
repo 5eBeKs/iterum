@@ -1,0 +1,83 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Reconciliation Protocol</title><style>
+:root { --ink:#17212b; --muted:#5d6b78; --rule:#d5dce3; --panel:#f3f6f8; --accent:#0e6e6a; --bad:#a3342a; }
+@page { size: A4; margin: 14mm 14mm 12mm; }
+* { box-sizing: border-box; }
+body { margin:0; background:#fff; color:var(--ink); font: 10.3pt/1.45 "Segoe UI", Arial, sans-serif; }
+.page { page-break-after: always; } .page:last-child { page-break-after: auto; }
+header { border-bottom:2px solid var(--ink); padding-bottom:6px; margin-bottom:12px; }
+.tag { font-size:8pt; text-transform:uppercase; letter-spacing:.08em; color:var(--accent); font-weight:600; }
+h1 { font-size:19pt; margin:2px 0 2px; letter-spacing:-0.01em; }
+.sub { color:var(--muted); font-size:9.5pt; }
+h2 { font-size:11.5pt; margin:14px 0 6px; }
+p { margin:6px 0; }
+.big { font-size:13pt; font-weight:650; border-left:3px solid var(--accent); padding-left:8px; margin:10px 0; }
+table { width:100%; border-collapse:collapse; font-size:9.3pt; margin:4px 0; }
+th { text-align:left; font-size:8.5pt; color:var(--muted); font-weight:600; border-bottom:1px solid var(--rule); padding:4px 6px; }
+td { border-bottom:1px solid var(--rule); padding:4px 6px; }
+td.n, th.n { text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+td.bad { color:var(--bad); font-weight:600; }
+.grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.box { background:var(--panel); border-radius:6px; padding:10px 12px; }
+.box h3 { margin:0 0 4px; font-size:10.5pt; }
+ul { margin:4px 0 0 18px; padding:0; } li { margin:3px 0; }
+code { font-family: Consolas, monospace; font-size:8.8pt; background:var(--panel); padding:6px 8px; display:block; border-radius:4px; }
+.foot { font-size:8.3pt; color:var(--muted); margin-top:10px; border-top:1px solid var(--rule); padding-top:6px; }
+.kpis { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:8px 0; }
+.kpi { background:var(--panel); border-radius:6px; padding:8px 10px; }
+.k { font-size:8.5pt; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; }
+.kv { font-size:17pt; font-weight:650; font-variant-numeric:tabular-nums; }
+ td{padding:2.5px 6px} h2{margin:9px 0 4px} .kpis{margin:4px 0}</style></head><body>
+<section class="page">
+<header><div class="tag">Sample protocol &middot; synthetic data</div><h1>Store orders vs payment processor, August 2026</h1>
+<div class="sub">Two exports that should agree: every difference with both values, and a bridge from one total to the other</div></header>
+
+<div class="kpis">
+<div class="kpi"><div class="k">Orders that should be paid</div><div class="kv">1,034</div></div>
+<div class="kpi"><div class="k">Reconcile</div><div class="kv">1,022</div></div>
+<div class="kpi"><div class="k">Differences</div><div class="kv" style="color:var(--bad)">15</div></div>
+</div>
+
+<h2>Rules agreed before counting</h2>
+<ul>
+<li>Key: <b>order_id</b> in both files. Orders <b>paid</b> or <b>refunded</b> should have a payment; <b>cancelled</b> ones none.</li>
+<li>The order total must equal the payment amount, in the same currency; a difference of 0.01 or less counts as matched.</li>
+</ul>
+
+<h2>The fifteen differences</h2>
+<table><thead><tr><th>What went wrong</th><th>Order</th><th class="n">Store</th><th class="n">Processor</th><th class="n">Difference</th></tr></thead><tbody>
+<tr><td>Order paid, no payment</td><td>SO-10717</td><td class="n">195.61</td><td class="n">—</td><td class="n bad">−195.61</td></tr>
+<tr><td>Order paid, no payment</td><td>SO-10927</td><td class="n">284.00</td><td class="n">—</td><td class="n bad">−284.00</td></tr>
+<tr><td>Order paid, no payment</td><td>SO-10988</td><td class="n">200.00</td><td class="n">—</td><td class="n bad">−200.00</td></tr>
+<tr><td>Order paid, no payment</td><td>SO-11061</td><td class="n">291.82</td><td class="n">—</td><td class="n bad">−291.82</td></tr>
+<tr><td>Amount differs</td><td>SO-10104</td><td class="n">345.66</td><td class="n">333.16</td><td class="n bad">−12.50</td></tr>
+<tr><td>Amount differs</td><td>SO-10588</td><td class="n">182.86</td><td class="n">162.86</td><td class="n bad">−20.00</td></tr>
+<tr><td>Amount differs</td><td>SO-10690</td><td class="n">79.73</td><td class="n">76.38</td><td class="n bad">−3.35</td></tr>
+<tr><td>Amount differs</td><td>SO-10920</td><td class="n">409.66</td><td class="n">397.16</td><td class="n bad">−12.50</td></tr>
+<tr><td>Amount differs</td><td>SO-10974</td><td class="n">223.40</td><td class="n">222.50</td><td class="n bad">−0.90</td></tr>
+<tr><td>Charged more than once</td><td>SO-10157</td><td class="n">254.90</td><td class="n">254.90 + 254.90</td><td class="n bad">+254.90</td></tr>
+<tr><td>Charged more than once</td><td>SO-10344</td><td class="n">474.97</td><td class="n">474.97 + 474.97</td><td class="n bad">+474.97</td></tr>
+<tr><td>Currency differs</td><td>SO-10086</td><td class="n">321.01 EUR</td><td class="n">321.01 USD</td><td class="n bad">not comparable</td></tr>
+<tr><td>Payment, no order</td><td>SO-19000</td><td class="n">—</td><td class="n">186.08</td><td class="n bad">+186.08</td></tr>
+<tr><td>Payment, no order</td><td>SO-19001</td><td class="n">—</td><td class="n">31.27</td><td class="n bad">+31.27</td></tr>
+<tr><td>Payment, no order</td><td>SO-19002</td><td class="n">—</td><td class="n">161.82</td><td class="n bad">+161.82</td></tr>
+</tbody></table>
+
+<div class="grid" style="margin-top:10px">
+<div><h2 style="margin-top:4px">From the store's total to the processor's (EUR)</h2>
+<table><tbody>
+<tr><td>Store: paid and refunded orders</td><td class="n">249,511.39</td></tr>
+<tr><td>Order paid, no payment</td><td class="n">−971.43</td></tr>
+<tr><td>Amount differs</td><td class="n">−49.25</td></tr>
+<tr><td>Charged more than once</td><td class="n">+729.87</td></tr>
+<tr><td>Payment, no order</td><td class="n">+379.17</td></tr>
+<tr><td>Currency differs (left out)</td><td class="n">−321.01</td></tr>
+<tr><td>Within tolerance</td><td class="n">+0.03</td></tr>
+<tr><td><b>Processor: EUR payments</b></td><td class="n"><b>249,278.77</b></td></tr>
+</tbody></table></div>
+<div class="box"><h3>What this does not check</h3>
+Whether refunds reached the customer (they are in neither file); the processor's fees; whether either file is right on
+its own. The check is that the two files agree, and where they do not, exactly how.</div>
+</div>
+<div class="foot">Synthetic exports: a store's orders and a payment processor's payments. Every figure can be recounted
+from the two files.</div>
+</section></body></html>

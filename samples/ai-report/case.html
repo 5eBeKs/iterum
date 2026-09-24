@@ -1,0 +1,98 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>AI Report Check</title><style>
+:root { --ink:#17212b; --muted:#5d6b78; --rule:#d5dce3; --panel:#f3f6f8; --accent:#0e6e6a; --bad:#a3342a; }
+@page { size: A4; margin: 14mm 14mm 12mm; }
+* { box-sizing: border-box; }
+body { margin:0; background:#fff; color:var(--ink); font: 10.3pt/1.45 "Segoe UI", Arial, sans-serif; }
+.page { page-break-after: always; } .page:last-child { page-break-after: auto; }
+header { border-bottom:2px solid var(--ink); padding-bottom:6px; margin-bottom:12px; }
+.tag { font-size:8pt; text-transform:uppercase; letter-spacing:.08em; color:var(--accent); font-weight:600; }
+h1 { font-size:19pt; margin:2px 0 2px; letter-spacing:-0.01em; }
+.sub { color:var(--muted); font-size:9.5pt; }
+h2 { font-size:11.5pt; margin:14px 0 6px; }
+p { margin:6px 0; }
+.big { font-size:13pt; font-weight:650; border-left:3px solid var(--accent); padding-left:8px; margin:10px 0; }
+table { width:100%; border-collapse:collapse; font-size:9.3pt; margin:4px 0; }
+th { text-align:left; font-size:8.5pt; color:var(--muted); font-weight:600; border-bottom:1px solid var(--rule); padding:4px 6px; }
+td { border-bottom:1px solid var(--rule); padding:4px 6px; }
+td.n, th.n { text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+td.bad { color:var(--bad); font-weight:600; }
+.grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.box { background:var(--panel); border-radius:6px; padding:10px 12px; }
+.box h3 { margin:0 0 4px; font-size:10.5pt; }
+ul { margin:4px 0 0 18px; padding:0; } li { margin:3px 0; }
+code { font-family: Consolas, monospace; font-size:8.8pt; background:var(--panel); padding:6px 8px; display:block; border-radius:4px; }
+.foot { font-size:8.3pt; color:var(--muted); margin-top:10px; border-top:1px solid var(--rule); padding-top:6px; }
+.kpis { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:8px 0; }
+.kpi { background:var(--panel); border-radius:6px; padding:8px 10px; }
+.k { font-size:8.5pt; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; }
+.kv { font-size:17pt; font-weight:650; font-variant-numeric:tabular-nums; }
+</style></head><body>
+<section class="page">
+<header><div class="tag">Case &middot; synthetic data</div><h1>An AI's sales report, every number checked</h1>
+<div class="sub">A Shopify orders export given to an AI assistant, and its report checked against the same export</div></header>
+
+<p>A shop owner exports the quarter's orders from Shopify and asks an AI assistant for the key numbers,
+"exact, for an investor presentation". The assistant writes code, cleans the file and returns a tidy report.
+We recounted every number of that report from the same export with separate code that never saw the report.</p>
+
+<div class="kpis">
+<div class="kpi"><div class="k">Numbers in the report</div><div class="kv">113</div></div>
+<div class="kpi"><div class="k">Checkable, and match</div><div class="kv">27 of 35</div></div>
+<div class="kpi"><div class="k">Wrong</div><div class="kv" style="color:var(--bad)">8</div></div>
+</div>
+
+<p class="big">All eight wrong figures come from one reasonable-looking line of the assistant's code.</p>
+<code>q['refund_prod'] = q['Refunded Amount'] * q['Subtotal'] / q['Total']</code>
+<p>It takes a "shipping share" out of every refund. For full refunds that is right. The partial refunds in this
+export are goods only, so shipping that was never refunded was taken out of them: refunds came out €505.35 too
+low and net sales €505.35 too high.</p>
+
+<table><thead><tr><th>Figure</th><th class="n">In the AI's report</th><th class="n">Recounted</th><th class="n">Difference</th></tr></thead><tbody>
+<tr><td>Refunds of goods, Q1</td><td class="n">83,002.07</td><td class="n">83,507.42</td><td class="n bad">−505.35</td></tr>
+<tr><td>Net sales, January</td><td class="n">529,138.18</td><td class="n">528,930.40</td><td class="n bad">+207.78</td></tr>
+<tr><td>Net sales, February</td><td class="n">458,990.22</td><td class="n">458,841.03</td><td class="n bad">+149.19</td></tr>
+<tr><td>Net sales, March</td><td class="n">487,268.58</td><td class="n">487,120.20</td><td class="n bad">+148.38</td></tr>
+<tr><td>Net sales, Q1</td><td class="n">1,475,396.98</td><td class="n">1,474,891.63</td><td class="n bad">+505.35</td></tr>
+<tr><td>Online store, net sales</td><td class="n">1,325,008.08</td><td class="n">1,324,502.73</td><td class="n bad">+505.35</td></tr>
+</tbody></table>
+<p>Everything else that could be checked matched to the cent: gross sales, discounts, orders, refunded orders,
+returning customers, all ten top-product figures. The assumption is written in a code comment, never in the report.
+A reader cannot see it; only a recount finds it.</p>
+<div class="foot">Two figures in the table are printed twice in the report, which makes eight. 78 numbers could not be
+checked, each with its reason given (a different definition, a split the checking code does not compute, or a note on cleaning).</div>
+</section>
+
+<section class="page">
+<header><div class="tag">The same export, a stronger assistant</div><h1>Right arithmetic, a different answer</h1></header>
+<p>A second assistant, the most capable model available at the time, got the same file and request. Its arithmetic
+holds, and its headline is still €221 thousand away, because it chose the definitions itself:</p>
+<table><thead><tr><th></th><th class="n">Stronger assistant</th><th class="n">Checked count</th></tr></thead><tbody>
+<tr><td>Net sales, Q1</td><td class="n">€1,253,965.73</td><td class="n">€1,474,891.63</td></tr>
+<tr><td>VAT</td><td class="n">excluded</td><td class="n">included</td></tr>
+<tr><td>Orders not yet paid</td><td class="n">counted in</td><td class="n">left out</td></tr>
+<tr><td>Staff purchases</td><td class="n">counted in</td><td class="n">left out</td></tr>
+</tbody></table>
+<p>Both can be defended. Nobody asked the owner which one the investor should see.</p>
+
+<h2>Why a stronger model does not replace the check</h2>
+<ul>
+<li><b>The choice of definitions is the owner's.</b> A better model still has to pick one; a check that starts by
+asking makes the choice on purpose.</li>
+<li><b>An error that looks reasonable survives its own review.</b> A model re-reading its work shares its
+assumptions; a recount by separate code does not.</li>
+<li><b>An investor cannot check a model's word.</b> They can check a document that puts every figure beside an
+independent recount.</li>
+</ul>
+
+<div class="grid" style="margin-top:12px">
+<div class="box"><h3>What you send</h3>Your report or deck, the export it was written from, and the list of figures
+to check. A short written list of definitions follows: what counts as a sale, VAT, shipping, which date.</div>
+<div class="box"><h3>What you receive</h3>Every figure beside its recount: it matches; it does not, with both values
+and the difference; or it cannot be checked, and why. And a receipt: file fingerprints that show the document was
+not changed after the check.</div>
+</div>
+<div class="foot">The export is synthetic, generated in the real Shopify format, so the right answers are known.
+One export, one request, one run of each assistant: this shows what a check finds, not how often assistants are wrong.
+In one order's notes the export also carried an instruction addressed to "the AI analyst"; neither assistant followed
+it, and neither mentioned it.</div>
+</section></body></html>
