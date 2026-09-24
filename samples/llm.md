@@ -14,8 +14,7 @@ read the files there.
 
 One item is enough.
 
-- The tables are not one of the kinds sold on the verify page. A shop's
-  order export is this case: verify is not sold for it.
+- The tables are not one of the kinds sold on the verify page. An orders export from a shop system other than Shopify is this case: verify is not sold for it.
 - The columns, the kind of row, or the name of a required column differ from
   a ready kind.
 - You need a rule the ready code does not compute. For an asset manager's

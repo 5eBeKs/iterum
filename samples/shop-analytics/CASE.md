@@ -21,9 +21,8 @@ The report's menu is fixed in advance:
 - the repeat-customer rate;
 - sales by channel.
 
-Claude Opus 5.5 does the work. Each stage (cleaning, metrics, analysis, the report) is written by
-one context and reviewed by another that starts fresh, and a final review reads the whole run. It
-took 85 minutes.
+An AI pipeline drafts the analysis. Nothing in the report is taken on its word: every figure is
+recounted by separate code, and a final review reads the whole work before it is sealed.
 
 ## The result
 
@@ -62,7 +61,7 @@ down before counting.
 3. Does the export always write customer emails in lower case? Two spellings of one address would
    count as two customers.
 4. **Does a partial refund ever include shipping?** The export cannot show it, and refunds and net
-   sales depend on the answer. The AI assistant in [the neighbouring case](../ai-report/CASE.md)
+   sales depend on the answer. An AI assistant in [the neighbouring case](../ai-report/CASE.md)
    decided it silently and added €505 to net sales.
 5. May the report say March is provisional, since refunds on late-March orders are still arriving?
 
@@ -82,8 +81,11 @@ first time.
 
 ---
 
-*Files in this folder, for readers on GitHub:* `sample-deliverable.pdf` (the two-page report),
-`report.md` (the run's machine report), `client_document.md` (the check document; written just
-before the seal, so it still says "not yet sealed", and in Russian with the questions in English —
-both to be fixed), `receipt.md` (the receipt), `cover.png` (the gig cover). The owner's definitions
-were answered by a delegate for this demonstration, and the document records that.
+*Files in this folder, for readers on GitHub.* `report.sealed.md` and `client_document.md` are the
+sealed files byte for byte: their SHA-256 equal the ones in `receipt.md`, where the report is listed as
+`release/report.md`. The document was written just before the seal, so it still says "not yet
+sealed", and it is in Russian with the questions in English; both are to be fixed.
+`report-readable.md` is the same report with the check's anchors taken out; `sample-deliverable.pdf`
+and `cover.png` were laid out after the seal from the sealed figures. None of these three is in the
+receipt. The owner's definitions were answered by a delegate for this demonstration, and the document
+records that.
