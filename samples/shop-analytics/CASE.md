@@ -23,6 +23,7 @@ final review reads the whole run. It took 85 minutes.
 
 ## What came out
 
+- [**A two-page sample of what the owner receives**](sample-deliverable.pdf): the report as the owner reads it, with the checks and the open questions on the second page.
 - [The report](report.md): 36 figures. Net sales are €1,474,891.63 over 8,664 orders, including
   VAT, excluding shipping, net of refunds, after discount codes. Each figure carries what it counts.
 - [The document for the reader](client_document.md): all 36 figures recomputed from the export,
