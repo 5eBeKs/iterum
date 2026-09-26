@@ -17,8 +17,9 @@ Amazon pay everything it owes?
 All three files are synthetic: a seller of home goods and phone accessories, fulfilled by Amazon, prices
 including German VAT. The orders report and the settlement report follow the columns documented for
 them, tab-separated as Seller Central writes them. The settlements were generated from the orders and
-then given, on purpose, the kinds of disagreement a real seller's files have. The reconciliation read
-the three files and nothing else; the list of what had been planted was opened only afterwards.
+then given, on purpose, the kinds of disagreement a real seller's files have. The reconciliation code reads the files and nothing else. It was written by the same person
+who planted the disagreements, so this case shows the method and what a client receives; it is not
+a blind test.
 
 ## Rules agreed before counting
 
@@ -102,7 +103,7 @@ Every line is a sum of rows of one of the files.
 
 ## What was planted, and what was found
 
-Checked against the planted list after the protocol was written: all seven kinds of planted
+Checked against the planted list: all seven kinds of planted
 disagreement are in the protocol, with the right orders, SKUs and amounts.
 
 ## What the client receives

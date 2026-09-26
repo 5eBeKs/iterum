@@ -15,8 +15,9 @@ other €285,611 go, and is any of it money that should have arrived and did not
 
 Both files are synthetic, in the real Shopify layouts. The payouts file was generated from the
 orders export and then given, on purpose, the kinds of disagreement a real shop's files have.
-The reconciliation read the two files and nothing else; the list of what had been planted was
-opened only afterwards, to check the result.
+The reconciliation code reads the files and nothing else. It was written by the same person
+who planted the disagreements, so this case shows the method and what a client receives; it is not
+a blind test.
 
 ## Rules agreed before counting
 
@@ -100,7 +101,7 @@ then they are listed, not guessed.
 
 ## What was planted, and what was found
 
-Checked against the planted list after the protocol was written. Eight kinds of disagreement were
+Checked against the planted list. Eight kinds of disagreement were
 planted, and seven are in the protocol with the right orders and amounts. The eighth, a refund made
 outside Shopify Payments, is among the 78 open refunds. From these two files alone it cannot be
 told apart from an April refund.

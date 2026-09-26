@@ -20,8 +20,9 @@ All four are synthetic. The statement is modelled on the detailed download of a 
 DistroKid, one row per reporting date, store, track and country, with the month of the sale beside the
 month it was reported; its columns are illustrative, because that distributor changed its layout in July
 2025. The files were generated and then given, on purpose, the kinds of disagreement a real band's have.
-The reconciliation read the four files and nothing else; the list of what had been planted was opened only
-afterwards.
+The reconciliation code reads the files and nothing else. It was written by the same person
+who planted the disagreements, so this case shows the method and what a client receives; it is not
+a blind test.
 
 ## Rules agreed before counting
 
@@ -87,7 +88,7 @@ The cent is rounding in the payouts. Every line is a sum of rows of one of the f
 
 ## What was planted, and what was found
 
-Checked against the planted list after the protocol was written: all six planted disagreements are in the
+Checked against the planted list: all six planted disagreements are in the
 protocol, with the right store, month, track and amount, and so is the month nobody withdrew.
 
 ## What the client receives
