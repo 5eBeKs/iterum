@@ -25,7 +25,7 @@ recounted: it matches, it does not with both values, or it cannot be checked and
 | Example | What the data was | What turned up |
 |---|---|---|
 | [An AI's sales report](ai-report/CASE.md) | A Shopify orders export given to two AI assistants with Python; one report checked with no model | One silent assumption in the assistant's code put 8 of 35 checkable figures off, €505 into net sales. The other assistant's headline is €221 thousand away through definitions nobody asked about |
-| [Fund factsheet, real and public](etf-smea/CASE.md) | An iShares ETF's September factsheet and the fund's own holdings file, checked with no model | The top 10 weights do not reproduce from the issuer's own holdings on either date the factsheet names |
+| [Fund factsheet, real and public](etf-smea/CASE.md) | An iShares ETF's factsheet for August 2026 and the fund's own holdings file, checked with no model | Ten of the eleven top-10 figures do not reproduce from the issuer's own holdings on 31 August, and none on 3 September, the two dates the factsheet names |
 
 ## A sales or business report, written from your export
 

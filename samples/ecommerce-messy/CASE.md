@@ -17,8 +17,9 @@ record, not an edit of this one.
 
 The report was written from the order export and checked against it.
 
-The file has 45,917 rows. Some orders appear more than once: each time the
-status changed, a new row with the same order number was appended. After keeping one row per order there are 45,000 orders; 44,541 fall in the
+The file has 45,917 rows. Some orders appear more than once: some rows are
+exact copies, and some are a later version of the order, appended with its status
+settled. After keeping one row per order there are 45,000 orders; 44,541 fall in the
 quarter, and 10 with a negative refund are left out as an export fault, which
 leaves 44,531.
 
@@ -40,10 +41,10 @@ way clients send files: several date formats, shipping written with spaces,
 commas or a EUR suffix, and a comment column of free text that was kept out of
 the calculation.
 
-The six ties were not planted. The program that generated this file writes each
-re-exported order one to five hours later, but never past 23:00, and copies the
-minutes and seconds. An order last updated at 23 o'clock gets a copy with the
-same time to the second. The program's own comment says the timestamp moves
+The six ties were not planted. The program that generated this file moves each
+re-exported order's time one to five hours on, but never past the day's last
+hour, and keeps the minutes and seconds. An order last updated between 23:00 and
+23:59 gets a copy with the same time to the second. The program's own comment says the timestamp moves
 forward, and the owner's ruling repeats it. We made the file ourselves and did
 not know; the final review found it.
 
@@ -60,5 +61,10 @@ the file by one character and the string changes. For this copy of the report
 the digest is:
 
 `2c73dbc26af176932724618ad7d036706778ed5a06244109f25aa203f7e01b03`
+
+The run's own record lists the report at 5,050 bytes: the run wrote it with Windows line endings, and
+the record's digest is taken over the text with line endings folded, which is how the run's lock reads
+a file. The copy here has Unix line endings, 4,963 bytes, and the SHA-256 of its bytes is that digest.
+This run is older than the receipts, which take their digests over the exact bytes.
 
 The rest of the files are in [README.md](README.md).

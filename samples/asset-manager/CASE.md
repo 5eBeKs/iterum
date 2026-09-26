@@ -11,7 +11,7 @@ computed, and it is the first thing a reader of the total needs to know.
 
 The report was written from the export and checked against it.
 
-The export has 761,005 price rows. On the reporting date, 26 June 2026, the
+The export has 761,004 price rows. On the reporting date, 26 June 2026, the
 funds hold 2,133 positions in 669 securities. The report prints 106 figures.
 Each one is recomputed from these files.
 

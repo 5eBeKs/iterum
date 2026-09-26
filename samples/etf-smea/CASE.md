@@ -3,9 +3,9 @@
 [Русская версия](CASE.ru.md)
 
 This one is not synthetic. Both documents are public and come from the same
-issuer: the September 2026 factsheet of the iShares Core MSCI Europe UCITS ETF
-EUR (Acc), ticker SMEA, and the fund's full holdings file, which iShares
-publishes by date.
+issuer: the factsheet of the iShares Core MSCI Europe UCITS ETF EUR (Acc), ticker
+SMEA, for August 2026, published in September, and the fund's full holdings
+file, which iShares publishes by date.
 
 The factsheet says of itself: *"Performance, Portfolio Breakdowns and Net Asset
 information as at: 31-Aug-2026. All other data as at 03-Sep-2026."* The check
@@ -20,9 +20,15 @@ assets, beta — cannot, and the document says why for each one.
 
 ## What turned up
 
-Ten of the eleven do not reproduce. Because the factsheet names two dates, the
-same figures were then recounted from the holdings file of 3 September. They do
-not reproduce from that one either.
+Ten of the eleven do not reproduce at the precision the factsheet prints them.
+Because the factsheet names two dates, the same figures were then recounted from
+the holdings file of 3 September, and none of the eleven reproduces from that one.
+
+**On the tolerance.** The sealed document prints ±0.01 beside each weight, but it
+compares the weights at the printed precision, which is stricter. Held to ±0.01 of
+the unrounded weights instead, nine of the eleven still differ: Banco Santander,
+1.45 against 1.458, is the one more that would pass, and HSBC, Shell and
+AstraZeneca are outside by 0.012 to 0.014 points.
 
 | Position | Factsheet | Holdings, 31 Aug | Holdings, 3 Sep |
 |---|---:|---:|---:|
@@ -46,8 +52,9 @@ owner ruled before any counting. The 31 August column is the sealed check. The
 3 September column is a direct recount from the second file, not a sealed run.
 
 **What this does and does not say.** It does not say iShares made a mistake. It
-says the printed weights cannot be recomputed from the issuer's own published
-holdings on either date the factsheet names. They may rest on another basis or
+says that from the issuer's own published holdings ten of the eleven printed
+figures cannot be recomputed on 31 August and none on 3 September, the two dates
+the factsheet names. They may rest on another basis or
 another day the document does not name; the document does not say which.
 
 **The holdings count.** The factsheet prints *Number of Holdings: 396*. The file

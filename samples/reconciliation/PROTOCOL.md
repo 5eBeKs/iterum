@@ -1,6 +1,6 @@
 # Reconciliation protocol: store orders vs payment processor
 
-*Sample on synthetic data. Every figure below is computed from the two files beside this page, [`orders.csv`](orders.csv) and [`payments.csv`](payments.csv), and can be recounted from them.*
+*Sample on synthetic data. Every figure below is computed from the two files beside this page, [`orders.csv`](orders.csv) and [`payments.csv`](payments.csv), and can be recounted from them. The disagreements were planted on purpose, and the code that reconciles was written by the same person who planted them, so this shows the method and what a client receives; it is not a blind test.*
 
 ## What was compared
 

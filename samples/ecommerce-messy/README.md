@@ -32,7 +32,7 @@ the way clients send files:
 - a byte-order mark at the start of the file, which can hide column names from
   a naive program;
 - dates written as `2026-03-01`, as `01.03.2026`, and as `03/01/2026`;
-- one order occupying several rows, one per status change;
+- one order occupying several rows: exact copies, and later versions appended with the status settled;
 - shipping written with a thousands space, a decimal comma, or a EUR suffix,
   and some cells blank or unreadable;
 - a comment column of free text; that column was removed from the calculation
@@ -62,10 +62,10 @@ By the final review's own count, taking the earlier row moves 10 published value
 (delivered orders, minus refunds, excluding shipping) falls from 3,023,296.61
 to 3,022,518.62 euros. A person has to confirm that "lower row in the file" is what they meant when the times matched. Only the final review of the whole run noticed this; no machine check and no stage review did.
 
-The six ties were not planted. The program that generated this file writes each
-re-exported order one to five hours later, but never past 23:00, and copies the
-minutes and seconds. An order last updated at 23 o'clock gets a copy with the
-same time to the second. The program's own comment says the timestamp moves
+The six ties were not planted. The program that generated this file moves each
+re-exported order's time one to five hours on, but never past the day's last
+hour, and keeps the minutes and seconds. An order last updated between 23:00 and
+23:59 gets a copy with the same time to the second. The program's own comment says the timestamp moves
 forward, and the owner's ruling repeats it. We made the file ourselves and did
 not know; the final review found it.
 

@@ -16,7 +16,7 @@ There were no folder paths of another machine in them.
 ## Where the data came from
 
 A synthetic asset-manager export. There is no live fund behind it. Six tables:
-761,005 price rows over four years, and the positions of fifteen funds. The
+761,004 price rows over four years, and the positions of fifteen funds. The
 reporting date is 26 June 2026. On that date: 2,133 positions in 669 securities.
 39 of them are quoted as a yield, not a price: a value cannot be computed from
 this export, and they are reported by quantity, without a sum.

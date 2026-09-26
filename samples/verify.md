@@ -7,13 +7,15 @@ has already been written and reviewed. I run that code on a new export and a
 new report. A language model does not read the files in this order.
 
 A full review of a new export, where a model writes the text and the code, is
-on [Profiles that use a model](llm.md). The shop and the asset manager in this folder are that kind of review;
-the [fund factsheet](etf-smea/CASE.md) is this check.
+on [Profiles that use a model](llm.md). The online shop, the asset manager and the certification run of
+the Shopify quarter in this folder are that kind of review; the [fund factsheet](etf-smea/CASE.md), the
+Shopify quarter's [client document](shop-analytics/CASE.md) and the check of [the AI's report](ai-report/CASE.md)
+are this check.
 
 
 **On sale for kinds 2, 3, 4 and 5; kind 1 after its first finished run.** A kind goes on sale when one
 verify run on it has reached a sealed document. Kind 2 did on a synthetic asset-manager export of
-761,005 price rows: 108 figures, all of them matched, no model, 115 seconds from the first step to
+761,004 price rows: 108 figures (the report's 106, two of them counted in both places they are printed), all of them matched, no model, 115 seconds from the first step to
 the seal. Kind 3 did on a real iShares factsheet and the fund's own holdings file
 ([the case](etf-smea/CASE.md)). Kinds 4 and 5 did on synthetic exports built to the Shopify
 and Stripe formats: 36 of 36 and 22 of 22 figures matched, no model, under a minute each. Kind 1
@@ -85,6 +87,13 @@ same ticker and name -- is refused on the first day rather than checked on a gue
 
 The CSV that **Orders → Export** writes in the Shopify admin: one row per line item, the admin's
 own column names. Extra columns do no harm; a missing one is refused by name on the first day.
+
+The code was certified on one shop's quarter, and what was frozen with it still names that
+quarter: its stage tests list the months and the products of that catalogue, and its check plan
+reads a control file that shop's export came with. So the first check for another shop, or another
+period, starts with those tests and that plan rewritten for your export and reviewed once, with no
+change to the code that counts; after that each export is a plain verify check.
+
 The reviewed code counts like this:
 
 - a sale is a paid order; cancelled orders and orders tagged `test` or `staff` are left out;
@@ -97,8 +106,9 @@ The reviewed code counts like this:
 - the channel is the `Source` column;
 - two overlapping exports pasted into one file are de-duplicated.
 
-The figures: net and gross sales by month, orders, average order value, refunds and the refund
-rate, the discount share, the top ten products, the repeat-customer rate, sales by channel. A shop
+The figures: net sales by month and for the period; for the period, gross sales, orders, the
+average order value, refunds and the refund rate, the discount share, the top ten products, the
+repeat-customer rate and sales by channel. A shop
 whose export writes one customer's address in mixed case says so before the start.
 
 ### Kind 5. A Stripe balance report
@@ -135,7 +145,7 @@ in. Not from the first chat message.
    rules do not already contain means verify cannot be bought.
 5. **A column description,** if you have not sent one before: the name, the
    unit, what a blank cell means. On the first day that shows whether the
-   file is one of the two kinds.
+   file is one of the kinds above.
 
 ## What you get back
 

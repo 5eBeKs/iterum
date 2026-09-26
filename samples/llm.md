@@ -20,8 +20,9 @@ One item is enough.
 - You need a rule the ready code does not compute. For an asset manager's
   positions that is, for example, a different bond price, a different
   headline, or a different exchange rate.
-- You want a written review, not only a status on each figure. Both examples
-  in this folder are that kind of review.
+- You want a written review, not only a status on each figure. The online
+  shop, the asset manager and the Shopify quarter in this folder are that kind
+  of review.
 
 The next period of the same kind, with the same columns and the same answers,
 is not this order. After this order that is a verify check, 1–2 days.
@@ -32,14 +33,17 @@ One profile, claude-build: Claude Opus 5.5 writes each stage, and separate
 Claude contexts review it, each starting fresh. The recount in the document is
 what speaks for the figures, not the fact that a model reviewed them.
 
-On the same messy shop export, four Opus 5.5 runs published the same figures
-to the last digit as the older Opus 5 runs, at a quarter to a fifth of their
-cost.
+On the same messy shop export, the three Opus 5.5 runs that reached a seal
+published the same figures to the last digit as the older Opus 5 runs, at a
+fifth to under half of their cost.
 
-Finished examples, made on profiles since retired; the checks are the same:
+Finished examples:
 
-- [Online shop](ecommerce-messy/CASE.md). GLM wrote, Claude reviewed.
-- [Asset manager](asset-manager/CASE.md). GLM wrote, Grok reviewed.
+- [A Shopify quarter](shop-analytics/CASE.md), on this profile.
+- [Online shop](ecommerce-messy/CASE.md), on a profile since retired: GLM wrote, Claude reviewed.
+- [Asset manager](asset-manager/CASE.md), on a profile since retired: GLM wrote, Grok reviewed.
+
+The checks are the same on all three.
 
 ## What to send
 
