@@ -43,11 +43,16 @@ Four things are not right:
 |---|---|---:|
 | A month reported twice | Album distributor: Deezer's July 2025 sales, reported again in October | +$150.35 |
 | A month never reported | EP distributor: Apple Music's June 2025, every track | about $143 |
-| Streams taken back as artificial | EP distributor: Spotify, *Glass Coast*, November 2025 | −$174.72 |
+| A deduction larger than the month it names | EP distributor: Spotify, *Glass Coast*, November 2025: 38,400 streams in the US and 16,200 in the UK, where the month counted 5,555 and 3,810 | −$174.72 |
 | A conversion beyond the agreed margin | the withdrawal of 30 September 2025, 3.4% below the reference rate | −€7.60 |
 
-Deezer's double report is in the label's receipts, and so in the band's recoupment. A distributor usually
-takes a double back; when this one does, $150.35 of receipts goes with it, so the band should not count on it.
+Deezer's double report is in the label's receipts, and so in the band's recoupment: the doubled receipts
+paid the advance back sooner, and €68.48 of the €2,410.15 rests on them. A distributor usually takes a
+double back, and when this one does, the label will deduct that €68.48 from a later statement.
+
+The EP distributor's deduction takes more streams than the month it names counted in those countries,
+and its statement gives no reason. A take-back of streams judged artificial can look like this, but only
+the distributor can say what it is for and which months it covers.
 
 ## Who is owed what
 
@@ -58,8 +63,12 @@ shared the way the album is:
 |---|---:|---:|---:|
 | Mara Keller | 3,277.37 | 199.89 | 723.05 |
 | Jonas Brandt | 3,180.98 | 199.89 | 723.05 |
-| Teo Vasić | 3,180.98 | 199.89 | 723.05 |
-| Lena Ortiz, producer | — | 66.63 | 241.02 |
+| Teo Vasić | 3,180.97 | 199.88 | 723.04 |
+| Lena Ortiz, producer | — | 66.63 | 241.01 |
+| **Together** | **9,639.32** | **666.29** | **2,410.15** |
+
+Each column is split by the largest remainder, so the cents add up to the total the members share; a
+cent left over goes to the member the split sheet names first.
 
 ## Why this is not a spreadsheet afternoon
 
