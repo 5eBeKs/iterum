@@ -20,9 +20,11 @@ amounts and statuses.
 
 21,687 rows, one per line item, 9,659 orders of an EU outdoor shop in Q1 2026. It is synthetic, in the
 real Shopify format, and messy the way a real one is: the owner downloaded the quarter in two parts
-that overlapped for eleven days, so 1,068 orders are in it twice. Shopify's admin logs what it exported,
-and all five of its totals agree with the file: rows, orders, first and last order date, sum. Nothing
-was lost between the admin and the file.
+that overlapped for eleven days, so 1,068 orders are in it twice. Beside it lies a control file, a
+record of what the order system exported, and all five of its totals agree with the file: rows, orders,
+first and last order date, sum. Nothing was lost between the system and the file. In this synthetic case
+the generator writes that record; a Shopify export comes with none, so for a real shop the totals come
+from another source, such as the payouts for the same days, and the document names it.
 
 ## Step 2. The shape, before any method
 
@@ -46,7 +48,8 @@ any figure exists, so a figure cannot choose its own method.
 | Who is a returning customer? | Two or more orders inside the quarter, one address being one customer |
 | What is an average order? | Net sales after refunds over orders |
 
-For this demonstration the owner's delegate answered them, and the document records who did.
+For this demonstration the owner did not answer them: an AI model answered them under the owner's
+delegation, and the document records that beside every rule. With a real client, the client answers.
 
 ## Step 4. From rows to sales
 
@@ -87,8 +90,9 @@ Top products: Fjord Rain Jacket (€254,356.47), Polar Down Jacket (€243,146.5
 An AI pipeline drafts the analysis; nothing in it is taken on its word. **678 checks by code** hold the
 contracts, the cleaning and every figure to the export: the cleaned tables against the raw rows, every
 figure recomputed from them, every number on the page bound to its recomputation. **248 checks by
-reviewers** read what code cannot: the definitions against the mandate, the figures' meanings and
-caveats, the report as the owner will read it. In the end every one of the report's 36 figures was
+reviewers**, separate runs of an AI model that never wrote the work they review, read what code cannot:
+the definitions against the mandate, the figures' meanings and caveats, the report as the owner will
+read it. In the end every one of the report's 36 figures was
 recounted by separate code: **36 of 36 match.** The checks by stage are in the workbook.
 
 ## Step 7. What only the owner can answer
@@ -106,14 +110,25 @@ step 3, and the report says so.
 
 ## Step 8. The next month
 
-The code that produced these figures is frozen after the review. It runs next month's export with no
-model, every figure is checked the same way, and the questions answered this time are not asked again.
+The code that produced these figures is frozen after the review, and a frozen stage runs with no
+model. For this shop's next month one thing changes first: the tests frozen with the code name this
+quarter's months and this catalogue's products, so a new month or a new product would stop them. They
+are rewritten for any month and reviewed once. After that each month runs with no model, every figure is
+checked the same way, and the questions answered this time are not asked again.
 
 ## What the client receives
 
 The three documents at the top, and a receipt: fingerprints of the export, the report and the document
 at the moment of the check. If anyone later changes a single figure in the document, its fingerprint
-no longer matches; anyone can compare it with a standard command, without us.
+no longer matches; anyone can compare it with a standard command, without us. The fingerprints are of
+the sealed text files. The PDF is the document laid out, and the workbook and the two-page report are
+laid out from the run; none of the three is in the receipt.
+
+**Two sentences of the sealed report are wrong.** The line on returning
+customers says earlier history is not in the export, yet the export holds 237 sales from 29–31 December;
+that is the second question of step 7. And the report's opening line says money is after discount codes,
+which holds for every figure but gross sales, before discount codes by definition. A sealed file cannot
+be edited without a new seal, so this page says it instead.
 
 ---
 
