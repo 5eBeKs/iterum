@@ -2,8 +2,8 @@
 
 [Русская версия](CASE.ru.md)
 
-A Shopify shop sold €529,976 of orders in March. Its Shopify Payments account paid out €244,365
-for March. The owner asks the question every shop owner asks sooner or later: where did the
+A Shopify shop sold €529,976 of orders in March. Its Shopify Payments transactions for March come to €244,365 net, of which €15,943 was paid out
+in the first days of April. The owner asks the question every shop owner asks sooner or later: where did the
 other €285,611 go, and is any of it money that should have arrived and did not?
 
 ## What was compared
@@ -81,9 +81,9 @@ Every line is a sum of rows of one of the two files.
 
 - **Half of March never passes through this account.** €262,170 of €529,976 was paid by PayPal,
   Klarna, transfer and cash. Their money reaches the bank by other routes, each with its own file.
-- **Cards cost 1.73% of what they charged.** American Express carried 6.1% of card sales and 10.8% of
-  the fees: 3.0% on each Amex payment against 1.6% on Visa and Mastercard.
-- **Eight orders need a person.** Two orders say paid with no money behind them (€376.80). Two were
+- **Card charges cost 1.72% in fees** (1.73% with the €15 dispute fee). American Express carried 6.1%
+  of card sales and 10.8% of the charge fees: 3.0% on each Amex payment against 1.6% on Visa and Mastercard.
+- **Eight records need a person.** Two orders say paid with no money behind them (€376.80). Two were
   charged less than their total. Two charges have no order in the export. One customer was charged
   twice: the second charge was refunded, and its fee was not. One refund was €4.95 larger than
   the order says.

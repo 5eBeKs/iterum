@@ -18,8 +18,9 @@ record, not an edit of this one.
 The report was written from the order export and checked against it.
 
 The file has 45,917 rows. Some orders appear more than once: each time the
-status changed, a new row with the same order number was appended. After keeping
-one row per order, there are 44,531 orders.
+status changed, a new row with the same order number was appended. After keeping one row per order there are 45,000 orders; 44,541 fall in the
+quarter, and 10 with a negative refund are left out as an export fault, which
+leaves 44,531.
 
 The agreed rule: if an order appears more than once, the version with the later
 update time goes into the figures. Revenue is delivered orders only, after
@@ -31,7 +32,7 @@ or already cancelled; the other is delivered. Time cannot pick a "latest"
 version. What remains is which of the two rows sits lower in the file.
 
 The report computed revenue from the row that sits lower. A recount from the
-export matches that choice. By the final review's own count, taking the earlier row moves 10 of 12 published values beyond tolerance. Net revenue falls from **3,023,296.61** to **3,022,518.62** euros.
+export matches that choice. By the final review's own count, taking the earlier row moves 10 published values beyond tolerance. Net revenue falls from **3,023,296.61** to **3,022,518.62** euros.
 The arithmetic matches the row that was kept. What does not hold is the reason the rule was accepted: the owner's ruling says every new version of an order is written with a later update time, and for these six it is not. No machine check and no stage review noticed. The final review of the whole run did, and a person has to confirm the tie-break.
 
 The export is synthetic. There is no live shop behind it. The file is built the

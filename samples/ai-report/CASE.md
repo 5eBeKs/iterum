@@ -1,4 +1,4 @@
-# An AI's sales report, every number checked
+# An AI's sales report: 113 figures reviewed, 35 recounted, 8 wrong
 
 [Русская версия](CASE.ru.md)
 
@@ -26,7 +26,8 @@ write: the key numbers of the quarter (net sales by month, orders, average order
 discounts, top products, returning customers, channels), "exact numbers, for an investor
 presentation".
 
-Then every number of assistant A's report was checked. Code reviewed in advance recounted it from the
+Then every number of assistant A's report was reviewed. Code reviewed in advance recounted each one it
+has a definition for from the
 same export, with no model involved, and compared the result with what is printed.
 
 ## Assistant A: one silent assumption, eight wrong figures

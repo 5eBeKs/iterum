@@ -39,7 +39,7 @@ the way clients send files:
   before any automated check read the file.
 
 Reporting period: 1 January to 31 March 2026, both ends included. 45,917 rows
-in the file; 44,531 orders after keeping one row per order. Six figures in the report, printed as fourteen numbers: four of the six are estimates and carry an interval. Each one is recomputed from the export, separately from however the
+in the file; 45,000 orders after keeping one row per order, 44,531 of them in the quarter once 10 with a negative refund are left out as an export fault. Six figures in the report, printed as fourteen numbers: four of the six are estimates and carry an interval. Each one is recomputed from the export, separately from however the
 report's author computed it.
 
 One model (GLM) wrote the report, another vendor's model (Claude) reviewed it.
@@ -58,7 +58,7 @@ The rule was: take the version with the later time. Equal times leave the rule
 with nothing to choose. The row that sits lower in the file wins. The report
 is computed on that order, and a recount matches it.
 
-By the final review's own count, taking the earlier row moves 10 of 12 published values beyond tolerance. Net revenue
+By the final review's own count, taking the earlier row moves 10 published values beyond tolerance. Net revenue
 (delivered orders, minus refunds, excluding shipping) falls from 3,023,296.61
 to 3,022,518.62 euros. A person has to confirm that "lower row in the file" is what they meant when the times matched. Only the final review of the whole run noticed this; no machine check and no stage review did.
 

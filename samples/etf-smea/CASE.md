@@ -36,9 +36,11 @@ not reproduce from that one either.
 | ASTRAZENECA PLC | 1.69 | 1.70 | 1.73 |
 | SAP | 1.59 | 1.56 | 1.52 |
 | BANCO SANTANDER | 1.45 | 1.46 | 1.49 |
-| Top 10, total | 21.02 | 20.98 | 21.15 |
+| Top 10, total | 21.02 | 20.98 | 21.13 |
 
-Weights in percent of the market value of every line of the file, as iShares
+The factsheet's total is the sum of its printed weights; the two file totals are sums of the
+unrounded weights, which is why 21.13 is not the sum of the rounded column above it. Weights in
+percent of the market value of every line of the file, as iShares
 itself computes the file's weight column; that basis is one of the readings the
 owner ruled before any counting. The 31 August column is the sealed check. The
 3 September column is a direct recount from the second file, not a sealed run.
@@ -50,9 +52,10 @@ another day the document does not name; the document does not say which.
 
 **The holdings count.** The factsheet prints *Number of Holdings: 396*. The file
 has 387 share lines on both dates, and 387 share lines plus 9 cash lines make 396
-on both dates. Whether 396 is right depends on what counts as a holding. That was
-the owner's ruling to make before the check, and it is printed in the document
-with the owner's name: shares only, so the count cannot be confirmed.
+on both dates. The sealed document marks 396 *cannot be verified*, and the reason it gives is the date: the
+factsheet counts holdings as at 3 September, and the check was over the 31 August file. Under the
+owner's ruling a holding is a share line, and on either date that makes 387; 396 is reached only if
+the 9 cash lines count as holdings too.
 
 ## The second date also moved the file
 

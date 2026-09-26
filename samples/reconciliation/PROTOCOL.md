@@ -6,8 +6,8 @@
 
 | File | What it is | Rows | SHA-256 |
 |---|---|---:|---|
-| `orders.csv` | the store's order export, August 2026 | 1200 | `c3fa381ce3964a3f…` |
-| `payments.csv` | the payment processor's export, same month | 1035 | `9925cd2c384bf169…` |
+| `orders.csv` | the store's order export, 1 August to 1 September 2026 | 1200 | `c3fa381ce3964a3f…` |
+| `payments.csv` | the payment processor's export, same dates | 1035 | `9925cd2c384bf169…` |
 
 ## Rules agreed before counting
 
