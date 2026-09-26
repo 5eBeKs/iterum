@@ -2,7 +2,7 @@
 
 [Русская версия](README.ru.md)
 
-Nine finished examples, grouped by the three things you can order. Each case page reads on its
+Seven finished examples, grouped by the three things you can order. Each case page reads on its
 own; the files beside it are for anyone who wants to recount.
 
 ## A reconciliation of two files that should agree
@@ -13,8 +13,6 @@ turns one file's total into the other's.
 | Example | What the data was | What turned up |
 |---|---|---|
 | [Shopify sales against Shopify Payments payouts](payouts-reconciliation/CASE.md) | A month of Shopify orders and the Shopify Payments transactions export | Where €285,611 between March sales and the net of March card transactions went, to the cent: other payment methods, refunds, fees. Eight records for a person, among them a double charge and a dispute the shop's books do not show |
-| [Amazon sales against Amazon settlements](amazon-settlement/CASE.md) | A month of an amazon.de seller: the All Orders report, two Flat File V2 settlements and the seller's catalogue | €28,513 between shipped goods and the bank explained to the cent: fees take 23.3%, €9,744 is on its way, and €144.46 is owed to the seller, one claim per order |
-| [A band's royalties](music-royalties/CASE.md) | Half a year of a distributor's statement, the band's bank account and its split sheet | A month Apple Music never reported, a month Deezer paid twice, streams taken back, a manager's 20% where the contract says 15%, and a single shared out on the album's split: who is owed what, member by member |
 | [Store orders against processor payments](reconciliation/PROTOCOL.md) | Two synthetic exports, a store's orders and a payment processor's payments | 15 records that do not reconcile, grouped by what went wrong, and how one file's total becomes the other's |
 
 ## A check of a report you already have
