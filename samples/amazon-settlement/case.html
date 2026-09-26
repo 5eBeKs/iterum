@@ -1,0 +1,58 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Amazon sales against Amazon settlements</title><style>
+:root { --ink:#17212b; --muted:#5d6b78; --rule:#d5dce3; --panel:#f3f6f8; --accent:#0e6e6a; --bad:#a3342a; }
+@page { size: A4; margin: 14mm 14mm 12mm; }
+* { box-sizing: border-box; }
+body { margin:0; background:#fff; color:var(--ink); font: 10.3pt/1.45 "Segoe UI", Arial, sans-serif; }
+.page { page-break-after: always; } .page:last-child { page-break-after: auto; }
+header { border-bottom:2px solid var(--ink); padding-bottom:6px; margin-bottom:12px; }
+.tag { font-size:8pt; text-transform:uppercase; letter-spacing:.08em; color:var(--accent); font-weight:600; }
+h1 { font-size:19pt; margin:2px 0 2px; letter-spacing:-0.01em; }
+.sub { color:var(--muted); font-size:9.5pt; }
+h2 { font-size:11.5pt; margin:14px 0 6px; }
+p { margin:6px 0; }
+.big { font-size:13pt; font-weight:650; border-left:3px solid var(--accent); padding-left:8px; margin:10px 0; }
+table { width:100%; border-collapse:collapse; font-size:9.3pt; margin:4px 0; }
+th { text-align:left; font-size:8.5pt; color:var(--muted); font-weight:600; border-bottom:1px solid var(--rule); padding:4px 6px; }
+td { border-bottom:1px solid var(--rule); padding:4px 6px; }
+td.n, th.n { text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+td.bad { color:var(--bad); font-weight:600; }
+.grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.box { background:var(--panel); border-radius:6px; padding:10px 12px; }
+.box h3 { margin:0 0 4px; font-size:10.5pt; }
+ul { margin:4px 0 0 18px; padding:0; } li { margin:3px 0; }
+code { font-family: Consolas, monospace; font-size:8.8pt; background:var(--panel); padding:6px 8px; display:block; border-radius:4px; }
+.foot { font-size:8.3pt; color:var(--muted); margin-top:10px; border-top:1px solid var(--rule); padding-top:6px; }
+.kpis { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:8px 0; }
+.kpi { background:var(--panel); border-radius:6px; padding:8px 10px; }
+.k { font-size:8.5pt; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; }
+.kv { font-size:17pt; font-weight:650; font-variant-numeric:tabular-nums; }
+</style></head><body><section class="page"><header><div class="tag">Case · reconciliation · synthetic data</div><h1>Amazon sales against Amazon settlements</h1><div class="sub">One month of a synthetic amazon.de seller, in the documented report layouts</div></header><div class="kpis"><div class="kpi"><div class="k">Shipped in March</div><div class="kv">€73,646</div></div><div class="kpi"><div class="k">Deposited</div><div class="kv">€45,133</div></div><div class="kpi"><div class="k">Amazon owes</div><div class="kv">€144.46</div></div></div><p>The seller asks where the other €28,513 went, and whether Amazon paid everything it owes.</p><h2>From March sales to the bank, EUR</h2><table><tr><th></th><th class="n">EUR</th></tr><tr><td>Ordered in March, item prices</td><td class="n">78,206.90</td></tr>
+<tr><td>Cancelled</td><td class="n">−3,368.30</td></tr>
+<tr><td>Not shipped by 31 March</td><td class="n">−1,192.40</td></tr>
+<tr><td><b>Shipped in March</b></td><td class="n"><b>73,646.20</b></td></tr>
+<tr><td>Shipped after 27 March, settles in April</td><td class="n">−7,529.40</td></tr>
+<tr><td>Shipped, never paid</td><td class="n">−99.70</td></tr>
+<tr><td>Paid less than the price</td><td class="n">−5.00</td></tr>
+<tr><td>Cancelled, but charged</td><td class="n">+19.90</td></tr>
+<tr><td>Charge with no order in the report</td><td class="n">+44.90</td></tr>
+<tr><td><b>Sales in the settlements</b></td><td class="n"><b>66,076.90</b></td></tr>
+<tr><td>Promotions</td><td class="n">−341.19</td></tr>
+<tr><td>Commissions (of which €4.00 above the rate card)</td><td class="n">−7,825.64</td></tr>
+<tr><td>FBA fees (of which €5.86 charged twice)</td><td class="n">−7,554.77</td></tr>
+<tr><td>Refunds to customers: March orders</td><td class="n">−2,091.62</td></tr>
+<tr><td>Refunds to customers: February orders</td><td class="n">−1,234.20</td></tr>
+<tr><td>Commission returned on refunds</td><td class="n">+417.74</td></tr>
+<tr><td>Refund administration fee</td><td class="n">−83.71</td></tr>
+<tr><td>Storage fee</td><td class="n">−61.37</td></tr>
+<tr><td>Subscription fee</td><td class="n">−39.00</td></tr>
+<tr><td>Reimbursed for lost and damaged stock</td><td class="n">+84.80</td></tr>
+<tr><td>Reserve: held on 29 March, less released on 15 March</td><td class="n">−2,215.00</td></tr>
+<tr><td><b>Deposited: 18 March and 1 April</b></td><td class="n"><b>45,132.94</b></td></tr></table><div class="foot">Every line is a sum of rows of the All Orders report, the two Flat File V2 settlements or the seller's catalogue. Fees, rate card and reserve are illustrative.</div></section><section class="page"><header><div class="tag">Case · reconciliation</div><h1>What needs Seller Support, or a person</h1></header><table><tr><th>What went wrong</th><th>Order</th><th class="n">Report</th><th class="n">Settlement</th><th class="n">Difference</th></tr><tr><td>Shipped, never paid</td><td class="n">302-2325519-1784447</td><td class="n">34.90</td><td class="n">—</td><td class="n">−34.90</td></tr>
+<tr><td>Shipped, never paid</td><td class="n">304-8652830-2994801</td><td class="n">64.80</td><td class="n">—</td><td class="n">−64.80</td></tr>
+<tr><td>Paid less than the price</td><td class="n">302-8208660-2594574</td><td class="n">14.90</td><td class="n">9.90</td><td class="n">−5.00</td></tr>
+<tr><td>Commission 15%, rate card 7%</td><td class="n">305-1590219-6565686</td><td class="n">1.04</td><td class="n">2.24</td><td class="n">−1.20</td></tr>
+<tr><td>Commission 15%, rate card 7%</td><td class="n">302-1241663-9626194</td><td class="n">2.44</td><td class="n">5.24</td><td class="n">−2.80</td></tr>
+<tr><td>FBA fee charged twice</td><td class="n">305-9605719-8374807</td><td class="n">5.86</td><td class="n">5.86 + 5.86</td><td class="n">−5.86</td></tr>
+<tr><td>Refund of two units, one sold</td><td class="n">302-4861010-5346516</td><td class="n">29.90</td><td class="n">59.80</td><td class="n">−29.90</td></tr>
+<tr><td>Cancelled, but charged</td><td class="n">304-8965748-2541815</td><td>cancelled</td><td class="n">19.90</td><td class="n">+19.90</td></tr>
+<tr><td>Charge with no order</td><td class="n">305-3570548-3024662</td><td class="n">—</td><td class="n">44.90</td><td class="n">+44.90</td></tr></table><h2>What the seller learns</h2><ul><li><b>Amazon's fees take 23.3% of sales:</b> commissions 11.8%, FBA fees 11.4%.</li><li><b>€9,744 is money on its way:</b> €7,529 settles in April, €2,215 sits in the reserve.</li><li><b>€144.46 is owed to the seller</b>, one claim per order above.</li><li><b>Two records need a person:</b> a customer charged for a cancelled order, and a sale with no order in the report.</li></ul><div class="foot">Synthetic data, generated with seven kinds of planted disagreement; the reconciliation read the three files only, and all seven were found afterwards with the right orders and amounts.</div></section></body></html>

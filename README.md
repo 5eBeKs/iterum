@@ -93,7 +93,7 @@ launch as it was recorded.
 
 ## What the reader receives
 
-[`samples/`](samples/) holds seven finished examples, listed by offer in [its index](samples/README.md); the two
+[`samples/`](samples/) holds nine finished examples, listed by offer in [its index](samples/README.md); the two
 earliest are below. Each one is a report, a document for the client, and a way to see that the files were not changed after they were handed over -- for the shop, which ran before receipts existed, a checksum in the run's own record rather than a receipt.
 
 - [Online shop](samples/ecommerce-messy/CASE.md) -- a quarterly order export,
