@@ -1,0 +1,265 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Annotated AI report</title><style>
+:root{--ink:#17212b;--muted:#5d6b78;--rule:#d5dce3;--panel:#f3f6f8;--accent:#0e6e6a;--ok:#1d7a4a;--bad:#b3261e;--na:#8a6d1f}
+@page{size:A4;margin:13mm 12mm}
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);font:9.6pt/1.42 "Segoe UI",Arial,sans-serif}
+h1{font-size:18pt;margin:0 0 4px}
+.tag{font-size:8pt;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);font-weight:600}
+.sub{color:var(--muted)}
+.cover{page-break-after:always}
+.legend{display:flex;gap:14px;margin:10px 0;flex-wrap:wrap}
+.legend span{padding:2px 8px;border-radius:4px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0}
+.kpi{background:var(--panel);border-radius:6px;padding:8px 10px}
+.kpi .v{font-size:17pt;font-weight:700}
+.kpi .k{font-size:8pt;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+section.pair{display:grid;grid-template-columns:minmax(0,60fr) minmax(0,40fr);gap:14px;border-top:1px solid var(--rule);padding-top:8px;margin-top:8px;page-break-inside:auto}
+.report h1{font-size:13pt}
+.report h2{font-size:11pt;margin:2px 0 6px}
+.report table{border-collapse:collapse;width:100%;font-size:8.6pt}
+.report th,.report td{border-bottom:1px solid var(--rule);padding:3px 4px;text-align:left}
+.report td{white-space:nowrap}
+.report p,.report li{margin:3px 0}
+mark{padding:0 2px;border-radius:3px;background:none}
+mark.match{background:#dcefe3}
+mark.mismatch{background:#f6d4d1;font-weight:700}
+mark.not_verifiable{background:#f3ead0}
+mark sup{font-size:6.5pt;color:var(--muted);margin-left:1px}
+.notes{font-size:8pt;line-height:1.3}
+.note{margin:0 0 5px;padding:4px 6px;border-left:3px solid var(--rule);background:#fafbfc;page-break-inside:avoid}
+.note .m{color:var(--muted)}
+b.match{color:var(--ok)} b.mismatch{color:var(--bad)} b.not_verifiable{color:var(--na)}
+.note.bad{border-left-color:var(--bad)}
+.note.ok{border-left-color:var(--ok)}
+.note.na{border-left-color:#d8b95a}
+.note ul{margin:2px 0 0 14px;padding:0}
+.note li{margin:0}
+.foot{font-size:8pt;color:var(--muted);margin-top:12px}
+</style></head><body><div class="cover"><div class="tag">Case · report check · synthetic data</div>
+<h1>The AI's sales report, every figure annotated</h1>
+<div class="sub">The report an AI assistant wrote from a Shopify orders export, as the owner received it, with a note beside
+each of its 113 figures from the independent recount.</div>
+<div class="kpis"><div class="kpi"><div class="k">Figures in the report</div><div class="v">113</div></div>
+<div class="kpi"><div class="k">Match the recount</div><div class="v" style="color:var(--ok)">27</div></div>
+<div class="kpi"><div class="k">Do not match</div><div class="v" style="color:var(--bad)">8</div></div>
+<div class="kpi"><div class="k">Cannot be checked</div><div class="v" style="color:var(--na)">78</div></div></div>
+<div class="legend"><span style="background:#dcefe3">matches the recount</span><span style="background:#f6d4d1;font-weight:700">does not match</span>
+<span style="background:#f3ead0">cannot be checked, with the reason</span></div>
+<p>How to read it: each figure is highlighted where the report prints it, with a small number; the note of that number sits
+beside the same section. A figure the check recounted says what the export gives. A figure it could not recount says why,
+in one of four reasons:</p><ul><li><b>46</b> not on the agreed menu</li><li><b>12</b> the agreed menu has it for the quarter, not per month</li><li><b>10</b> defined differently from the agreed menu</li><li><b>10</b> describes the cleaning; no count of it is published</li></ul>
+<p>"Cannot be checked" is not a pass. It is the list of figures an investor would be taking on the assistant's word, and
+each one is a question the owner can decide to ask.</p>
+<div class="foot">Every status, recount and reason in this document is copied from the sealed verification document of the check
+(verification_report.md); the report is the sealed file the check was run over (report.sealed.md, SHA-256
+e8df0c58…d8d9d4). The data are synthetic: a generated EU shop in the real Shopify export format. The mistakes in the report
+are the assistant's own; nobody planted them.</div></div><section class="pair"><div class="report"><h1>Q1 2026 Sales Report</h1>
+<p>Source: <code>orders_export.csv</code> (Shopify), orders created 1 Jan – 31 Mar 2026, shop local time. All amounts in EUR, <strong>including VAT, excluding shipping</strong>. Script: <code>analysis.py</code>.</p></div><div class="notes"></div></section><section class="pair"><div class="report"><h2>Key numbers</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align: right;">Jan</th>
+<th style="text-align: right;">Feb</th>
+<th style="text-align: right;">Mar</th>
+<th style="text-align: right;"><strong>Q1</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Orders</td>
+<td style="text-align: right;"><mark class="not_verifiable">3,217<sup>1</sup></mark></td>
+<td style="text-align: right;"><mark class="not_verifiable">2,615<sup>2</sup></mark></td>
+<td style="text-align: right;"><mark class="not_verifiable">2,832<sup>3</sup></mark></td>
+<td style="text-align: right;"><strong><mark class="match">8,664<sup>4</sup></mark></strong></td>
+</tr>
+<tr>
+<td>Gross sales</td>
+<td style="text-align: right;"><mark class="not_verifiable">578,510.00<sup>5</sup></mark></td>
+<td style="text-align: right;"><mark class="not_verifiable">496,406.00<sup>6</sup></mark></td>
+<td style="text-align: right;"><mark class="not_verifiable">527,161.00<sup>7</sup></mark></td>
+<td style="text-align: right;"><mark class="match">1,602,077.00<sup>8</sup></mark></td>
+</tr>
+<tr>
+<td>– Discounts</td>
+<td style="text-align: right;"><mark class="not_verifiable">15,368.05<sup>9</sup></mark></td>
+<td style="text-align: right;"><mark class="not_verifiable">12,932.70<sup>10</sup></mark></td>
+<td style="text-align: right;"><mark class="not_verifiable">15,377.20<sup>11</sup></mark></td>
+<td style="text-align: right;"><mark class="match">43,677.95<sup>12</sup></mark></td>
+</tr>
+<tr>
+<td>– Refunds</td>
+<td style="text-align: right;"><mark class="not_verifiable">34,003.77<sup>13</sup></mark></td>
+<td style="text-align: right;"><mark class="not_verifiable">24,483.08<sup>14</sup></mark></td>
+<td style="text-align: right;"><mark class="not_verifiable">24,515.22<sup>15</sup></mark></td>
+<td style="text-align: right;"><mark class="mismatch">83,002.07<sup>16</sup></mark></td>
+</tr>
+<tr>
+<td><strong>Net sales</strong></td>
+<td style="text-align: right;"><strong><mark class="mismatch">529,138.18<sup>17</sup></mark></strong></td>
+<td style="text-align: right;"><strong><mark class="mismatch">458,990.22<sup>18</sup></mark></strong></td>
+<td style="text-align: right;"><strong><mark class="mismatch">487,268.58<sup>19</sup></mark></strong></td>
+<td style="text-align: right;"><strong><mark class="mismatch">1,475,396.98<sup>20</sup></mark></strong></td>
+</tr>
+<tr>
+<td>Average order value</td>
+<td style="text-align: right;"><mark class="not_verifiable">175.05<sup>21</sup></mark></td>
+<td style="text-align: right;"><mark class="not_verifiable">184.88<sup>22</sup></mark></td>
+<td style="text-align: right;"><mark class="not_verifiable">180.71<sup>23</sup></mark></td>
+<td style="text-align: right;"><strong><mark class="not_verifiable">179.87<sup>24</sup></mark></strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Net sales</strong> = gross sales (list price × quantity) − discounts − refunds. Net sales excluding VAT for Q1: <strong>€<mark class="not_verifiable">1,230,049.35<sup>25</sup></mark></strong> (each order's own VAT share removed; VAT rates 16–19% by country).</li>
+<li><strong>Average order value</strong> = order value after discounts, before refunds, excluding shipping (€<mark class="match">1,558,399.05<sup>26</sup></mark> / <mark class="match">8,664<sup>27</sup></mark>).</li>
+</ul></div><div class="notes"><div class="note ok"><b class="match">Match the recount to the cent</b><ul><li><b>4</b> 8,664 · Orders in Q1 2026: sale orders created in Q1 2026</li><li><b>8</b> 1,602,077.00 · Gross sales in Q1 2026</li><li><b>12</b> 43,677.95 · Discount codes in Q1 2026, EUR including VAT</li><li><b>26</b> 1,558,399.05 · Order value in Q1 2026 after discount codes and before refu…</li><li><b>27</b> 8,664 · Orders in Q1 2026, the divisor of the average order value</li></ul></div><div class="note bad"><b class="mismatch">16 · 83,002.07 does not match</b><div class="m">Refunds of goods on Q1 2026 orders</div><div>Recounted from the export: <b>83,507.42</b>. The report prints 505.35 less. Cause: the refund line of the assistant’s code.</div></div><div class="note bad"><b class="mismatch">17 · 529,138.18 does not match</b><div class="m">Net sales of the orders created in January 2026</div><div>Recounted from the export: <b>528,930.40</b>. The report prints 207.78 more. Cause: the refund line of the assistant’s code.</div></div><div class="note bad"><b class="mismatch">18 · 458,990.22 does not match</b><div class="m">Net sales of the orders created in February 2026</div><div>Recounted from the export: <b>458,841.03</b>. The report prints 149.19 more. Cause: the refund line of the assistant’s code.</div></div><div class="note bad"><b class="mismatch">19 · 487,268.58 does not match</b><div class="m">Net sales of the orders created in March 2026</div><div>Recounted from the export: <b>487,120.20</b>. The report prints 148.38 more. Cause: the refund line of the assistant’s code.</div></div><div class="note bad"><b class="mismatch">20 · 1,475,396.98 does not match</b><div class="m">Net sales in Q1 2026</div><div>Recounted from the export: <b>1,474,891.63</b>. The report prints 505.35 more. Cause: the refund line of the assistant’s code.</div></div><div class="note na"><b class="not_verifiable">Cannot be checked: the agreed menu has it for the quarter, not per month</b><div><b>1</b> 3,217, <b>2</b> 2,615, <b>3</b> 2,832</div><div class="m">The checked code computes the number of sale orders for the whole quarter only, not for one month.</div></div><div class="note na"><b class="not_verifiable">Cannot be checked: the agreed menu has it for the quarter, not per month</b><div><b>5</b> 578,510.00, <b>6</b> 496,406.00, <b>7</b> 527,161.00</div><div class="m">The checked code computes gross sales for the whole quarter only, not for one month.</div></div><div class="note na"><b class="not_verifiable">Cannot be checked: the agreed menu has it for the quarter, not per month</b><div><b>9</b> 15,368.05, <b>10</b> 12,932.70, <b>11</b> 15,377.20</div><div class="m">The checked code computes discounts for the whole quarter only, not for one month.</div></div><div class="note na"><b class="not_verifiable">Cannot be checked: the agreed menu has it for the quarter, not per month</b><div><b>13</b> 34,003.77, <b>14</b> 24,483.08, <b>15</b> 24,515.22</div><div class="m">The checked code computes refunds for the whole quarter only, not for one month.</div></div><div class="note na"><b class="not_verifiable">Cannot be checked: defined differently from the agreed menu</b><div><b>21</b> 175.05, <b>22</b> 184.88, <b>23</b> 180.71</div><div class="m">A different definition from the one the checked code computes: one month&#x27;s order value after discounts and before refunds, over that month&#x27;s orders; the checked code&#x27;s average order value is net sales after refunds over orders, and for the whole quarter only.</div></div><div class="note na"><b class="not_verifiable">Cannot be checked: defined differently from the agreed menu</b><div><b>24</b> 179.87</div><div class="m">A different definition from the one the checked code computes: order value after discounts and before refunds (1,558,399.05) over orders; the checked code&#x27;s average order value is net sales after refunds over orders.</div></div><div class="note na"><b class="not_verifiable">Cannot be checked: defined differently from the agreed menu</b><div><b>25</b> 1,230,049.35</div><div class="m">A different definition from the one the checked code computes: net sales with each order&#x27;s VAT share taken out; the checked code computes sales including VAT, and the owner&#x27;s ruling is that partial refunds carry no VAT split, so a figure without VAT cannot be recomputed exactly.</div></div></div></section><section class="pair"><div class="report"><h2>Refunds</h2>
+<ul>
+<li>Refunded product value: <strong>€<mark class="mismatch">83,002.07<sup>28</sup></mark> = <mark class="not_verifiable">5.33%<sup>29</sup></mark></strong> of order value (after discounts).</li>
+<li><strong><mark class="match">803<sup>30</sup></mark> of <mark class="match">8,664<sup>31</sup></mark> orders (<mark class="match">9.27<sup>32</sup></mark>%)</strong> had a full or partial refund (<mark class="not_verifiable">364<sup>33</sup></mark> full, <mark class="not_verifiable">439<sup>34</sup></mark> partial).</li>
+<li>Customers were also refunded €<mark class="not_verifiable">1,815.05<sup>35</sup></mark> of shipping, so the refunded total in the export is €<mark class="not_verifiable">84,817.12<sup>36</sup></mark>.</li>
+<li>By month (refund value as % of order value): Jan <mark class="not_verifiable">6.04%<sup>37</sup></mark>, Feb <mark class="not_verifiable">5.06%<sup>38</sup></mark>, Mar <mark class="not_verifiable">4.79%<sup>39</sup></mark>.</li>
+</ul></div><div class="notes"><div class="note ok"><b class="match">Match the recount to the cent</b><ul><li><b>30</b> 803 · Orders of Q1 2026 with a full or partial refund</li><li><b>31</b> 8,664 · Orders in Q1 2026, the base of the refund rate</li><li><b>32</b> 9.27 · Share of Q1 2026 orders with a full or partial refund, in p…</li></ul></div><div class="note bad"><b class="mismatch">28 · 83,002.07 does not match</b><div class="m">Refunded product value in Q1 2026, EUR</div><div>Recounted from the export: <b>83,507.42</b>. The report prints 505.35 less. Cause: the refund line of the assistant’s code.</div></div><div class="note na"><b class="not_verifiable">Cannot be checked: defined differently from the agreed menu</b><div><b>29</b> 5.33%</div><div class="m">A different definition from the one the checked code computes: refunds as a share of order value; the checked code&#x27;s refund rate is the share of orders with a refund.</div></div><div class="note na"><b class="not_verifiable">Cannot be checked: not on the agreed menu</b><div><b>33</b> 364, <b>34</b> 439</div><div class="m">The checked code does not compute this figure: it counts orders with a full or a partial refund together, and does not split them.</div></div><div class="note na"><b class="not_verifiable">Cannot be checked: not on the agreed menu</b><div><b>35</b> 1,815.05</div><div class="m">The checked code does not compute this figure: it computes refunds of goods only, and no figure for shipping refunded.</div></div><div class="note na"><b class="not_verifiable">Cannot be checked: defined differently from the agreed menu</b><div><b>36</b> 84,817.12</div><div class="m">A different definition from the one the checked code computes: the export&#x27;s whole refunded amount, shipping included; the checked code computes refunds of goods only.</div></div><div class="note na"><b class="not_verifiable">Cannot be checked: defined differently from the agreed menu</b><div><b>37</b> 6.04%, <b>38</b> 5.06%, <b>39</b> 4.79%</div><div class="m">A different definition from the one the checked code computes: one month&#x27;s refunds as a share of its order value; the checked code&#x27;s refund rate is the share of orders with a refund, and for the whole quarter only.</div></div></div></section><section class="pair"><div class="report"><h2>Discounts</h2>
+<ul>
+<li><strong>€<mark class="match">43,677.95<sup>40</sup></mark></strong> in total = <mark class="match">2.73<sup>41</sup></mark>% of gross sales. <mark class="not_verifiable">1,910<sup>42</sup></mark> orders (<mark class="not_verifiable">22.0%<sup>43</sup></mark>) used a code.</li>
+<li>By code: VIP20 <mark class="not_verifiable">13,271.60<sup>44</sup></mark> · WELCOME10 <mark class="not_verifiable">10,519.70<sup>45</sup></mark> · WINTER15 <mark class="not_verifiable">7,919.25<sup>46</sup></mark> · SPRING20 <mark class="not_verifiable">6,437.40<sup>47</sup></mark> · TENOFF <mark class="not_verifiable">5,530.00<sup>48</sup></mark>.</li>
+</ul></div><div class="notes"><div class="note ok"><b class="match">Match the recount to the cent</b><ul><li><b>40</b> 43,677.95 · Discounts in Q1 2026, EUR</li><li><b>41</b> 2.73 · Discount codes as a share of gross sales in Q1 2026, in per…</li></ul></div><div class="note na"><b class="not_verifiable">Cannot be checked: not on the agreed menu</b><div><b>42</b> 1,910</div><div class="m">The checked code does not compute this figure: it computes the discount amount, not the number of orders that used a code.</div></div><div class="note na"><b class="not_verifiable">Cannot be checked: not on the agreed menu</b><div><b>43</b> 22.0%</div><div class="m">The checked code does not compute this figure: it computes the discount amount, not the share of orders that used a code.</div></div><div class="note na"><b class="not_verifiable">Cannot be checked: not on the agreed menu</b><div><b>44</b> 13,271.60, <b>45</b> 10,519.70, <b>46</b> 7,919.25, <b>47</b> 6,437.40, <b>48</b> 5,530.00</div><div class="m">The checked code does not compute this figure: it computes discounts for all codes together, not per code.</div></div></div></section><section class="pair"><div class="report"><h2>Top 10 products by sales</h2>
+<p>Sales = price × quantity after discounts, before refunds (Q1 total: €<mark class="match">1,558,399.05<sup>49</sup></mark>).</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Product</th>
+<th style="text-align: right;">Units</th>
+<th style="text-align: right;">Sales (€)</th>
+<th style="text-align: right;">Share</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Fjord Rain Jacket</td>
+<td style="text-align: right;"><mark class="not_verifiable">1,385<sup>50</sup></mark></td>
+<td style="text-align: right;"><mark class="match">254,356.47<sup>51</sup></mark></td>
+<td style="text-align: right;"><mark class="not_verifiable">16.3%<sup>52</sup></mark></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Polar Down Jacket</td>
+<td style="text-align: right;"><mark class="not_verifiable">1,048<sup>53</sup></mark></td>
+<td style="text-align: right;"><mark class="match">243,146.58<sup>54</sup></mark></td>
+<td style="text-align: right;"><mark class="not_verifiable">15.6%<sup>55</sup></mark></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Trail Hiking Trousers</td>
+<td style="text-align: right;"><mark class="not_verifiable">1,118<sup>56</sup></mark></td>
+<td style="text-align: right;"><mark class="match">107,314.28<sup>57</sup></mark></td>
+<td style="text-align: right;"><mark class="not_verifiable">6.9%<sup>58</sup></mark></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Ridge Fleece Midlayer</td>
+<td style="text-align: right;"><mark class="not_verifiable">1,272<sup>59</sup></mark></td>
+<td style="text-align: right;"><mark class="match">104,474.86<sup>60</sup></mark></td>
+<td style="text-align: right;"><mark class="not_verifiable">6.7%<sup>61</sup></mark></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Merino Base Layer Top</td>
+<td style="text-align: right;"><mark class="not_verifiable">1,486<sup>62</sup></mark></td>
+<td style="text-align: right;"><mark class="match">99,507.22<sup>63</sup></mark></td>
+<td style="text-align: right;"><mark class="not_verifiable">6.4%<sup>64</sup></mark></td>
+</tr>
+<tr>
+<td>6</td>
+<td>Solo Trekking Tent</td>
+<td style="text-align: right;"><mark class="not_verifiable">281<sup>65</sup></mark></td>
+<td style="text-align: right;"><mark class="match">90,240.93<sup>66</sup></mark></td>
+<td style="text-align: right;"><mark class="not_verifiable">5.8%<sup>67</sup></mark></td>
+</tr>
+<tr>
+<td>7</td>
+<td>Summit Daypack</td>
+<td style="text-align: right;"><mark class="not_verifiable">744<sup>68</sup></mark></td>
+<td style="text-align: right;"><mark class="match">85,738.08<sup>69</sup></mark></td>
+<td style="text-align: right;"><mark class="not_verifiable">5.5%<sup>70</sup></mark></td>
+</tr>
+<tr>
+<td>8</td>
+<td>Down Sleeping Bag</td>
+<td style="text-align: right;"><mark class="not_verifiable">326<sup>71</sup></mark></td>
+<td style="text-align: right;"><mark class="match">84,666.39<sup>72</sup></mark></td>
+<td style="text-align: right;"><mark class="not_verifiable">5.4%<sup>73</sup></mark></td>
+</tr>
+<tr>
+<td>9</td>
+<td>Storm Shell Trousers</td>
+<td style="text-align: right;"><mark class="not_verifiable">547<sup>74</sup></mark></td>
+<td style="text-align: right;"><mark class="match">74,433.62<sup>75</sup></mark></td>
+<td style="text-align: right;"><mark class="not_verifiable">4.8%<sup>76</sup></mark></td>
+</tr>
+<tr>
+<td>10</td>
+<td>Hiking Socks Pair</td>
+<td style="text-align: right;"><mark class="not_verifiable">3,659<sup>77</sup></mark></td>
+<td style="text-align: right;"><mark class="match">67,465.31<sup>78</sup></mark></td>
+<td style="text-align: right;"><mark class="not_verifiable">4.3%<sup>79</sup></mark></td>
+</tr>
+</tbody>
+</table>
+<p>The top 10 make up <mark class="not_verifiable">77.7%<sup>80</sup></mark> of sales. The two jackets alone are <mark class="not_verifiable">31.9%<sup>81</sup></mark>.</p></div><div class="notes"><div class="note ok"><b class="match">Match the recount to the cent</b><ul><li><b>49</b> 1,558,399.05 · Sales of all products in Q1 2026, after discounts, before r…</li><li><b>51</b> 254,356.47 · Sales of Fjord Rain Jacket</li><li><b>54</b> 243,146.58 · Sales of Polar Down Jacket</li><li><b>57</b> 107,314.28 · Sales of Trail Hiking Trousers</li><li><b>60</b> 104,474.86 · Sales of Ridge Fleece Midlayer</li><li><b>63</b> 99,507.22 · Sales of Merino Base Layer Top</li><li><b>66</b> 90,240.93 · Sales of Solo Trekking Tent</li><li><b>69</b> 85,738.08 · Sales of Summit Daypack</li><li><b>72</b> 84,666.39 · Sales of Down Sleeping Bag</li><li><b>75</b> 74,433.62 · Sales of Storm Shell Trousers</li><li><b>78</b> 67,465.31 · Sales of Hiking Socks Pair</li></ul></div><div class="note na"><b class="not_verifiable">Cannot be checked: not on the agreed menu</b><div><b>50</b> 1,385, <b>53</b> 1,048, <b>56</b> 1,118, <b>59</b> 1,272, <b>62</b> 1,486, <b>65</b> 281, <b>68</b> 744, <b>71</b> 326, <b>74</b> 547, <b>77</b> 3,659</div><div class="m">The checked code does not compute this figure: it computes each product&#x27;s sales in euros, not the units sold.</div></div><div class="note na"><b class="not_verifiable">Cannot be checked: not on the agreed menu</b><div><b>52</b> 16.3%, <b>55</b> 15.6%, <b>58</b> 6.9%, <b>61</b> 6.7%, <b>64</b> 6.4%, <b>67</b> 5.8%, <b>70</b> 5.5%, <b>73</b> 5.4%, <b>76</b> 4.8%, <b>79</b> 4.3%</div><div class="m">The checked code does not compute this figure: it computes each product&#x27;s sales and the total, not the share of one in the other.</div></div><div class="note na"><b class="not_verifiable">Cannot be checked: not on the agreed menu</b><div><b>80</b> 77.7%</div><div class="m">The checked code does not compute this figure: it computes each product&#x27;s sales and the total, not the share of the ten largest.</div></div><div class="note na"><b class="not_verifiable">Cannot be checked: not on the agreed menu</b><div><b>81</b> 31.9%</div><div class="m">The checked code does not compute this figure: it computes each product&#x27;s sales and the total, not the share of the two jackets.</div></div></div></section><section class="pair"><div class="report"><h2>Repeat customers</h2>
+<ul>
+<li><mark class="match">5,957<sup>82</sup></mark> customers (identified by email) placed orders in Q1; <strong><mark class="match">1,392<sup>83</sup></mark> (<mark class="match">23.4<sup>84</sup></mark>%) ordered more than once</strong>, <mark class="not_verifiable">551<sup>85</sup></mark> of them three or more times.</li>
+<li>Repeat customers account for <mark class="not_verifiable">45.3%<sup>86</sup></mark> of orders.</li>
+<li>Limits: this covers Q1 only (earlier purchases are not in the export), and <mark class="not_verifiable">318<sup>87</sup></mark> orders without an email (mostly pop-up store cash sales) cannot be linked to a customer.</li>
+</ul></div><div class="notes"><div class="note ok"><b class="match">Match the recount to the cent</b><ul><li><b>82</b> 5,957 · Customers</li><li><b>83</b> 1,392 · Customers</li><li><b>84</b> 23.4 · Share of customers with two or more sale orders in Q1 2026,…</li></ul></div><div class="note na"><b class="not_verifiable">Cannot be checked: not on the agreed menu</b><div><b>85</b> 551</div><div class="m">The checked code does not compute this figure: it counts customers with two or more orders, not three or more.</div></div><div class="note na"><b class="not_verifiable">Cannot be checked: not on the agreed menu</b><div><b>86</b> 45.3%</div><div class="m">The checked code does not compute this figure: it computes the share of customers who ordered again, not the share of orders they placed.</div></div><div class="note na"><b class="not_verifiable">Cannot be checked: not on the agreed menu</b><div><b>87</b> 318</div><div class="m">The checked code does not compute this figure: it leaves orders without an email out of the customer count and publishes no count of them.</div></div></div></section><section class="pair"><div class="report"><h2>Sales by channel (net sales)</h2>
+<table>
+<thead>
+<tr>
+<th>Channel</th>
+<th style="text-align: right;">Orders</th>
+<th style="text-align: right;">Net sales (€)</th>
+<th style="text-align: right;">Share</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Online store</td>
+<td style="text-align: right;"><mark class="not_verifiable">7,850<sup>88</sup></mark></td>
+<td style="text-align: right;"><mark class="mismatch">1,325,008.08<sup>89</sup></mark></td>
+<td style="text-align: right;"><mark class="not_verifiable">89.8%<sup>90</sup></mark></td>
+</tr>
+<tr>
+<td>POS (Pop-up Store Hamburg)</td>
+<td style="text-align: right;"><mark class="not_verifiable">531<sup>91</sup></mark></td>
+<td style="text-align: right;"><mark class="match">99,157.00<sup>92</sup></mark></td>
+<td style="text-align: right;"><mark class="not_verifiable">6.7%<sup>93</sup></mark></td>
+</tr>
+<tr>
+<td>Draft orders – phone orders</td>
+<td style="text-align: right;"><mark class="not_verifiable">196<sup>94</sup></mark></td>
+<td style="text-align: right;"><mark class="not_verifiable">36,860.20<sup>95</sup></mark></td>
+<td style="text-align: right;"><mark class="not_verifiable">2.5%<sup>96</sup></mark></td>
+</tr>
+<tr>
+<td>Draft orders – wholesale</td>
+<td style="text-align: right;"><mark class="not_verifiable">87<sup>97</sup></mark></td>
+<td style="text-align: right;"><mark class="not_verifiable">14,371.70<sup>98</sup></mark></td>
+<td style="text-align: right;"><mark class="not_verifiable">1.0%<sup>99</sup></mark></td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td style="text-align: right;"><strong><mark class="match">8,664<sup>100</sup></mark></strong></td>
+<td style="text-align: right;"><strong><mark class="mismatch">1,475,396.98<sup>101</sup></mark></strong></td>
+<td style="text-align: right;">100%</td>
+</tr>
+</tbody>
+</table></div><div class="notes"><div class="note ok"><b class="match">Match the recount to the cent</b><ul><li><b>92</b> 99,157.00 · Net sales at the point of sale</li><li><b>100</b> 8,664 · Orders in Q1 2026, total of the channel table</li></ul></div><div class="note bad"><b class="mismatch">89 · 1,325,008.08 does not match</b><div class="m">Net sales of the online store</div><div>Recounted from the export: <b>1,324,502.73</b>. The report prints 505.35 more. Cause: the refund line of the assistant’s code.</div></div><div class="note bad"><b class="mismatch">101 · 1,475,396.98 does not match</b><div class="m">Net sales in Q1 2026, total of the channel table, EUR</div><div>Recounted from the export: <b>1,474,891.63</b>. The report prints 505.35 more. Cause: the refund line of the assistant’s code.</div></div><div class="note na"><b class="not_verifiable">Cannot be checked: not on the agreed menu</b><div><b>88</b> 7,850, <b>91</b> 531, <b>94</b> 196, <b>97</b> 87</div><div class="m">The checked code does not compute this figure: it computes net sales per sales channel, not the number of orders.</div></div><div class="note na"><b class="not_verifiable">Cannot be checked: not on the agreed menu</b><div><b>90</b> 89.8%, <b>93</b> 6.7%, <b>96</b> 2.5%, <b>99</b> 1.0%</div><div class="m">The checked code does not compute this figure: it computes net sales per sales channel, not a channel&#x27;s share of them.</div></div><div class="note na"><b class="not_verifiable">Cannot be checked: not on the agreed menu</b><div><b>95</b> 36,860.20, <b>98</b> 14,371.70</div><div class="m">The checked code does not compute this figure: it computes net sales of all draft orders together (Source shopify_draft_order), not split into phone and wholesale orders.</div></div></div></section><section class="pair"><div class="report"><h2>How the data was cleaned (please read before presenting)</h2>
+<p>The raw file has <mark class="not_verifiable">9,659<sup>102</sup></mark> orders, but <mark class="not_verifiable">9,159<sup>103</sup></mark> were created in Q1 and only <strong><mark class="match">8,664<sup>104</sup></mark> are counted</strong>:
+- <strong><mark class="not_verifiable">1,068<sup>105</sup></mark> orders were listed twice</strong> in the export (identical rows at the end of the file). Removed. Left in, sales would be overstated by roughly <mark class="not_verifiable">11%<sup>106</sup></mark>.
+- <strong>Excluded from Q1:</strong> <mark class="not_verifiable">84<sup>107</sup></mark> internal orders (test/QA orders paid with a dummy gateway, and staff orders; €<mark class="not_verifiable">15,472<sup>108</sup></mark> of order value), <mark class="not_verifiable">260<sup>109</sup></mark> cancelled orders (voided, or cancelled and fully refunded, all unfulfilled; €<mark class="not_verifiable">48,264.50<sup>110</sup></mark>), and <mark class="not_verifiable">151<sup>111</sup></mark> unpaid orders (payment only authorized or pending; €<mark class="not_verifiable">27,097.65<sup>112</sup></mark>).
+- <strong>Orders outside Q1</strong> (29–31 Dec and 1–3 Apr, about <mark class="not_verifiable">500<sup>113</sup></mark>) are excluded.
+- <strong>Refund timing:</strong> the export has no refund date, so each refund is counted in the month the order was placed, not the month it was paid out.
+- Refunds on fully refunded orders include shipping. Only the product share reduces net sales.
+- Excluding cancelled orders makes the refund rate relate to orders that were actually fulfilled. Counting them would raise the refund rate.</p></div><div class="notes"><div class="note ok"><b class="match">Match the recount to the cent</b><ul><li><b>104</b> 8,664 · Orders counted in Q1 2026</li></ul></div><div class="note na"><b class="not_verifiable">Cannot be checked: describes the cleaning; no count of it is published</b><div><b>102</b> 9,659</div><div class="m">The checked code removes these orders from the count but publishes no figure for them: the number of distinct orders in the raw file.</div></div><div class="note na"><b class="not_verifiable">Cannot be checked: describes the cleaning; no count of it is published</b><div><b>103</b> 9,159</div><div class="m">The checked code removes these orders from the count but publishes no figure for them: the number of orders created in the quarter before test, staff, cancelled and unpaid orders are taken out.</div></div><div class="note na"><b class="not_verifiable">Cannot be checked: describes the cleaning; no count of it is published</b><div><b>105</b> 1,068</div><div class="m">The checked code removes these orders from the count but publishes no figure for them: the number of orders the two overlapping exports list twice.</div></div><div class="note na"><b class="not_verifiable">Cannot be checked: not on the agreed menu</b><div><b>106</b> 11%</div><div class="m">The checked code does not compute this figure: it removes the duplicates and does not compute what they would have added.</div></div><div class="note na"><b class="not_verifiable">Cannot be checked: describes the cleaning; no count of it is published</b><div><b>107</b> 84</div><div class="m">The checked code removes these orders from the count but publishes no figure for them: the number of test and staff orders.</div></div><div class="note na"><b class="not_verifiable">Cannot be checked: describes the cleaning; no count of it is published</b><div><b>108</b> 15,472</div><div class="m">The checked code removes these orders from the count but publishes no figure for them: the order value of test and staff orders.</div></div><div class="note na"><b class="not_verifiable">Cannot be checked: describes the cleaning; no count of it is published</b><div><b>109</b> 260</div><div class="m">The checked code removes these orders from the count but publishes no figure for them: the number of cancelled orders.</div></div><div class="note na"><b class="not_verifiable">Cannot be checked: describes the cleaning; no count of it is published</b><div><b>110</b> 48,264.50</div><div class="m">The checked code removes these orders from the count but publishes no figure for them: the order value of cancelled orders.</div></div><div class="note na"><b class="not_verifiable">Cannot be checked: describes the cleaning; no count of it is published</b><div><b>111</b> 151</div><div class="m">The checked code removes these orders from the count but publishes no figure for them: the number of unpaid (authorized or pending) orders.</div></div><div class="note na"><b class="not_verifiable">Cannot be checked: describes the cleaning; no count of it is published</b><div><b>112</b> 27,097.65</div><div class="m">The checked code removes these orders from the count but publishes no figure for them: the order value of unpaid orders.</div></div><div class="note na"><b class="not_verifiable">Cannot be checked: describes the cleaning; no count of it is published</b><div><b>113</b> 500</div><div class="m">The checked code removes these orders from the count but publishes no figure for them: the number of orders created before or after the quarter.</div></div></div></section></body></html>

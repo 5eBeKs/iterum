@@ -1,0 +1,97 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Annotated AI report</title><style>
+:root{--ink:#17212b;--muted:#5d6b78;--rule:#d5dce3;--panel:#f3f6f8;--accent:#0e6e6a;--ok:#1d7a4a;--bad:#b3261e;--na:#8a6d1f}
+@page{size:A4;margin:13mm 12mm}
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);font:9.6pt/1.42 "Segoe UI",Arial,sans-serif}
+h1{font-size:18pt;margin:0 0 4px}
+.tag{font-size:8pt;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);font-weight:600}
+.sub{color:var(--muted)}
+.cover{page-break-after:always}
+.legend{display:flex;gap:14px;margin:10px 0;flex-wrap:wrap}
+.legend span{padding:2px 8px;border-radius:4px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0}
+.kpi{background:var(--panel);border-radius:6px;padding:8px 10px}
+.kpi .v{font-size:17pt;font-weight:700}
+.kpi .k{font-size:8pt;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+section.pair{display:grid;grid-template-columns:minmax(0,60fr) minmax(0,40fr);gap:14px;border-top:1px solid var(--rule);padding-top:8px;margin-top:8px;page-break-inside:auto}
+.report h1{font-size:13pt}
+.report h2{font-size:11pt;margin:2px 0 6px}
+.report table{border-collapse:collapse;width:100%;font-size:8.6pt}
+.report th,.report td{border-bottom:1px solid var(--rule);padding:3px 4px;text-align:left}
+.report td{white-space:nowrap}
+.report p,.report li{margin:3px 0}
+mark{padding:0 2px;border-radius:3px;background:none}
+mark.match{background:#dcefe3}
+mark.mismatch{background:#f6d4d1;font-weight:700}
+mark.not_verifiable{background:#f3ead0}
+mark sup{font-size:6.5pt;color:var(--muted);margin-left:1px}
+.notes{font-size:8pt;line-height:1.3}
+.note{margin:0 0 5px;padding:4px 6px;border-left:3px solid var(--rule);background:#fafbfc;page-break-inside:avoid}
+.note .m{color:var(--muted)}
+b.match{color:var(--ok)} b.mismatch{color:var(--bad)} b.not_verifiable{color:var(--na)}
+.note.bad{border-left-color:var(--bad)}
+.note.ok{border-left-color:var(--ok)}
+.note.na{border-left-color:#d8b95a}
+.note ul{margin:2px 0 0 14px;padding:0}
+.note li{margin:0}
+.foot{font-size:8pt;color:var(--muted);margin-top:12px}
+body{width:1180px;margin:22px 50px}section.pair:first-of-type{border-top:none}@page{margin:0}</style></head><body><div style="font:600 11pt Segoe UI;letter-spacing:.1em;color:#0e6e6a;text-transform:uppercase;margin-bottom:6px">The report as the owner got it, with the check's note beside every figure · synthetic data</div><section class="pair"><div class="report"><h2>Key numbers</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align: right;">Jan</th>
+<th style="text-align: right;">Feb</th>
+<th style="text-align: right;">Mar</th>
+<th style="text-align: right;"><strong>Q1</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Orders</td>
+<td style="text-align: right;"><mark class="not_verifiable">3,217<sup>1</sup></mark></td>
+<td style="text-align: right;"><mark class="not_verifiable">2,615<sup>2</sup></mark></td>
+<td style="text-align: right;"><mark class="not_verifiable">2,832<sup>3</sup></mark></td>
+<td style="text-align: right;"><strong><mark class="match">8,664<sup>4</sup></mark></strong></td>
+</tr>
+<tr>
+<td>Gross sales</td>
+<td style="text-align: right;"><mark class="not_verifiable">578,510.00<sup>5</sup></mark></td>
+<td style="text-align: right;"><mark class="not_verifiable">496,406.00<sup>6</sup></mark></td>
+<td style="text-align: right;"><mark class="not_verifiable">527,161.00<sup>7</sup></mark></td>
+<td style="text-align: right;"><mark class="match">1,602,077.00<sup>8</sup></mark></td>
+</tr>
+<tr>
+<td>– Discounts</td>
+<td style="text-align: right;"><mark class="not_verifiable">15,368.05<sup>9</sup></mark></td>
+<td style="text-align: right;"><mark class="not_verifiable">12,932.70<sup>10</sup></mark></td>
+<td style="text-align: right;"><mark class="not_verifiable">15,377.20<sup>11</sup></mark></td>
+<td style="text-align: right;"><mark class="match">43,677.95<sup>12</sup></mark></td>
+</tr>
+<tr>
+<td>– Refunds</td>
+<td style="text-align: right;"><mark class="not_verifiable">34,003.77<sup>13</sup></mark></td>
+<td style="text-align: right;"><mark class="not_verifiable">24,483.08<sup>14</sup></mark></td>
+<td style="text-align: right;"><mark class="not_verifiable">24,515.22<sup>15</sup></mark></td>
+<td style="text-align: right;"><mark class="mismatch">83,002.07<sup>16</sup></mark></td>
+</tr>
+<tr>
+<td><strong>Net sales</strong></td>
+<td style="text-align: right;"><strong><mark class="mismatch">529,138.18<sup>17</sup></mark></strong></td>
+<td style="text-align: right;"><strong><mark class="mismatch">458,990.22<sup>18</sup></mark></strong></td>
+<td style="text-align: right;"><strong><mark class="mismatch">487,268.58<sup>19</sup></mark></strong></td>
+<td style="text-align: right;"><strong><mark class="mismatch">1,475,396.98<sup>20</sup></mark></strong></td>
+</tr>
+<tr>
+<td>Average order value</td>
+<td style="text-align: right;"><mark class="not_verifiable">175.05<sup>21</sup></mark></td>
+<td style="text-align: right;"><mark class="not_verifiable">184.88<sup>22</sup></mark></td>
+<td style="text-align: right;"><mark class="not_verifiable">180.71<sup>23</sup></mark></td>
+<td style="text-align: right;"><strong><mark class="not_verifiable">179.87<sup>24</sup></mark></strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Net sales</strong> = gross sales (list price × quantity) − discounts − refunds. Net sales excluding VAT for Q1: <strong>€<mark class="not_verifiable">1,230,049.35<sup>25</sup></mark></strong> (each order's own VAT share removed; VAT rates 16–19% by country).</li>
+<li><strong>Average order value</strong> = order value after discounts, before refunds, excluding shipping (€<mark class="match">1,558,399.05<sup>26</sup></mark> / <mark class="match">8,664<sup>27</sup></mark>).</li>
+</ul></div><div class="notes"><div class="note ok"><b class="match">Match the recount to the cent</b><ul><li><b>4</b> 8,664 · Orders in Q1 2026: sale orders created in Q1 2026</li><li><b>8</b> 1,602,077.00 · Gross sales in Q1 2026</li><li><b>12</b> 43,677.95 · Discount codes in Q1 2026, EUR including VAT</li><li><b>26</b> 1,558,399.05 · Order value in Q1 2026 after discount codes and before refu…</li><li><b>27</b> 8,664 · Orders in Q1 2026, the divisor of the average order value</li></ul></div><div class="note bad"><b class="mismatch">16 · 83,002.07 does not match</b><div class="m">Refunds of goods on Q1 2026 orders</div><div>Recounted from the export: <b>83,507.42</b>. The report prints 505.35 less. Cause: the refund line of the assistant’s code.</div></div><div class="note bad"><b class="mismatch">17 · 529,138.18 does not match</b><div class="m">Net sales of the orders created in January 2026</div><div>Recounted from the export: <b>528,930.40</b>. The report prints 207.78 more. Cause: the refund line of the assistant’s code.</div></div><div class="note bad"><b class="mismatch">18 · 458,990.22 does not match</b><div class="m">Net sales of the orders created in February 2026</div><div>Recounted from the export: <b>458,841.03</b>. The report prints 149.19 more. Cause: the refund line of the assistant’s code.</div></div><div class="note bad"><b class="mismatch">19 · 487,268.58 does not match</b><div class="m">Net sales of the orders created in March 2026</div><div>Recounted from the export: <b>487,120.20</b>. The report prints 148.38 more. Cause: the refund line of the assistant’s code.</div></div><div class="note bad"><b class="mismatch">20 · 1,475,396.98 does not match</b><div class="m">Net sales in Q1 2026</div><div>Recounted from the export: <b>1,474,891.63</b>. The report prints 505.35 more. Cause: the refund line of the assistant’s code.</div></div><div class="note na"><b class="not_verifiable">Cannot be checked: the agreed menu has it for the quarter, not per month</b><div><b>1</b> 3,217, <b>2</b> 2,615, <b>3</b> 2,832</div><div class="m">The checked code computes the number of sale orders for the whole quarter only, not for one month.</div></div><div class="note na"><b class="not_verifiable">Cannot be checked: the agreed menu has it for the quarter, not per month</b><div><b>5</b> 578,510.00, <b>6</b> 496,406.00, <b>7</b> 527,161.00</div><div class="m">The checked code computes gross sales for the whole quarter only, not for one month.</div></div><div class="note na"><b class="not_verifiable">Cannot be checked: the agreed menu has it for the quarter, not per month</b><div><b>9</b> 15,368.05, <b>10</b> 12,932.70, <b>11</b> 15,377.20</div><div class="m">The checked code computes discounts for the whole quarter only, not for one month.</div></div><div class="note na"><b class="not_verifiable">Cannot be checked: the agreed menu has it for the quarter, not per month</b><div><b>13</b> 34,003.77, <b>14</b> 24,483.08, <b>15</b> 24,515.22</div><div class="m">The checked code computes refunds for the whole quarter only, not for one month.</div></div><div class="note na"><b class="not_verifiable">Cannot be checked: defined differently from the agreed menu</b><div><b>21</b> 175.05, <b>22</b> 184.88, <b>23</b> 180.71</div><div class="m">A different definition from the one the checked code computes: one month&#x27;s order value after discounts and before refunds, over that month&#x27;s orders; the checked code&#x27;s average order value is net sales after refunds over orders, and for the whole quarter only.</div></div><div class="note na"><b class="not_verifiable">Cannot be checked: defined differently from the agreed menu</b><div><b>24</b> 179.87</div><div class="m">A different definition from the one the checked code computes: order value after discounts and before refunds (1,558,399.05) over orders; the checked code&#x27;s average order value is net sales after refunds over orders.</div></div><div class="note na"><b class="not_verifiable">Cannot be checked: defined differently from the agreed menu</b><div><b>25</b> 1,230,049.35</div><div class="m">A different definition from the one the checked code computes: net sales with each order&#x27;s VAT share taken out; the checked code computes sales including VAT, and the owner&#x27;s ruling is that partial refunds carry no VAT split, so a figure without VAT cannot be recomputed exactly.</div></div></div></section></body></html>
