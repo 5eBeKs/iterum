@@ -1,0 +1,252 @@
+[
+  {
+    "channel": "Shopify Payments",
+    "kind": "Order paid, no card charge",
+    "reference": "#10394",
+    "in_the_shop": "38.95",
+    "at_the_provider": "—",
+    "in_the_bank": "—",
+    "difference": "-38.95",
+    "what_to_do": "Ask Shopify support; the order may have been marked paid by hand"
+  },
+  {
+    "channel": "Shopify Payments",
+    "kind": "Order paid, no card charge",
+    "reference": "#8935",
+    "in_the_shop": "337.85",
+    "at_the_provider": "—",
+    "in_the_bank": "—",
+    "difference": "-337.85",
+    "what_to_do": "Ask Shopify support; the order may have been marked paid by hand"
+  },
+  {
+    "channel": "Shopify Payments",
+    "kind": "Charged less than the order",
+    "reference": "#8345",
+    "in_the_shop": "52.95",
+    "at_the_provider": "48.00",
+    "in_the_bank": "—",
+    "difference": "-4.95",
+    "what_to_do": "Collect the difference or correct the order"
+  },
+  {
+    "channel": "Shopify Payments",
+    "kind": "Charged less than the order",
+    "reference": "#7596",
+    "in_the_shop": "42.95",
+    "at_the_provider": "30.45",
+    "in_the_bank": "—",
+    "difference": "-12.50",
+    "what_to_do": "Collect the difference or correct the order"
+  },
+  {
+    "channel": "Shopify Payments",
+    "kind": "Charged twice",
+    "reference": "#7560",
+    "in_the_shop": "266.00",
+    "at_the_provider": "266.00 + 266.00",
+    "in_the_bank": "—",
+    "difference": "266.00",
+    "what_to_do": "Refunded already; the fee of the second charge was kept"
+  },
+  {
+    "channel": "Shopify Payments",
+    "kind": "Charge with no order",
+    "reference": "#10662",
+    "in_the_shop": "—",
+    "at_the_provider": "129.00",
+    "in_the_bank": "—",
+    "difference": "129.00",
+    "what_to_do": "Find the order; the export may predate it"
+  },
+  {
+    "channel": "Shopify Payments",
+    "kind": "Charge with no order",
+    "reference": "#10666",
+    "in_the_shop": "—",
+    "at_the_provider": "129.00",
+    "in_the_bank": "—",
+    "difference": "129.00",
+    "what_to_do": "Find the order; the export may predate it"
+  },
+  {
+    "channel": "Shopify Payments",
+    "kind": "Payout never reached the bank",
+    "reference": "payout 2026-03-18",
+    "in_the_shop": "—",
+    "at_the_provider": "9341.59",
+    "in_the_bank": "—",
+    "difference": "-9341.59",
+    "what_to_do": "Ask Shopify for the payout's trace; check the bank account on file"
+  },
+  {
+    "channel": "PayPal",
+    "kind": "Order paid, no PayPal payment",
+    "reference": "#8041",
+    "in_the_shop": "582.00",
+    "at_the_provider": "—",
+    "in_the_bank": "—",
+    "difference": "-582.00",
+    "what_to_do": "Search PayPal by the customer's e-mail; the order may be marked paid by mistake"
+  },
+  {
+    "channel": "PayPal",
+    "kind": "Refund in PayPal, none in the shop",
+    "reference": "#9232",
+    "in_the_shop": "0.00",
+    "at_the_provider": "-45.00",
+    "in_the_bank": "—",
+    "difference": "-45.00",
+    "what_to_do": "Find who refunded it and why; record it in the shop or claim it back"
+  },
+  {
+    "channel": "Klarna",
+    "kind": "Fee above the contract (3.49% for 2.99%)",
+    "reference": "KL202603234928",
+    "in_the_shop": "2.99%",
+    "at_the_provider": "3.49%",
+    "in_the_bank": "—",
+    "difference": "-146.50",
+    "what_to_do": "Claim the difference from Klarna"
+  },
+  {
+    "channel": "Klarna",
+    "kind": "Held back as a rolling reserve",
+    "reference": "KL202603234928",
+    "in_the_shop": "—",
+    "at_the_provider": "2000.00",
+    "in_the_bank": "—",
+    "difference": "-2000.00",
+    "what_to_do": "Ask Klarna why and until when; it is the shop's money"
+  },
+  {
+    "channel": "Bank transfer",
+    "kind": "Customer paid a different amount",
+    "reference": "#8067",
+    "in_the_shop": "224.10",
+    "at_the_provider": "—",
+    "in_the_bank": "209.10",
+    "difference": "-15.00",
+    "what_to_do": "Probably the customer's bank charges; invoice them or write it off"
+  },
+  {
+    "channel": "Cash",
+    "kind": "Deposit differs from the till",
+    "reference": "week of 09 March",
+    "in_the_shop": "1748.00",
+    "at_the_provider": "—",
+    "in_the_bank": "1708.00",
+    "difference": "-40.00",
+    "what_to_do": "Count the till against the day reports of that week"
+  },
+  {
+    "channel": "Amazon",
+    "kind": "Cancelled, but charged",
+    "reference": "302-2534212-3499741 NO-BTL-75",
+    "in_the_shop": "Cancelled",
+    "at_the_provider": "27.90",
+    "in_the_bank": "—",
+    "difference": "27.90",
+    "what_to_do": "Refund the customer"
+  },
+  {
+    "channel": "Amazon",
+    "kind": "Paid less than the price",
+    "reference": "304-4103772-7671362 NO-CBL-02",
+    "in_the_shop": "14.90",
+    "at_the_provider": "9.90",
+    "in_the_bank": "—",
+    "difference": "-5.00",
+    "what_to_do": "Open a case with Seller Support"
+  },
+  {
+    "channel": "Amazon",
+    "kind": "Commission above the rate card",
+    "reference": "302-5103311-7220635 NO-PWR-10",
+    "in_the_shop": "2.44",
+    "at_the_provider": "5.24",
+    "in_the_bank": "—",
+    "difference": "-2.80",
+    "what_to_do": "Open a case with Seller Support"
+  },
+  {
+    "channel": "Amazon",
+    "kind": "Shipped, never paid",
+    "reference": "306-2995046-5638590 NO-SCK-02",
+    "in_the_shop": "24.90",
+    "at_the_provider": "—",
+    "in_the_bank": "—",
+    "difference": "-24.90",
+    "what_to_do": "Open a case with Seller Support"
+  },
+  {
+    "channel": "Amazon",
+    "kind": "FBA fee charged twice",
+    "reference": "303-3618526-6250112 NO-SCK-02",
+    "in_the_shop": "-3.12",
+    "at_the_provider": "-6.24",
+    "in_the_bank": "—",
+    "difference": "-3.12",
+    "what_to_do": "Open a case with Seller Support"
+  },
+  {
+    "channel": "Amazon",
+    "kind": "Shipped, never paid",
+    "reference": "304-7670079-7856065 NO-LMP-35",
+    "in_the_shop": "39.90",
+    "at_the_provider": "—",
+    "in_the_bank": "—",
+    "difference": "-39.90",
+    "what_to_do": "Open a case with Seller Support"
+  },
+  {
+    "channel": "Amazon",
+    "kind": "Shipped, never paid",
+    "reference": "304-7670079-7856065 NO-SPK-01",
+    "in_the_shop": "39.80",
+    "at_the_provider": "—",
+    "in_the_bank": "—",
+    "difference": "-39.80",
+    "what_to_do": "Open a case with Seller Support"
+  },
+  {
+    "channel": "Amazon",
+    "kind": "Charge with no order in the report",
+    "reference": "302-8819284-1290456 NO-LMP-35",
+    "in_the_shop": "—",
+    "at_the_provider": "39.90",
+    "in_the_bank": "—",
+    "difference": "39.90",
+    "what_to_do": "Check whether the report was pulled before this order"
+  },
+  {
+    "channel": "Amazon",
+    "kind": "Refund larger than the sale",
+    "reference": "304-4179934-8659362 NO-GLV-01",
+    "in_the_shop": "34.90",
+    "at_the_provider": "69.80",
+    "in_the_bank": "—",
+    "difference": "-34.90",
+    "what_to_do": "Open a case with Seller Support"
+  },
+  {
+    "channel": "Stripe (USD)",
+    "kind": "Invoice due, not paid",
+    "reference": "NO-US-2026-007",
+    "in_the_shop": "USD 3880.00",
+    "at_the_provider": "—",
+    "in_the_bank": "—",
+    "difference": "USD -3880.00",
+    "what_to_do": "Remind the customer"
+  },
+  {
+    "channel": "Bank",
+    "kind": "Credit nobody can place",
+    "reference": "26.03.2026",
+    "in_the_shop": "—",
+    "at_the_provider": "—",
+    "in_the_bank": "310.00",
+    "difference": "310.00",
+    "what_to_do": "Ask the bank for the payer's details"
+  }
+]

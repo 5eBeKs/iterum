@@ -1,0 +1,26 @@
+channel,kind,reference,in_the_shop,at_the_provider,in_the_bank,difference,what_to_do
+Shopify Payments,"Order paid, no card charge",#10394,38.95,—,—,-38.95,Ask Shopify support; the order may have been marked paid by hand
+Shopify Payments,"Order paid, no card charge",#8935,337.85,—,—,-337.85,Ask Shopify support; the order may have been marked paid by hand
+Shopify Payments,Charged less than the order,#8345,52.95,48.00,—,-4.95,Collect the difference or correct the order
+Shopify Payments,Charged less than the order,#7596,42.95,30.45,—,-12.50,Collect the difference or correct the order
+Shopify Payments,Charged twice,#7560,266.00,266.00 + 266.00,—,266.00,Refunded already; the fee of the second charge was kept
+Shopify Payments,Charge with no order,#10662,—,129.00,—,129.00,Find the order; the export may predate it
+Shopify Payments,Charge with no order,#10666,—,129.00,—,129.00,Find the order; the export may predate it
+Shopify Payments,Payout never reached the bank,payout 2026-03-18,—,9341.59,—,-9341.59,Ask Shopify for the payout's trace; check the bank account on file
+PayPal,"Order paid, no PayPal payment",#8041,582.00,—,—,-582.00,Search PayPal by the customer's e-mail; the order may be marked paid by mistake
+PayPal,"Refund in PayPal, none in the shop",#9232,0.00,-45.00,—,-45.00,Find who refunded it and why; record it in the shop or claim it back
+Klarna,Fee above the contract (3.49% for 2.99%),KL202603234928,2.99%,3.49%,—,-146.50,Claim the difference from Klarna
+Klarna,Held back as a rolling reserve,KL202603234928,—,2000.00,—,-2000.00,Ask Klarna why and until when; it is the shop's money
+Bank transfer,Customer paid a different amount,#8067,224.10,—,209.10,-15.00,Probably the customer's bank charges; invoice them or write it off
+Cash,Deposit differs from the till,week of 09 March,1748.00,—,1708.00,-40.00,Count the till against the day reports of that week
+Amazon,"Cancelled, but charged",302-2534212-3499741 NO-BTL-75,Cancelled,27.90,—,27.90,Refund the customer
+Amazon,Paid less than the price,304-4103772-7671362 NO-CBL-02,14.90,9.90,—,-5.00,Open a case with Seller Support
+Amazon,Commission above the rate card,302-5103311-7220635 NO-PWR-10,2.44,5.24,—,-2.80,Open a case with Seller Support
+Amazon,"Shipped, never paid",306-2995046-5638590 NO-SCK-02,24.90,—,—,-24.90,Open a case with Seller Support
+Amazon,FBA fee charged twice,303-3618526-6250112 NO-SCK-02,-3.12,-6.24,—,-3.12,Open a case with Seller Support
+Amazon,"Shipped, never paid",304-7670079-7856065 NO-LMP-35,39.90,—,—,-39.90,Open a case with Seller Support
+Amazon,"Shipped, never paid",304-7670079-7856065 NO-SPK-01,39.80,—,—,-39.80,Open a case with Seller Support
+Amazon,Charge with no order in the report,302-8819284-1290456 NO-LMP-35,—,39.90,—,39.90,Check whether the report was pulled before this order
+Amazon,Refund larger than the sale,304-4179934-8659362 NO-GLV-01,34.90,69.80,—,-34.90,Open a case with Seller Support
+Stripe (USD),"Invoice due, not paid",NO-US-2026-007,USD 3880.00,—,—,USD -3880.00,Remind the customer
+Bank,Credit nobody can place,26.03.2026,—,—,310.00,310.00,Ask the bank for the payer's details

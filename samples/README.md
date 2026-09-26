@@ -2,7 +2,7 @@
 
 [Русская версия](README.ru.md)
 
-Seven finished examples, grouped by the three things you can order. Each case page reads on its
+Eight finished examples, grouped by the three things you can order. Each case page reads on its
 own; the files beside it are for anyone who wants to recount.
 
 ## A reconciliation of two files that should agree
@@ -12,6 +12,7 @@ turns one file's total into the other's.
 
 | Example | What the data was | What turned up |
 |---|---|---|
+| [Closing March across every channel](month-close/CASE.md) | Eleven files: Shopify, Shopify Payments, PayPal, Klarna, Amazon, Stripe in dollars, two bank accounts | Received in March: €421,581.88 and $32,753.08 of €561,258.10 and $45,570.75 sold; €93,170 of the shop's money not in its account on 31 March, and where each part is; €33,132 of credits that are not revenue; 26 records to act on |
 | [Shopify sales against Shopify Payments payouts](payouts-reconciliation/CASE.md) | A month of Shopify orders and the Shopify Payments transactions export | Where €285,611 between March sales and the net of March card transactions went, to the cent: other payment methods, refunds, fees. Eight records for a person, among them a double charge and a dispute the shop's books do not show |
 | [Store orders against processor payments](reconciliation/PROTOCOL.md) | Two synthetic exports, a store's orders and a payment processor's payments | 15 records that do not reconcile, grouped by what went wrong, and how one file's total becomes the other's |
 
