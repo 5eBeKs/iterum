@@ -1,0 +1,10 @@
+{
+  "label": "Nordlys Records",
+  "advance_eur": "15000.00",
+  "advance_paid": "2025-01-20",
+  "label_share_of_gross_receipts": "0.50",
+  "artist_share_applied_to_advance_until_recouped": true,
+  "conversion": "the reference rate of the quarter's last business day, less at most 1%",
+  "statement_due_days_after_quarter": 45,
+  "distributor_a_withdrawal_margin_accepted": "0.015"
+}
