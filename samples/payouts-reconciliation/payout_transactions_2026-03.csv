@@ -114,7 +114,7 @@ Transaction Date,Type,Order,Card Brand,Card Source,Payout Status,Payout Date,Ava
 2026-03-03 13:53:11,charge,#7580,master,google_pay,paid,2026-03-05,2026-03-05,338.00,5.32,332.68
 2026-03-03 14:42:15,charge,#7583,visa,online,paid,2026-03-05,2026-03-05,131.95,2.23,129.72
 2026-03-03 16:04:13,charge,#7591,master,online,paid,2026-03-05,2026-03-05,29.95,0.70,29.25
-2026-03-03 16:36:15,charge,#7596,visa,apple_pay,paid,2026-03-05,2026-03-05,30.45,0.71,29.74
+2026-03-03 16:36:15,charge,#7596,visa,apple_pay,paid,2026-03-05,2026-03-05,42.95,0.89,42.06
 2026-03-03 17:00:24,charge,#7598,master,online,paid,2026-03-05,2026-03-05,49.95,1.00,48.95
 2026-03-03 17:16:57,charge,#7599,visa,google_pay,paid,2026-03-05,2026-03-05,181.60,2.97,178.63
 2026-03-03 17:24:21,charge,#7600,american_express,online,paid,2026-03-05,2026-03-05,103.95,3.26,100.69
@@ -874,6 +874,7 @@ Transaction Date,Type,Order,Card Brand,Card Source,Payout Status,Payout Date,Ava
 2026-03-18 17:12:17,charge,#9027,master,online,paid,2026-03-20,2026-03-20,35.55,0.78,34.77
 2026-03-18 17:37:22,refund,#6934,master,online,paid,2026-03-20,2026-03-20,-50.00,0.00,-50.00
 2026-03-18 17:40:44,charge,#9029,master,online,paid,2026-03-20,2026-03-20,67.95,1.27,66.68
+2026-03-18 17:59:44,charge,#9031,visa,online,paid,2026-03-20,2026-03-20,47.95,0.97,46.98
 2026-03-18 18:36:58,charge,#9038,visa,online,paid,2026-03-20,2026-03-20,412.00,6.43,405.57
 2026-03-18 18:47:37,charge,#9040,visa,online,paid,2026-03-20,2026-03-20,90.00,1.60,88.40
 2026-03-18 18:51:31,charge,#9041,visa,apple_pay,paid,2026-03-20,2026-03-20,48.95,0.98,47.97
@@ -1115,6 +1116,7 @@ Transaction Date,Type,Order,Card Brand,Card Source,Payout Status,Payout Date,Ava
 2026-03-22 18:58:06,charge,#9482,visa,online,paid,2026-03-24,2026-03-24,127.95,2.17,125.78
 2026-03-22 19:08:02,charge,#9483,visa,apple_pay,paid,2026-03-24,2026-03-24,76.95,1.40,75.55
 2026-03-22 19:24:12,charge,#9486,master,online,paid,2026-03-24,2026-03-24,64.15,1.21,62.94
+2026-03-22 19:30:29,charge,#9490,visa,online,paid,2026-03-24,2026-03-24,745.00,11.42,733.58
 2026-03-22 20:08:34,charge,#9491,master,online,paid,2026-03-24,2026-03-24,452.00,7.03,444.97
 2026-03-22 20:14:46,charge,#9492,master,online,paid,2026-03-24,2026-03-24,119.00,2.04,116.96
 2026-03-22 20:21:23,charge,#9493,master,google_pay,paid,2026-03-24,2026-03-24,119.00,2.04,116.96
@@ -1254,7 +1256,6 @@ Transaction Date,Type,Order,Card Brand,Card Source,Payout Status,Payout Date,Ava
 2026-03-25 14:03:38,charge,#9740,master,apple_pay,paid,2026-03-27,2026-03-27,249.00,3.98,245.02
 2026-03-25 14:08:23,refund,#7650,visa,online,paid,2026-03-27,2026-03-27,-33.95,0.00,-33.95
 2026-03-25 14:49:29,charge,#9742,master,online,paid,2026-03-27,2026-03-27,157.00,2.60,154.40
-2026-03-25 15:19:00,charge,#10662,visa,online,paid,2026-03-27,2026-03-27,129.00,2.18,126.82
 2026-03-25 15:55:20,charge,#9752,visa,apple_pay,paid,2026-03-27,2026-03-27,119.00,2.04,116.96
 2026-03-25 16:27:11,charge,#9755,visa,online,paid,2026-03-27,2026-03-27,362.55,5.69,356.86
 2026-03-25 17:11:44,charge,#9763,visa,online,paid,2026-03-27,2026-03-27,357.00,5.60,351.40
@@ -1291,7 +1292,7 @@ Transaction Date,Type,Order,Card Brand,Card Source,Payout Status,Payout Date,Ava
 2026-03-26 12:41:43,charge,#9834,master,google_pay,paid,2026-03-30,2026-03-30,38.95,0.83,38.12
 2026-03-26 13:04:11,charge,#9836,visa,online,paid,2026-03-30,2026-03-30,31.95,0.73,31.22
 2026-03-26 13:04:52,charge,#9837,visa,online,paid,2026-03-30,2026-03-30,345.00,5.42,339.58
-2026-03-26 13:09:37,charge,#9838,master,online,paid,2026-03-30,2026-03-30,273.00,4.34,268.66
+2026-03-26 13:09:37,charge,#9838,master,online,paid,2026-03-30,2026-03-30,260.50,4.16,256.34
 2026-03-26 14:23:12,charge,#9845,master,online,paid,2026-03-30,2026-03-30,31.95,0.73,31.22
 2026-03-26 15:19:08,charge,#9848,visa,apple_pay,paid,2026-03-30,2026-03-30,198.00,3.22,194.78
 2026-03-26 15:23:08,refund,#9306,visa,online,paid,2026-03-30,2026-03-30,-23.20,0.00,-23.20
@@ -1301,7 +1302,6 @@ Transaction Date,Type,Order,Card Brand,Card Source,Payout Status,Payout Date,Ava
 2026-03-26 17:39:33,charge,#9859,master,online,paid,2026-03-30,2026-03-30,168.00,2.77,165.23
 2026-03-26 17:41:29,charge,#9860,visa,apple_pay,paid,2026-03-30,2026-03-30,101.95,1.78,100.17
 2026-03-26 18:51:29,charge,#9864,visa,online,paid,2026-03-30,2026-03-30,238.00,3.82,234.18
-2026-03-26 18:56:00,charge,#10666,visa,online,paid,2026-03-30,2026-03-30,129.00,2.18,126.82
 2026-03-26 19:33:43,charge,#9867,master,online,paid,2026-03-30,2026-03-30,125.60,2.13,123.47
 2026-03-26 20:16:05,charge,#9871,master,online,paid,2026-03-30,2026-03-30,62.95,1.19,61.76
 2026-03-26 20:26:46,charge,#9872,visa,online,paid,2026-03-30,2026-03-30,138.00,2.32,135.68

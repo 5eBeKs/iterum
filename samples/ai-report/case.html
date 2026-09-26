@@ -43,9 +43,9 @@ We reviewed all 113 numbers of that report and recounted the 35 that have a defi
 
 <p class="big">All eight wrong figures come from one reasonable-looking line of the assistant's code.</p>
 <code>q['refund_prod'] = q['Refunded Amount'] * q['Subtotal'] / q['Total']</code>
-<p>It takes a "shipping share" out of every refund. For full refunds that is right. The partial refunds in this
-export are goods only, so shipping that was never refunded was taken out of them: refunds came out €505.35 too
-low and net sales €505.35 too high.</p>
+<p>It takes a "shipping share" out of every refund. For full refunds that is right. The partial refunds were
+generated for this case as goods only, so shipping that was never refunded was taken out of them: refunds came
+out €505.35 too low and net sales €505.35 too high.</p>
 
 <table><thead><tr><th>Figure</th><th class="n">In the AI's report</th><th class="n">Recounted</th><th class="n">Difference</th></tr></thead><tbody>
 <tr><td>Refunds of goods, Q1</td><td class="n">83,002.07</td><td class="n">83,507.42</td><td class="n bad">−505.35</td></tr>
@@ -56,15 +56,16 @@ low and net sales €505.35 too high.</p>
 <tr><td>Online store, net sales</td><td class="n">1,325,008.08</td><td class="n">1,324,502.73</td><td class="n bad">+505.35</td></tr>
 </tbody></table>
 <p>Everything else that could be checked matched to the cent: gross sales, discounts, orders, refunded orders,
-returning customers, all ten top-product figures. The assumption is written in a code comment, never in the report.
-A reader cannot see it; only a recount finds it.</p>
+returning customers, all ten top-product figures. The report names the assumption for full refunds only; what it
+did to the partial ones shows nowhere but in €1,815.05 of "shipping refunded". The same line moves nine more figures
+the check could not take.</p>
 <div class="foot">Two figures in the table are printed twice in the report, which makes eight. 78 numbers could not be
 checked, each with its reason given (a different definition, a split the checking code does not compute, or a note on cleaning).</div>
 </section>
 
 <section class="page">
 <header><div class="tag">The same export, a stronger assistant</div><h1>Right arithmetic, a different answer</h1></header>
-<p>A second assistant, the most capable model available at the time, got the same file and request. Its arithmetic
+<p>A second assistant, a stronger model, got the same file and request. Its arithmetic
 holds, and its headline is still €221 thousand away, because it chose the definitions itself:</p>
 <table><thead><tr><th></th><th class="n">Stronger assistant</th><th class="n">Checked count</th></tr></thead><tbody>
 <tr><td>Net sales, Q1</td><td class="n">€1,253,965.73</td><td class="n">€1,474,891.63</td></tr>
@@ -82,6 +83,8 @@ asking makes the choice on purpose.</li>
 assumptions; a recount by separate code does not.</li>
 <li><b>An investor cannot check a model's word.</b> They can check a document that puts every figure beside an
 independent recount.</li>
+<li><b>The check is not a different intelligence.</b> Its rules and code were written with AI too, but before any
+figure was computed, and the code recounted each figure without seeing the report.</li>
 </ul>
 
 <div class="grid" style="margin-top:12px">

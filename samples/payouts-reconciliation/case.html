@@ -31,11 +31,11 @@ code { font-family: Consolas, monospace; font-size:8.8pt; background:var(--panel
 <section class="page">
 <header><div class="tag">Case · reconciliation</div><h1>Shopify sales against Shopify Payments payouts</h1>
 <div class="sub">One month of a synthetic EU shop, in the real Shopify export layouts</div></header>
-<p>The shop sold €529,976 of orders in March. Its Shopify Payments transactions for March come to €244,365 net, €15,943 of it paid out in early April.
-Where did the other €285,611 go, and is any of it money that should have arrived and did not?</p>
+<p>The shop sold €529,976 of orders in March. Its Shopify Payments transactions for March come to €244,892 net, €15,943 of it paid out in early April.
+Where did the other €285,084 go, and is any of it money that should have arrived and did not?</p>
 <div class="kpis">
 <div class="kpi"><div class="k">Sold in March</div><div class="kv">€529,976</div></div>
-<div class="kpi"><div class="k">Net of March card transactions</div><div class="kv">€244,365</div></div>
+<div class="kpi"><div class="k">Net of March card transactions</div><div class="kv">€244,892</div></div>
 <div class="kpi"><div class="k">Card orders matched</div><div class="kv">1,439 / 1,444</div></div>
 </div>
 <h2>From March sales to the payout, EUR</h2>
@@ -49,17 +49,17 @@ Where did the other €285,611 go, and is any of it money that should have arriv
 <tr><td>Orders paid, no charge</td><td class="n">−376.80</td></tr>
 <tr><td>Charged less than the order</td><td class="n">−17.45</td></tr>
 <tr><td>Charged twice</td><td class="n">+266.00</td></tr>
-<tr><td>Charges with no order</td><td class="n">+258.00</td></tr>
-<tr><td><b>Charges in the payouts file</b></td><td class="n"><b>267,935.80</b></td></tr>
+<tr><td>Card charges on orders paid through PayPal</td><td class="n">+792.95</td></tr>
+<tr><td><b>Charges in the payouts file</b></td><td class="n"><b>268,470.75</b></td></tr>
 <tr><td>Refunds: March orders, as recorded in Shopify</td><td class="n">−9,934.50</td></tr>
 <tr><td>Refund larger than Shopify records (#9090)</td><td class="n">−103.95</td></tr>
 <tr><td>Refunds: February orders</td><td class="n">−8,464.41</td></tr>
 <tr><td>Refund of the second charge (#7560)</td><td class="n">−266.00</td></tr>
 <tr><td>Chargeback</td><td class="n">−154.00</td></tr>
 <tr><td>Adjustment</td><td class="n">−23.40</td></tr>
-<tr><td>Card fees</td><td class="n">−4,624.84</td></tr>
-<tr><td><b>Net for March transactions</b></td><td class="n"><b>244,364.70</b></td></tr>
-<tr><td>of which paid out by 31 March</td><td class="n">228,421.57</td></tr>
+<tr><td>Card fees</td><td class="n">−4,632.87</td></tr>
+<tr><td><b>Net for March transactions</b></td><td class="n"><b>244,891.62</b></td></tr>
+<tr><td>of which paid out by 31 March</td><td class="n">228,948.49</td></tr>
 <tr><td>of which in transit, paid out in early April</td><td class="n">15,943.13</td></tr>
 </table>
 <div class="foot">Every line is a sum of rows of one of two files: the Shopify orders export and the Shopify
@@ -71,11 +71,11 @@ for that export; its fees are illustrative.</div>
 <table><tr><th>What went wrong</th><th>Order</th><th class="n">In Shopify</th><th class="n">In the payouts</th><th class="n">Difference</th></tr>
 <tr><td>Order paid, no charge</td><td>#8935</td><td class="n">337.85</td><td class="n">—</td><td class="n">−337.85</td></tr>
 <tr><td>Order paid, no charge</td><td>#10394</td><td class="n">38.95</td><td class="n">—</td><td class="n">−38.95</td></tr>
-<tr><td>Charged less than the order</td><td>#7596</td><td class="n">42.95</td><td class="n">30.45</td><td class="n">−12.50</td></tr>
 <tr><td>Charged less than the order</td><td>#8345</td><td class="n">52.95</td><td class="n">48.00</td><td class="n">−4.95</td></tr>
+<tr><td>Charged less than the order</td><td>#9838</td><td class="n">273.00</td><td class="n">260.50</td><td class="n">−12.50</td></tr>
 <tr><td>Charged twice, second refunded</td><td>#7560</td><td class="n">266.00</td><td class="n">266.00 + 266.00</td><td class="n">+266.00, then −266.00</td></tr>
-<tr><td>Charge, no order in the export</td><td>#10662</td><td class="n">—</td><td class="n">129.00</td><td class="n">+129.00</td></tr>
-<tr><td>Charge, no order in the export</td><td>#10666</td><td class="n">—</td><td class="n">129.00</td><td class="n">+129.00</td></tr>
+<tr><td>Card charged, order paid by PayPal</td><td>#9031</td><td class="n">47.95</td><td class="n">47.95</td><td class="n">+47.95</td></tr>
+<tr><td>Card charged, order paid by PayPal</td><td>#9490</td><td class="n">745.00</td><td class="n">745.00</td><td class="n">+745.00</td></tr>
 <tr><td>Refund larger than recorded</td><td>#9090</td><td class="n">99.00</td><td class="n">103.95</td><td class="n">+4.95</td></tr>
 <tr><td>Chargeback, order still paid</td><td>#7795</td><td class="n">154.00</td><td class="n">−154.00, fee 15.00</td><td class="n">−169.00</td></tr>
 </table>

@@ -9,27 +9,34 @@ actually receive this month, and where is the rest of my money?**
 
 ## The answer
 
-**Received from customers in March: €421,581.88 into the euro account and $32,753.08 into the dollar
-account.** Sold in March: €561,258.10 across six euro channels and $45,570.75 of invoices due.
+**Received from customers in March: €422,108.80 into the euro account and $32,753.08 into the dollar
+account.** Sold in March: €561,258.10 across six euro channels, and $45,570.75 of invoices due in dollars.
 
 | From what was sold to what reached the bank | EUR | USD |
 |---|---:|---:|
 | **Sold in March** | **561,258.10** | **45,570.75** |
 | Refunds to customers | −30,175.80 | −600.00 |
-| Fees | −17,266.45 | −1,210.83 |
-| Paid out, arriving in April | −68,200.15 | — |
-| Not yet paid out | −7,690.05 | — |
+| Fees | −17,274.48 | −1,210.83 |
+| Paid out in March, booked in April | −42,234.27 | — |
+| Not yet paid out on 31 March | −33,655.93 | — |
 | Held by the providers | −7,938.33 | −7,126.84 |
 | Missing: paid out, never booked by the bank | −9,341.59 | — |
 | Not yet paid by the customer | — | −3,880.00 |
 | Brought from February (PayPal) | +1,840.22 | — |
-| Differences, promotions and other items | −904.07 | — |
-| **Received in the bank in March** | **421,581.88** | **32,753.08** |
+| Differences, promotions and other items | −369.12 | — |
+| **Received in the bank in March** | **422,108.80** | **32,753.08** |
 
-**€93,170.12 of the shop's money had not reached its account on 31 March.** Most of it is only late:
-€68,200 was paid out on the last days of March and is booked in April. €7,938 is held by the providers:
-Klarna's reserve, Amazon's reserve, the PayPal balance. And €9,341.59 is lost on the way. Shopify's file
-says the payout of 18 March was paid; the bank never booked it.
+**€93,170.12 of the shop's money had not reached its account on 31 March.** Most of it is only late.
+€42,234 was paid out on the last days of March and is booked in April. €33,656 had not been paid out
+yet: Shopify Payments' payouts of 1 and 2 April, Amazon's settlement deposited on 1 April, Klarna's
+captures of 30–31 March, Amazon's last shipments and the till's last two days. €7,938 is held by the
+providers: Klarna's reserve, Amazon's reserve, the PayPal balance. And €9,341.59 is lost on the way:
+Shopify's file says the payout of 18 March was paid, and the bank never booked it.
+
+**Refunds still to go out.** The shop recorded refunds on 119 March orders paid by card, PayPal or
+Klarna that no provider paid in March: €12,307.90. They leave in April, or were made another way, such as
+a gift card or cash at the till. The orders export carries no refund date, so the close lists them rather
+than guesses, and April's files settle each one.
 
 **€33,132 that came into the account is not revenue**, and a close that counted it would overstate March
 by exactly that: €10,000 moved from the savings account, €18,132 converted from the dollar account and a
@@ -37,24 +44,28 @@ by exactly that: €10,000 moved from the savings account, €18,132 converted f
 
 ## What to do this week
 
-From the 26 records that did not agree, in the order of the money:
+From the 28 records that did not agree, the largest first:
 
 1. **Ask Shopify for the trace of the payout of 18 March**, €9,341.59.
 2. **Remind the US customer of invoice NO-US-2026-007**, $3,880.00, due 30 March.
 3. **Ask Klarna why €2,000 was held back**, and until when, and claim the fee charged at 3.49% instead of
    2.99% for one week: €146.50.
-4. **Find order #8041**: paid by PayPal in the shop, €582.00, with no payment in PayPal.
-5. **Open cases with Amazon Seller Support**: three lines shipped and never paid, one paid €5 short, a
-   commission above the rate card, an FBA fee charged twice, a refund larger than the sale.
-6. **Find who refunded €45.00 in PayPal** on order #9232; the shop records no refund.
-7. **Refund the Amazon customer charged for a cancelled order**, and find the Amazon sale paid with no order in the report.
-8. **Count the till for the week of 9 March**: the deposit is €40.00 short. And invoice the €15.00 a
-   customer's bank took from a transfer.
-9. **Ask the bank who sent €310.00 on 26 March** with no reference.
+4. **Refund two customers who paid twice**, by card and through PayPal: #9490, €745.00, and #9031, €47.95.
+5. **Find order #8041**: paid by PayPal in the shop, €582.00, with no payment in PayPal.
+6. **Ask Shopify support about two card orders marked paid with no charge**: #8935, €337.85, and #10394, €38.95.
+7. **Ask the bank who sent €310.00 on 26 March** with no reference.
+8. **Answer the chargeback on #7795**, €154.00 and a €15.00 fee, or record it on the order, which still reads paid.
+9. **Open cases with Amazon Seller Support**: three lines shipped and never paid, one paid €5 short, a
+   commission above the rate card, an FBA fee charged twice, a refund larger than the sale. And refund the
+   Amazon customer charged for a cancelled order, and find the order behind the charge the report does not list.
+10. **Find who refunded**: €45.00 in PayPal on order #9232, where the shop records no refund, and €4.95 by
+    card on #9090 beyond what the order records. Ask Shopify what the adjustment of €23.40 on 12 March was for.
+11. **Count the till for the week of 9 March**: the deposit is €40.00 short. And invoice the €15.00 a
+    customer's bank took from a transfer.
+12. **Collect or correct the two card charges short of their order**: #9838, €12.50, and #8345, €4.95.
 
-The card channel's order-level records are the ones of [the payouts case](../payouts-reconciliation/CASE.md):
-two orders marked paid with no charge, two charged less than the order, a double charge, two charges with
-no order.
+The card channel's records are those of [the payouts case](../payouts-reconciliation/CASE.md), from the
+same file, and the payout that never reached the bank is this close's own.
 
 ## Why this is not a spreadsheet afternoon
 
@@ -81,16 +92,20 @@ provider's payout to its bank line, and only then can it say what is missing.
 ## Rules written down before counting
 
 - The month's sales: Shopify orders paid 1–31 March in the shop's time; Amazon lines shipped from orders
-  placed in March; wholesale invoices due in March.
-- Money is received when the bank books it. A payout booked in April is on its way at the close.
+  placed in March; wholesale invoices due in March. Orders on Shopify's test gateway are not sales.
+- Money is received when the bank books it. A payout the provider sent by 31 March and the bank booked in
+  April is on its way; one the provider sent in April had not been paid out at the close.
+- Cut-offs: Klarna settles weekly, so its captures of 30–31 March settle on 6 April; the till's takings of
+  30–31 March are deposited in April; Amazon lines of orders placed from 27 March settle in April. Amazon's
+  dates are read in UTC, as its reports write them.
 - Fees are held to the contracts: PayPal 2.49% + €0.35, Klarna 2.99% + €0.35, Stripe 2.9% + $0.30,
   Amazon's rate card. Shopify Payments' fees are taken as its file states them.
 - A credit that is not a customer's money is listed and kept out of what was received.
 
 ## What the client receives
 
-- [**The close document**](month-close-document.pdf) (7 pages): the answer, where the money is, each
-  channel's bridge closed to the cent, all 26 records that did not agree with what to do about each,
+- [**The close document**](month-close-document.pdf) (8 pages): the answer, where the money is, each
+  channel's bridge closed to the cent, all 28 records that did not agree with what to do about each,
   every credit to the account by what it was, the rules, and the same money in five formats.
 - [**The workbook**](month-close.xlsx): the bridge by channel, the exceptions with filters, every bank
   credit labelled, the payments out, the files' fingerprints.

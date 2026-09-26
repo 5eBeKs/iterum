@@ -1,11 +1,14 @@
 channel,kind,reference,in_the_shop,at_the_provider,in_the_bank,difference,what_to_do
 Shopify Payments,"Order paid, no card charge",#10394,38.95,—,—,-38.95,Ask Shopify support; the order may have been marked paid by hand
+Shopify Payments,Charged less than the order,#9838,273.00,260.50,—,-12.50,Collect the difference or correct the order
 Shopify Payments,"Order paid, no card charge",#8935,337.85,—,—,-337.85,Ask Shopify support; the order may have been marked paid by hand
 Shopify Payments,Charged less than the order,#8345,52.95,48.00,—,-4.95,Collect the difference or correct the order
-Shopify Payments,Charged less than the order,#7596,42.95,30.45,—,-12.50,Collect the difference or correct the order
 Shopify Payments,Charged twice,#7560,266.00,266.00 + 266.00,—,266.00,Refunded already; the fee of the second charge was kept
-Shopify Payments,Charge with no order,#10662,—,129.00,—,129.00,Find the order; the export may predate it
-Shopify Payments,Charge with no order,#10666,—,129.00,—,129.00,Find the order; the export may predate it
+Shopify Payments,Card charged for an order paid through PayPal,#9031,47.95,47.95,—,47.95,The customer paid twice: refund one of the two payments
+Shopify Payments,Card charged for an order paid through PayPal,#9490,745.00,745.00,—,745.00,The customer paid twice: refund one of the two payments
+Shopify Payments,Card refund differs from the order's refund,#9090,99.00,103.95,—,-4.95,Find who refunded the difference and why
+Shopify Payments,Adjustment with no order,2026-03-12,—,-23.40,—,-23.40,Ask Shopify what the adjustment was for
+Shopify Payments,"Chargeback, the order still reads paid",#7795,154.00,-154.00 and a 15.00 fee,—,-169.00,"Answer the dispute, or record it on the order"
 Shopify Payments,Payout never reached the bank,payout 2026-03-18,—,9341.59,—,-9341.59,Ask Shopify for the payout's trace; check the bank account on file
 PayPal,"Order paid, no PayPal payment",#8041,582.00,—,—,-582.00,Search PayPal by the customer's e-mail; the order may be marked paid by mistake
 PayPal,"Refund in PayPal, none in the shop",#9232,0.00,-45.00,—,-45.00,Find who refunded it and why; record it in the shop or claim it back
