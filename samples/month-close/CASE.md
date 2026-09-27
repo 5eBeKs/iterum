@@ -104,7 +104,7 @@ provider's payout to its bank line, and only then can it say what is missing.
 
 ## What the client receives
 
-- [**The close document**](month-close-document.pdf) (8 pages): the answer, where the money is, each
+- [**The close document**](month-close-document.pdf) (7 pages): the answer, where the money is, each
   channel's bridge closed to the cent, all 28 records that did not agree with what to do about each,
   every credit to the account by what it was, the rules, and the same money in five formats.
 - [**The workbook**](month-close.xlsx): the bridge by channel, the exceptions with filters, every bank

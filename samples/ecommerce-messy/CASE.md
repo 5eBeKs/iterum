@@ -1,11 +1,12 @@
-# An online shop's quarter: the partner channel sells smaller and delivers less
+# An online shop's quarter: smaller baskets, and fewer orders delivered, in the partner channel
 
 An online shop sends its order export for Q1 2026 and asks how the quarter went. The report
 answers: **€3,023,296.61** of net revenue from **44,531** orders. The partner channel brought 45%
 of the orders, but only **60.5%** of them reached delivery, against **72.4%** in the direct channel,
-and a delivered partner order averaged **€87.27** against **€110.64**. The partner channel sells
-smaller baskets and loses more of them on the way. Every one of those figures was recounted from
-the export by separate code.
+and a delivered partner order averaged **€87.27** against **€110.64**. Partner orders are smaller,
+and a smaller share of them was delivered by the time of the export. That share counts cancelled and
+still-pending orders in its base, so it describes the quarter; it does not say why. Every one of
+those figures was recounted from the export by separate code.
 
 ## What the check found along the way
 

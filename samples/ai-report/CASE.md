@@ -13,11 +13,11 @@ word, to partial refunds too. The same line moves nine more figures that the che
 an investor sees them.
 
 The result the owner receives is here in full:
-- [**the report with a note beside every figure**](annotated-report.pdf) (6 pages): each of the 113
+- [**the report with a note beside every figure**](annotated-report.pdf) (7 pages): each of the 113
   figures highlighted where it is printed, green, red or amber, with what the recount says or why it
   cannot say anything;
-- [**the verification document**](verification-document.pdf) (13 pages), the sealed document of the
-  check as the client gets it;
+- [**the verification document**](verification-document.pdf) (15 pages): a reader's note on what it covers, then the
+  sealed document of the check as the client gets it, and the rules' questions in English;
 - [**the workbook**](ai-report-check.xlsx): all 113 figures in one filterable sheet, the eight that do
   not match, the 38 rules agreed before counting, and the export's reconciliation to its control file.
 
@@ -222,6 +222,7 @@ is Claude Sonnet 5 and the stronger one Claude Opus 5.5. `sonnet-5-report.md` an
 reports as the assistants wrote them. `sonnet-5-report.sealed.md`: the same Sonnet report with the check's
 anchors in it, the copy the check read and the receipt lists as `release/report.md`.
 `verification_report.md`: the check, every number with its status; `verification-document.pdf` is it
-rendered without a change. `receipt.md`: the receipt; the SHA-256 of `sonnet-5-report.sealed.md` and of
+rendered without a change, after a reader's note and before an English list of the rules' questions, both
+marked as not part of the seal. `receipt.md`: the receipt; the SHA-256 of `sonnet-5-report.sealed.md` and of
 `verification_report.md` equal the ones in it. `annotated-report.pdf` and `ai-report-check.xlsx` are laid out
 from the sealed document and compute nothing; they are not in the receipt.

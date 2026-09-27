@@ -13,12 +13,14 @@ h1{font-size:18pt;margin:0 0 4px}
 .kpi{background:var(--panel);border-radius:6px;padding:8px 10px}
 .kpi .v{font-size:17pt;font-weight:700}
 .kpi .k{font-size:8pt;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
-section.pair{display:grid;grid-template-columns:minmax(0,60fr) minmax(0,40fr);gap:14px;border-top:1px solid var(--rule);padding-top:8px;margin-top:8px;page-break-inside:auto}
+section.pair{display:grid;grid-template-columns:minmax(0,64fr) minmax(0,36fr);gap:14px;border-top:1px solid var(--rule);padding-top:8px;margin-top:8px;page-break-inside:auto}
 .report h1{font-size:13pt}
 .report h2{font-size:11pt;margin:2px 0 6px}
-.report table{border-collapse:collapse;width:100%;font-size:8.6pt}
-.report th,.report td{border-bottom:1px solid var(--rule);padding:3px 4px;text-align:left}
+.report table{border-collapse:collapse;width:100%;font-size:7.8pt}
+.report th,.report td{border-bottom:1px solid var(--rule);padding:2px 3px;text-align:left}
+/* Figures never wrap, labels may: a table of four months of figures has to fit its column, or it runs under the notes. */
 .report td{white-space:nowrap}
+.report td:first-child{white-space:normal}
 .report p,.report li{margin:3px 0}
 mark{padding:0 2px;border-radius:3px;background:none}
 mark.match{background:#dcefe3}
