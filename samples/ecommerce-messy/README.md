@@ -20,7 +20,7 @@ Three files from one finished check. They were not edited after the check ended.
 
 The later asset-manager example has a separate receipt — a list of checksums
 written outside the working folder at the moment the work is treated as
-finished. This check ended on 16 September 2026, before that receipt existed.
+finished. This check ended in September 2026, before that receipt existed.
 `AUDIT_REPORT.md` stands in for it. A receipt of the later kind was not written
 after the fact.
 
@@ -44,8 +44,8 @@ report's author computed it.
 
 One model (GLM) wrote the report, another vendor's model (Claude) reviewed it.
 The figures themselves are recounted by ordinary code, with no model in that
-step. 18 model launches. Work ended
-16 September 2026.
+step. 18 model launches. Work ended in
+September 2026.
 
 ## What was found
 

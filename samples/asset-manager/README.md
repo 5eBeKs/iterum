@@ -27,7 +27,7 @@ separately from however the report's author computed it.
 One model (GLM) wrote the report, another vendor's model (Grok) reviewed it.
 The figures themselves are recounted by ordinary code, with no model in that
 step. 16 model launches. The receipt was
-issued on 20 September 2026. The last review of the whole report passed with
+issued in September 2026. The last review of the whole report passed with
 17 notes, none of which stopped the hand-over.
 
 ## What was found

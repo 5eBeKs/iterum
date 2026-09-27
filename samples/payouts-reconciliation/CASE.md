@@ -120,5 +120,5 @@ told apart from an April refund.
 byte for byte (SHA-256 `d8b8a2459bdb1c07c4f3202c3279920270ae6d9715accf44b9a405b4e63d91c1`). The
 orders export is not in this repository, for the same reason as in the neighbouring cases (SHA-256
 `4655ea261d1446cdb828cbf2106dae16d141b625cdbf5ac543c048f57004881f`). The payouts file follows the
-columns help.shopify.com lists for the transactions export, checked on 24 September 2026. Its
+columns help.shopify.com lists for the transactions export, checked in September 2026. Its
 fees are illustrative, not Shopify's published rates.

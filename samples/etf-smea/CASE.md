@@ -95,9 +95,9 @@ versions this case was checked against are named by their bytes:
 
 | Document | As at | Downloaded | Bytes | SHA-256 |
 |---|---|---|---:|---|
-| Factsheet, `smea-ishares-core-msci-europe-ucits-etf-eur-acc-fund-fact-sheet-en-gb.pdf`, headed "August 2026" | 31 Aug 2026; other data 3 Sep 2026 | 21 Sep 2026 | 380,083 | `8d10940581f503a51db6a1b4382e0908131a227bea53ec66134e538647c8032c` |
-| Holdings file, `SMEA_holdings.csv`, the sealed check's data | 31 Aug 2026 | 21 Sep 2026 | 60,265 | `1522469665017d604661a567440380356a687a045f2b0842f4ba8e6e05599819` |
-| Holdings file, `SMEA_holdings.csv`, the direct recount | 3 Sep 2026 | by 23 Sep 2026 | 60,896 | `c6c999d5a2a6f2297251a5133e4d602bd12dd6d907a3efb70eb083af2dc6b63c` |
+| Factsheet, `smea-ishares-core-msci-europe-ucits-etf-eur-acc-fund-fact-sheet-en-gb.pdf`, headed "August 2026" | 31 Aug 2026; other data 3 Sep 2026 | September 2026 | 380,083 | `8d10940581f503a51db6a1b4382e0908131a227bea53ec66134e538647c8032c` |
+| Holdings file, `SMEA_holdings.csv`, the sealed check's data | 31 Aug 2026 | September 2026 | 60,265 | `1522469665017d604661a567440380356a687a045f2b0842f4ba8e6e05599819` |
+| Holdings file, `SMEA_holdings.csv`, the direct recount | 3 Sep 2026 | September 2026 | 60,896 | `c6c999d5a2a6f2297251a5133e4d602bd12dd6d907a3efb70eb083af2dc6b63c` |
 
 Copies of the three are kept with the case's working files; they are not republished here.
 

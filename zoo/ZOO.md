@@ -6,7 +6,7 @@ do not edit by hand.
 
 - Machine corpus: `examples/mutations` of MAX v2 at `a3eb90f` -- declarations its own suite holds true there.
 - Reviewer corpus: this bench at `4704ff7`; launches recorded over MAX v2 revisions `05bbc25`, `06eb683`, `0703cb4`, `1d34cf0`, `2a6f8dc`, `2cc51dd`, `7e1d71f`, `920704d`, `99dbc4b`, `a3eb90f`, `b409142`, `b7adc4a`, `bc6f71b`, `d6a41ff`, `e48d886`, `fa38876`.
-- Written 2026-09-19.
+- Written in September 2026.
 
 Three layers, in the order a defect meets them: the **machine** gates (free, deterministic,
 every run), the stage's **auditor** (one model launch per stage), and the final **red team**
